@@ -1,6 +1,6 @@
 # 新生入学迎新系统
 
-Welcome the students
+Welcome HITers
 
 :warning:此版本仅仅是用于SE的大作业，可能不会有后续更新，请谨慎使用
 
