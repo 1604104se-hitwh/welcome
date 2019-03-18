@@ -35,14 +35,14 @@
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
-				<div class="sidebar-brand-text mx-3">迎新系统 <sup id="user-type">新生</sup></div>
+				<div class="sidebar-brand-text mx-3">迎新系统 <sup id="user-type">{{$sysType}}</sup></div>
 			</a>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0">
 
 			<!-- Nav Item - Dashboard -->
-			<li class="nav-item">
+			<li class="nav-item active">
 				<a class="nav-link" href="index.html">
 					<i class="fas fa-fw fa-home"></i>
 					<span>首页</span></a>
@@ -57,7 +57,7 @@
 			</div>
 
 			<!-- Nav Item - Information Query -->
-			<li class="nav-item active">
+			<li class="nav-item">
 				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo"
 					aria-expanded="true" aria-controls="collapseInfo">
 					<i class="fas fa-fw fa-laptop"></i>
@@ -154,7 +154,7 @@
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i class="fas fa-envelope fa-fw"></i>
 								<!-- Counter - Messages -->
-								<span class="badge badge-danger badge-counter">2</span>
+								<span class="badge badge-danger badge-counter">{{$messageNumber}}</span>
 							</a>
 							<!-- Dropdown - Messages -->
 							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -184,17 +184,17 @@
 						<li class="nav-item dropdown no-arrow">
 							<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，SPC</span>
+								<span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，{{$user}}</span>
 								<img class="img-profile rounded-circle"
-									src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+									src="{{$userImg}}">
 							</a>
 							<!-- Dropdown - User Information -->
 							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#">
+								<a class="dropdown-item" href="{{$toInfomationURL}}">
 									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
 								</a>
-								<a class="dropdown-item" href="#">
+								<a class="dropdown-item" href="{{$toSettingURL}}">
 									<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
 								</a>
 								<div class="dropdown-divider"></div>
@@ -214,7 +214,7 @@
 
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">你的信息</h1>
+						<h1 class="h3 mb-0 text-gray-800">首页</h1>
 					</div>
 
 					<!-- Content Row -->
@@ -228,7 +228,7 @@
 										<div class="col mr-2">
 											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">您的学号
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">160820321</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuID}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-id-card fa-2x text-gray-300"></i>
@@ -246,7 +246,7 @@
 										<div class="col mr-2">
 											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">所在院系
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">计算机类</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuDept}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-chalkboard-teacher fa-2x text-gray-300"></i>
@@ -265,7 +265,8 @@
 											<div class="text-xs font-weight-bold text-info text-uppercase mb-1">宿舍</div>
 											<div class="row no-gutters align-items-center">
 												<div class="col-auto">
-													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">9公寓-325室
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+														{{$stuDomitory}}
 													</div>
 												</div>
 											</div>
@@ -286,7 +287,7 @@
 										<div class="col mr-2">
 											<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报道时间
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">9月1日</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuReportTime}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -301,232 +302,190 @@
 					<div class="card-columns">
 
 						<!-- Content Column -->
-						<div class="mb-4">
-							<!-- Illustrations -->
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">学校简介</h6>
-								</div>
-								<div class="card-body">
-									<div class="text-center">
-										<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-											src="img/undraw_posting_photo.svg" alt="">
-									</div>
-									<p>
-										哈尔滨工业大学（以下简称哈工大）是一所有着近百年历史、世界知名的工科强校，2017年入选国家“双一流”建设A类高校，是我国首批入选国家“985工程”重点建设的大学，拥有以38位院士为带头人的雄厚师资，有9个国家一级重点学科，10个学科名列全国前五名，其中，名列前茅的工科类重点学科数量位居全国第二，工程学在全球排名第六。
-									</p>
-									<a target="_blank" rel="nofollow" href="https://undraw.co/">更多介绍 &rarr;</a>
-								</div>
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">学校简介</h6>
+							</div>
+							<div class="card-body">
+								{!! $schoolInfo !!}
+								<a target="_blank" rel="nofollow" href="{{$toSchoolInfoURL}}">更多介绍 &rarr;</a>
 							</div>
 						</div>
 
-						<div class="mb-4">
-							<!-- Illustrations -->
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">你的同学</h6>
-								</div>
-								<div class="card-body">
-									<div class="row">
-										<div class="col-xl-6 col-lg-12">
-											<div class="chart-pie pt-4">
-												<canvas id="groupAccountChart"></canvas>
-											</div>
-										</div>
-										<div class="col-xl-6 col-lg-12">
-											<div class="chart-pie pt-4">
-												<canvas id="allAccountChart"></canvas>
-											</div>
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">你的同学</h6>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-xl-6 col-lg-12">
+										<div class="chart-pie pt-4">
+											<canvas id="groupAccountChart"></canvas>
 										</div>
 									</div>
-									<a target="_blank" rel="nofollow" href="https://undraw.co/">查看所有同学 &rarr;</a>
-
-								</div>
-							</div>
-
-							<div class="mb-4">
-								<!-- Illustrations -->
-								<div class="card shadow mb-4">
-									<div class="card-header py-3">
-										<h6 class="m-0 font-weight-bold text-primary">你的室友</h6>
-									</div>
-									<div class="card-body">
-										<table class="table table-bordered">
-											<thead>
-												<tr role="row">
-													<th>姓名</th>
-													<th>学号</th>
-													<th>床位</th>
-													<th>来自</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr role="row">
-													<td>小明</td>
-													<td>160410401</td>
-													<td>4</td>
-													<td>山东</td>
-												</tr>
-												<tr role="row">
-													<td>小明</td>
-													<td>160410401</td>
-													<td>4</td>
-													<td>山东</td>
-												</tr>
-												<tr role="row">
-													<td>小明</td>
-													<td>160410401</td>
-													<td>4</td>
-													<td>山东</td>
-												</tr>
-											</tbody>
-										</table>
+									<div class="col-xl-6 col-lg-12">
+										<div class="chart-pie pt-4">
+											<canvas id="groupProviceChart"></canvas>
+										</div>
 									</div>
 								</div>
+								<a target="_blank" rel="nofollow" href="{{$toAllStuURL}}">查看所有同学 &rarr;</a>
 							</div>
 						</div>
 
-						<div class="mb-4">
-							<!-- Illustrations -->
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">专业介绍</h6>
-								</div>
-								<div class="card-body">
-									<div class="text-center">
-										<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-											src="img/undraw_posting_photo.svg" alt="">
-									</div>
-									<p>使用说明仔细看下面：</p>
-									<a target="_blank" rel="nofollow" href="https://undraw.co/">更多介绍 &rarr;</a>
-								</div>
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">你的室友</h6>
+							</div>
+							<div class="card-body">
+								<table class="table table-bordered">
+									<thead>
+										<tr role="row">
+											<th>姓名</th>
+											<th>学号</th>
+											<th>床位</th>
+											<th>来自</th>
+										</tr>
+									</thead>
+									<tbody>
+									@if(count($domStus)==0)
+										{{-- 还没有信息 --}}
+										<tr role="row">
+											<td colspan="4">还没有信息</td>
+										</tr>
+									@else
+										@foreach($domStus as $domStu)
+											<tr role="row">
+												<td>{{$domStu->name}}</td>
+												<td>{{$domStu->stuID}}</td>
+												<td>{{$domStu->bedID}}</td>
+												<td>{{$domStu->comeFrom}}</td>
+											</tr>
+										@endforeach
+									@endif
+									</tbody>
+								</table>
 							</div>
 						</div>
 
-						<div class="mb-4">
-							<!-- Illustrations -->
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">宿舍环境</h6>
-								</div>
-								<div class="card-body">
-									<div class="text-center">
-										<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-											src="img/undraw_posting_photo.svg" alt="">
-									</div>
-									<p>使用说明仔细看下面：</p>
-									<a target="_blank" rel="nofollow" href="https://undraw.co/">更多介绍 &rarr;</a>
-								</div>
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">专业介绍</h6>
+							</div>
+							<div class="card-body">
+								{!!$deptInfo!!}
+								<a target="_blank" rel="nofollow" href="{{$toDeptInfoURL}}">更多介绍 &rarr;</a>
 							</div>
 						</div>
 
-						<div class="mb-4">
-							<!-- Illustrations -->
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">老乡信息</h6>
-								</div>
-								<div class="card-body">
-									<div class="col-sm-12">
-										<table class="table table-bordered">
-											<thead>
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">宿舍环境</h6>
+							</div>
+							<div class="card-body">
+								{!!$domInfo!!}
+								<a target="_blank" rel="nofollow" href="{{$toDomInfoURL}}">更多介绍 &rarr;</a>
+							</div>
+						</div>
+
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">老乡信息</h6>
+							</div>
+							<div class="card-body">
+								<div class="col-sm-12">
+									<table class="table table-bordered">
+										<thead>
+											<tr role="row">
+												<th>姓名</th>
+												<th>学号</th>
+												<th>性别</th>
+												<th>毕业学校</th>
+											</tr>
+										</thead>
+										<tbody>
+											@if (count($localStus)==0)
+												<td colspan="4">还没有信息</td>
+											@else
+												@foreach ($localStus as $localStu)
 												<tr role="row">
-													<th>姓名</th>
-													<th>学号</th>
-													<th>公寓</th>
-													<th>毕业学校</th>
+													<td>$localStu->name</td>
+													<td>$localStu->stuID</td>
+													<td>$localStu->gender</td>
+													<td>$localStu->preSchool</td>
 												</tr>
-											</thead>
-											<tbody>
-												<tr role="row">
-													<td>小明</td>
-													<td>160410401</td>
-													<td>8</td>
-													<td>山东省实验中学</td>
-												</tr>
-												<tr role="row">
-													<td>小明</td>
-													<td>160410401</td>
-													<td>8</td>
-													<td>山东省实验中学</td>
-												</tr>
-												<tr role="row">
-													<td>小明</td>
-													<td>160410401</td>
-													<td>8</td>
-													<td>山东省实验中学</td>
-												</tr>
-											</tbody>
-										</table>
-										<a target="_blank" rel="nofollow" href="https://undraw.co/">查看全部老乡 &rarr;</a>
-									</div>
+												@endforeach
+											@endif
+										</tbody>
+									</table>
+									<a target="_blank" rel="nofollow" href="{{$toLocalStuURL}}">查看全部老乡 &rarr;</a>
 								</div>
 							</div>
-
 						</div>
 
 					</div>
-					<!-- /.container-fluid -->
-
 				</div>
-				<!-- End of Main Content -->
-
-				<!-- Footer -->
-				<footer class="sticky-footer bg-white">
-					<div class="container my-auto">
-						<div class="copyright text-center my-auto">
-							<span>Copyright &copy; Harbin Institute of Technology , Weihai</span>
-						</div>
-					</div>
-				</footer>
-				<!-- End of Footer -->
+				<!-- /.container-fluid -->
 
 			</div>
-			<!-- End of Content Wrapper -->
+			<!-- End of Main Content -->
+
+			<!-- Footer -->
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; Harbin Institute of Technology , Weihai</span>
+					</div>
+				</div>
+			</footer>
+			<!-- End of Footer -->
 
 		</div>
-		<!-- End of Page Wrapper -->
+		<!-- End of Content Wrapper -->
 
-		<!-- Scroll to Top Button-->
-		<a class="scroll-to-top rounded" href="#page-top">
-			<i class="fas fa-angle-up"></i>
-		</a>
+	</div>
+	<!-- End of Page Wrapper -->
 
-		<!-- Logout Modal-->
-		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-			aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-					</div>
-					<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-					<div class="modal-footer">
-						<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-						<a class="btn btn-primary" href="login.html">Logout</a>
-					</div>
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">确认退出？</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">选择“退出”退出登录</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+					<a class="btn btn-primary" href="{{$toLogoutURL}}">退出</a>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<!-- Bootstrap core JavaScript-->
-		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-		<!-- Core plugin JavaScript-->
-		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-		<!-- Custom scripts for all pages-->
-		<script src="js/sb-admin-2.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
 
-		<!-- Page level plugins -->
-		<script src="vendor/chart.js/Chart.min.js"></script>
+	<!-- Page level plugins -->
+	<script src="vendor/chart.js/Chart.min.js"></script>
 
-		<!-- Chart -->
-		<script type="text/javascript" src="js/chart.js"></script>
+	<!-- Chart -->
+	<script type="text/javascript" src="js/chart.js"></script>
 
 
 </body>

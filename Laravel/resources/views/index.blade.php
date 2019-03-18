@@ -12,13 +12,13 @@
 	<title>迎新系统-哈尔滨工业大学（威海）</title>
 
 	<!-- Custom fonts for this template-->
-	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-	<link
-		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78="
+	 crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	 rel="stylesheet">
 
 	<!-- Custom styles for this template-->
-	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
 
 </head>
 
@@ -35,7 +35,7 @@
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
-				<div class="sidebar-brand-text mx-3">迎新系统 <sup id="user-type">新生</sup></div>
+				<div class="sidebar-brand-text mx-3">迎新系统 <sup id="user-type">{{$sysType}}</sup></div>
 			</a>
 
 			<!-- Divider -->
@@ -58,24 +58,23 @@
 
 			<!-- Nav Item - Information Query -->
 			<li class="nav-item">
-				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo"
-					aria-expanded="true" aria-controls="collapseInfo">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo" aria-expanded="true" aria-controls="collapseInfo">
 					<i class="fas fa-fw fa-laptop"></i>
 					<span>信息查询</span>
 				</a>
 				<div id="collapseInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">你可以查看：</h6>
-						<a class="collapse-item" href="">你的班级</a>
-						<a class="collapse-item" href="">你的宿舍</a>
-						<a class="collapse-item" href="">你的老乡</a>
+						<a class="collapse-item" href="{{url('/classInfo')}}">你的班级</a>
+						<a class="collapse-item" href="{{url('/yourDom')}}">你的宿舍</a>
+						<a class="collapse-item" href="{{url('/yourCountrymen')}}">你的老乡</a>
 					</div>
 				</div>
 			</li>
 
 			<!-- Nav Item - Arrived -->
 			<li class="nav-item">
-				<a class="nav-link" href="#">
+				<a class="nav-link" href="{{url('/arriveInfo')}}">
 					<i class="fas fa-fw fa-plane-arrival"></i>
 					<span>到站信息</span>
 				</a>
@@ -91,7 +90,7 @@
 
 			<!-- Nav Item - Notice -->
 			<li class="nav-item">
-				<a class="nav-link" href="">
+				<a class="nav-link" href="{{url('/allInfo')}}">
 					<i class="fas fa-fw fa-bell"></i>
 					<span>所有通知</span></a>
 			</li>
@@ -106,16 +105,15 @@
 
 			<!-- Nav Item - welcome -->
 			<li class="nav-item">
-				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseWel"
-					aria-expanded="true" aria-controls="collapseWel">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseWel" aria-expanded="true" aria-controls="collapseWel">
 					<i class="fas fa-fw fa-route"></i>
 					<span>报到流程</span>
 				</a>
 				<div id="collapseWel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">你可以查看：</h6>
-						<a class="collapse-item" href="">报道说明</a>
-						<a class="collapse-item" href="">开始报道</a>
+						<a class="collapse-item" href="{{url('/reportInfo')}}">报道说明</a>
+						<a class="collapse-item" href="{{url('/startReport')}}">开始报道</a>
 					</div>
 				</div>
 			</li>
@@ -149,31 +147,27 @@
 					<ul class="navbar-nav ml-auto">
 						<!-- Nav Item - Messages -->
 						<li class="nav-item dropdown no-arrow mx-1">
-							<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+							 aria-expanded="false">
 								<i class="fas fa-envelope fa-fw"></i>
 								<!-- Counter - Messages -->
-								<span class="badge badge-danger badge-counter">2</span>
+								<span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
 							</a>
 							<!-- Dropdown - Messages -->
-							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="messagesDropdown">
+							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
 								<h6 class="dropdown-header">
 									消息中心
 								</h6>
+								@if(count($messages['showMessage'])!=0) @foreach ($messages['showMessage'] as $message)
 								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="font-weight-bold">
-										<div class="text-truncate">宿舍信息已导入</div>
-										<div class="small text-gray-500">大家可以查宿舍啦~</div>
+									<div @if ($message[ 'readed'] == false) class="font-weight-bold" @endif>
+										<div class="text-truncate">{{$message['title']}}</div>
+										<div class="small text-gray-500">{{$message['context']}}</div>
 									</div>
 								</a>
-								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div>
-										<div class="text-truncate">新生信息已经导入</div>
-										<div class="small text-gray-500">新生信息已经导入啦，可以查学号喽~</div>
-									</div>
-								</a>
-								<a class="dropdown-item text-center small text-gray-500" href="#">更多信息...</a>
+								@endforeach
+								@endif
+								<a class="dropdown-item text-center small text-gray-500" href="{{url($messages['moreInfoUrl'])}}">更多信息...</a>
 							</div>
 						</li>
 
@@ -181,19 +175,18 @@
 
 						<!-- Nav Item - User Information -->
 						<li class="nav-item dropdown no-arrow">
-							<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，SPC</span>
+							<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+							 aria-expanded="false">
+								<span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，{{$user}}</span>
 								<img class="img-profile rounded-circle"
-									src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+									src="{{url($userImg)}}">
 							</a>
 							<!-- Dropdown - User Information -->
-							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#">
+							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+								<a class="dropdown-item" href="{{url($toInfomationURL)}}">
 									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
 								</a>
-								<a class="dropdown-item" href="#">
+								<a class="dropdown-item" href="{{url($toSettingURL)}}">
 									<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
 								</a>
 								<div class="dropdown-divider"></div>
@@ -227,7 +220,7 @@
 										<div class="col mr-2">
 											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">您的学号
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">160820321</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuID}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-id-card fa-2x text-gray-300"></i>
@@ -245,7 +238,7 @@
 										<div class="col mr-2">
 											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">所在院系
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">计算机类</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuDept}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-chalkboard-teacher fa-2x text-gray-300"></i>
@@ -264,7 +257,8 @@
 											<div class="text-xs font-weight-bold text-info text-uppercase mb-1">宿舍</div>
 											<div class="row no-gutters align-items-center">
 												<div class="col-auto">
-													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">9公寓-325室
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+														{{$stuDomitory}}
 													</div>
 												</div>
 											</div>
@@ -285,7 +279,7 @@
 										<div class="col mr-2">
 											<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报道时间
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">9月1日</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuReportTime}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -305,14 +299,8 @@
 								<h6 class="m-0 font-weight-bold text-primary">学校简介</h6>
 							</div>
 							<div class="card-body">
-								<div class="text-center">
-									<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-										src="img/undraw_posting_photo.svg" alt="">
-								</div>
-								<p>
-									哈尔滨工业大学（以下简称哈工大）是一所有着近百年历史、世界知名的工科强校，2017年入选国家“双一流”建设A类高校，是我国首批入选国家“985工程”重点建设的大学，拥有以38位院士为带头人的雄厚师资，有9个国家一级重点学科，10个学科名列全国前五名，其中，名列前茅的工科类重点学科数量位居全国第二，工程学在全球排名第六。
-								</p>
-								<a target="_blank" rel="nofollow" href="https://undraw.co/">更多介绍 &rarr;</a>
+								{!! $schoolInfo !!}
+								<a target="_blank" rel="nofollow" href="{{url($toSchoolInfoURL)}}">更多介绍 &rarr;</a>
 							</div>
 						</div>
 
@@ -333,7 +321,7 @@
 										</div>
 									</div>
 								</div>
-								<a target="_blank" rel="nofollow" href="https://undraw.co/">查看所有同学 &rarr;</a>
+								<a target="_blank" rel="nofollow" href="{{url($toAllStuURL)}}">查看所有同学 &rarr;</a>
 							</div>
 						</div>
 
@@ -352,21 +340,18 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr role="row">
-											<td>小明</td>
-											<td>160410401</td>
-											<td>4</td>
-											<td>山东</td>
-										</tr>
-										<tr role="row">
-											<td>小明</td>
-											<td>160410401</td>
-											<td>4</td>
-											<td>山东</td>
-										</tr>
+										@if(count($domStus)==0) {{-- 还没有信息 --}}
 										<tr role="row">
 											<td colspan="4">还没有信息</td>
 										</tr>
+										@else @foreach($domStus as $domStu)
+										<tr role="row">
+											<td>{{$domStu->name}}</td>
+											<td>{{$domStu->stuID}}</td>
+											<td>{{$domStu->bedID}}</td>
+											<td>{{$domStu->comeFrom}}</td>
+										</tr>
+										@endforeach @endif
 									</tbody>
 								</table>
 							</div>
@@ -377,12 +362,8 @@
 								<h6 class="m-0 font-weight-bold text-primary">专业介绍</h6>
 							</div>
 							<div class="card-body">
-								<div class="text-center">
-									<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-										src="img/undraw_posting_photo.svg" alt="">
-								</div>
-								<p>使用说明仔细看下面：</p>
-								<a target="_blank" rel="nofollow" href="https://undraw.co/">更多介绍 &rarr;</a>
+								{!!$deptInfo!!}
+								<a target="_blank" rel="nofollow" href="{{url($toDeptInfoURL)}}">更多介绍 &rarr;</a>
 							</div>
 						</div>
 
@@ -391,12 +372,8 @@
 								<h6 class="m-0 font-weight-bold text-primary">宿舍环境</h6>
 							</div>
 							<div class="card-body">
-								<div class="text-center">
-									<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-										src="img/undraw_posting_photo.svg" alt="">
-								</div>
-								<p>使用说明仔细看下面：</p>
-								<a target="_blank" rel="nofollow" href="https://undraw.co/">更多介绍 &rarr;</a>
+								{!!$domInfo!!}
+								<a target="_blank" rel="nofollow" href="{{url($toDomInfoURL)}}">更多介绍 &rarr;</a>
 							</div>
 						</div>
 
@@ -411,32 +388,24 @@
 											<tr role="row">
 												<th>姓名</th>
 												<th>学号</th>
-												<th>公寓</th>
+												<th>性别</th>
 												<th>毕业学校</th>
 											</tr>
 										</thead>
 										<tbody>
+											@if (count($localStus)==0)
+											<td colspan="4">还没有信息</td>
+											@else @foreach ($localStus as $localStu)
 											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>8</td>
-												<td>山东省实验中学</td>
+												<td>$localStu->name</td>
+												<td>$localStu->stuID</td>
+												<td>$localStu->gender</td>
+												<td>$localStu->preSchool</td>
 											</tr>
-											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>8</td>
-												<td>山东省实验中学</td>
-											</tr>
-											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>8</td>
-												<td>山东省实验中学</td>
-											</tr>
+											@endforeach @endif
 										</tbody>
 									</table>
-									<a target="_blank" rel="nofollow" href="https://undraw.co/">查看全部老乡 &rarr;</a>
+									<a target="_blank" rel="nofollow" href="{{url($toLocalStuURL)}}">查看全部老乡 &rarr;</a>
 								</div>
 							</div>
 						</div>
@@ -470,40 +439,36 @@
 	</a>
 
 	<!-- Logout Modal-->
-	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<h5 class="modal-title" id="exampleModalLabel">确认退出？</h5>
 					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-				<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+				<div class="modal-body">选择“退出”退出登录</div>
 				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="login.html">Logout</a>
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+					<a class="btn btn-primary" href="{{url($toLogoutURL)}}">退出</a>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-	<!-- Core plugin JavaScript-->
-	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	 crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js" integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
+	 crossorigin="anonymous"></script>
 	<!-- Custom scripts for all pages-->
-	<script src="js/sb-admin-2.min.js"></script>
-
-	<!-- Page level plugins -->
-	<script src="vendor/chart.js/Chart.min.js"></script>
+	<script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
 	<!-- Chart -->
-	<script type="text/javascript" src="js/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis="
+	 crossorigin="anonymous"></script>
+	<script src="{{asset('js/chart.js')}}"></script>
 
 
 </body>
