@@ -65,16 +65,16 @@
 				<div id="collapseInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">你可以查看：</h6>
-						<a class="collapse-item" href="{{url('/classInfo')}}">你的班级</a>
-						<a class="collapse-item" href="{{url('/yourDom')}}">你的宿舍</a>
-						<a class="collapse-item" href="{{url('/yourCountrymen')}}">你的老乡</a>
+						<a class="collapse-item" href="{{url('/stu/quiryClass')}}">你的班级</a>
+						<a class="collapse-item" href="{{url('/stu/quiryDorm')}}">你的宿舍</a>
+						<a class="collapse-item" href="{{url('/stu/quiryContryFolk')}}">你的老乡</a>
 					</div>
 				</div>
 			</li>
 
 			<!-- Nav Item - Arrived -->
 			<li class="nav-item">
-				<a class="nav-link" href="{{url('/arriveInfo')}}">
+				<a class="nav-link" href="{{url('/stu/nav')}}">
 					<i class="fas fa-fw fa-plane-arrival"></i>
 					<span>到站信息</span>
 				</a>
@@ -90,7 +90,7 @@
 
 			<!-- Nav Item - Notice -->
 			<li class="nav-item">
-				<a class="nav-link" href="{{url('/allInfo')}}">
+				<a class="nav-link" href="{{url('/stu/posts')}}">
 					<i class="fas fa-fw fa-bell"></i>
 					<span>所有通知</span></a>
 			</li>
@@ -112,8 +112,8 @@
 				<div id="collapseWel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">你可以查看：</h6>
-						<a class="collapse-item" href="{{url('/reportInfo')}}">报道说明</a>
-						<a class="collapse-item" href="{{url('/startReport')}}">开始报道</a>
+						<a class="collapse-item" href="{{url('/stu/enrollInfo')}}">报到说明</a>
+						<a class="collapse-item" href="{{url('/stu/enrollGuide')}}">开始报到</a>
 					</div>
 				</div>
 			</li>
