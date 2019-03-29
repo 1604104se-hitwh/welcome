@@ -35,14 +35,14 @@
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
-				<div class="sidebar-brand-text mx-3">迎新系统 <sup id="user-type">{{$sysType}}</sup></div>
+				<div class="sidebar-brand-text mx-3">迎新系统 <sup id="user-type">管理员</sup></div>
 			</a>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0">
 
 			<!-- Nav Item - Dashboard -->
-			<li class="nav-item active">
+			<li class="nav-item">
 				<a class="nav-link" href="index.html">
 					<i class="fas fa-fw fa-home"></i>
 					<span>首页</span></a>
@@ -53,25 +53,32 @@
 
 			<!-- Heading -->
 			<div class="sidebar-heading">
-				信息查询
+				信息管理
 			</div>
 
-			<!-- Nav Item - Information Query -->
-			<li class="nav-item">
+			<!-- Nav Item - Information set -->
+			<li class="nav-item active">
 				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo"
 					aria-expanded="true" aria-controls="collapseInfo">
 					<i class="fas fa-fw fa-laptop"></i>
-					<span>信息查询</span>
+					<span>信息管理</span>
 				</a>
 				<div id="collapseInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">你可以查看：</h6>
-						<a class="collapse-item" href="">你的信息</a>
-						<a class="collapse-item" href="">你的班级</a>
-						<a class="collapse-item" href="">你的宿舍</a>
-						<a class="collapse-item" href="">你的老乡</a>
+						<h6 class="collapse-header">你可以管理：</h6>
+						<a class="collapse-item" href="">学校信息</a>
+						<a class="collapse-item" href="">新生信息</a>
+						<a class="collapse-item" href="">管理员信息</a>
 					</div>
 				</div>
+			</li>
+
+			<!-- Nav Item - self info -->
+			<li class="nav-item">
+				<a class="nav-link" href="#">
+					<i class="fas fa-fw fa-info"></i>
+					<span>个人信息</span>
+				</a>
 			</li>
 
 			<!-- Nav Item - Arrived -->
@@ -94,7 +101,7 @@
 			<li class="nav-item">
 				<a class="nav-link" href="">
 					<i class="fas fa-fw fa-bell"></i>
-					<span>所有通知</span></a>
+					<span>发布通知</span></a>
 			</li>
 
 			<!-- Divider -->
@@ -114,9 +121,9 @@
 				</a>
 				<div id="collapseWel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">你可以查看：</h6>
-						<a class="collapse-item" href="">报道说明</a>
-						<a class="collapse-item" href="">开始报道</a>
+						<h6 class="collapse-header">你可以：</h6>
+						<a class="collapse-item" href="">报到信息</a>
+						<a class="collapse-item" href="">迎新核验</a>
 					</div>
 				</div>
 			</li>
@@ -148,53 +155,22 @@
 
 					<!-- Topbar Navbar -->
 					<ul class="navbar-nav ml-auto">
-						<!-- Nav Item - Messages -->
-						<li class="nav-item dropdown no-arrow mx-1">
-							<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fas fa-envelope fa-fw"></i>
-								<!-- Counter - Messages -->
-								<span class="badge badge-danger badge-counter">{{$messageNumber}}</span>
-							</a>
-							<!-- Dropdown - Messages -->
-							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="messagesDropdown">
-								<h6 class="dropdown-header">
-									消息中心
-								</h6>
-								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="font-weight-bold">
-										<div class="text-truncate">宿舍信息已导入</div>
-										<div class="small text-gray-500">大家可以查宿舍啦~</div>
-									</div>
-								</a>
-								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div>
-										<div class="text-truncate">新生信息已经导入</div>
-										<div class="small text-gray-500">新生信息已经导入啦，可以查学号喽~</div>
-									</div>
-								</a>
-								<a class="dropdown-item text-center small text-gray-500" href="#">更多信息...</a>
-							</div>
-						</li>
-
-						<div class="topbar-divider d-none d-sm-block"></div>
 
 						<!-- Nav Item - User Information -->
 						<li class="nav-item dropdown no-arrow">
 							<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，{{$user}}</span>
+								<span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，SPC</span>
 								<img class="img-profile rounded-circle"
-									src="{{$userImg}}">
+									src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
 							</a>
 							<!-- Dropdown - User Information -->
 							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="{{$toInfomationURL}}">
+								<a class="dropdown-item" href="#">
 									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
 								</a>
-								<a class="dropdown-item" href="{{$toSettingURL}}">
+								<a class="dropdown-item" href="#">
 									<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
 								</a>
 								<div class="dropdown-divider"></div>
@@ -214,7 +190,7 @@
 
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">首页</h1>
+						<h1 class="h3 mb-0 text-gray-800">新生管理</h1>
 					</div>
 
 					<!-- Content Row -->
@@ -226,12 +202,12 @@
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">您的学号
+											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">新生人数
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuID}}</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">1520</div>
 										</div>
 										<div class="col-auto">
-											<i class="fas fa-id-card fa-2x text-gray-300"></i>
+											<i class="fas fa-luggage-cart fa-2x text-gray-300"></i>
 										</div>
 									</div>
 								</div>
@@ -244,12 +220,12 @@
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">所在院系
+											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">老生人数
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuDept}}</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">12000</div>
 										</div>
 										<div class="col-auto">
-											<i class="fas fa-chalkboard-teacher fa-2x text-gray-300"></i>
+											<i class="fas fa-user-check fa-2x text-gray-300"></i>
 										</div>
 									</div>
 								</div>
@@ -262,17 +238,16 @@
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-info text-uppercase mb-1">宿舍</div>
+											<div class="text-xs font-weight-bold text-info text-uppercase mb-1">已报到人数</div>
 											<div class="row no-gutters align-items-center">
 												<div class="col-auto">
-													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-														{{$stuDomitory}}
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">123
 													</div>
 												</div>
 											</div>
 										</div>
 										<div class="col-auto">
-											<i class="fas fa-building fa-2x text-gray-300"></i>
+											<i class="fas fa-check-circle fa-2x text-gray-300"></i>
 										</div>
 									</div>
 								</div>
@@ -285,9 +260,9 @@
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报道时间
+											<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报到时间
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuReportTime}}</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">9月1日</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -297,133 +272,56 @@
 							</div>
 						</div>
 					</div>
-
-					<!-- Content Row -->
-					<div class="card-columns">
-
-						<!-- Content Column -->
-						<div class="card mb-4">
-							<div class="card-header py-3">
-								<h6 class="m-0 font-weight-bold text-primary">学校简介</h6>
-							</div>
-							<div class="card-body">
-								{!! $schoolInfo !!}
-								<a target="_blank" rel="nofollow" href="{{$toSchoolInfoURL}}">更多介绍 &rarr;</a>
-							</div>
-						</div>
-
-						<div class="card mb-4">
-							<div class="card-header py-3">
-								<h6 class="m-0 font-weight-bold text-primary">你的同学</h6>
-							</div>
-							<div class="card-body">
-								<div class="row">
-									<div class="col-xl-6 col-lg-12">
-										<div class="chart-pie pt-4">
-											<canvas id="groupAccountChart"></canvas>
-										</div>
-									</div>
-									<div class="col-xl-6 col-lg-12">
-										<div class="chart-pie pt-4">
-											<canvas id="groupProviceChart"></canvas>
-										</div>
-									</div>
+					<div class="row">
+						<div class="col-md-8 col-sm-12">
+							<div class="card mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">新生情况</h6>
 								</div>
-								<a target="_blank" rel="nofollow" href="{{$toAllStuURL}}">查看所有同学 &rarr;</a>
-							</div>
-						</div>
-
-						<div class="card mb-4">
-							<div class="card-header py-3">
-								<h6 class="m-0 font-weight-bold text-primary">你的室友</h6>
-							</div>
-							<div class="card-body">
-								<table class="table table-bordered">
-									<thead>
-										<tr role="row">
-											<th>姓名</th>
-											<th>学号</th>
-											<th>床位</th>
-											<th>来自</th>
-										</tr>
-									</thead>
-									<tbody>
-									@if(count($domStus)==0)
-										{{-- 还没有信息 --}}
-										<tr role="row">
-											<td colspan="4">还没有信息</td>
-										</tr>
-									@else
-										@foreach($domStus as $domStu)
-											<tr role="row">
-												<td>{{$domStu->name}}</td>
-												<td>{{$domStu->stuID}}</td>
-												<td>{{$domStu->bedID}}</td>
-												<td>{{$domStu->comeFrom}}</td>
-											</tr>
-										@endforeach
-									@endif
-									</tbody>
-								</table>
-							</div>
-						</div>
-
-						<div class="card mb-4">
-							<div class="card-header py-3">
-								<h6 class="m-0 font-weight-bold text-primary">专业介绍</h6>
-							</div>
-							<div class="card-body">
-								{!!$deptInfo!!}
-								<a target="_blank" rel="nofollow" href="{{$toDeptInfoURL}}">更多介绍 &rarr;</a>
-							</div>
-						</div>
-
-						<div class="card mb-4">
-							<div class="card-header py-3">
-								<h6 class="m-0 font-weight-bold text-primary">宿舍环境</h6>
-							</div>
-							<div class="card-body">
-								{!!$domInfo!!}
-								<a target="_blank" rel="nofollow" href="{{$toDomInfoURL}}">更多介绍 &rarr;</a>
-							</div>
-						</div>
-
-						<div class="card mb-4">
-							<div class="card-header py-3">
-								<h6 class="m-0 font-weight-bold text-primary">老乡信息</h6>
-							</div>
-							<div class="card-body">
-								<div class="col-sm-12">
+								<div class="card-body">
 									<table class="table table-bordered">
 										<thead>
-											<tr role="row">
-												<th>姓名</th>
-												<th>学号</th>
-												<th>性别</th>
-												<th>毕业学校</th>
+											<tr>
+												<th>院系名</th>
+												<th>新生人数</th>
+												<th>男生</th>
+												<th>女生</th>
 											</tr>
 										</thead>
 										<tbody>
-											@if (count($localStus)==0)
-												<td colspan="4">还没有信息</td>
-											@else
-												@foreach ($localStus as $localStu)
-												<tr role="row">
-													<td>$localStu->name</td>
-													<td>$localStu->stuID</td>
-													<td>$localStu->gender</td>
-													<td>$localStu->preSchool</td>
-												</tr>
-												@endforeach
-											@endif
+											<tr>
+												<td scope="row">计算机科学与技术</td>
+												<td>100</td>
+												<td>50</td>
+												<td>50</td>
+											</tr>
+											<tr>
+												<td scope="row">材料科学与工程</td>
+												<td>100</td>
+												<td>50</td>
+												<td>50</td>
+											</tr>
 										</tbody>
 									</table>
-									<a target="_blank" rel="nofollow" href="{{$toLocalStuURL}}">查看全部老乡 &rarr;</a>
 								</div>
 							</div>
 						</div>
-
+						<div class="col-md-4 col-sm-12">
+							<div class="card mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">信息修改</h6>
+								</div>
+								<div class="card-body">
+									<div class="form-group">
+										<label for="deptInfoUpload">上传院系信息</label>
+										<input type="file" id="deptInfoUpload">
+										<p class="help-block">上传模板文件</p>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
+
 				</div>
 				<!-- /.container-fluid -->
 
@@ -457,15 +355,15 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">确认退出？</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
 					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-				<div class="modal-body">选择“退出”退出登录</div>
+				<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
 				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
-					<a class="btn btn-primary" href="{{$toLogoutURL}}">退出</a>
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="login.html">Logout</a>
 				</div>
 			</div>
 		</div>
@@ -480,13 +378,6 @@
 
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
-
-	<!-- Page level plugins -->
-	<script src="vendor/chart.js/Chart.min.js"></script>
-
-	<!-- Chart -->
-	<script type="text/javascript" src="js/chart.js"></script>
-
 
 </body>
 
