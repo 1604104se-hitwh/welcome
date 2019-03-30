@@ -13,7 +13,7 @@ class StuController extends Controller
         $res_obj_array = DB::select('SELECT * FROM t_student');
         //$stu_name = $res_obj->stu_name;
         
-        return view('stu.index',[
+        return view('stu.new.index',[
             'sysType'=>"新生",  // 系统运行模式，新生，老生，管理员
             'messages'=>array(
                 'unreadNum'=>3,
@@ -71,6 +71,6 @@ class StuController extends Controller
 
     public function queryContryFolk()
     {
-        return view('stu.queryContryFolk');
+        return view('stu.new.queryContryFolk');
     }
 }
