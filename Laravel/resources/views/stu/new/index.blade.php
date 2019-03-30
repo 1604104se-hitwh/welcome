@@ -160,12 +160,18 @@
 								</h6>
 								@if(count($messages['showMessage'])!=0) @foreach ($messages['showMessage'] as $message)
 								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div @if ($message[ 'readed'] == false) class="font-weight-bold" @endif>
+									<div @if ($message['readed'] == false) class="font-weight-bold" @endif>
 										<div class="text-truncate">{{$message['title']}}</div>
 										<div class="small text-gray-500">{{$message['context']}}</div>
 									</div>
 								</a>
 								@endforeach
+								@else 
+								<a class="dropdown-item d-flex align-items-center" href="#">
+									<div>
+										<div class="text-truncate">暂时没有消息哦~</div>
+									</div>
+								</a>
 								@endif
 								<a class="dropdown-item text-center small text-gray-500" href="{{url($messages['moreInfoUrl'])}}">更多信息...</a>
 							</div>
@@ -393,19 +399,19 @@
 											</tr>
 										</thead>
 										<tbody>
-											@if (count($localStus)==0)
+											@if (count($localFolks)==0)
 											<td colspan="4">还没有信息</td>
-											@else @foreach ($localStus as $localStu)
+											@else @foreach ($localFolks as $localFolk)
 											<tr role="row">
-												<td>$localStu->name</td>
-												<td>$localStu->stuID</td>
-												<td>$localStu->gender</td>
-												<td>$localStu->preSchool</td>
+												<td>{{$localFolk->name}}</td>
+												<td>{{$localFolk->stuID}}</td>
+												<td>{{$localFolk->gender}}</td>
+												<td>{{$localFolk->preSchool}}</td>
 											</tr>
 											@endforeach @endif
 										</tbody>
 									</table>
-									<a target="_blank" rel="nofollow" href="{{url($toLocalStuURL)}}">查看全部老乡 &rarr;</a>
+									<a target="_blank" rel="nofollow" href="{{url($toLocalFolkURL)}}">查看全部老乡 &rarr;</a>
 								</div>
 							</div>
 						</div>

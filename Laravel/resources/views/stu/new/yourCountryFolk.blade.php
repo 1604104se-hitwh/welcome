@@ -154,27 +154,29 @@
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i class="fas fa-envelope fa-fw"></i>
 								<!-- Counter - Messages -->
-								<span class="badge badge-danger badge-counter">2</span>
+								<span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
 							</a>
 							<!-- Dropdown - Messages -->
-							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="messagesDropdown">
+							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
 								<h6 class="dropdown-header">
 									消息中心
 								</h6>
+								@if(count($messages['showMessage'])!=0) @foreach ($messages['showMessage'] as $message)
 								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="font-weight-bold">
-										<div class="text-truncate">宿舍信息已导入</div>
-										<div class="small text-gray-500">大家可以查宿舍啦~</div>
+									<div @if ($message['readed'] == false) class="font-weight-bold" @endif>
+										<div class="text-truncate">{{$message['title']}}</div>
+										<div class="small text-gray-500">{{$message['context']}}</div>
 									</div>
 								</a>
+								@endforeach
+								@else 
 								<a class="dropdown-item d-flex align-items-center" href="#">
 									<div>
-										<div class="text-truncate">新生信息已经导入</div>
-										<div class="small text-gray-500">新生信息已经导入啦，可以查学号喽~</div>
+										<div class="text-truncate">暂时没有消息哦~</div>
 									</div>
 								</a>
-								<a class="dropdown-item text-center small text-gray-500" href="#">更多信息...</a>
+								@endif
+								<a class="dropdown-item text-center small text-gray-500" href="{{url($messages['moreInfoUrl'])}}">更多信息...</a>
 							</div>
 						</li>
 
@@ -182,19 +184,18 @@
 
 						<!-- Nav Item - User Information -->
 						<li class="nav-item dropdown no-arrow">
-							<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，SPC</span>
+							<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+							 aria-expanded="false">
+								<span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，{{$user}}</span>
 								<img class="img-profile rounded-circle"
-									src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+									src="{{url($userImg)}}">
 							</a>
 							<!-- Dropdown - User Information -->
-							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#">
+							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+								<a class="dropdown-item" href="{{url($toInfomationURL)}}">
 									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
 								</a>
-								<a class="dropdown-item" href="#">
+								<a class="dropdown-item" href="{{url($toSettingURL)}}">
 									<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
 								</a>
 								<div class="dropdown-divider"></div>
@@ -214,7 +215,7 @@
 
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">你的宿舍</h1>
+						<h1 class="h3 mb-0 text-gray-800">你的老乡</h1>
 					</div>
 
 					<!-- Content Row -->
@@ -228,7 +229,7 @@
 										<div class="col mr-2">
 											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">您的学号
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">160820321</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuID}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-id-card fa-2x text-gray-300"></i>
@@ -238,15 +239,16 @@
 							</div>
 						</div>
 
-						<!-- Infomation Card shcool -->
+						<!-- Infomation Card ID card -->
 						<div class="col-xl-3 col-md-6 mb-4">
 							<div class="card border-left-success shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">所在院系
+											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+												你的身份证号
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">计算机类</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$IDnumber}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-chalkboard-teacher fa-2x text-gray-300"></i>
@@ -256,22 +258,23 @@
 							</div>
 						</div>
 
-						<!-- Infomation Card department -->
+						<!-- Infomation Card local -->
 						<div class="col-xl-3 col-md-6 mb-4">
 							<div class="card border-left-info shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-info text-uppercase mb-1">宿舍</div>
+											<div class="text-xs font-weight-bold text-info text-uppercase mb-1">识别地区
+											</div>
 											<div class="row no-gutters align-items-center">
 												<div class="col-auto">
-													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">9公寓-325室
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$stuLocal}}
 													</div>
 												</div>
 											</div>
 										</div>
 										<div class="col-auto">
-											<i class="fas fa-building fa-2x text-gray-300"></i>
+											<i class="fas fa-map fa-2x text-gray-300"></i>
 										</div>
 									</div>
 								</div>
@@ -284,12 +287,12 @@
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报道时间
+											<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">毕业院校
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">9月1日</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuPreSchool}}</div>
 										</div>
 										<div class="col-auto">
-											<i class="fas fa-comments fa-2x text-gray-300"></i>
+											<i class="fas fa-graduation-cap fa-2x text-gray-300"></i>
 										</div>
 									</div>
 								</div>
@@ -305,27 +308,7 @@
 							<!-- Illustrations -->
 							<div class="card mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">宿舍简介</h6>
-								</div>
-								<div class="card-body">
-
-								</div>
-							</div>
-
-							<!-- Illustrations -->
-							<div class="card mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">宿舍位置</h6>
-								</div>
-								<div class="card-body">
-
-								</div>
-							</div>
-
-							<!-- Illustrations -->
-							<div class="card mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">你的室友</h6>
+									<h6 class="m-0 font-weight-bold text-primary">老乡信息</h6>
 								</div>
 								<div class="card-body">
 									<table class="table table-bordered">
@@ -333,29 +316,58 @@
 											<tr role="row">
 												<th>姓名</th>
 												<th>学号</th>
-												<th>床位</th>
-												<th>来自</th>
+												<th>性别</th>
+												<th>毕业学校</th>
 											</tr>
 										</thead>
 										<tbody>
+											@if(count($countymens)==0) {{-- 还没有信息 --}}
 											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>4</td>
-												<td>山东</td>
+												<td colspan="4">还没有信息</td>
 											</tr>
+											@else @foreach($countymens as $countymen)
 											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>4</td>
-												<td>山东</td>
+												<td>{{$countymen->name}}</td>
+												<td>{{$countymen->stuID}}</td>
+												<td>{{$countymen->gender}}</td>
+												<td>{{$countymen->fromSchool}}</td>
 											</tr>
+											@endforeach @endif
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+						<div class="mb-4">
+							<!-- Illustrations -->
+							<div class="card mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">与你同校的</h6>
+								</div>
+								<div class="card-body">
+									<table class="table table-bordered">
+										<thead>
 											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>4</td>
-												<td>山东</td>
+												<th>姓名</th>
+												<th>学号</th>
+												<th>性别</th>
+												<th>毕业学校</th>
 											</tr>
+										</thead>
+										<tbody>
+											@if(count($sameSchools)==0) {{-- 还没有信息 --}}
+											<tr role="row">
+												<td colspan="4">还没有信息</td>
+											</tr>
+											@else @foreach($sameSchools as $sameSchool)
+											<tr role="row">
+												<td>{{$sameSchool->name}}</td>
+												<td>{{$sameSchool->stuID}}</td>
+												<td>{{$sameSchool->gender}}</td>
+												<td>{{$sameSchool->fromSchool}}</td>
+											</tr>
+											@endforeach @endif
 										</tbody>
 									</table>
 								</div>
@@ -377,9 +389,9 @@
 				</div>
 			</footer>
 			<!-- End of Footer -->
-
 		</div>
-		<!-- End of Content Wrapper -->
+	</div>
+	<!-- End of Content Wrapper -->
 
 	</div>
 	<!-- End of Page Wrapper -->
@@ -390,40 +402,31 @@
 	</a>
 
 	<!-- Logout Modal-->
-	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<h5 class="modal-title" id="exampleModalLabel">确认退出？</h5>
 					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-				<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+				<div class="modal-body">选择“退出”退出登录</div>
 				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="login.html">Logout</a>
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+					<a class="btn btn-primary" href="{{url($toLogoutURL)}}">退出</a>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-	<!-- Core plugin JavaScript-->
-	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	 crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js" integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
+	 crossorigin="anonymous"></script>
 	<!-- Custom scripts for all pages-->
-	<script src="js/sb-admin-2.min.js"></script>
-
-	<!-- Page level plugins -->
-	<script src="vendor/chart.js/Chart.min.js"></script>
-
-	<!-- Chart -->
-	<script type="text/javascript" src="js/chart.js"></script>
+	<script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
 
 </body>

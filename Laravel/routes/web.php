@@ -22,7 +22,7 @@ Route::get('/stu/queryClass', '\App\Http\Controllers\StuController@queryClass');
 
 Route::get('/stu/queryDorm', '\App\Http\Controllers\StuController@queryDorm');
 
-Route::get('/stu/queryContryFolk', '\App\Http\Controllers\StuController@queryContryFolk');
+Route::get('/stu/queryCountryFolk', '\App\Http\Controllers\StuController@queryCountryFolk');
 
 Route::get('/stu/posts', '\App\Http\Controllers\PostController@index');
 
