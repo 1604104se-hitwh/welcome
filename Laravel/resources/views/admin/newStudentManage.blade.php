@@ -35,7 +35,7 @@
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
-				<div class="sidebar-brand-text mx-3">迎新系统 <sup id="user-type">新生</sup></div>
+				<div class="sidebar-brand-text mx-3">迎新系统 <sup id="user-type">管理员</sup></div>
 			</a>
 
 			<!-- Divider -->
@@ -53,24 +53,32 @@
 
 			<!-- Heading -->
 			<div class="sidebar-heading">
-				信息查询
+				信息管理
 			</div>
 
-			<!-- Nav Item - Information Query -->
+			<!-- Nav Item - Information set -->
 			<li class="nav-item active">
 				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo"
 					aria-expanded="true" aria-controls="collapseInfo">
 					<i class="fas fa-fw fa-laptop"></i>
-					<span>信息查询</span>
+					<span>信息管理</span>
 				</a>
 				<div id="collapseInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">你可以查看：</h6>
-						<a class="collapse-item" href="">你的班级</a>
-						<a class="collapse-item" href="">你的宿舍</a>
-						<a class="collapse-item" href="">你的老乡</a>
+						<h6 class="collapse-header">你可以管理：</h6>
+						<a class="collapse-item" href="">学校信息</a>
+						<a class="collapse-item" href="">新生信息</a>
+						<a class="collapse-item" href="">管理员信息</a>
 					</div>
 				</div>
+			</li>
+
+			<!-- Nav Item - self info -->
+			<li class="nav-item">
+				<a class="nav-link" href="#">
+					<i class="fas fa-fw fa-info"></i>
+					<span>个人信息</span>
+				</a>
 			</li>
 
 			<!-- Nav Item - Arrived -->
@@ -93,7 +101,7 @@
 			<li class="nav-item">
 				<a class="nav-link" href="">
 					<i class="fas fa-fw fa-bell"></i>
-					<span>所有通知</span></a>
+					<span>发布通知</span></a>
 			</li>
 
 			<!-- Divider -->
@@ -113,9 +121,9 @@
 				</a>
 				<div id="collapseWel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">你可以查看：</h6>
-						<a class="collapse-item" href="">报道说明</a>
-						<a class="collapse-item" href="">开始报道</a>
+						<h6 class="collapse-header">你可以：</h6>
+						<a class="collapse-item" href="">报到信息</a>
+						<a class="collapse-item" href="">迎新核验</a>
 					</div>
 				</div>
 			</li>
@@ -147,37 +155,6 @@
 
 					<!-- Topbar Navbar -->
 					<ul class="navbar-nav ml-auto">
-						<!-- Nav Item - Messages -->
-						<li class="nav-item dropdown no-arrow mx-1">
-							<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fas fa-envelope fa-fw"></i>
-								<!-- Counter - Messages -->
-								<span class="badge badge-danger badge-counter">2</span>
-							</a>
-							<!-- Dropdown - Messages -->
-							<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="messagesDropdown">
-								<h6 class="dropdown-header">
-									消息中心
-								</h6>
-								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="font-weight-bold">
-										<div class="text-truncate">宿舍信息已导入</div>
-										<div class="small text-gray-500">大家可以查宿舍啦~</div>
-									</div>
-								</a>
-								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div>
-										<div class="text-truncate">新生信息已经导入</div>
-										<div class="small text-gray-500">新生信息已经导入啦，可以查学号喽~</div>
-									</div>
-								</a>
-								<a class="dropdown-item text-center small text-gray-500" href="#">更多信息...</a>
-							</div>
-						</li>
-
-						<div class="topbar-divider d-none d-sm-block"></div>
 
 						<!-- Nav Item - User Information -->
 						<li class="nav-item dropdown no-arrow">
@@ -213,7 +190,7 @@
 
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">你的老乡</h1>
+						<h1 class="h3 mb-0 text-gray-800">新生管理</h1>
 					</div>
 
 					<!-- Content Row -->
@@ -225,54 +202,52 @@
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">您的学号
+											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">新生人数
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">160820321</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">1520</div>
 										</div>
 										<div class="col-auto">
-											<i class="fas fa-id-card fa-2x text-gray-300"></i>
+											<i class="fas fa-luggage-cart fa-2x text-gray-300"></i>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 
-						<!-- Infomation Card ID card -->
+						<!-- Infomation Card shcool -->
 						<div class="col-xl-3 col-md-6 mb-4">
 							<div class="card border-left-success shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-												你的身份证号
+											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">老生人数
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">341000000000000000</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">12000</div>
 										</div>
 										<div class="col-auto">
-											<i class="fas fa-chalkboard-teacher fa-2x text-gray-300"></i>
+											<i class="fas fa-user-check fa-2x text-gray-300"></i>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 
-						<!-- Infomation Card local -->
+						<!-- Infomation Card department -->
 						<div class="col-xl-3 col-md-6 mb-4">
 							<div class="card border-left-info shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-info text-uppercase mb-1">识别地区
-											</div>
+											<div class="text-xs font-weight-bold text-info text-uppercase mb-1">已报到人数</div>
 											<div class="row no-gutters align-items-center">
 												<div class="col-auto">
-													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">安徽省-黄山市
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">123
 													</div>
 												</div>
 											</div>
 										</div>
 										<div class="col-auto">
-											<i class="fas fa-map fa-2x text-gray-300"></i>
+											<i class="fas fa-check-circle fa-2x text-gray-300"></i>
 										</div>
 									</div>
 								</div>
@@ -285,129 +260,68 @@
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">毕业院校
+											<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报到时间
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">屯溪一中</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">9月1日</div>
 										</div>
 										<div class="col-auto">
-											<i class="fas fa-graduation-cap fa-2x text-gray-300"></i>
+											<i class="fas fa-comments fa-2x text-gray-300"></i>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-
-					<!-- Content Row -->
-					<div class="card-columns">
-
-						<!-- Content Column -->
-						<div class="mb-4">
-							<!-- Illustrations -->
+					<div class="row">
+						<div class="col-md-8 col-sm-12">
 							<div class="card mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">老乡信息</h6>
+									<h6 class="m-0 font-weight-bold text-primary">新生情况</h6>
 								</div>
 								<div class="card-body">
 									<table class="table table-bordered">
 										<thead>
-											<tr role="row">
-												<th>姓名</th>
-												<th>学号</th>
-												<th>性别</th>
-												<th>毕业学校</th>
+											<tr>
+												<th>院系名</th>
+												<th>新生人数</th>
+												<th>男生</th>
+												<th>女生</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>男</td>
-												<td>屯溪一中</td>
+											<tr>
+												<td scope="row">计算机科学与技术</td>
+												<td>100</td>
+												<td>50</td>
+												<td>50</td>
 											</tr>
-											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>男</td>
-												<td>祁门中学</td>
-											</tr>
-											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>男</td>
-												<td>歙县中学</td>
-											</tr>
-											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>男</td>
-												<td>祁门中学</td>
-											</tr>
-											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>男</td>
-												<td>祁门中学</td>
-											</tr>
-											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>男</td>
-												<td>祁门中学</td>
-											</tr>
-											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>男</td>
-												<td>歙县中学</td>
-											</tr>
-											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>男</td>
-												<td>歙县中学</td>
+											<tr>
+												<td scope="row">材料科学与工程</td>
+												<td>100</td>
+												<td>50</td>
+												<td>50</td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 							</div>
 						</div>
-
-						<div class="mb-4">
-							<!-- Illustrations -->
+						<div class="col-md-4 col-sm-12">
 							<div class="card mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">与你同校的</h6>
+									<h6 class="m-0 font-weight-bold text-primary">信息修改</h6>
 								</div>
 								<div class="card-body">
-									<table class="table table-bordered">
-										<thead>
-											<tr role="row">
-												<th>姓名</th>
-												<th>学号</th>
-												<th>性别</th>
-												<th>毕业学校</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>男</td>
-												<td>屯溪一中</td>
-											</tr>
-											<tr role="row">
-												<td>小明</td>
-												<td>160410401</td>
-												<td>男</td>
-												<td>屯溪一中</td>
-											</tr>
-										</tbody>
-									</table>
+									<div class="form-group">
+										<label for="deptInfoUpload">上传院系信息</label>
+										<input type="file" id="deptInfoUpload">
+										<p class="help-block">上传模板文件</p>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+
 				</div>
 				<!-- /.container-fluid -->
 
@@ -423,9 +337,9 @@
 				</div>
 			</footer>
 			<!-- End of Footer -->
+
 		</div>
-	</div>
-	<!-- End of Content Wrapper -->
+		<!-- End of Content Wrapper -->
 
 	</div>
 	<!-- End of Page Wrapper -->
@@ -464,13 +378,6 @@
 
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
-
-	<!-- Page level plugins -->
-	<script src="vendor/chart.js/Chart.min.js"></script>
-
-	<!-- Chart -->
-	<script type="text/javascript" src="js/chart.js"></script>
-
 
 </body>
 
