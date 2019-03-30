@@ -11,9 +11,9 @@
     #### 新生
 
     新生-首页                           /stu                               \App\Http\Controllers\StuController@index
-    新生-信息查询-你的班级              /stu/quiryClass                     \App\Http\Controllers\StuController@quiryClass
-    新生-信息查询-你的宿舍              /stu/quiryDorm                      \App\Http\Controllers\StuController@quiryDorm
-    新生-信息查询-你的老乡              /stu/quiryContryFolk                \App\Http\Controllers\StuController@quiryContryFolk
+    新生-信息查询-你的班级              /stu/queryClass                     \App\Http\Controllers\StuController@queryClass
+    新生-信息查询-你的宿舍              /stu/queryDorm                      \App\Http\Controllers\StuController@queryDorm
+    新生-信息查询-你的老乡              /stu/queryContryFolk                \App\Http\Controllers\StuController@queryContryFolk
 
     新生-通知公告                       /stu/posts                          \App\Http\Controllers\PostController@index
     新生-通知公告-通知详情              /stu/posts/{postId}                  \App\Http\Controllers\PostController@show
@@ -29,7 +29,7 @@
     #### 老生
 
     老生-首页                           /stu
-    老生-信息查询-老乡查询              /stu/quiryContryFolk
+    老生-信息查询-老乡查询              /stu/queryContryFolk
     老生-所有通知                       /stu/posts
 
     #### 管理员

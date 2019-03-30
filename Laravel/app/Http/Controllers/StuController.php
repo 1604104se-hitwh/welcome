@@ -59,18 +59,18 @@ class StuController extends Controller
             ]);
     }
 
-    public function quiryClass()
+    public function queryClass()
     {
         return 'class';
     }
 
-    public function quiryDorm()
+    public function queryDorm()
     {
         return 'dorm';
     }
 
-    public function quiryContryFolk()
+    public function queryContryFolk()
     {
-        return view('stu.quiryContryFolk');
+        return view('stu.queryContryFolk');
     }
 }
