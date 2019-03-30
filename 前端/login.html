@@ -45,44 +45,47 @@
 							</ul>
 						</div>
 						<div class="card-body tab-content">
-							<div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="newStudent-tab">
+							<form class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="newStudent-tab" method="POST" action="./login">
 								<h4 class="card-title">新生登陆</h4>
+								<input type="hidden" name="loginType" value="new">
 								<div class="form-group">
 									<label for="examId">考生号</label>
-									<input type="text" class="form-control" id="examId" placeholder="填写您的考生号">
+									<input type="text" name="examId" class="form-control" id="examId" placeholder="填写您的考生号">
 								</div>
 								<div class="form-group">
 									<label for="perId">身份证号</label>
-									<input type="text" class="form-control" id="perId" placeholder="填写身份证号">
+									<input type="text" name="perId" class="form-control" id="perId" placeholder="填写身份证号">
 								</div>
-								<button class="btn btn-block btn-primary" id="newLogin">登陆</button>
-							</div>
+								<button type="submit" class="btn btn-block btn-primary" id="newLogin">登陆</button>
+							</form>
 
-							<div class="tab-pane fade" id="old" role="tabpanel" aria-labelledby="oldStudent-tab">
+							<form class="tab-pane fade" id="old" role="tabpanel" aria-labelledby="oldStudent-tab" method="POST" action="./login">
 								<h4 class="card-title">老生登陆</h4>
+								<input type="hidden" name="loginType" value="old">
 								<div class="form-group">
 									<label for="examId">姓名</label>
-									<input type="text" class="form-control" id="name" placeholder="填写您的姓名">
+									<input type="text" name="name" class="form-control" id="name" placeholder="填写您的姓名">
 								</div>
 								<div class="form-group">
 									<label for="perId">身份证号</label>
-									<input type="text" class="form-control" id="perId" placeholder="填写身份证号">
+									<input type="text" name="perId" class="form-control" id="perId" placeholder="填写身份证号">
 								</div>
-								<button class="btn btn-block btn-secondary" id="oldLogin">登陆</button>
-							</div>
+								<button type="submit" class="btn btn-block btn-secondary" id="oldLogin">登陆</button>
+							</form>
 
-							<div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
+							<form class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab" method="POST" action="./login">
 								<h4 class="card-title">管理员登陆</h4>
+								<input type="hidden" name="loginType" value="admin">
 								<div class="form-group">
 									<label for="examId">用户名</label>
-									<input type="text" class="form-control" id="useid" placeholder="填写准用户名">
+									<input type="text" name="useid" class="form-control" id="useid" placeholder="填写准用户名">
 								</div>
 								<div class="form-group">
 									<label for="perId">密码</label>
-									<input type="password" class="form-control" id="password" placeholder="填写密码">
+									<input type="password" name="psw" class="form-control" id="password" placeholder="填写密码">
 								</div>
-								<button class="btn btn-block btn-danger" id="adminLogin">登陆</button>
-							</div>
+								<button type="submit" class="btn btn-block btn-danger" id="adminLogin">登陆</button>
+							</form>
 						</div>
 					</div>
 				</div>
