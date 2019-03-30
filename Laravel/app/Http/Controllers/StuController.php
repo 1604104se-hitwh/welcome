@@ -32,7 +32,7 @@ class StuController extends Controller
                 'moreInfoUrl'=>"/message",
     
             ), // 信息
-            'stuID'=> $res_obj_array[0]->stu_num, // 学号
+            'stuID'=>$res_obj_array[0]->stu_num, // 学号
             'user'=> $res_obj_array[0]->stu_name, // 用户名
             'userImg'=> "userImg",// 用户头像链接 url(site)
             'toInfomationURL'=>"toInfomationURL", //
@@ -52,6 +52,10 @@ class StuController extends Controller
             'localStus'=>array(),
             'toLocalStuURL'=>"toLocalStuURL",
             'toLogoutURL'=>"toLogoutURL",      // 退出登录
+            //饼图
+            'yourStuChartBoyGirl'=>array(1,2), // 男女比例，先男后女
+            'yourStuChartProName'=>array("南京","其他"), // 省份名字
+            'yourStuChartProData'=>array(1,2) // 每个信息
             ]);
     }
 
