@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('login');
+    return view('auth.login');
 });
 
 //STUDENT
@@ -49,6 +49,4 @@ Route::get('/adm/posts', '\App\Http\Controllers\PostController@index');
 Route::get('/adm/posts/{post}', '\App\Http\Controllers\PostController@show');
 
 Route::get('/adm/posts/create', '\App\Http\Controllers\PostController@create');
-
-Auth::routes();
 
