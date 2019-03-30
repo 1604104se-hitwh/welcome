@@ -50,5 +50,5 @@ Route::get('/adm/posts/{post}', '\App\Http\Controllers\PostController@show');
 
 Route::get('/adm/posts/create', '\App\Http\Controllers\PostController@create');
 
-<<<<<<< HEAD
+Auth::routes();
 
