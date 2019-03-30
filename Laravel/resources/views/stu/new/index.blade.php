@@ -43,7 +43,7 @@
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active">
-				<a class="nav-link" href="index.html">
+				<a class="nav-link" href="{{url('/stu/index')}}">
 					<i class="fas fa-fw fa-home"></i>
 					<span>首页</span></a>
 			</li>
@@ -65,9 +65,9 @@
 				<div id="collapseInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">你可以查看：</h6>
-						<a class="collapse-item" href="{{url('/stu/quiryClass')}}">你的班级</a>
-						<a class="collapse-item" href="{{url('/stu/quiryDorm')}}">你的宿舍</a>
-						<a class="collapse-item" href="{{url('/stu/quiryContryFolk')}}">你的老乡</a>
+						<a class="collapse-item" href="{{url('/stu/queryClass')}}">你的班级</a>
+						<a class="collapse-item" href="{{url('/stu/queryDorm')}}">你的宿舍</a>
+						<a class="collapse-item" href="{{url('/stu/queryContryFolk')}}">你的老乡</a>
 					</div>
 				</div>
 			</li>
