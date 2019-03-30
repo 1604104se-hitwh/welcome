@@ -10,7 +10,7 @@
 
     #### 新生
 
-    新生-首页                           /stu                                \App\Http\Controllers\StuController@index
+    新生-首页                           /stu                               \App\Http\Controllers\StuController@index
     新生-信息查询-你的班级              /stu/quiryClass                     \App\Http\Controllers\StuController@quiryClass
     新生-信息查询-你的宿舍              /stu/quiryDorm                      \App\Http\Controllers\StuController@quiryDorm
     新生-信息查询-你的老乡              /stu/quiryContryFolk                \App\Http\Controllers\StuController@quiryContryFolk
