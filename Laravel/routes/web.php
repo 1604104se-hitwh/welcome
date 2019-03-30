@@ -18,11 +18,11 @@ Route::get('/', function () {
 //STUDENT
 Route::get('/stu', '\App\Http\Controllers\StuController@index');
 
-Route::get('/stu/quiryClass', '\App\Http\Controllers\StuController@quiryClass');
+Route::get('/stu/queryClass', '\App\Http\Controllers\StuController@queryClass');
 
-Route::get('/stu/quiryDorm', '\App\Http\Controllers\StuController@quiryDorm');
+Route::get('/stu/queryDorm', '\App\Http\Controllers\StuController@queryDorm');
 
-Route::get('/stu/quiryContryFolk', '\App\Http\Controllers\StuController@quiryContryFolk');
+Route::get('/stu/queryContryFolk', '\App\Http\Controllers\StuController@queryContryFolk');
 
 Route::get('/stu/posts', '\App\Http\Controllers\PostController@index');
 
