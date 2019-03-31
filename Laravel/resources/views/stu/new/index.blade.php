@@ -67,7 +67,7 @@
 						<h6 class="collapse-header">你可以查看：</h6>
 						<a class="collapse-item" href="{{url('/stu/queryClass')}}">你的班级</a>
 						<a class="collapse-item" href="{{url('/stu/queryDorm')}}">你的宿舍</a>
-						<a class="collapse-item" href="{{url('/stu/queryContryFolk')}}">你的老乡</a>
+						<a class="collapse-item" href="{{url('/stu/queryCountryFolk')}}">你的老乡</a>
 					</div>
 				</div>
 			</li>
