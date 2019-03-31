@@ -67,7 +67,7 @@
 						<h6 class="collapse-header">你可以查看：</h6>
 						<a class="collapse-item" href="{{url('/stu/queryClass')}}">你的班级</a>
 						<a class="collapse-item" href="{{url('/stu/queryDorm')}}">你的宿舍</a>
-						<a class="collapse-item" href="{{url('/stu/queryContryFolk')}}">你的老乡</a>
+						<a class="collapse-item" href="{{url('/stu/queryCountryFolk')}}">你的老乡</a>
 					</div>
 				</div>
 			</li>
@@ -352,10 +352,10 @@
 										</tr>
 										@else @foreach($domStus as $domStu)
 										<tr role="row">
-											<td>{{$domStu->name}}</td>
-											<td>{{$domStu->stuID}}</td>
-											<td>{{$domStu->bedID}}</td>
-											<td>{{$domStu->comeFrom}}</td>
+											<td>{{$domStu->stu_name}}</td>
+											<td>{{$domStu->stu_num}}</td>
+											<td>{{$domStu->stu_dorm_str}}</td>
+											<td>{{$domStu->address}}</td>
 										</tr>
 										@endforeach @endif
 									</tbody>
@@ -403,10 +403,10 @@
 											<td colspan="4">还没有信息</td>
 											@else @foreach ($localFolks as $localFolk)
 											<tr role="row">
-												<td>{{$localFolk->name}}</td>
-												<td>{{$localFolk->stuID}}</td>
-												<td>{{$localFolk->gender}}</td>
-												<td>{{$localFolk->preSchool}}</td>
+												<td>{{$localFolk->stu_name}}</td>
+												<td>{{$localFolk->stu_num}}</td>
+												<td>{{$localFolk->stu_gen}}</td>
+												<td>{{$localFolk->stu_num}}</td>
 											</tr>
 											@endforeach @endif
 										</tbody>

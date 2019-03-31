@@ -18,6 +18,8 @@ Route::get('/', function () {
 //STUDENT
 Route::get('/stu', '\App\Http\Controllers\StuController@index');
 
+Route::get('/stu/index', '\App\Http\Controllers\StuController@index');
+
 Route::get('/stu/queryClass', '\App\Http\Controllers\StuController@queryClass');
 
 Route::get('/stu/queryDorm', '\App\Http\Controllers\StuController@queryDorm');
@@ -43,10 +45,17 @@ Route::get('/stu/survey/{surveyId}', '\App\Http\Controllers\SurveyController@ind
 //ADMIN
 
 //...
+Route::get('/admin', '\App\Http\Controllers\AdminController@index');
 
-Route::get('/adm/posts', '\App\Http\Controllers\PostController@index');
+Route::get('/admin/index', '\App\Http\Controllers\AdminController@index');
 
-Route::get('/adm/posts/{post}', '\App\Http\Controllers\PostController@show');
+Route::get('/admin/manageSchoolInfo','\App\Http\Controllers\AdminController@manageSchoolInfo');
 
-Route::get('/adm/posts/create', '\App\Http\Controllers\PostController@create');
+Route::get('/admin/manageNewsInfo','\App\Http\Controllers\AdminController@manageNewsInfo');
+
+Route::get('/admin/posts', '\App\Http\Controllers\PostController@index');
+
+Route::get('/admin/posts/{post}', '\App\Http\Controllers\PostController@show');
+
+Route::get('/admin/posts/create', '\App\Http\Controllers\PostController@create');
 
