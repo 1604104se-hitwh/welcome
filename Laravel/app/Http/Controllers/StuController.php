@@ -49,6 +49,14 @@ class StuController extends Controller
                 $classmates_addr_prov_cnt[$classmate_addr_info['addressTree'][0]] = 1;
             }
         }
+        arsort($classmates_addr_prov_cnt);  //按照值降序排序
+        $classmates_addr_prov_cnt = array_slice($classmates_addr_prov_cnt,0,4); //取前五个
+        $top4_num = 0;
+        $vals = array_values($classmates_addr_prov_cnt);
+        for($i = 0; $i<4; ++$i) {
+           $top4_num += $vals[$i];
+        }
+        $classmates_addr_prov_cnt['其他'] = $class_male_num + $class_fmle_num - $top4_num;
 
         $cid = $res_obj_array[0]->stu_cid;
         $res = $this->idValidator->getInfo($cid);
