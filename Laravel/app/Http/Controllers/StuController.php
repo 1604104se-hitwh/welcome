@@ -28,14 +28,28 @@ class StuController extends Controller
         //$stu_name = $res_obj->stu_name;
         /*班级情况统计*/
         $stu_class_str = substr($res_obj_array[0]->stu_num, 0, 7);  //学号digit0~digit6
-        $sql = "SELECT * FROM `t_student` WHERE `stu_num` LIKE '$stu_class_str%'";  //获得同班同学信息
-        $res_classmates_array = DB::select($sql);
+        $classmates_array = DB::select("SELECT * FROM `t_student` WHERE `stu_num` LIKE '$stu_class_str%'");//获得同班同学信息
+
+        //性别比例
         $class_male_num = 0;
         $class_fmle_num = 0;
-        foreach($res_classmates_array as $classmate) {
+        foreach($classmates_array as $classmate) {
             if($classmate->stu_gen) $class_male_num++;
             else $class_fmle_num++;
         }
+        //地区分布，需要做桶排序
+
+        $classmates_addr_prov_cnt = array();
+        foreach($classmates_array as $classmate) {
+            $classmate_addr_info = $this->idValidator->getInfo($classmate->stu_cid);
+            $classmate->address = $classmate_addr_info['address'];
+            if(array_key_exists($classmate_addr_info['addressTree'][0], $classmates_addr_prov_cnt)) {
+                $classmates_addr_prov_cnt[$classmate_addr_info['addressTree'][0]] += 1;
+            } else {
+                $classmates_addr_prov_cnt[$classmate_addr_info['addressTree'][0]] = 1;
+            }
+        }
+
         $cid = $res_obj_array[0]->stu_cid;
         $res = $this->idValidator->getInfo($cid);
         /*室友统计 */
@@ -89,13 +103,22 @@ class StuController extends Controller
             'toLogoutURL'=>"toLogoutURL",      // 退出登录
             //饼图
             'yourStuChartBoyGirl'=>array($class_male_num, $class_fmle_num), // 男女比例，先男后女
-            'yourStuChartProName'=>array("南京","其他"), // 省份名字
-            'yourStuChartProData'=>array(1,2) // 每个信息
+            'yourStuChartProName'=>array_keys($classmates_addr_prov_cnt), // 省份名字
+            'yourStuChartProData'=>array_values($classmates_addr_prov_cnt) // 每个信息
             ]);
     }
 
     public function queryClass()
     {
+        $this->idValidator = new IdValidator();
+        $res_obj_array = DB::select('SELECT * FROM `t_student` WHERE `stu_cid`="230123199011274968"');
+        /*班级情况统计*/
+        $stu_class_str = substr($res_obj_array[0]->stu_num, 0, 7);  //学号digit0~digit6
+        $classmates_array = DB::select("SELECT * FROM `t_student` WHERE `stu_num` LIKE '$stu_class_str%'");//获得同班同学信息
+
+        foreach($classmates_array as $classmate) {
+            $classmate->address = $this->idValidator->getInfo($classmate->stu_cid)['address'];
+        }
         return view('stu.new.yourClass',[
             'sysType'=>"新生",  // 系统运行模式，新生，老生，管理员
             'messages'=>array(
@@ -115,15 +138,15 @@ class StuController extends Controller
                 'moreInfoUrl'=>"/message", // 更多信息跳转
     
             ), // 信息
-            'stuID'=>"stuID", // 学号
-            'user'=>"user", // 用户名
+            'stuID'=>$res_obj_array[0]->stu_num, // 学号
+            'user'=>$res_obj_array[0]->stu_name, // 用户名
             'userImg'=> "userImg",// 用户头像链接 url(site)
             'toInfomationURL'=>"toInfomationURL", // 个人设置url
             'toSettingURL'=>"toSettingURL", // 个人设置
             'stuDept'=>"计算机",
-            'stuDomitory'=>"stuDomitory",
+            'stuDomitory'=>$res_obj_array[0]->stu_dorm_str,
             'stuReportTime'=>"9月1日",
-            'classmates'=>array(), // 你的同学
+            'classmates'=>$classmates_array, // 你的同学
             'toLogoutURL'=>"toLogoutURL",      // 退出登录
             ]);
     }

@@ -114,8 +114,8 @@
 				<div id="collapseWel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">你可以查看：</h6>
-						<a class="collapse-item" href="">报道说明</a>
-						<a class="collapse-item" href="">开始报道</a>
+						<a class="collapse-item" href="">报到说明</a>
+						<a class="collapse-item" href="">开始报到</a>
 					</div>
 				</div>
 			</li>

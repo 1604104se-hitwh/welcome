@@ -44,7 +44,7 @@
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item">
-				<a class="nav-link" href="{{url('/stu/index')}}">
+				<a class="nav-link" href="{{url('/stu')}}">
 					<i class="fas fa-fw fa-home"></i>
 					<span>首页</span></a>
 			</li>
@@ -115,8 +115,8 @@
 				<div id="collapseWel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">你可以查看：</h6>
-						<a class="collapse-item" href="{{url('/stu/enrollInfo')}}">报道说明</a>
-						<a class="collapse-item" href="{{url('/stu/enrollGuide')}}">开始报道</a>
+						<a class="collapse-item" href="{{url('/stu/enrollInfo')}}">报到说明</a>
+						<a class="collapse-item" href="{{url('/stu/enrollGuide')}}">开始报到</a>
 					</div>
 				</div>
 			</li>
@@ -327,10 +327,10 @@
 											</tr>
 											@else @foreach($countymens as $countymen)
 											<tr role="row">
-												<td>{{$countymen->name}}</td>
-												<td>{{$countymen->stuID}}</td>
-												<td>{{$countymen->gender}}</td>
-												<td>{{$countymen->fromSchool}}</td>
+												<td>{{$countymen->stu_name}}</td>
+												<td>{{$countymen->stu_num}}</td>
+												<td>{{$countymen->stu_gen}}</td>
+												<td>{{$countymen->stu_num}}</td>
 											</tr>
 											@endforeach @endif
 										</tbody>

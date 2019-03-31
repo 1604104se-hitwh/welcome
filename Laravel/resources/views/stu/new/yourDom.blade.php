@@ -48,7 +48,7 @@
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item">
-				<a class="nav-link" href="{{url('/stu/index')}}">
+				<a class="nav-link" href="{{url('/stu')}}">
 					<i class="fas fa-fw fa-home"></i>
 					<span>首页</span></a>
 			</li>
@@ -119,8 +119,8 @@
 				<div id="collapseWel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">你可以查看：</h6>
-						<a class="collapse-item" href="{{url('/stu/enrollInfo')}}">报道说明</a>
-						<a class="collapse-item" href="{{url('/stu/enrollGuide')}}">开始报道</a>
+						<a class="collapse-item" href="{{url('/stu/enrollInfo')}}">报到说明</a>
+						<a class="collapse-item" href="{{url('/stu/enrollGuide')}}">开始报到</a>
 					</div>
 				</div>
 			</li>
@@ -290,7 +290,7 @@
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报道时间
+											<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报到时间
 											</div>
 											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuReportTime}}</div>
 										</div>
@@ -350,10 +350,10 @@
 											</tr>
 											@else @foreach($yourDoms as $yourDom)
 											<tr role="row">
-												<td>{{$yourDom->name}}</td>
-												<td>{{$yourDom->stuID}}</td>
-												<td>{{$yourDom->bedID}}</td>
-												<td>{{$yourDom->comeFrom}}</td>
+												<td>{{$yourDom->stu_name}}</td>
+												<td>{{$yourDom->stu_num}}</td>
+												<td>{{$yourDom->stu_dorm_str}}</td>
+												<td>{{$yourDom->address}}</td>
 											</tr>
 											@endforeach @endif
 										</tbody>
