@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 require_once __DIR__.'/../../include.php';
 use Jxlwqq\IdValidator\IdValidator;
@@ -235,4 +236,11 @@ class StuController extends Controller
             'toLogoutURL'=>"toLogoutURL",      // 退出登录
             ]);
     }
+
+    /* public function authenticate() {
+        if (Auth::attempt(['stu_eid' => $email, 'stu_cid' => $password])) {
+            // 认证通过...
+            return redirect()->intended('...');
+        }
+    } */
 }

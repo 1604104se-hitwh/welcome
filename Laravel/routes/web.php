@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::post("/", function() {
+    return view("stu.new.index");
+})->middleware('stuAuth');
+
 //STUDENT
 Route::get('/stu', '\App\Http\Controllers\StuController@index');
 
