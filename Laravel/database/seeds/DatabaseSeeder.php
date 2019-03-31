@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         for($i = 0; $i < 30; ++$i) {
             DB::table('t_student')->insert([
-                'stu_status' => 'PRE',
+                'stu_status' => 'PREPARE',
                 'stu_degree' => 'UG',
                 'stu_num' => '16040'.sprintf("%02d", rand(0, 6)).sprintf("%02d", rand(0, 40)),
                 'stu_name' => str_random(6),
