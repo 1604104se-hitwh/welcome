@@ -178,8 +178,8 @@ class StuController extends Controller
             'toInfomationURL'=>"toInfomationURL", // 个人设置url
             'toSettingURL'=>"toSettingURL", // 个人设置
             'stuDept'=>"计算机",
-            'stuDomitory'=>"stuDomitory",
-            'stuReportTime'=>"9月1日",
+            'stuDomitory'=>"stuDomitory", // 宿舍
+            'stuReportTime'=>"9月1日", // 报到时间
             'domInfo'=>"domInfo", // 宿舍介绍
             'yourDoms'=>array(),
             'domLocal'=>array( // 宿舍位置（定位）

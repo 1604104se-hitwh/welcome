@@ -12,13 +12,13 @@
 	<title>迎新系统-哈尔滨工业大学（威海）</title>
 
 	<!-- Custom fonts for this template-->
-	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-	<link
-		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78="
+	 crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	 rel="stylesheet">
 
 	<!-- Custom styles for this template-->
-	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
 
 </head>
 
@@ -35,15 +35,15 @@
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
-				<div class="sidebar-brand-text mx-3">迎新系统 <sup id="user-type">管理员</sup></div>
+				<div class="sidebar-brand-text mx-3">迎新系统 <sup id="user-type">{{$sysType}}</sup></div>
 			</a>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0">
 
 			<!-- Nav Item - Dashboard -->
-			<li class="nav-item">
-				<a class="nav-link" href="index.html">
+			<li class="nav-item active">
+				<a class="nav-link" href="{{url('/admin/index')}}">
 					<i class="fas fa-fw fa-home"></i>
 					<span>首页</span></a>
 			</li>
@@ -57,7 +57,7 @@
 			</div>
 
 			<!-- Nav Item - Information set -->
-			<li class="nav-item active">
+			<li class="nav-item">
 				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo"
 					aria-expanded="true" aria-controls="collapseInfo">
 					<i class="fas fa-fw fa-laptop"></i>
@@ -66,16 +66,16 @@
 				<div id="collapseInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">你可以管理：</h6>
-						<a class="collapse-item" href="">学校信息</a>
-						<a class="collapse-item" href="">新生信息</a>
-						<a class="collapse-item" href="">管理员信息</a>
+						<a class="collapse-item" href="{{url('/admin/manageSchoolInfo')}}">学校信息</a>
+						<a class="collapse-item" href="{{url('/admin/manageNewsInfo')}}">新生信息</a>
+						<a class="collapse-item" href="{{url('/admin/manageAdminInfo')}}">管理员信息</a>
 					</div>
 				</div>
 			</li>
 
 			<!-- Nav Item - self info -->
 			<li class="nav-item">
-				<a class="nav-link" href="#">
+				<a class="nav-link" href="{{url('/admin/personalInfo')}}">
 					<i class="fas fa-fw fa-info"></i>
 					<span>个人信息</span>
 				</a>
@@ -83,7 +83,7 @@
 
 			<!-- Nav Item - Arrived -->
 			<li class="nav-item">
-				<a class="nav-link" href="#">
+				<a class="nav-link" href="{{url('/admin/nav')}}">
 					<i class="fas fa-fw fa-plane-arrival"></i>
 					<span>到站信息</span>
 				</a>
@@ -99,7 +99,7 @@
 
 			<!-- Nav Item - Notice -->
 			<li class="nav-item">
-				<a class="nav-link" href="">
+				<a class="nav-link" href="{{url('/admin/posts')}}">
 					<i class="fas fa-fw fa-bell"></i>
 					<span>发布通知</span></a>
 			</li>
@@ -122,8 +122,8 @@
 				<div id="collapseWel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">你可以：</h6>
-						<a class="collapse-item" href="">报到信息</a>
-						<a class="collapse-item" href="">迎新核验</a>
+						<a class="collapse-item" href="{{url('/admin/reportInfo')}}">报到信息</a>
+						<a class="collapse-item" href="{{url('/admin/reportCheck')}}">迎新核验</a>
 					</div>
 				</div>
 			</li>
@@ -160,17 +160,16 @@
 						<li class="nav-item dropdown no-arrow">
 							<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，SPC</span>
+								<span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，{{$user}}</span>
 								<img class="img-profile rounded-circle"
 									src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
 							</a>
 							<!-- Dropdown - User Information -->
-							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#">
+							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+								<a class="dropdown-item" href="{{url($toInfomationURL)}}">
 									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
 								</a>
-								<a class="dropdown-item" href="#">
+								<a class="dropdown-item" href="{{url($toSettingURL)}}">
 									<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
 								</a>
 								<div class="dropdown-divider"></div>
@@ -190,7 +189,7 @@
 
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">学校信息</h1>
+						<h1 class="h3 mb-0 text-gray-800">首页</h1>
 					</div>
 
 					<!-- Content Row -->
@@ -204,7 +203,7 @@
 										<div class="col mr-2">
 											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">新生人数
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">1520</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$newStuNumber}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-luggage-cart fa-2x text-gray-300"></i>
@@ -222,7 +221,7 @@
 										<div class="col mr-2">
 											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">老生人数
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">12000</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$oldStuNumber}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-user-check fa-2x text-gray-300"></i>
@@ -241,7 +240,7 @@
 											<div class="text-xs font-weight-bold text-info text-uppercase mb-1">已报到人数</div>
 											<div class="row no-gutters align-items-center">
 												<div class="col-auto">
-													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">123
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$hasReportNumber}}
 													</div>
 												</div>
 											</div>
@@ -262,7 +261,7 @@
 										<div class="col mr-2">
 											<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报到时间
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">9月1日</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuReportTime}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -273,73 +272,89 @@
 						</div>
 					</div>
 
-					<div class="card mb-4">
-						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">学校信息</h6>
-						</div>
-						<div class="card-body">
-							<div id="schoolInfoEditor" class="mb-4">
-								<p>学校信息在这里更改</p>
-							</div>
-							<button type="button" class="btn btn-primary" id="submitSchoolInfo">提交</button>
-						</div>
-					</div>
+					<!-- Content Row -->
+					<div class="card-columns">
 
-					<div class="card mb-4">
-						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">专业信息</h6>
-						</div>
-						<div class="card-body row">
-							<div class="col-md-8 col-sm-12">
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<th>院系名</th>
-											<th>代码</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td scope="row">计算机科学与技术</td>
-											<td>04</td>
-										</tr>
-										<tr>
-											<td scope="row">材料科学与工程</td>
-											<td>08</td>
-										</tr>
-									</tbody>
-								</table>
-
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<th>专业名</th>
-											<th>代码</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td scope="row">计算机类</td>
-											<td>0</td>
-										</tr>
-										<tr>
-											<td scope="row">焊接技术与工程</td>
-											<td>2</td>
-										</tr>
-									</tbody>
-								</table>
+						<!-- Content Column -->
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">学校简介</h6>
 							</div>
-							<div class="col-md-4 col-sm-12">
-								<div class="form-group mb-4">
-									<label for="deptInfoUpload">上传院系信息</label>
-									<input type="file" id="deptInfoUpload">
-									<p class="help-block">上传模板文件</p>
+							<div class="card-body">
+								<div class="text-center">
+									<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+										src="img/undraw_posting_photo.svg" alt="">
 								</div>
-								<button type="button" class="btn btn-primary" id="submitDeptInfo">提交</button>
+								<p>
+									{!! $schoolInfo !!}
+								</p>
+								<a target="_blank" rel="nofollow" href="{{url($toSetSchoolInfoURL)}}">去设置 &rarr;</a>
 							</div>
 						</div>
-					</div>
 
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">院系统计</h6>
+							</div>
+							<div class="card-body">
+								<table class="table table-bordered">
+									<thead>
+										<tr role="row">
+											<th>系名</th>
+											<th>新生数</th>
+											<th>已报到人数</th>
+											<th>男女比例</th>
+										</tr>
+									</thead>
+									<tbody>
+										@if(count($schoolStatistics)==0) {{-- 还没有信息 --}}
+										<tr role="row">
+											<td colspan="4">还没有信息</td>
+										</tr>
+										@else @foreach($schoolStatistics as $schoolStatistic)
+										<tr role="row">
+											<td>{{$schoolStatistic->deptName}}</td>
+											<td>{{$schoolStatistic->stuNumber}}</td>
+											<td>{{$schoolStatistic->hasReportNumber}}</td>
+											<td>{{$schoolStatistic->genderRate}}</td>
+										</tr>
+										@endforeach @endif
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">仪表盘</h6>
+							</div>
+							<div class="card-body">
+								<table class="table table-bordered">
+									<thead>
+										<tr role="row">
+											<th></th>
+											<th>状态</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr role="row">
+											<th>新生信息</th>
+											<td>{{$systemStatus['newsStatus']}}</td>
+										</tr>
+										<tr role="row">
+											<th>院系信息</th>
+											<td>{{$systemStatus['deptStatus']}}</td>
+										</tr>
+										<tr role="row">
+											<th>报到进程</th>
+											<td>{{$systemStatus['reportStatus']}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+					</div>
 				</div>
 				<!-- /.container-fluid -->
 
@@ -368,44 +383,33 @@
 	</a>
 
 	<!-- Logout Modal-->
-	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<h5 class="modal-title" id="exampleModalLabel">确认退出？</h5>
 					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-				<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+				<div class="modal-body">选择“退出”退出登录</div>
 				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="login.html">Logout</a>
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+					<a class="btn btn-primary" href="{{url($toLogoutURL)}}">退出</a>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-	<!-- Core plugin JavaScript-->
-	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	 crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js" integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
+	 crossorigin="anonymous"></script>
 	<!-- Custom scripts for all pages-->
-	<script src="js/sb-admin-2.min.js"></script>
+	<script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
-	<!-- Custom scripts for Editor -->
-	<script type="text/javascript" src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
-    <script type="text/javascript">
-        var E = window.wangEditor
-        var editor = new E('#schoolInfoEditor')
-        editor.create()
-		// get html infomation
-		// editor.txt.html()
-    </script>
+
 </body>
 
 </html>
