@@ -12,13 +12,13 @@
 	<title>迎新系统-哈尔滨工业大学（威海）</title>
 
 	<!-- Custom fonts for this template-->
-	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-	<link
-		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78="
+	 crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	 rel="stylesheet">
 
 	<!-- Custom styles for this template-->
-	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
 
 </head>
 
@@ -35,7 +35,7 @@
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
-				<div class="sidebar-brand-text mx-3">迎新系统 <sup id="user-type">管理员</sup></div>
+				<div class="sidebar-brand-text mx-3">迎新系统 <sup id="user-type">{{$sysType}}</sup></div>
 			</a>
 
 			<!-- Divider -->
@@ -43,7 +43,7 @@
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active">
-				<a class="nav-link" href="index.html">
+				<a class="nav-link" href="{{url('/admin/index')}}">
 					<i class="fas fa-fw fa-home"></i>
 					<span>首页</span></a>
 			</li>
@@ -66,16 +66,16 @@
 				<div id="collapseInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">你可以管理：</h6>
-						<a class="collapse-item" href="">学校信息</a>
-						<a class="collapse-item" href="">新生信息</a>
-						<a class="collapse-item" href="">管理员信息</a>
+						<a class="collapse-item" href="{{url('/admin/manageSchoolInfo')}}">学校信息</a>
+						<a class="collapse-item" href="{{url('/admin/manageNewsInfo')}}">新生信息</a>
+						<a class="collapse-item" href="{{url('/admin/manageAdminInfo')}}">管理员信息</a>
 					</div>
 				</div>
 			</li>
 
 			<!-- Nav Item - self info -->
 			<li class="nav-item">
-				<a class="nav-link" href="#">
+				<a class="nav-link" href="{{url('/admin/personalInfo')}}">
 					<i class="fas fa-fw fa-info"></i>
 					<span>个人信息</span>
 				</a>
@@ -83,7 +83,7 @@
 
 			<!-- Nav Item - Arrived -->
 			<li class="nav-item">
-				<a class="nav-link" href="#">
+				<a class="nav-link" href="{{url('/admin/nav')}}">
 					<i class="fas fa-fw fa-plane-arrival"></i>
 					<span>到站信息</span>
 				</a>
@@ -99,7 +99,7 @@
 
 			<!-- Nav Item - Notice -->
 			<li class="nav-item">
-				<a class="nav-link" href="">
+				<a class="nav-link" href="{{url('/admin/posts')}}">
 					<i class="fas fa-fw fa-bell"></i>
 					<span>发布通知</span></a>
 			</li>
@@ -122,8 +122,8 @@
 				<div id="collapseWel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">你可以：</h6>
-						<a class="collapse-item" href="">报到信息</a>
-						<a class="collapse-item" href="">迎新核验</a>
+						<a class="collapse-item" href="{{url('/admin/reportInfo')}}">报到信息</a>
+						<a class="collapse-item" href="{{url('/admin/reportCheck')}}">迎新核验</a>
 					</div>
 				</div>
 			</li>
@@ -160,17 +160,16 @@
 						<li class="nav-item dropdown no-arrow">
 							<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，SPC</span>
+								<span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，{{$user}}</span>
 								<img class="img-profile rounded-circle"
 									src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
 							</a>
 							<!-- Dropdown - User Information -->
-							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#">
+							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+								<a class="dropdown-item" href="{{url($toInfomationURL)}}">
 									<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
 								</a>
-								<a class="dropdown-item" href="#">
+								<a class="dropdown-item" href="{{url($toSettingURL)}}">
 									<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
 								</a>
 								<div class="dropdown-divider"></div>
@@ -204,7 +203,7 @@
 										<div class="col mr-2">
 											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">新生人数
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">1520</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$newStuNumber}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-luggage-cart fa-2x text-gray-300"></i>
@@ -222,7 +221,7 @@
 										<div class="col mr-2">
 											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">老生人数
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">12000</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$oldStuNumber}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-user-check fa-2x text-gray-300"></i>
@@ -241,7 +240,7 @@
 											<div class="text-xs font-weight-bold text-info text-uppercase mb-1">已报到人数</div>
 											<div class="row no-gutters align-items-center">
 												<div class="col-auto">
-													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">123
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$hasReportNumber}}
 													</div>
 												</div>
 											</div>
@@ -262,7 +261,7 @@
 										<div class="col mr-2">
 											<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报到时间
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">9月1日</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuReportTime}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -287,9 +286,9 @@
 										src="img/undraw_posting_photo.svg" alt="">
 								</div>
 								<p>
-									哈尔滨工业大学（以下简称哈工大）是一所有着近百年历史、世界知名的工科强校，2017年入选国家“双一流”建设A类高校，是我国首批入选国家“985工程”重点建设的大学，拥有以38位院士为带头人的雄厚师资，有9个国家一级重点学科，10个学科名列全国前五名，其中，名列前茅的工科类重点学科数量位居全国第二，工程学在全球排名第六。
+									{!! $schoolInfo !!}
 								</p>
-								<a target="_blank" rel="nofollow" href="https://undraw.co/">去设置 &rarr;</a>
+								<a target="_blank" rel="nofollow" href="{{url($toSetSchoolInfoURL)}}">去设置 &rarr;</a>
 							</div>
 						</div>
 
@@ -308,21 +307,18 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr role="row">
-											<td>计算机科学与技术</td>
-											<td>180</td>
-											<td>2</td>
-											<td>1:1</td>
-										</tr>
-										<tr role="row">
-											<td>材料科学与工程</td>
-											<td>210</td>
-											<td>4</td>
-											<td>5:1</td>
-										</tr>
+										@if(count($schoolStatistics)==0) {{-- 还没有信息 --}}
 										<tr role="row">
 											<td colspan="4">还没有信息</td>
 										</tr>
+										@else @foreach($schoolStatistics as $schoolStatistic)
+										<tr role="row">
+											<td>{{$schoolStatistic->deptName}}</td>
+											<td>{{$schoolStatistic->stuNumber}}</td>
+											<td>{{$schoolStatistic->hasReportNumber}}</td>
+											<td>{{$schoolStatistic->genderRate}}</td>
+										</tr>
+										@endforeach @endif
 									</tbody>
 								</table>
 							</div>
@@ -343,15 +339,15 @@
 									<tbody>
 										<tr role="row">
 											<th>新生信息</th>
-											<td>已导入</td>
+											<td>{{$systemStatus['newsStatus']}}</td>
 										</tr>
 										<tr role="row">
 											<th>院系信息</th>
-											<td>已导入，共23个系</td>
+											<td>{{$systemStatus['deptStatus']}}</td>
 										</tr>
 										<tr role="row">
 											<th>报到进程</th>
-											<td>正在报到</td>
+											<td>{{$systemStatus['reportStatus']}}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -387,40 +383,31 @@
 	</a>
 
 	<!-- Logout Modal-->
-	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<h5 class="modal-title" id="exampleModalLabel">确认退出？</h5>
 					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-				<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+				<div class="modal-body">选择“退出”退出登录</div>
 				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-					<a class="btn btn-primary" href="login.html">Logout</a>
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+					<a class="btn btn-primary" href="{{url($toLogoutURL)}}">退出</a>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-	<!-- Core plugin JavaScript-->
-	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	 crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js" integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
+	 crossorigin="anonymous"></script>
 	<!-- Custom scripts for all pages-->
-	<script src="js/sb-admin-2.min.js"></script>
-
-	<!-- Page level plugins -->
-	<script src="vendor/chart.js/Chart.min.js"></script>
-
-	<!-- Chart -->
-	<script type="text/javascript" src="js/chart.js"></script>
+	<script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
 
 </body>
