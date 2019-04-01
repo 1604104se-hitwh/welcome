@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 require_once __DIR__.'/../../include.php';
 use Jxlwqq\IdValidator\IdValidator;
 
-function str_n_pos($str,$find,$n){
+function str_n_pos($str,$find,$n) {
     $pos_val = 0;
     for ($i=1;$i<=$n;$i++){
         $pos = strpos($str,$find);
@@ -229,10 +229,31 @@ class StuController extends Controller
             ]);
     }
 
-    /* public function authenticate() {
-        if (Auth::attempt(['stu_eid' => $email, 'stu_cid' => $password])) {
-            // 认证通过...
-            return redirect()->intended('...');
+    public function postLogin(Request $request) {
+        if($request->input('loginType') === "new") {
+            $stu_eid = $request->input("examId", "default");
+            $stu_cid = $request->input("perId", "default");
+            $this->idValidator = new IdValidator();
+            $res_obj_array = DB::select('SELECT * FROM t_student WHERE stu_cid = :stu_cid',
+                                        ["stu_cid" => $stu_cid]);
+            if ($res_obj_array && $stu_cid === ($res_obj_array[0]->stu_cid)) {
+                $request->session()->put("usr", $request->input("stu_cid"));
+                return redirect()->intended("/stu");
+            }
+            return redirect("/");
         }
-    } */
+        
+        return redirect("/");
+    }
+
+    public function sessionTest(Request $request) {
+        if ($request->session()->has("usr")) {
+            return $request->session()->get("usr");
+        }
+    }
+
+    public function __construct()
+    {
+        $this->middleware('stuAuth');
+    }
 }

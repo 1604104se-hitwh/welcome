@@ -47,6 +47,7 @@
 						<div class="card-body tab-content">
 							<form class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="newStudent-tab" method="POST" action="./login">
 								<h4 class="card-title">新生登陆</h4>
+								{{csrf_field()}}
 								<input type="hidden" name="loginType" value="new">
 								<div class="form-group">
 									<label for="examId">考生号</label>

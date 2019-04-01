@@ -2,11 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
+// use Closure;
 use App\Models\User;
-// use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-class AuthMiddle
+// use Closure;
+
+class CheckMiddle
 {
     /**
      * Handle an incoming request.
@@ -17,9 +18,9 @@ class AuthMiddle
      */
     public function handle($request, Closure $next)
     {
-        if ($request->session()->has("usr")) {
-            return $next($request);
+        if (Auth::check == false) {
+            return redirect::guest("/");
         }
-        return redirect()->guest("/");
+        return $next($request);
     }
 }

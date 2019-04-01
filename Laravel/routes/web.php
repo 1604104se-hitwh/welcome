@@ -15,11 +15,20 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::post("/", function() {
+// Route::view("/", "auth.login");
+
+/* Route::post("/login", function() {
     return view("stu.new.index");
-})->middleware('stuAuth');
+})->middleware('stuAuth'); */
+
+Route::post("/put", "StuController@sessionPut");
+
+Route::get("/test", "StuController@sessionTest");
+
+Route::post("/login", "StuController@postLogin");
 
 //STUDENT
+
 Route::get('/stu', '\App\Http\Controllers\StuController@index');
 
 Route::get('/stu/index', '\App\Http\Controllers\StuController@index');
@@ -63,3 +72,4 @@ Route::get('/admin/posts/{post}', '\App\Http\Controllers\PostController@show');
 
 Route::get('/admin/posts/create', '\App\Http\Controllers\PostController@create');
 
+// Auth::routes();
