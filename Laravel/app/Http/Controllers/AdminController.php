@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 class AdminController extends Controller
 {
     public function __construct() {
-        $this->middleware('checkAuth');
+        // $this->middleware('checkAuth');
     }
     // 管理员-首页
     public function index(){

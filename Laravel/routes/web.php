@@ -16,32 +16,37 @@ Route::get('/', function () {
 });
 
 Route::post("/login", "StuController@postLogin");
+Route::get("/logout", "LoginController@logout");
 
-//STUDENT
+Route::group(['middleware' => ['checkAuth']], function() {
+    //STUDENT
 
-Route::get('/stu', '\App\Http\Controllers\StuController@index');
+	Route::get('/stu', '\App\Http\Controllers\StuController@index');
+	
+	Route::get('/stu/index', '\App\Http\Controllers\StuController@index');
+	
+	Route::get('/stu/queryClass', '\App\Http\Controllers\StuController@queryClass');
+	
+	Route::get('/stu/queryDorm', '\App\Http\Controllers\StuController@queryDorm');
+	
+	Route::get('/stu/queryCountryFolk', '\App\Http\Controllers\StuController@queryCountryFolk');
+	
+	Route::get('/stu/posts', '\App\Http\Controllers\PostController@index');
+	
+	Route::get('/stu/posts/{postId}', '\App\Http\Controllers\PostController@show');
+	
+	Route::get('/stu/nav', '\App\Http\Controllers\NavController@index');
+	
+	Route::get('/stu/enrollInfo', '\App\Http\Controllers\EnrollController@enrollInfo');
+	
+	Route::get('/stu/enrollGuide', '\App\Http\Controllers\EnrollController@enrollGuide');
+	
+	Route::get('/stu/survey', '\App\Http\Controllers\SurveyController@index');
+	
+	Route::get('/stu/survey/{surveyId}', '\App\Http\Controllers\SurveyController@index');
+});
 
-Route::get('/stu/index', '\App\Http\Controllers\StuController@index');
 
-Route::get('/stu/queryClass', '\App\Http\Controllers\StuController@queryClass');
-
-Route::get('/stu/queryDorm', '\App\Http\Controllers\StuController@queryDorm');
-
-Route::get('/stu/queryCountryFolk', '\App\Http\Controllers\StuController@queryCountryFolk');
-
-Route::get('/stu/posts', '\App\Http\Controllers\PostController@index');
-
-Route::get('/stu/posts/{postId}', '\App\Http\Controllers\PostController@show');
-
-Route::get('/stu/nav', '\App\Http\Controllers\NavController@index');
-
-Route::get('/stu/enrollInfo', '\App\Http\Controllers\EnrollController@enrollInfo');
-
-Route::get('/stu/enrollGuide', '\App\Http\Controllers\EnrollController@enrollGuide');
-
-Route::get('/stu/survey', '\App\Http\Controllers\SurveyController@index');
-
-Route::get('/stu/survey/{surveyId}', '\App\Http\Controllers\SurveyController@index');
 
 
 

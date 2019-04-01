@@ -23,8 +23,10 @@ function str_n_pos($str,$find,$n) {
 class StuController extends Controller
 {
     private $idValidator;
-    public function index() 
-    {
+
+    private $stu_data = [];
+
+    public function index() {
         $this->idValidator = new IdValidator();
         $res_obj_array = DB::select('SELECT * FROM `t_student` WHERE `stu_cid`="230123199011274968"');
         //$stu_name = $res_obj->stu_name;
@@ -111,11 +113,11 @@ class StuController extends Controller
             'toDomInfoURL'=>"toDomInfoURL",
             'localFolks'=>$contry_folk_array, // 老乡
             'toLocalFolkURL'=>"toLocalFolksURL", // 查看老乡信息url
-            'toLogoutURL'=>"toLogoutURL",      // 退出登录
+            'toLogoutURL'=>"/logout",      // 退出登录
             //饼图
             'yourStuChartBoyGirl'=>array($class_male_num, $class_fmle_num), // 男女比例，先男后女
             'yourStuChartProName'=>array_keys($classmates_addr_prov_cnt), // 省份名字
-            'yourStuChartProData'=>array_values($classmates_addr_prov_cnt) // 每个信息
+            'yourStuChartProData'=>array_values($classmates_addr_prov_cnt), // 每个信息
             ]);
 //        return view('stu.old.index',[
 //            'sysType'=>"老生",  // 系统运行模式，新生，老生，管理员
@@ -415,6 +417,6 @@ class StuController extends Controller
     }
 
     public function __construct() {
-        $this->middleware('checkAuth');
+        // $this->middleware('checkAuth');
     }
 }
