@@ -47,6 +47,7 @@
 						<div class="card-body tab-content">
 							<form class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="newStudent-tab" method="POST" action="./login">
 								<h4 class="card-title">新生登陆</h4>
+								{{ csrf_field() }}
 								<input type="hidden" name="loginType" value="new">
 								<div class="form-group">
 									<label for="examId">考生号</label>
@@ -61,6 +62,7 @@
 
 							<form class="tab-pane fade" id="old" role="tabpanel" aria-labelledby="oldStudent-tab" method="POST" action="./login">
 								<h4 class="card-title">老生登陆</h4>
+								{{ csrf_field() }}
 								<input type="hidden" name="loginType" value="old">
 								<div class="form-group">
 									<label for="examId">姓名</label>
@@ -75,6 +77,7 @@
 
 							<form class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab" method="POST" action="./login">
 								<h4 class="card-title">管理员登陆</h4>
+								{{ csrf_field() }}
 								<input type="hidden" name="loginType" value="admin">
 								<div class="form-group">
 									<label for="examId">用户名</label>

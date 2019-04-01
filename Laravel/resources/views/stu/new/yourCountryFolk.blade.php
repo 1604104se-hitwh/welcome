@@ -352,20 +352,18 @@
 												<th>姓名</th>
 												<th>学号</th>
 												<th>性别</th>
-												<th>毕业学校</th>
 											</tr>
 										</thead>
 										<tbody>
 											@if(count($sameSchools)==0) {{-- 还没有信息 --}}
 											<tr role="row">
-												<td colspan="4">还没有信息</td>
+												<td colspan="3">还没有信息</td>
 											</tr>
 											@else @foreach($sameSchools as $sameSchool)
 											<tr role="row">
 												<td>{{$sameSchool->name}}</td>
 												<td>{{$sameSchool->stuID}}</td>
 												<td>{{$sameSchool->gender}}</td>
-												<td>{{$sameSchool->fromSchool}}</td>
 											</tr>
 											@endforeach @endif
 										</tbody>

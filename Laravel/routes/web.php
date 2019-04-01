@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::post("/", function() {
+Route::post("/login", function() {
     return view("stu.new.index");
 })->middleware('stuAuth');
 
