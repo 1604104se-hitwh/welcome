@@ -12,7 +12,7 @@ class StudentTableSeeder extends Seeder
     public function run()
     {
         DB::table('t_student')->insert([
-            'stu_status' => 'PRE',
+            'stu_status' => 'PREPARE',
             'stu_degree' => 'UG',
             'stu_num' => '160400400',
             'stu_name' => '张三丰',
@@ -24,7 +24,7 @@ class StudentTableSeeder extends Seeder
         ]);
 
         DB::table('t_student')->insert([
-            'stu_status' => 'PRE',
+            'stu_status' => 'PREPARE',
             'stu_degree' => 'UG',
             'stu_num' => '160400401',
             'stu_name' => '四班甲',
@@ -36,7 +36,7 @@ class StudentTableSeeder extends Seeder
         ]);
 
         DB::table('t_student')->insert([
-            'stu_status' => 'PRE',
+            'stu_status' => 'PREPARE',
             'stu_degree' => 'UG',
             'stu_num' => '160400402',
             'stu_name' => '四班乙',
@@ -48,7 +48,7 @@ class StudentTableSeeder extends Seeder
         ]);
 
         DB::table('t_student')->insert([
-            'stu_status' => 'PRE',
+            'stu_status' => 'PREPARE',
             'stu_degree' => 'UG',
             'stu_num' => '160400403',
             'stu_name' => '四班丙',
@@ -60,7 +60,7 @@ class StudentTableSeeder extends Seeder
         ]);
 
         DB::table('t_student')->insert([
-            'stu_status' => 'PRE',
+            'stu_status' => 'PREPARE',
             'stu_degree' => 'UG',
             'stu_num' => '160400404',
             'stu_name' => '四班丁',

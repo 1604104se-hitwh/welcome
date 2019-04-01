@@ -15,7 +15,7 @@ class CreateStudentTable extends Migration
     {
         Schema::create('t_student', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('stu_status', ['PRE', 'ENROLLING', 'CURRENT', 'FINISH', 'OTHER']);
+            $table->enum('stu_status', ['PREPARE', 'ENROLL', 'CURRENT', 'GRADUATE', 'SUSPEND', 'COMPLETE', 'OTHER']);
             $table->enum('stu_degree', ['UG', 'M', 'D']);
             $table->char('stu_num', 10);
             $table->string('stu_name', 15);

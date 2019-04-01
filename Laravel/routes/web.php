@@ -15,12 +15,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-// Route::view("/", "auth.login");
-
-/* Route::post("/login", function() {
-    return view("stu.new.index");
-})->middleware('stuAuth'); */
-
 Route::post("/put", "StuController@sessionPut");
 
 Route::get("/test", "StuController@sessionTest");

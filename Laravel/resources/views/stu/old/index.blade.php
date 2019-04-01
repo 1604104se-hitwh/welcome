@@ -14,9 +14,8 @@
 	<!-- Custom fonts for this template-->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78="
 	 crossorigin="anonymous">
-	<link
-		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	 rel="stylesheet">
 
 	<!-- Custom styles for this template-->
 	<link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
@@ -43,7 +42,7 @@
 			<hr class="sidebar-divider my-0">
 
 			<!-- Nav Item - Dashboard -->
-			<li class="nav-item">
+			<li class="nav-item active">
 				<a class="nav-link" href="{{url('/stu')}}">
 					<i class="fas fa-fw fa-home"></i>
 					<span>首页</span></a>
@@ -58,9 +57,8 @@
 			</div>
 
 			<!-- Nav Item - Information Query -->
-			<li class="nav-item active">
-				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo"
-					aria-expanded="true" aria-controls="collapseInfo">
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo" aria-expanded="true" aria-controls="collapseInfo">
 					<i class="fas fa-fw fa-laptop"></i>
 					<span>信息查询</span>
 				</a>
@@ -72,14 +70,6 @@
 						<a class="collapse-item" href="{{url('/stu/queryCountryFolk')}}">你的老乡</a>
 					</div>
 				</div>
-			</li>
-
-			<!-- Nav Item - Arrived -->
-			<li class="nav-item">
-				<a class="nav-link" href="{{url('/stu/nav')}}">
-					<i class="fas fa-fw fa-plane-arrival"></i>
-					<span>到站信息</span>
-				</a>
 			</li>
 
 			<!-- Divider -->
@@ -97,29 +87,10 @@
 					<span>所有通知</span></a>
 			</li>
 
-			<!-- Divider -->
-			<hr class="sidebar-divider">
-
 			<!-- Heading -->
 			<div class="sidebar-heading">
 				迎新服务
 			</div>
-
-			<!-- Nav Item - welcome -->
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseWel"
-					aria-expanded="true" aria-controls="collapseWel">
-					<i class="fas fa-fw fa-route"></i>
-					<span>报到流程</span>
-				</a>
-				<div id="collapseWel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">你可以查看：</h6>
-						<a class="collapse-item" href="{{url('/stu/enrollInfo')}}">报到说明</a>
-						<a class="collapse-item" href="{{url('/stu/enrollGuide')}}">开始报到</a>
-					</div>
-				</div>
-			</li>
 
 			<!-- Divider -->
 			<hr class="sidebar-divider d-none d-md-block">
@@ -150,8 +121,8 @@
 					<ul class="navbar-nav ml-auto">
 						<!-- Nav Item - Messages -->
 						<li class="nav-item dropdown no-arrow mx-1">
-							<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+							 aria-expanded="false">
 								<i class="fas fa-envelope fa-fw"></i>
 								<!-- Counter - Messages -->
 								<span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
@@ -215,7 +186,7 @@
 
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
-						<h1 class="h3 mb-0 text-gray-800">你的老乡</h1>
+						<h1 class="h3 mb-0 text-gray-800">首页</h1>
 					</div>
 
 					<!-- Content Row -->
@@ -239,16 +210,15 @@
 							</div>
 						</div>
 
-						<!-- Infomation Card ID card -->
+						<!-- Infomation Card shcool -->
 						<div class="col-xl-3 col-md-6 mb-4">
 							<div class="card border-left-success shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-												你的身份证号
+											<div class="text-xs font-weight-bold text-success text-uppercase mb-1">所在院系
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$IDnumber}}</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuDept}}</div>
 										</div>
 										<div class="col-auto">
 											<i class="fas fa-chalkboard-teacher fa-2x text-gray-300"></i>
@@ -258,23 +228,23 @@
 							</div>
 						</div>
 
-						<!-- Infomation Card local -->
+						<!-- Infomation Card department -->
 						<div class="col-xl-3 col-md-6 mb-4">
 							<div class="card border-left-info shadow h-100 py-2">
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-info text-uppercase mb-1">识别地区
-											</div>
+											<div class="text-xs font-weight-bold text-info text-uppercase mb-1">宿舍</div>
 											<div class="row no-gutters align-items-center">
 												<div class="col-auto">
-													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$stuLocal}}
+													<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+														{{$stuDomitory}}
 													</div>
 												</div>
 											</div>
 										</div>
 										<div class="col-auto">
-											<i class="fas fa-map fa-2x text-gray-300"></i>
+											<i class="fas fa-building fa-2x text-gray-300"></i>
 										</div>
 									</div>
 								</div>
@@ -287,12 +257,12 @@
 								<div class="card-body">
 									<div class="row no-gutters align-items-center">
 										<div class="col mr-2">
-											<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">毕业院校
+											<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报到时间
 											</div>
-											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuPreSchool}}</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuReportTime}}</div>
 										</div>
 										<div class="col-auto">
-											<i class="fas fa-graduation-cap fa-2x text-gray-300"></i>
+											<i class="fas fa-comments fa-2x text-gray-300"></i>
 										</div>
 									</div>
 								</div>
@@ -304,13 +274,95 @@
 					<div class="card-columns">
 
 						<!-- Content Column -->
-						<div class="mb-4">
-							<!-- Illustrations -->
-							<div class="card mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">老乡信息</h6>
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">学校简介</h6>
+							</div>
+							<div class="card-body">
+								{!! $schoolInfo !!}
+								<a target="_blank" rel="nofollow" href="{{url($toSchoolInfoURL)}}">更多介绍 &rarr;</a>
+							</div>
+						</div>
+
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">你的同学</h6>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-xl-6 col-lg-12">
+										<div class="chart-pie pt-4">
+											<canvas id="groupAccountChart"></canvas>
+										</div>
+									</div>
+									<div class="col-xl-6 col-lg-12">
+										<div class="chart-pie pt-4">
+											<canvas id="groupProviceChart"></canvas>
+										</div>
+									</div>
 								</div>
-								<div class="card-body">
+								<a target="_blank" rel="nofollow" href="{{url($toAllStuURL)}}">查看所有同学 &rarr;</a>
+							</div>
+						</div>
+
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">你的室友</h6>
+							</div>
+							<div class="card-body">
+								<table class="table table-bordered">
+									<thead>
+										<tr role="row">
+											<th>姓名</th>
+											<th>学号</th>
+											<th>床位</th>
+											<th>来自</th>
+										</tr>
+									</thead>
+									<tbody>
+										@if(count($domStus)==0) {{-- 还没有信息 --}}
+										<tr role="row">
+											<td colspan="4">还没有信息</td>
+										</tr>
+										@else @foreach($domStus as $domStu)
+										<tr role="row">
+											<td>{{$domStu->stu_name}}</td>
+											<td>{{$domStu->stu_num}}</td>
+											<td>{{$domStu->stu_dorm_str}}</td>
+											<td>{{$domStu->address}}</td>
+										</tr>
+										@endforeach @endif
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">专业介绍</h6>
+							</div>
+							<div class="card-body">
+								{!!$deptInfo!!}
+								<a target="_blank" rel="nofollow" href="{{url($toDeptInfoURL)}}">更多介绍 &rarr;</a>
+							</div>
+						</div>
+
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">宿舍环境</h6>
+							</div>
+							<div class="card-body">
+								{!!$domInfo!!}
+								<a target="_blank" rel="nofollow" href="{{url($toDomInfoURL)}}">更多介绍 &rarr;</a>
+							</div>
+						</div>
+
+						<div class="card mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">老乡信息</h6>
+							</div>
+							<div class="card-body">
+								<div class="col-sm-12">
 									<table class="table table-bordered">
 										<thead>
 											<tr role="row">
@@ -321,56 +373,23 @@
 											</tr>
 										</thead>
 										<tbody>
-											@if(count($countymens)==0) {{-- 还没有信息 --}}
+											@if (count($localFolks)==0)
+											<td colspan="4">还没有信息</td>
+											@else @foreach ($localFolks as $localFolk)
 											<tr role="row">
-												<td colspan="4">还没有信息</td>
-											</tr>
-											@else @foreach($countymens as $countymen)
-											<tr role="row">
-												<td>{{$countymen->stu_name}}</td>
-												<td>{{$countymen->stu_num}}</td>
-												<td>{{$countymen->stu_gen}}</td>
-												<td>{{$countymen->stu_num}}</td>
+												<td>{{$localFolk->stu_name}}</td>
+												<td>{{$localFolk->stu_num}}</td>
+												<td>{{$localFolk->stu_gen}}</td>
+												<td>{{$localFolk->stu_num}}</td>
 											</tr>
 											@endforeach @endif
 										</tbody>
 									</table>
+									<a target="_blank" rel="nofollow" href="{{url($toLocalFolkURL)}}">查看全部老乡 &rarr;</a>
 								</div>
 							</div>
 						</div>
 
-						<div class="mb-4">
-							<!-- Illustrations -->
-							<div class="card mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">与你同校的</h6>
-								</div>
-								<div class="card-body">
-									<table class="table table-bordered">
-										<thead>
-											<tr role="row">
-												<th>姓名</th>
-												<th>学号</th>
-												<th>性别</th>
-											</tr>
-										</thead>
-										<tbody>
-											@if(count($sameSchools)==0) {{-- 还没有信息 --}}
-											<tr role="row">
-												<td colspan="3">还没有信息</td>
-											</tr>
-											@else @foreach($sameSchools as $sameSchool)
-											<tr role="row">
-												<td>{{$sameSchool->name}}</td>
-												<td>{{$sameSchool->stuID}}</td>
-												<td>{{$sameSchool->gender}}</td>
-											</tr>
-											@endforeach @endif
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 				<!-- /.container-fluid -->
@@ -387,9 +406,9 @@
 				</div>
 			</footer>
 			<!-- End of Footer -->
+
 		</div>
-	</div>
-	<!-- End of Content Wrapper -->
+		<!-- End of Content Wrapper -->
 
 	</div>
 	<!-- End of Page Wrapper -->
@@ -425,6 +444,79 @@
 	 crossorigin="anonymous"></script>
 	<!-- Custom scripts for all pages-->
 	<script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+
+	<!-- Chart -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis="
+	 crossorigin="anonymous"></script>
+	<!-- Chart -->
+	<script type="text/javascript">
+		// Set new default font family and font color to mimic Bootstrap's default styling
+		Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+		Chart.defaults.global.defaultFontColor = '#858796';
+
+		// groupAccountChart, using to show the Male and Female in a class
+		var groupAccountChart = new Chart(document.getElementById("groupAccountChart"), {
+		type: 'doughnut',
+		data: {
+			labels: ["男生", "女生"],
+			datasets: [{
+			data: {!! json_encode($yourStuChartBoyGirl) !!},
+			backgroundColor: ['#4e73df', '#1cc88a'],
+			hoverBackgroundColor: ['#2e59d9', '#17a673'],
+			hoverBorderColor: "rgba(234, 236, 244, 1)",
+			}],
+		},
+		options: {
+			maintainAspectRatio: false,
+			tooltips: {
+			backgroundColor: "rgb(255,255,255)",
+			bodyFontColor: "#858796",
+			borderColor: '#dddfeb',
+			borderWidth: 1,
+			xPadding: 15,
+			yPadding: 15,
+			displayColors: false,
+			caretPadding: 10,
+			},
+			legend: {
+			display: true
+			},
+			cutoutPercentage: 80,
+		},
+		});
+
+
+		var allAccountChart = new Chart(document.getElementById("groupProviceChart"), {
+		type: 'doughnut',
+		data: {
+			labels: {!! json_encode($yourStuChartProName,JSON_UNESCAPED_UNICODE) !!},
+			datasets: [{
+			data: {!! json_encode($yourStuChartProData) !!},
+			backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f26d5b', '#7f9eb2'],
+			hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#c03546', '#77919d'],
+			hoverBorderColor: "rgba(234, 236, 244, 1)",
+			}],
+		},
+		options: {
+			maintainAspectRatio: false,
+			tooltips: {
+			backgroundColor: "rgb(255,255,255)",
+			bodyFontColor: "#858796",
+			borderColor: '#dddfeb',
+			borderWidth: 1,
+			xPadding: 15,
+			yPadding: 15,
+			displayColors: false,
+			caretPadding: 10,
+			},
+			legend: {
+			display: true
+			},
+			cutoutPercentage: 80,
+		},
+		});
+
+	</script>
 
 
 </body>
