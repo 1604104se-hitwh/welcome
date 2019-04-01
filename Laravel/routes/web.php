@@ -15,10 +15,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::post("/put", "StuController@sessionPut");
-
-Route::get("/test", "StuController@sessionTest");
-
 Route::post("/login", "StuController@postLogin");
 
 //STUDENT

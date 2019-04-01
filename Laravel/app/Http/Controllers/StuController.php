@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 require_once __DIR__.'/../../include.php';
 use Jxlwqq\IdValidator\IdValidator;
+use App\Http\Requests\LoginPost;
 
 function str_n_pos($str,$find,$n) {
     $pos_val = 0;
@@ -29,7 +30,8 @@ class StuController extends Controller
         //$stu_name = $res_obj->stu_name;
         /*班级情况统计*/
         $stu_class_str = substr($res_obj_array[0]->stu_num, 0, 7);  //学号digit0~digit6
-        $classmates_array = DB::select("SELECT * FROM `t_student` WHERE `stu_num` LIKE '$stu_class_str%'");//获得同班同学信息
+        //获得同班同学信息
+        $classmates_array = DB::select("SELECT * FROM `t_student` WHERE `stu_num` LIKE '$stu_class_str%'");
 
         //性别比例
         $class_male_num = 0;
@@ -375,31 +377,44 @@ class StuController extends Controller
 //        ]);
     }
 
-    public function postLogin(Request $request) {
-        if($request->input('loginType') === "new") {
+    /**
+     * XXX：这里有待改进
+     * app\Request下有一个人继承自Request的LoginPost，
+     * 但是将Request替换为LoginPost时，会将连接的数据库表替换为名叫posts的表，
+     * 修改这个配置的方法目前还没找到；
+     * 解决该问题后可以使用validated方法对post的数据进行初步验证
+     */
+    public function postLogin(Request $request) {      
+        // 获取通过验证的数据...
+        // $validated = $request->validated(); 
+        if ($request->input('loginType', "default") === "new") {   
             $stu_eid = $request->input("examId", "default");
             $stu_cid = $request->input("perId", "default");
             $this->idValidator = new IdValidator();
             $res_obj_array = DB::select('SELECT * FROM t_student WHERE stu_cid = :stu_cid',
                                         ["stu_cid" => $stu_cid]);
+            /* 判断该名新生是否存在 */
             if ($res_obj_array && $stu_cid === ($res_obj_array[0]->stu_cid)) {
-                $request->session()->put("usr", $request->input("stu_cid"));
+                session(["id" => $res_obj_array[0]->id]);
+                session(["stu_status" => $res_obj_array[0]->stu_status]);
+                session(["stu_degree" => $res_obj_array[0]->stu_degree]);
+                session(["stu_num" => $res_obj_array[0]->stu_num]);
+                session(["stu_name" => $res_obj_array[0]->stu_name]);
+                session(["stu_gen" => $res_obj_array[0]->stu_gen]);
+                session(["stu_cid" => $res_obj_array[0]->stu_cid]);
+                session(["stu_eid" => $res_obj_array[0]->stu_eid]);
+                session(["class_id" => $res_obj_array[0]->class_id]);
+                session(["stu_dorm_str" => $res_obj_array[0]->stu_dorm_str]);
+
+                // $request->session()->put("usr", $request->input("stu_cid"));
                 return redirect()->intended("/stu");
             }
             return redirect("/");
-        }
-        
+        }        
         return redirect("/");
     }
 
-    public function sessionTest(Request $request) {
-        if ($request->session()->has("usr")) {
-            return $request->session()->get("usr");
-        }
-    }
-
-    public function __construct()
-    {
-        $this->middleware('stuAuth');
+    public function __construct() {
+        $this->middleware('checkAuth');
     }
 }

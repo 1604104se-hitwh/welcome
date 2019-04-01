@@ -17,7 +17,7 @@ class AuthMiddle
      */
     public function handle($request, Closure $next)
     {
-        if ($request->session()->has("usr")) {
+        if ($request->session()->has("id")) {
             return $next($request);
         }
         return redirect()->guest("/");
