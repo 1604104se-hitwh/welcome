@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+require_once __DIR__.'/../../include.php';
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -45,6 +46,7 @@ class LoginController extends Controller
                 session(["stu_eid" => $res_obj_array[0]->stu_eid]);
                 session(["class_id" => $res_obj_array[0]->class_id]);
                 session(["stu_dorm_str" => $res_obj_array[0]->stu_dorm_str]);
+                session(["stu_fromSchool" => $res_obj_array[0]->stu_fromSchool]);
 
                 // $request->session()->put("usr", $request->input("stu_cid"));
                 return redirect()->intended("/stu");
