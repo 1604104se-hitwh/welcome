@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 require_once __DIR__.'/../../include.php';
 use Jxlwqq\IdValidator\IdValidator;
+use App\Http\Requests\LoginPost;
 
-function str_n_pos($str,$find,$n){
+function str_n_pos($str,$find,$n) {
     $pos_val = 0;
     for ($i=1;$i<=$n;$i++){
         $pos = strpos($str,$find);
@@ -22,14 +23,17 @@ function str_n_pos($str,$find,$n){
 class StuController extends Controller
 {
     private $idValidator;
-    public function index() 
-    {
+
+    private $stu_data = [];
+
+    public function index() {
         $this->idValidator = new IdValidator();
         $res_obj_array = DB::select('SELECT * FROM `t_student` WHERE `stu_cid`="230123199011274968"');
         //$stu_name = $res_obj->stu_name;
         /*班级情况统计*/
         $stu_class_str = substr($res_obj_array[0]->stu_num, 0, 7);  //学号digit0~digit6
-        $classmates_array = DB::select("SELECT * FROM `t_student` WHERE `stu_num` LIKE '$stu_class_str%'");//获得同班同学信息
+        //获得同班同学信息
+        $classmates_array = DB::select("SELECT * FROM `t_student` WHERE `stu_num` LIKE '$stu_class_str%'");
 
         //性别比例
         $class_male_num = 0;
@@ -109,11 +113,11 @@ class StuController extends Controller
             'toDomInfoURL'=>"toDomInfoURL",
             'localFolks'=>$contry_folk_array, // 老乡
             'toLocalFolkURL'=>"toLocalFolksURL", // 查看老乡信息url
-            'toLogoutURL'=>"toLogoutURL",      // 退出登录
+            'toLogoutURL'=>"/logout",      // 退出登录
             //饼图
             'yourStuChartBoyGirl'=>array($class_male_num, $class_fmle_num), // 男女比例，先男后女
             'yourStuChartProName'=>array_keys($classmates_addr_prov_cnt), // 省份名字
-            'yourStuChartProData'=>array_values($classmates_addr_prov_cnt) // 每个信息
+            'yourStuChartProData'=>array_values($classmates_addr_prov_cnt), // 每个信息
             ]);
 //        return view('stu.old.index',[
 //            'sysType'=>"老生",  // 系统运行模式，新生，老生，管理员
@@ -375,10 +379,44 @@ class StuController extends Controller
 //        ]);
     }
 
-    /* public function authenticate() {
-        if (Auth::attempt(['stu_eid' => $email, 'stu_cid' => $password])) {
-            // 认证通过...
-            return redirect()->intended('...');
-        }
-    } */
+    /**
+     * XXX：这里有待改进
+     * app\Request下有一个人继承自Request的LoginPost，
+     * 但是将Request替换为LoginPost时，会将连接的数据库表替换为名叫posts的表，
+     * 修改这个配置的方法目前还没找到；
+     * 解决该问题后可以使用validated方法对post的数据进行初步验证
+     */
+    public function postLogin(Request $request) {      
+        // 获取通过验证的数据...
+        // $validated = $request->validated(); 
+        if ($request->input('loginType', "default") === "new") {   
+            $stu_eid = $request->input("examId", "default");
+            $stu_cid = $request->input("perId", "default");
+            $this->idValidator = new IdValidator();
+            $res_obj_array = DB::select('SELECT * FROM t_student WHERE stu_cid = :stu_cid',
+                                        ["stu_cid" => $stu_cid]);
+            /* 判断该名新生是否存在 */
+            if ($res_obj_array && $stu_cid === ($res_obj_array[0]->stu_cid)) {
+                session(["id" => $res_obj_array[0]->id]);
+                session(["stu_status" => $res_obj_array[0]->stu_status]);
+                session(["stu_degree" => $res_obj_array[0]->stu_degree]);
+                session(["stu_num" => $res_obj_array[0]->stu_num]);
+                session(["stu_name" => $res_obj_array[0]->stu_name]);
+                session(["stu_gen" => $res_obj_array[0]->stu_gen]);
+                session(["stu_cid" => $res_obj_array[0]->stu_cid]);
+                session(["stu_eid" => $res_obj_array[0]->stu_eid]);
+                session(["class_id" => $res_obj_array[0]->class_id]);
+                session(["stu_dorm_str" => $res_obj_array[0]->stu_dorm_str]);
+
+                // $request->session()->put("usr", $request->input("stu_cid"));
+                return redirect()->intended("/stu");
+            }
+            return redirect("/");
+        }        
+        return redirect("/");
+    }
+
+    public function __construct() {
+        // $this->middleware('checkAuth');
+    }
 }

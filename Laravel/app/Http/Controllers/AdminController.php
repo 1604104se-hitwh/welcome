@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
+    public function __construct() {
+        // $this->middleware('checkAuth');
+    }
     // 管理员-首页
     public function index(){
         $res = DB::select('SELECT * FROM `t_student` WHERE `stu_status`="PREPARE"');
