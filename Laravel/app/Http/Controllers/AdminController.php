@@ -18,7 +18,7 @@ class AdminController extends Controller
         $current = DB::select('SELECT * FROM `t_student` WHERE `stu_status`="CURRENT"');
         return view('admin.index',[
             'sysType'=>"管理员",  // 系统运行模式，新生，老生，管理员
-            'user'=>"user", // 用户名
+            'user'=>session("name"), // 用户名
             'userImg'=> "userImg",// 用户头像链接 url(site)
             'toInfomationURL'=>"toInfomationURL", // 个人设置url
             'toSettingURL'=>"toSettingURL", // 个人设置
@@ -36,7 +36,7 @@ class AdminController extends Controller
                 'reportStatus'=>"等待开始报到", // 报到状态
             ), 
 
-            'toLogoutURL'=>"toLogoutURL",      // 退出登录
+            'toLogoutURL'=>"/logout",      // 退出登录
         ]);
     }
 
@@ -44,7 +44,7 @@ class AdminController extends Controller
     public function manageSchoolInfo(){
         return view('admin.insertSchoolInfo',[
             'sysType'=>"管理员",  // 系统运行模式，新生，老生，管理员
-            'user'=>"user", // 用户名
+            'user'=>session("name"), // 用户名
             'userImg'=> "userImg",// 用户头像链接 url(site)
             'toInfomationURL'=>"toInfomationURL", // 个人设置url
             'toSettingURL'=>"toSettingURL", // 个人设置
@@ -58,7 +58,7 @@ class AdminController extends Controller
             'schoolInfoPostURL'=>"", // 学校信息提交URL
             'deptInfoPostURL'=>"", // 院系信息提交URL
 
-            'toLogoutURL'=>"toLogoutURL",      // 退出登录
+            'toLogoutURL'=>"/logout",      // 退出登录
         ]);
     }
 
@@ -66,7 +66,7 @@ class AdminController extends Controller
     public function manageNewsInfo(){
         return view('admin.newStudentManage',[
             'sysType'=>"管理员",  // 系统运行模式，新生，老生，管理员
-            'user'=>"user", // 用户名
+            'user'=>session("name"), // 用户名
             'userImg'=> "userImg",// 用户头像链接 url(site)
             'toInfomationURL'=>"toInfomationURL", // 个人设置url
             'toSettingURL'=>"toSettingURL", // 个人设置
@@ -78,7 +78,7 @@ class AdminController extends Controller
             'newsInfoPostURL'=>"", // 新生信息提交URL
 
 
-            'toLogoutURL'=>"toLogoutURL",      // 退出登录
+            'toLogoutURL'=>"/logout",      // 退出登录
         ]);
     }
 

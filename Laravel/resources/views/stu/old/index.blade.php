@@ -43,7 +43,7 @@
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active">
-				<a class="nav-link" href="{{url('/stu')}}">
+				<a class="nav-link" href="{{url('/senior')}}">
 					<i class="fas fa-fw fa-home"></i>
 					<span>首页</span></a>
 			</li>

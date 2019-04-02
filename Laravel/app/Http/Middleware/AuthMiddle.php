@@ -7,8 +7,8 @@ use App\Models\User;
 // use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class AuthMiddle
-{
+/* 用来控制非法访问，只有session中有id项才能正常访问 */
+class AuthMiddle {
     /**
      * Handle an incoming request.
      *
