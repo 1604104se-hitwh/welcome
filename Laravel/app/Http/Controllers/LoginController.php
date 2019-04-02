@@ -70,7 +70,7 @@ class LoginController extends Controller
                                         ["useid"=>$useid, "psw"=>$psw]);
             if ($res_obj_array) {
                 session(["id"=>$res_obj_array[0]->id]);
-                session[["name"=>$useid]];
+                session(["name"=>$useid]);
                 return redirect()->intended("/admin");
             }
         }  
