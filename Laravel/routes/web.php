@@ -15,51 +15,54 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::post("/login", function() {
-    return view("stu.new.index");
-})->middleware('stuAuth');
+Route::post("/login", "LoginController@login");
 
-//STUDENT
-Route::get('/stu', '\App\Http\Controllers\StuController@index');
+Route::get("/logout", "LoginController@logout");
 
-Route::get('/stu/index', '\App\Http\Controllers\StuController@index');
+/* 使用中间件组方式比较灵活 */
+Route::group(['middleware' => ['checkAuth']], function() {
+    //STUDENT
 
-Route::get('/stu/queryClass', '\App\Http\Controllers\StuController@queryClass');
+	Route::get('/stu', '\App\Http\Controllers\StuController@index');
+	
+	Route::get('/stu/index', '\App\Http\Controllers\StuController@index');
+	
+	Route::get('/stu/queryClass', '\App\Http\Controllers\StuController@queryClass');
+	
+	Route::get('/stu/queryDorm', '\App\Http\Controllers\StuController@queryDorm');
+	
+	Route::get('/stu/queryCountryFolk', '\App\Http\Controllers\StuController@queryCountryFolk');
+	
+	Route::get('/stu/posts', '\App\Http\Controllers\PostController@index');
+	
+	Route::get('/stu/posts/{postId}', '\App\Http\Controllers\PostController@show');
+	
+	Route::get('/stu/nav', '\App\Http\Controllers\NavController@index');
+	
+	Route::get('/stu/enrollInfo', '\App\Http\Controllers\EnrollController@enrollInfo');
+	
+	Route::get('/stu/enrollGuide', '\App\Http\Controllers\EnrollController@enrollGuide');
+	
+	Route::get('/stu/survey', '\App\Http\Controllers\SurveyController@index');
+	
+	Route::get('/stu/survey/{surveyId}', '\App\Http\Controllers\SurveyController@index');
 
-Route::get('/stu/queryDorm', '\App\Http\Controllers\StuController@queryDorm');
+	//ADMIN
 
-Route::get('/stu/queryCountryFolk', '\App\Http\Controllers\StuController@queryCountryFolk');
+	Route::get('/admin', '\App\Http\Controllers\AdminController@index');
 
-Route::get('/stu/posts', '\App\Http\Controllers\PostController@index');
+	Route::get('/admin/index', '\App\Http\Controllers\AdminController@index');
 
-Route::get('/stu/posts/{postId}', '\App\Http\Controllers\PostController@show');
+	Route::get('/admin/manageSchoolInfo','\App\Http\Controllers\AdminController@manageSchoolInfo');
 
-Route::get('/stu/nav', '\App\Http\Controllers\NavController@index');
+	Route::get('/admin/manageNewsInfo','\App\Http\Controllers\AdminController@manageNewsInfo');
 
-Route::get('/stu/enrollInfo', '\App\Http\Controllers\EnrollController@enrollInfo');
+	Route::get('/admin/posts', '\App\Http\Controllers\PostController@index');
 
-Route::get('/stu/enrollGuide', '\App\Http\Controllers\EnrollController@enrollGuide');
+	Route::get('/admin/posts/{post}', '\App\Http\Controllers\PostController@show');
 
-Route::get('/stu/survey', '\App\Http\Controllers\SurveyController@index');
+	Route::get('/admin/posts/create', '\App\Http\Controllers\PostController@create');
 
-Route::get('/stu/survey/{surveyId}', '\App\Http\Controllers\SurveyController@index');
+});
 
-
-
-//ADMIN
-
-//...
-Route::get('/admin', '\App\Http\Controllers\AdminController@index');
-
-Route::get('/admin/index', '\App\Http\Controllers\AdminController@index');
-
-Route::get('/admin/manageSchoolInfo','\App\Http\Controllers\AdminController@manageSchoolInfo');
-
-Route::get('/admin/manageNewsInfo','\App\Http\Controllers\AdminController@manageNewsInfo');
-
-Route::get('/admin/posts', '\App\Http\Controllers\PostController@index');
-
-Route::get('/admin/posts/{post}', '\App\Http\Controllers\PostController@show');
-
-Route::get('/admin/posts/create', '\App\Http\Controllers\PostController@create');
-
+// Auth::routes();
