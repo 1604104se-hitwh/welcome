@@ -135,8 +135,6 @@ class StuController extends Controller
 
     public function queryClass()
     {
-
-
         $res_obj_array = DB::select('SELECT * FROM `t_student` WHERE `stu_cid`= :stu_cid', ["stu_cid" => session('stu_cid')]);
         /*班级情况统计*/
         $stu_class_str = substr(session('stu_num'), 0, 7);  //学号digit0~digit6
@@ -175,35 +173,7 @@ class StuController extends Controller
             'classmates' => $classmates_array, // 你的同学
             'toLogoutURL' => "/logout",      // 退出登录
         ]);
-        //        return view('stu.old.yourClass',[
-        //            'sysType'=>"老生",  // 系统运行模式，新生，老生，管理员
-        //            'messages'=>array(
-        //                'unreadNum'=>3, // 未读信息
-        //                'showMessage'=>array(   // 选的信息
-        //                    array(
-        //                        'title'=>"111",
-        //                        'context'=>"111",
-        //                        'readed'=>false,
-        //                    ),
-        //                    array(
-        //                        'title'=>"222",
-        //                        'context'=>"222",
-        //                        'readed'=>true,
-        //                    ),
-        //                ),
-        //                'moreInfoUrl'=>"/message", // 更多信息跳转
-        //
-        //            ), // 信息
-        //            'stuID'=>$res_obj_array[0]->stu_num, // 学号
-        //            'stuDept'=>"计算机",
-        //            'classID'=>$res_obj_array[0]->class_id,
-        //            'classmates'=>$classmates_array, // 你的同学
-        //            'user'=>$res_obj_array[0]->stu_name, // 用户名?
-        //            'userImg'=> "userImg",// 用户头像链接 url(site)?
-        //            'toInfomationURL'=>"toInfomationURL", // 个人设置url
-        //            'toSettingURL'=>"toSettingURL", // 个人设置
-        //            'toLogoutURL'=>"toLogoutURL",      // 退出登录
-        //        ]);
+        
     }
 
     public function queryDorm()
@@ -255,41 +225,7 @@ class StuController extends Controller
 
 
             'toLogoutURL' => "/logout",      // 退出登录
-        ]);
-        //        return view('stu.old.yourDom',[
-        //            'sysType'=>"老生",  // 系统运行模式，新生，老生，管理员
-        //            'messages'=>array(
-        //                'unreadNum'=>3, // 未读信息
-        //                'showMessage'=>array(   // 选的信息
-        //                    array(
-        //                        'title'=>"111",
-        //                        'context'=>"111",
-        //                        'readed'=>false,
-        //                    ),
-        //                    array(
-        //                        'title'=>"222",
-        //                        'context'=>"222",
-        //                        'readed'=>true,
-        //                    ),
-        //                ),
-        //                'moreInfoUrl'=>"/message", // 更多信息跳转
-        //
-        //            ), // 信息
-        //            'user'=>"user", // 用户名
-        //            'userImg'=> "userImg",// 用户头像链接 url(site)
-        //            'stuID'=>"stuID", // 学号
-        //            'stuDept'=>"计算机",
-        //            'stuDomitory'=>"stuDomitory", // 宿舍
-        //            'domInfo'=>"domInfo", // 宿舍介绍
-        //            'yourDoms'=>array(),
-        //            'domLocal'=>array( // 宿舍位置（定位）
-        //                'PX'=>array(122.080098,37.532806),
-        //                'title'=>"七公寓"
-        //            ),
-        //            'toInfomationURL'=>"toInfomationURL", // 个人设置url
-        //            'toSettingURL'=>"toSettingURL", // 个人设置
-        //            'toLogoutURL'=>"toLogoutURL",      // 退出登录
-        //        ]);
+        ]);      
     }
 
     public function queryCountryFolk()
@@ -307,7 +243,6 @@ class StuController extends Controller
             if ($localStudent->stu_fromSchool == $fromSchool)
                 array_push($sameSchools, $localStudent);
         }
-
 
         return view('stu.new.yourCountryFolk', [
             'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
@@ -341,37 +276,6 @@ class StuController extends Controller
 
             'toLogoutURL' => "/logout",      // 退出登录
         ]);
-        //        return view('stu.old.yourCountryFolk',[
-        //            'sysType'=>"老生",  // 系统运行模式，新生，老生，管理员
-        //            'messages'=>array(
-        //                'unreadNum'=>3, // 未读信息
-        //                'showMessage'=>array(   // 选的信息
-        //                    array(
-        //                        'title'=>"111",
-        //                        'context'=>"111",
-        //                        'readed'=>false,
-        //                    ),
-        //                    array(
-        //                        'title'=>"222",
-        //                        'context'=>"222",
-        //                        'readed'=>true,
-        //                    ),
-        //                ),
-        //                'moreInfoUrl'=>"/message", // 更多信息跳转
-        //
-        //            ), // 信息
-        //            'stuID'=>"stuID", // 学号
-        //            'user'=>"user", // 用户名
-        //            'userImg'=> "userImg",// 用户头像链接 url(site)
-        //            'toInfomationURL'=>"toInfomationURL", // 个人设置url
-        //            'toSettingURL'=>"toSettingURL", // 个人设置
-        //            'IDnumber'=>"111111", // 身份证号码
-        //            'stuLocal'=>"stuLocal", // 识别地区
-        //            'stuPreSchool'=>"stuPreSchool", // 毕业院校
-        //            'countymens'=>array(), // 老乡信息
-        //            'sameSchools'=>array(), // 同校信息
-        //            'toLogoutURL'=>"toLogoutURL",      // 退出登录
-        //        ]);
     }
 
     public function __construct()

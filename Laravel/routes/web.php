@@ -50,6 +50,9 @@ Route::group(['middleware' => ['checkAuth']], function() {
 	/* SENIOR STUDENT*/
 
 	Route::get("/senior", "SeniorController@index");
+	Route::get('/senior/queryClass', 'SeniorController@queryClass');
+	Route::get('/senior/queryDorm', 'SeniorController@queryDorm');
+	Route::get('/senior/queryCountryFolk', 'SeniorController@queryCountryFolk');
 
 	//ADMIN
 
