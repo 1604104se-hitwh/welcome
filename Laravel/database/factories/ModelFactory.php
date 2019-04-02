@@ -18,6 +18,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     /**
      * TODO: 使用faker批量填充假数据
      */
+    
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,

@@ -49,7 +49,15 @@ class LoginController extends Controller
                 return redirect()->intended("/stu");
             }
         } else if ($loginType === "old") {
-
+            $name = $request->input("name", "default");
+            $perId = $request->input("perId", "default");
+            $res_obj_array = DB::select('SELECT * FROM t_admin WHERE stu_name = :name 
+                                        AND stu_cid = :perId',
+                                        ["name"=>$name, "psw"=>$perId]);
+            if ($res_obj_array) {
+                session(["id"=>$res_obj_array[0]->id]);
+                return redirect()->intended("/?");
+            }
         } else if ($loginType === "admin") {
             $useid = $request->input("useid", "default");
             $psw = $request->input("psw", "default");
