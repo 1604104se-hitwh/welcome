@@ -20,7 +20,7 @@ Route::get("/logout", "LoginController@logout");
 
 /* 使用中间件组方式比较灵活 */
 Route::group(['middleware' => ['checkAuth']], function() {
-    //STUDENT
+    //NEW STUDENT
 
 	Route::get('/stu', '\App\Http\Controllers\StuController@index');
 	
@@ -45,6 +45,10 @@ Route::group(['middleware' => ['checkAuth']], function() {
 	Route::get('/stu/survey', '\App\Http\Controllers\SurveyController@index');
 	
 	Route::get('/stu/survey/{surveyId}', '\App\Http\Controllers\SurveyController@index');
+
+	/* SENIOR STUDENT*/
+
+	Route::get("/senior", "SeniorController@index");
 
 	//ADMIN
 

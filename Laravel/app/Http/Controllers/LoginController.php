@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\LoginPost;
 
 /**
  * 此为登录控制器，登录分为三种情况：
@@ -51,12 +52,13 @@ class LoginController extends Controller
         } else if ($loginType === "old") {
             $name = $request->input("name", "default");
             $perId = $request->input("perId", "default");
-            $res_obj_array = DB::select('SELECT * FROM t_admin WHERE stu_name = :name 
+            $res_obj_array = DB::select('SELECT * FROM t_student WHERE stu_name = :name 
                                         AND stu_cid = :perId',
-                                        ["name"=>$name, "psw"=>$perId]);
+                                        ["name"=>$name, "perId"=>$perId]);
             if ($res_obj_array) {
                 session(["id"=>$res_obj_array[0]->id]);
-                return redirect()->intended("/?");
+                session(["name"=>$name]);
+                return redirect()->intended("/senior");
             }
         } else if ($loginType === "admin") {
             $useid = $request->input("useid", "default");
@@ -66,6 +68,7 @@ class LoginController extends Controller
                                         ["useid"=>$useid, "psw"=>$psw]);
             if ($res_obj_array) {
                 session(["id"=>$res_obj_array[0]->id]);
+                session[["name"=>$useid]];
                 return redirect()->intended("/admin");
             }
         }  
