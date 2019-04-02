@@ -64,7 +64,6 @@ Welcome HITers
 
 
 
-
 ## 项目配置
 
 - 后端采用Laravel框架，前端采用Bootstrap。再次感谢框架作者给我们开发带来便利。
@@ -86,6 +85,33 @@ Welcome HITers
 - [ ] NGINX >= 1.13
 - [ ] HTTP/2
 - [ ] 优秀的云主机
+
+
+
+## 开发环境配置
+
+- 要求本地装有composer
+
+```text
+git clone https://github.com/1604104se-hitwh/welcome.git
+cd Laravel
+composer install
+```
+之后需要打开.env配置本地的数据库环境
+```text
+php artisan migrate
+php artisan db:seed --class=StudentTableSeeder
+php artisan db:seed --class=AdminTableSeeder
+php artisan db:seed --class=DatabaseSeeder
+php artisan db:seed --class=DepartmentTableSeeder
+php artisan db:seed --class=MajorTableSeeder
+```
+调试运行：
+```text
+php artisan serve
+```
+打开浏览器，地址栏输入：localhost:8000
+登录数据可以在相应的数据库填充器中查看，比如管理员登录就可以在`database/seeds/AdminTableSeeder.php`中选取用户名密码登录
 
 
 
