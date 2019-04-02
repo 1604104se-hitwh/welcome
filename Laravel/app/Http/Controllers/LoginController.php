@@ -5,15 +5,15 @@ require_once __DIR__.'/../../include.php';
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Jxlwqq\IdValidator\IdValidator;
 
+/**
+ * 此为登录控制器，登录分为三种情况：
+ * 新生
+ * 老生
+ * 管理员
+ */
 class LoginController extends Controller
 {
-    public function logout(Request $request) {
-        $request->session()->flush();
-        return redirect("/");
-    }
-
     /**
      * XXX：这里有待改进
      * app\Request下有一个人继承自Request的LoginPost，
@@ -21,17 +21,20 @@ class LoginController extends Controller
      * 修改这个配置的方法目前还没找到；
      * 解决该问题后可以使用validated方法对post的数据进行初步验证
      */
-    public function postLogin(Request $request) {      
+
+    /* 登录总控 */
+    public function login(Request $request) {
         // 获取通过验证的数据...
         // $validated = $request->validated(); 
-        if ($request->input('loginType', "default") === "new") {   
+        $loginType = $request->input('loginType', "default");
+        if ($loginType === "new") {   
             $stu_eid = $request->input("examId", "default");
             $stu_cid = $request->input("perId", "default");
-            $this->idValidator = new IdValidator();
-            $res_obj_array = DB::select('SELECT * FROM t_student WHERE stu_cid = :stu_cid AND stu_eid = :stu_eid',
-                                        ["stu_cid" => $stu_cid,"stu_eid" => $stu_eid]);
+            // $this->idValidator = new IdValidator();
+            $res_obj_array = DB::select('SELECT * FROM t_student WHERE stu_cid = :stu_cid',
+                                        ["stu_cid" => $stu_cid]);
             /* 判断该名新生是否存在 */
-            if ($res_obj_array) {
+            if ($res_obj_array && $stu_cid === ($res_obj_array[0]->stu_cid)) {
                 session(["id" => $res_obj_array[0]->id]);
                 session(["stu_status" => $res_obj_array[0]->stu_status]);
                 session(["stu_degree" => $res_obj_array[0]->stu_degree]);
@@ -47,8 +50,24 @@ class LoginController extends Controller
                 // $request->session()->put("usr", $request->input("stu_cid"));
                 return redirect()->intended("/stu");
             }
-            return redirect("/");
-        }
+        } else if ($loginType === "old") {
+
+        } else if ($loginType === "admin") {
+            $useid = $request->input("useid", "default");
+            $psw = $request->input("psw", "default");
+            $res_obj_array = DB::select('SELECT * FROM t_admin WHERE adm_name = :useid 
+                                        AND adm_password = :psw',
+                                        ["useid"=>$useid, "psw"=>$psw]);
+            if ($res_obj_array) {
+                session(["id"=>$res_obj_array[0]->id]);
+                return redirect()->intended("/admin");
+            }
+        }  
+        return redirect("/");
+    }
+
+    public function logout(Request $request) {
+        $request->session()->flush();
         return redirect("/");
     }
 }

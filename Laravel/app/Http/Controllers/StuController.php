@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 require_once __DIR__.'/../../include.php';
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 use Jxlwqq\IdValidator\IdValidator;
 use App\Http\Requests\LoginPost;
@@ -24,7 +23,14 @@ class StuController extends Controller
 {
     private $idValidator;
 
-    private $stu_data = [];
+    /**
+     * TODO: 
+     * 登录时将相关数据写入session，然后存入stu_data数组，
+     * 方便在index中使用
+     */
+
+    //  example: $data['first'] = 'Zhang'; $value = session("key", "default");
+    private static $stu_data = [];
 
     public function index() {
         
@@ -32,7 +38,6 @@ class StuController extends Controller
         $stu_class_str = substr(session('stu_num'), 0, 7);  //学号digit0~digit6
         //获得同班同学信息
         $classmates_array = DB::select("SELECT * FROM `t_student` WHERE `stu_num` LIKE '$stu_class_str%'");
-
         //性别比例
         $class_male_num = 0;
         $class_fmle_num = 0;
