@@ -32,7 +32,7 @@
 		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 			<!-- Sidebar - Brand -->
-			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
@@ -321,7 +321,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											@if(count($countymens)==0) {{-- 还没有信息 --}}
+											@if(count($countymens) == 0) {{-- 还没有信息 --}}
 											<tr role="row">
 												<td colspan="4">还没有信息</td>
 											</tr>
@@ -329,8 +329,14 @@
 											<tr role="row">
 												<td>{{$countymen->stu_name}}</td>
 												<td>{{$countymen->stu_num}}</td>
-												<td>{{$countymen->stu_gen}}</td>
-												<td>{{$countymen->stu_num}}</td>
+												<td>
+												@if($countymen->stu_gen == 0)
+													男
+												@else
+													女
+												@endif
+												</td>
+												<td>{{$countymen->stu_fromSchool}}</td>
 											</tr>
 											@endforeach @endif
 										</tbody>
@@ -355,15 +361,21 @@
 											</tr>
 										</thead>
 										<tbody>
-											@if(count($sameSchools)==0) {{-- 还没有信息 --}}
+											@if(count($sameSchools) == 0) {{-- 还没有信息 --}}
 											<tr role="row">
 												<td colspan="3">还没有信息</td>
 											</tr>
 											@else @foreach($sameSchools as $sameSchool)
 											<tr role="row">
-												<td>{{$sameSchool->name}}</td>
-												<td>{{$sameSchool->stuID}}</td>
-												<td>{{$sameSchool->gender}}</td>
+												<td>{{$sameSchool->stu_name}}</td>
+												<td>{{$sameSchool->stu_num}}</td>
+												<td>
+												@if($sameSchool->stu_gen == 0)
+													男
+												@else
+													女
+												@endif
+												</td>
 											</tr>
 											@endforeach @endif
 										</tbody>

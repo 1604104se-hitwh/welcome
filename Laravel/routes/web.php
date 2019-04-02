@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::post("/login", "StuController@postLogin");
+Route::post("/login", "LoginController@postLogin");
 Route::get("/logout", "LoginController@logout");
 
 Route::group(['middleware' => ['checkAuth']], function() {
