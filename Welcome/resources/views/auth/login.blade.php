@@ -88,7 +88,7 @@
                         <input type="hidden" name="loginType" value="admin">
                         <div class="form-group">
                             <label for="examId">用户名</label>
-                            <input type="text" name="useid" class="form-control" id="userId" placeholder="填写准用户名">
+                            <input type="text" name="userId" class="form-control" id="userId" placeholder="填写准用户名">
                         </div>
                         <div class="form-group">
                             <label for="perId">密码</label>

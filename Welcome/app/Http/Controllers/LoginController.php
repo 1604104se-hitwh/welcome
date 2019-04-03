@@ -75,7 +75,8 @@ class LoginController extends Controller
             $res_obj_array = DB::select('SELECT * FROM t_admin WHERE adm_name = :userId 
                                         AND adm_password = :psw',
                 ["userId" => $userId, "psw" => $psw]);
-            if ($res_obj_array) {
+
+                if ($res_obj_array) {
                 session([
                     "id" => $res_obj_array[0]->id,
                     "name" => $userId,
