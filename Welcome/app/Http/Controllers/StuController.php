@@ -24,18 +24,7 @@ class StuController extends Controller
 {
     private $idValidator;
 
-    /**
-     * TODO:
-     * 登录时将相关数据写入session，然后存入stu_data数组，
-     * 方便在index中使用
-     */
-
-    //  example: $data['first'] = 'Zhang'; $value = session("key", "default");
-    private static $stu_data = [];
-
-    public function index()
-    {
-
+    public function index() {
         /*班级情况统计*/
         $stu_class_str = substr(session('stu_num'), 0, 7);  //学号digit0~digit6
         //获得同班同学信息
@@ -223,8 +212,6 @@ class StuController extends Controller
                 'PX' => array(122.080098, 37.532806),
                 'title' => "七公寓"
             ),
-
-
             'toLogoutURL' => "/logout",      // 退出登录
         ]);
     }
@@ -279,9 +266,7 @@ class StuController extends Controller
         ]);
     }
 
-    public function __construct()
-    {
-        // $this->middleware('checkAuth');
+    public function __construct() {
         // 身份证获取
         $this->idValidator = new IdValidator();
     }
