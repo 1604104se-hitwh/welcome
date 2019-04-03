@@ -22,15 +22,7 @@ function str_n_pos($str, $find, $n)
 class StuController extends Controller
 {
     private $idValidator;
-
-    /**
-     * TODO: 
-     * 登录时将相关数据写入session，然后存入stu_data数组，
-     * 方便在index中使用
-     */
-
-    //  example: $data['first'] = 'Zhang'; $value = session("key", "default");
-    private static $stu_data = [];
+    // private static $stu_data = [];
 
     public function index()
     {
