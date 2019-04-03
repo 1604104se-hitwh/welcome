@@ -140,23 +140,23 @@ php artisan serve
 
 - 登陆界面
 
-![login](pic/login.png)
+![login](./pic/login.png)
 
 - 新生界面
 
-![news](pic/news.png)
+![news](./pic/news.png)
 
 - 新生查询宿舍信息
 
-![newsDorm](pic/newsDorm.png)
+![newsDorm](./pic/newsDorm.png)
 
 - 新生查询老乡
 
-![newsLocal](pic/newsLocal.png)
+![newsLocal](./pic/newsLocal.png)
 
 - 管理员界面
 
-![admin](pic/admin.png)
+![admin](./pic/admin.png)
 
 ## 暂定实现功能
 
