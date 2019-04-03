@@ -77,7 +77,7 @@ Welcome HITers
 
 运行环境建议：
 
-- [x] PHP >= 7.0（推荐使用7.1以上）
+- [x] PHP >= 7.1（推荐使用7.2以上）
 - [x] Laravel >= 5.6
 - [x] Mysql >= 5.6
 - [x] Curl
@@ -90,15 +90,28 @@ Welcome HITers
 
 ## 开发环境配置
 
-- 要求本地装有composer
+- 要求本地装有`composer`
 
-```text
+```php
 git clone https://github.com/1604104se-hitwh/welcome.git
-cd Laravel
+cd Welcome
 composer install
 ```
-之后需要打开.env配置本地的数据库环境
-```text
+
+之后需要打开`.env`配置本地的数据库环境
+
+```php
+DB_CONNECTION=mysql // 可能是别的数据库，具体见Laravel
+DB_HOST=127.0.0.1 	// 数据库地址
+DB_PORT=3306 		// 端口
+DB_DATABASE=数据库名称
+DB_USERNAME=数据库用户名
+DB_PASSWORD=数据库密码
+```
+
+再执行：
+
+```php
 php artisan migrate
 php artisan db:seed --class=StudentTableSeeder
 php artisan db:seed --class=AdminTableSeeder
@@ -106,14 +119,21 @@ php artisan db:seed --class=DatabaseSeeder
 php artisan db:seed --class=DepartmentTableSeeder
 php artisan db:seed --class=MajorTableSeeder
 ```
+
 调试运行：
-```text
+
+```php
 php artisan serve
 ```
-打开浏览器，地址栏输入：localhost:8000
+
+打开浏览器，地址栏输入：`localhost:8000`
 登录数据可以在相应的数据库填充器中查看，比如管理员登录就可以在`database/seeds/AdminTableSeeder.php`中选取用户名密码登录
 
+## 生产环境配置
 
+- 使用`Nginx`中间件，需要将入口导向`public`，`index.php`会将流量引导到内核和路由；
+- 删除`.env`，在`config`中进行修改配置；
+- 关闭`debug`模式，进入生产模式。
 
 ## 暂定实现功能
 
@@ -161,7 +181,6 @@ php artisan serve
 6. 迎新核验
 
    向各院系提供，在迎新核验时候提供学生的核验信息，在核验完成后确认报到。
-
 
 
 *Welcome HITers Software Development Team*
