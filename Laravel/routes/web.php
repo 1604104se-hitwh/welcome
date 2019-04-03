@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-	return view('auth.login');
+    return view('auth.login');
 });
 
 Route::post("/login", "LoginController@login");
@@ -20,55 +20,55 @@ Route::post("/login", "LoginController@login");
 Route::get("/logout", "LoginController@logout");
 
 /* 使用中间件组方式比较灵活 */
-Route::group(['middleware' => ['checkAuth']], function() {
+Route::group(['middleware' => ['checkAuth:new']], function () {
     //NEW STUDENT
 
-	Route::get('/stu', '\App\Http\Controllers\StuController@index');
+    Route::get('/stu', '\App\Http\Controllers\StuController@index');
 
-	Route::get('/stu/index', '\App\Http\Controllers\StuController@index');
+    Route::get('/stu/index', '\App\Http\Controllers\StuController@index');
 
-	Route::get('/stu/queryClass', '\App\Http\Controllers\StuController@queryClass');
+    Route::get('/stu/queryClass', '\App\Http\Controllers\StuController@queryClass');
 
-	Route::get('/stu/queryDorm', '\App\Http\Controllers\StuController@queryDorm');
+    Route::get('/stu/queryDorm', '\App\Http\Controllers\StuController@queryDorm');
 
-	Route::get('/stu/queryCountryFolk', '\App\Http\Controllers\StuController@queryCountryFolk');
+    Route::get('/stu/queryCountryFolk', '\App\Http\Controllers\StuController@queryCountryFolk');
 
-	Route::get('/stu/posts', '\App\Http\Controllers\PostController@index');
+    Route::get('/stu/posts', '\App\Http\Controllers\PostController@index');
 
-	Route::get('/stu/posts/{postId}', '\App\Http\Controllers\PostController@show');
+    Route::get('/stu/posts/{postId}', '\App\Http\Controllers\PostController@show');
 
-	Route::get('/stu/nav', '\App\Http\Controllers\NavController@index');
+    Route::get('/stu/nav', '\App\Http\Controllers\NavController@index');
 
-	Route::get('/stu/enrollInfo', '\App\Http\Controllers\EnrollController@enrollInfo');
+    Route::get('/stu/enrollInfo', '\App\Http\Controllers\EnrollController@enrollInfo');
 
-	Route::get('/stu/enrollGuide', '\App\Http\Controllers\EnrollController@enrollGuide');
+    Route::get('/stu/enrollGuide', '\App\Http\Controllers\EnrollController@enrollGuide');
 
-	Route::get('/stu/survey', '\App\Http\Controllers\SurveyController@index');
+    Route::get('/stu/survey', '\App\Http\Controllers\SurveyController@index');
 
-	Route::get('/stu/survey/{surveyId}', '\App\Http\Controllers\SurveyController@index');
+    Route::get('/stu/survey/{surveyId}', '\App\Http\Controllers\SurveyController@index');
+});
+/* SENIOR STUDENT*/
+Route::group(['middleware' => ['checkAuth:old']], function () {
+    Route::get("/senior", "SeniorController@index");
+    Route::get('/senior/queryClass', 'SeniorController@queryClass');
+    Route::get('/senior/queryDorm', 'SeniorController@queryDorm');
+    Route::get('/senior/queryCountryFolk', 'SeniorController@queryCountryFolk');
+});
+//ADMIN
+Route::group(['middleware' => ['checkAuth:admin']], function () {
+    Route::get('/admin', '\App\Http\Controllers\AdminController@index');
 
-	/* SENIOR STUDENT*/
+    Route::get('/admin/index', '\App\Http\Controllers\AdminController@index');
 
-	Route::get("/senior", "SeniorController@index");
-	Route::get('/senior/queryClass', 'SeniorController@queryClass');
-	Route::get('/senior/queryDorm', 'SeniorController@queryDorm');
-	Route::get('/senior/queryCountryFolk', 'SeniorController@queryCountryFolk');
+    Route::get('/admin/manageSchoolInfo', '\App\Http\Controllers\AdminController@manageSchoolInfo');
 
-	//ADMIN
+    Route::get('/admin/manageNewsInfo', '\App\Http\Controllers\AdminController@manageNewsInfo');
 
-	Route::get('/admin', '\App\Http\Controllers\AdminController@index');
+    Route::get('/admin/posts', '\App\Http\Controllers\PostController@index');
 
-	Route::get('/admin/index', '\App\Http\Controllers\AdminController@index');
+    Route::get('/admin/posts/{post}', '\App\Http\Controllers\PostController@show');
 
-	Route::get('/admin/manageSchoolInfo', '\App\Http\Controllers\AdminController@manageSchoolInfo');
-
-	Route::get('/admin/manageNewsInfo', '\App\Http\Controllers\AdminController@manageNewsInfo');
-
-	Route::get('/admin/posts', '\App\Http\Controllers\PostController@index');
-
-	Route::get('/admin/posts/{post}', '\App\Http\Controllers\PostController@show');
-
-	Route::get('/admin/posts/create', '\App\Http\Controllers\PostController@create');
+    Route::get('/admin/posts/create', '\App\Http\Controllers\PostController@create');
 });
 
 

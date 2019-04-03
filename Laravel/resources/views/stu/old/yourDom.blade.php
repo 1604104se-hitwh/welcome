@@ -12,7 +12,8 @@
     <title>迎新系统-哈尔滨工业大学（威海）</title>
 
     <!-- Custom fonts for this template-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78="
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css"
+          integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78="
           crossorigin="anonymous">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -21,7 +22,10 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
     <style>
-        #container {width:100%; height: 380px; }
+        #container {
+            width: 100%;
+            height: 380px;
+        }
     </style>
 
 </head>
@@ -122,14 +126,16 @@
                 <ul class="navbar-nav ml-auto">
                     <!-- Nav Item - Messages -->
                     <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                             <i class="fas fa-envelope fa-fw"></i>
                             <!-- Counter - Messages -->
                             <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
                         </a>
                         <!-- Dropdown - Messages -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="messagesDropdown">
                             <h6 class="dropdown-header">
                                 消息中心
                             </h6>
@@ -142,7 +148,8 @@
                                 </a>
                             @endforeach
                             @endif
-                            <a class="dropdown-item text-center small text-gray-500" href="{{url($messages['moreInfoUrl'])}}">更多信息...</a>
+                            <a class="dropdown-item text-center small text-gray-500"
+                               href="{{url($messages['moreInfoUrl'])}}">更多信息...</a>
                         </div>
                     </li>
 
@@ -150,14 +157,16 @@
 
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，{{$user}}</span>
                             <img class="img-profile rounded-circle"
                                  src="{{url($userImg)}}">
                         </a>
                         <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="{{url($toInfomationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
@@ -288,20 +297,20 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @if(count($yourDoms)==0) {{-- 还没有信息 --}}
-                                        <tr role="row">
-                                            <td colspan="4">还没有信息</td>
-                                        </tr>
-                                        @else
-                                            @foreach($yourDoms as $yourDom)
-                                                <tr role="row">
-                                                    <td>{{$yourDom->stu_name}}</td>
-                                                    <td>{{$yourDom->stu_num}}</td>
-                                                    <td>{{$yourDom->stu_dorm_str}}</td>
-                                                    <td>{{$yourDom->address}}</td>
-                                                </tr>
-                                            @endforeach
-                                        @endif
+                                    @if(count($yourDoms)==0) {{-- 还没有信息 --}}
+                                    <tr role="row">
+                                        <td colspan="4">还没有信息</td>
+                                    </tr>
+                                    @else
+                                        @foreach($yourDoms as $yourDom)
+                                            <tr role="row">
+                                                <td>{{$yourDom->stu_name}}</td>
+                                                <td>{{$yourDom->stu_num}}</td>
+                                                <td>{{$yourDom->stu_dorm_str}}</td>
+                                                <td>{{$yourDom->address}}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -333,7 +342,8 @@
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -352,20 +362,23 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js" integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js"
+        integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
         crossorigin="anonymous"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <!-- amap scripts for local infomation-->
-<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.13&key=0a4d80176be0dde936743e7e03a5f237"></script>
+<script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.13&key=0a4d80176be0dde936743e7e03a5f237"></script>
 
 <script>
-    var map = new AMap.Map('container',{
+    var map = new AMap.Map('container', {
         resizeEnable: true,
-        center:[122.083199, 37.534235],
-        zoom:15
+        center: [122.083199, 37.534235],
+        zoom: 15
     });
 
     var marker = new AMap.Marker({

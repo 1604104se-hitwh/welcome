@@ -20,7 +20,7 @@ class AdminController extends Controller
             'sysType'=>"管理员",  // 系统运行模式，新生，老生，管理员
             'user'=>session("name"), // 用户名
             'userImg'=> "userImg",// 用户头像链接 url(site)
-            'toInfomationURL'=>"toInfomationURL", // 个人设置url
+            'toInfomationURL'=>"toInfomationURL", // 更多消息url
             'toSettingURL'=>"toSettingURL", // 个人设置
             'newStuNumber'=>count($res), // 新生人数
             'oldStuNumber'=>count($current), // 老生人数
@@ -76,7 +76,6 @@ class AdminController extends Controller
             'stuReportTime'=>"9月1日", // 报到时间
             'majorInfos'=>array(), // 专业新生情况
             'newsInfoPostURL'=>"", // 新生信息提交URL
-
 
             'toLogoutURL'=>"/logout",      // 退出登录
         ]);

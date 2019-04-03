@@ -12,7 +12,8 @@
     <title>迎新系统-哈尔滨工业大学（威海）</title>
 
     <!-- Custom fonts for this template-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78="
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css"
+          integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78="
           crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
@@ -117,14 +118,16 @@
                 <ul class="navbar-nav ml-auto">
                     <!-- Nav Item - Messages -->
                     <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                             <i class="fas fa-envelope fa-fw"></i>
                             <!-- Counter - Messages -->
                             <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
                         </a>
                         <!-- Dropdown - Messages -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="messagesDropdown">
                             <h6 class="dropdown-header">
                                 消息中心
                             </h6>
@@ -138,7 +141,8 @@
                                     </a>
                                 @endforeach
                             @endif
-                            <a class="dropdown-item text-center small text-gray-500" href="{{url($messages['moreInfoUrl'])}}">更多信息...</a>
+                            <a class="dropdown-item text-center small text-gray-500"
+                               href="{{url($messages['moreInfoUrl'])}}">更多信息...</a>
                         </div>
                     </li>
 
@@ -146,14 +150,16 @@
 
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，{{$user}}</span>
                             <img class="img-profile rounded-circle"
                                  src="{{url($userImg)}}">
                         </a>
                         <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="{{url($toInfomationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
@@ -282,20 +288,20 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @if(count($countymens)==0) {{-- 还没有信息 --}}
-                                        <tr role="row">
-                                            <td colspan="4">还没有信息</td>
-                                        </tr>
-                                        @else
-                                            @foreach($countymens as $countymen)
+                                    @if(count($countymens)==0) {{-- 还没有信息 --}}
+                                    <tr role="row">
+                                        <td colspan="4">还没有信息</td>
+                                    </tr>
+                                    @else
+                                        @foreach($countymens as $countymen)
                                             <tr role="row">
                                                 <td>{{$countymen->stu_name}}</td>
                                                 <td>{{$countymen->stu_num}}</td>
                                                 <td>{{$countymen->stu_gen}}</td>
                                                 <td>{{$countymen->stu_num}}</td>
                                             </tr>
-                                            @endforeach
-                                        @endif
+                                        @endforeach
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -318,9 +324,9 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @if (count($sameSchools)==0)
-                                            <td colspan="4">还没有信息</td>
-                                        @else
+                                    @if (count($sameSchools)==0)
+                                        <td colspan="4">还没有信息</td>
+                                    @else
                                         @foreach ($sameSchools as $sameSchool)
                                             <tr role="row">
                                                 <td>{{$sameSchool->name}}</td>
@@ -328,7 +334,7 @@
                                                 <td>{{$sameSchool->gender}}</td>
                                             </tr>
                                         @endforeach
-                                        @endif
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -380,9 +386,11 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                                             crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js" integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js"
+        integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
         crossorigin="anonymous"></script>
 
 <!-- Custom scripts for all pages-->

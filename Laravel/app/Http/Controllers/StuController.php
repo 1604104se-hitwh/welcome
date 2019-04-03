@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 require_once __DIR__ . '/../../include.php';
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,7 +25,7 @@ class StuController extends Controller
     private $idValidator;
 
     /**
-     * TODO: 
+     * TODO:
      * 登录时将相关数据写入session，然后存入stu_data数组，
      * 方便在index中使用
      */
@@ -41,10 +42,10 @@ class StuController extends Controller
         $classmates_array = DB::select("SELECT * FROM `t_student` WHERE `stu_num` LIKE '$stu_class_str%'");
         //性别比例
         $class_male_num = 0;
-        $class_fmle_num = 0;
+        $class_female_num = 0;
         foreach ($classmates_array as $classmate) {
             if ($classmate->stu_gen) $class_male_num++;
-            else $class_fmle_num++;
+            else $class_female_num++;
         }
         //地区分布，需要做桶排序
 
@@ -70,7 +71,7 @@ class StuController extends Controller
         for ($i = 0; $i < count($classmates_addr_prov_cnt); ++$i) {
             $top4_num += $vals[$i];
         }
-        if (0 != $restNumber = $class_male_num + $class_fmle_num - $top4_num)
+        if (0 != $restNumber = $class_male_num + $class_female_num - $top4_num)
             $classmates_addr_prov_cnt['其他'] = $restNumber;
 
         $cid = session('stu_cid');
@@ -84,7 +85,7 @@ class StuController extends Controller
         }
         /*老乡统计 */
         $stu_prov_city_str = substr(session('stu_cid'), 0, 5);
-        $contry_folk_array = DB::select("SELECT * FROM `t_student` WHERE `stu_cid` LIKE '$stu_prov_city_str%' AND `stu_cid`<> :cid", ["cid" => $cid]);
+        $country_folk_array = DB::select("SELECT * FROM `t_student` WHERE `stu_cid` LIKE '$stu_prov_city_str%' AND `stu_cid`<> :cid", ["cid" => $cid]);
 
         return view('stu.new.index', [
             'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
@@ -116,20 +117,20 @@ class StuController extends Controller
             'schoolInfo' => "<div class=\"text-center\"><img class=\"img-fluid px-3 px-sm-4 mt-3 mb-4\" style=\"width: 25rem;\" src=\"img/undraw_posting_photo.svg\" alt=\"\"></div><p>
             哈尔滨工业大学（以下简称哈工大）是一所有着近百年历史、世界知名的工科强校，2017年入选国家“双一流”建设A类高校，是我国首批入选国家“985工程”重点建设的大学，拥有以38位院士为带头人的雄厚师资，有9个国家一级重点学科，10个学科名列全国前五名，其中，名列前茅的工科类重点学科数量位居全国第二，工程学在全球排名第六。</p>", // 学校信息 可以html
             'toSchoolInfoURL' => "toSchoolInfoURL",
-            'toAllStuURL' => "toAllStuURL", // 所有同学信息url
+            'toAllStuURL' => "/stu/queryClass", // 所有同学信息url
             'domStus' => $roommates_array, // 室友
             'deptInfo' => "deptInfo", // 专业信息
             'toDeptInfoURL' => "toDeptInfoURL",
             'domInfo' => "domInfo", // 宿舍信息
-            'toDomInfoURL' => "toDomInfoURL",
-            'localFolks' => $contry_folk_array, // 老乡
-            'toLocalFolkURL' => "toLocalFolksURL", // 查看老乡信息url
+            'toDomInfoURL' => "/stu/queryDorm",
+            'localFolks' => $country_folk_array, // 老乡
+            'toLocalFolkURL' => "/stu/queryCountryFolk", // 查看老乡信息url
             'toLogoutURL' => "/logout",      // 退出登录
             //饼图
-            'yourStuChartBoyGirl'=>array($class_male_num, $class_fmle_num), // 男女比例，先男后女
-            'yourStuChartProName'=>array_keys($classmates_addr_prov_cnt), // 省份名字
-            'yourStuChartProData'=>array_values($classmates_addr_prov_cnt), // 每个信息
-            ]);
+            'yourStuChartBoyGirl' => array($class_male_num, $class_female_num), // 男女比例，先男后女
+            'yourStuChartProName' => array_keys($classmates_addr_prov_cnt), // 省份名字
+            'yourStuChartProData' => array_values($classmates_addr_prov_cnt), // 每个信息
+        ]);
 
     }
 
@@ -173,7 +174,7 @@ class StuController extends Controller
             'classmates' => $classmates_array, // 你的同学
             'toLogoutURL' => "/logout",      // 退出登录
         ]);
-        
+
     }
 
     public function queryDorm()
@@ -225,7 +226,7 @@ class StuController extends Controller
 
 
             'toLogoutURL' => "/logout",      // 退出登录
-        ]);      
+        ]);
     }
 
     public function queryCountryFolk()
