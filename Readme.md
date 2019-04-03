@@ -135,6 +135,29 @@ php artisan serve
 - 删除`.env`，在`config`中进行修改配置；
 - 关闭`debug`模式，进入生产模式。
 
+## 已实现部分功能展示
+
+- 登陆界面
+
+![login](pic\login.png)
+
+- 新生界面
+
+![news](pic\news.png)
+
+- 新生查询宿舍信息
+
+![newsDorm](pic\newsDorm.png)
+
+- 新生查询老乡
+
+![newsLocal](pic\newsLocal.png)
+
+- 管理员界面
+
+![admin](pic\admin.png)
+
+
 ## 暂定实现功能
 
 1. 个人信息查询
