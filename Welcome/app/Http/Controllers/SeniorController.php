@@ -23,7 +23,7 @@ class SeniorController extends Controller
 {
     public function index(Request $request) {
         $this->idValidator = new IdValidator();
-        $res_obj_array = DB::select('SELECT * FROM `t_student` WHERE `stu_cid`="230123199011274968"');
+        $res_obj_array = DB::select('SELECT * FROM `t_student` WHERE id = :id', ["id"=>session("id")]);
         /*班级情况统计*/
         $stu_class_str = substr($res_obj_array[0]->stu_num, 0, 7);  //学号digit0~digit6
         //获得同班同学信息

@@ -64,7 +64,13 @@ class LoginController extends Controller
             if ($res_obj_array) {
                 session([
                     "id" => $res_obj_array[0]->id,
-                    "name" => $name,
+                    "stu_name" => $name,
+                    "stu_gen" => $res_obj_array[0]->stu_gen,
+                    "stu_cid" => $perId,
+                    "stu_eid" => $res_obj_array[0]->stu_eid,
+                    "class_id" => $res_obj_array[0]->class_id,
+                    "stu_dorm_str" => $res_obj_array[0]->stu_dorm_str,
+                    "stu_fromSchool" => $res_obj_array[0]->stu_fromSchool,
                     "Auth" => "old",
                 ]);
                 return redirect()->intended("/senior");
