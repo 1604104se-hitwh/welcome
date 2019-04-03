@@ -52,17 +52,17 @@ Welcome HITers
 
 - 学生情况不明确
 
-总之解决新生从录取到报道完成的一体化流程，让现场报道更加快捷方便，同时也能让新生更好地了解学校，学校也能更加方便的了解报道状态。
+
+总之解决新生从录取到报到完成的一体化流程，让现场报到更加快捷方便，同时也能让新生更好地了解学校，学校也能更加方便的了解报到状态。
 
 ### 希望还能实现
 
 - 财务系统对接，学杂费用在线缴纳
 
-- 统一认证服务，实现报道前熟悉统一认证服务
+
+- 统一认证服务，实现报到前熟悉统一认证服务
 
 - 信息推送，包括短信和微信平台自动推送
-
-
 
 
 ## 项目配置
@@ -78,7 +78,8 @@ Welcome HITers
 
 运行环境建议：
 
-- [x] PHP >= 7.0（推荐使用7.1以上）
+
+- [x] PHP >= 7.1（推荐使用7.2以上）
 - [x] Laravel >= 5.6
 - [x] Mysql >= 5.6
 - [x] Curl
@@ -88,6 +89,74 @@ Welcome HITers
 - [ ] 优秀的云主机
 
 
+## 开发环境配置
+
+- 要求本地装有`composer`
+
+```php
+git clone https://github.com/1604104se-hitwh/welcome.git
+cd Welcome
+composer install
+```
+
+之后需要打开`.env`配置本地的数据库环境
+
+```php
+DB_CONNECTION=mysql // 可能是别的数据库，具体见Laravel
+DB_HOST=127.0.0.1 	// 数据库地址
+DB_PORT=3306 		// 端口
+DB_DATABASE=数据库名称
+DB_USERNAME=数据库用户名
+DB_PASSWORD=数据库密码
+```
+
+再执行：
+
+```php
+php artisan migrate
+php artisan db:seed --class=StudentTableSeeder
+php artisan db:seed --class=AdminTableSeeder
+php artisan db:seed --class=DatabaseSeeder
+php artisan db:seed --class=DepartmentTableSeeder
+php artisan db:seed --class=MajorTableSeeder
+```
+
+调试运行：
+
+```php
+php artisan serve
+```
+
+打开浏览器，地址栏输入：`localhost:8000`
+登录数据可以在相应的数据库填充器中查看，比如管理员登录就可以在`database/seeds/AdminTableSeeder.php`中选取用户名密码登录
+
+## 生产环境配置
+
+- 使用`Nginx`中间件，需要将入口导向`public`，`index.php`会将流量引导到内核和路由；
+- 删除`.env`，在`config`中进行修改配置；
+- 关闭`debug`模式，进入生产模式。
+
+## 已实现部分功能展示
+
+- 登陆界面
+
+![login](pic\login.png)
+
+- 新生界面
+
+![news](pic\news.png)
+
+- 新生查询宿舍信息
+
+![newsDorm](pic\newsDorm.png)
+
+- 新生查询老乡
+
+![newsLocal](pic\newsLocal.png)
+
+- 管理员界面
+
+![admin](pic\admin.png)
 
 ## 暂定实现功能
 
@@ -130,12 +199,11 @@ Welcome HITers
 
 5. 报到流程
 
-   提供报道的流程指示，通过引导的方式（可提供此步到下一步的路线图等信息），方便新生快速完成报道。
+   提供报到的流程指示，通过引导的方式（可提供此步到下一步的路线图等信息），方便新生快速完成报到。
 
 6. 迎新核验
 
-   向各院系提供，在迎新核验时候提供学生的核验信息，在核验完成后确认报道。
-
+   向各院系提供，在迎新核验时候提供学生的核验信息，在核验完成后确认报到。
 
 
 *Welcome HITers Software Development Team*

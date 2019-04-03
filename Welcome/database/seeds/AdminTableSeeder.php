@@ -1,0 +1,20 @@
+<?php
+
+use Illuminate\Database\Seeder;
+
+class AdminTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('t_admin')->insert([
+            'adm_name' => 'root',
+            'adm_password' => '1234',
+            'pms_id' => 0,
+        ]);
+    }
+}
