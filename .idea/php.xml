@@ -82,6 +82,9 @@
       <path value="$PROJECT_DIR$/Welcome/vendor/phpspec/prophecy" />
       <path value="$PROJECT_DIR$/Welcome/vendor/composer" />
       <path value="$PROJECT_DIR$/Welcome/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/Welcome/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/Welcome/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/Welcome/vendor/doctrine/dbal" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
