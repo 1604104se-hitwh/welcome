@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use Jxlwqq\IdValidator\IdValidator;
+// use models
+use App\Models\Students as newStu;
 
 function str_n_pos($str, $find, $n)
 {
@@ -24,11 +26,20 @@ class StuController extends Controller
 {
     private $idValidator;
 
+    public function __construct() {
+        // 身份证获取
+        $this->idValidator = new IdValidator();
+    }
+    
+    /**
+     * 首页 控制器
+     */
     public function index() {
-        /*班级情况统计*/
         $stu_class_str = substr(session('stu_num'), 0, 7);  //学号digit0~digit6
         //获得同班同学信息
-        $classmates_array = DB::select("SELECT * FROM `t_student` WHERE `stu_num` LIKE '$stu_class_str%'");
+        $classmates_array = newStu::where('stu_num', 'like', $stu_class_str.'%')
+           ->orderBy('stu_num', 'asc')
+           ->get();
         //性别比例
         $class_male_num = 0;
         $class_female_num = 0;
@@ -68,13 +79,22 @@ class StuController extends Controller
 
         /*室友统计 */
         $dorm_str = substr(session('stu_dorm_str'), 0, str_n_pos(session('stu_dorm_str'), '-', 2));   // 切割宿舍信息
-        $roommates_array = DB::select("SELECT * FROM `t_student` WHERE `stu_dorm_str` LIKE '$dorm_str%' AND `stu_cid`<> :cid", ["cid" => $cid]);
+        $roommates_array = newStu::where([
+            ['stu_dorm_str', 'like', $dorm_str.'%'],
+            ['stu_cid','<>',$cid]
+        ])->orderBy('stu_dorm_str', 'asc')
+           ->get();
+
         foreach ($roommates_array as $roommate) {
             $roommate->address = $this->idValidator->getInfo($roommate->stu_cid)['address'];
         }
         /*老乡统计 */
         $stu_prov_city_str = substr(session('stu_cid'), 0, 5);
-        $country_folk_array = DB::select("SELECT * FROM `t_student` WHERE `stu_cid` LIKE '$stu_prov_city_str%' AND `stu_cid`<> :cid", ["cid" => $cid]);
+        $country_folk_array = newStu::where([
+            ['stu_cid', 'like', $stu_prov_city_str.'%'],
+            ['stu_cid','<>',$cid]
+        ])->orderBy('stu_cid', 'asc')
+           ->get();
 
         return view('stu.new.index', [
             'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
@@ -123,12 +143,16 @@ class StuController extends Controller
 
     }
 
+    /**
+     * 同班同学 控制器
+     */
     public function queryClass()
     {
-        $res_obj_array = DB::select('SELECT * FROM `t_student` WHERE `stu_cid`= :stu_cid', ["stu_cid" => session('stu_cid')]);
-        /*班级情况统计*/
         $stu_class_str = substr(session('stu_num'), 0, 7);  //学号digit0~digit6
-        $classmates_array = DB::select("SELECT * FROM `t_student` WHERE `stu_num` LIKE '$stu_class_str%'"); //获得同班同学信息
+        //获得同班同学信息
+        $classmates_array = newStu::where('stu_num', 'like', $stu_class_str.'%')
+           ->orderBy('stu_num', 'asc')
+           ->get();
 
         foreach ($classmates_array as $classmate) {
             $classmate->address = $this->idValidator->getInfo($classmate->stu_cid)['address'];
@@ -166,14 +190,17 @@ class StuController extends Controller
 
     }
 
+    /**
+     * 室友信息 控制器
+     */
     public function queryDorm()
     {
-        /*室友统计 */
         $dorm_str = substr(session('stu_dorm_str'), 0, str_n_pos(session('stu_dorm_str'), '-', 2));   // 切割宿舍信息
-        $roommates_array = DB::select(
-            "SELECT * FROM `t_student` WHERE `stu_dorm_str` LIKE '$dorm_str%' AND `stu_cid`<> :cid",
-            ["cid" => session('stu_cid')]
-        );
+        $roommates_array = newStu::where([
+            ['stu_dorm_str', 'like', $dorm_str.'%'],
+            ['stu_cid','<>', session('stu_cid')]
+        ])->orderBy('stu_dorm_str', 'asc')
+           ->get();
 
         foreach ($roommates_array as $roommate) {
             $roommate->address = $this->idValidator->getInfo($roommate->stu_cid)['address'];
@@ -216,14 +243,21 @@ class StuController extends Controller
         ]);
     }
 
+    /**
+     * 老乡信息 控制器
+     */
     public function queryCountryFolk()
     {
         $cid = session('stu_cid');
         $res = $this->idValidator->getInfo($cid);
         $localNumber = substr($cid, 0, 5);
+        // 查询数据库
+        $localStudents = newStu::where([
+            ['stu_cid', 'like', $localNumber.'%'],
+            ['stu_cid','<>', session('stu_cid')]
+        ])->orderBy('stu_cid', 'asc')
+           ->get();
 
-        $localStudents = DB::table('t_student')->where('stu_cid', 'like', $localNumber . '%')
-            ->where('stu_cid', '<>', $cid)->get();
         $fromSchool = session('stu_fromSchool');
         $sameSchools = [];
 
@@ -264,10 +298,5 @@ class StuController extends Controller
 
             'toLogoutURL' => "/logout",      // 退出登录
         ]);
-    }
-
-    public function __construct() {
-        // 身份证获取
-        $this->idValidator = new IdValidator();
     }
 }
