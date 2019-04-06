@@ -24,7 +24,7 @@ class CreateStudentTable extends Migration
             $table->char('stu_eid', 14);
             $table->integer('class_id')->unsigned();
             $table->string('stu_dorm_str', 10)->nullable();
-            $table->string('stu_fromSchool', 10)->nullable();
+            $table->string('stu_from_school', 10)->nullable();
         });
     }
 

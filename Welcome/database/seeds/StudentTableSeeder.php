@@ -21,7 +21,7 @@ class StudentTableSeeder extends Seeder
             'stu_eid' => '12345678901234',
             'class_id' => 4,
             'stu_dorm_str' => '12-666-6',
-            'stu_fromSchool'=> '实验中学',
+            'stu_from_school'=> '实验中学',
         ]);
 
         DB::table('t_student')->insert([
@@ -34,7 +34,7 @@ class StudentTableSeeder extends Seeder
             'stu_eid' => '11145678901234',
             'class_id' => 4,
             'stu_dorm_str' => '6-170-4',
-            'stu_fromSchool'=> '实验中学',
+            'stu_from_school'=> '实验中学',
         ]);
 
         DB::table('t_student')->insert([
@@ -47,7 +47,7 @@ class StudentTableSeeder extends Seeder
             'stu_eid' => '11145678901234',
             'class_id' => 4,
             'stu_dorm_str' => '12-666-5',
-            'stu_fromSchool'=> '实验中学',
+            'stu_from_school'=> '实验中学',
         ]);
 
         DB::table('t_student')->insert([
@@ -60,7 +60,7 @@ class StudentTableSeeder extends Seeder
             'stu_eid' => '11145678901234',
             'class_id' => 4,
             'stu_dorm_str' => '12-666-4',
-            'stu_fromSchool'=> '实验中学',
+            'stu_from_school'=> '实验中学',
         ]);
 
         DB::table('t_student')->insert([
@@ -73,7 +73,7 @@ class StudentTableSeeder extends Seeder
             'stu_eid' => '11145678901234',
             'class_id' => 4,
             'stu_dorm_str' => '12-666-3',
-            'stu_fromSchool'=> '实验中学',
+            'stu_from_school'=> '实验中学',
         ]);
 
         DB::table('t_student')->insert([
@@ -86,7 +86,7 @@ class StudentTableSeeder extends Seeder
             'stu_eid' => '11145678901234',
             'class_id' => 4,
             'stu_dorm_str' => '12-666-2',
-            'stu_fromSchool'=> '实验中学',
+            'stu_from_school'=> '实验中学',
         ]);
 
         DB::table('t_student')->insert([
@@ -99,7 +99,7 @@ class StudentTableSeeder extends Seeder
             'stu_eid' => '11145678901234',
             'class_id' => 4,
             'stu_dorm_str' => '12-666-1',
-            'stu_fromSchool'=> '实验中学',
+            'stu_from_school'=> '实验中学',
         ]);
     }
 }

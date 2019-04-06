@@ -224,11 +224,11 @@ class StuController extends Controller
 
         $localStudents = DB::table('t_student')->where('stu_cid', 'like', $localNumber . '%')
             ->where('stu_cid', '<>', $cid)->get();
-        $fromSchool = session('stu_fromSchool');
+        $fromSchool = session('stu_from_school');
         $sameSchools = [];
 
         foreach ($localStudents as $localStudent) {
-            if ($localStudent->stu_fromSchool == $fromSchool)
+            if ($localStudent->stu_from_school == $fromSchool)
                 array_push($sameSchools, $localStudent);
         }
 

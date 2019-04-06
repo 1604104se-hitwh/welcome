@@ -48,7 +48,7 @@ class LoginController extends Controller
                     "stu_eid" => $res_obj_array[0]->stu_eid,
                     "class_id" => $res_obj_array[0]->class_id,
                     "stu_dorm_str" => $res_obj_array[0]->stu_dorm_str,
-                    "stu_fromSchool" => $res_obj_array[0]->stu_fromSchool,
+                    "stu_from_school" => $res_obj_array[0]->stu_from_school,
                     "Auth" => "new",
                 ]);
 
@@ -70,7 +70,7 @@ class LoginController extends Controller
                     "stu_eid" => $res_obj_array[0]->stu_eid,
                     "class_id" => $res_obj_array[0]->class_id,
                     "stu_dorm_str" => $res_obj_array[0]->stu_dorm_str,
-                    "stu_fromSchool" => $res_obj_array[0]->stu_fromSchool,
+                    "stu_from_school" => $res_obj_array[0]->stu_from_school,
                     "Auth" => "old",
                 ]);
                 return redirect()->intended("/senior");

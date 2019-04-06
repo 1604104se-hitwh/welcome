@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostTable extends Migration
+class CreatePostReadTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreatePostTable extends Migration
      */
     public function up()
     {
-        Schema::create('t_post', function (Blueprint $table) {
+        Schema::create('post_read', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamp('post_timestamp')->nullable();
-            $table->string('post_title', 100)->nullable();
-            $table->text('post_content')->nullable();
-            $table->smallInteger('post_send_to')->default(0);
+            $table->timestamp('read_timestamp')->nullable();
+            $table->integer('post_id')->unsigned()->nullable();
+            $table->integer('stu_id')->unsigned()->nullable();
+            $table->timestamps();
         });
     }
 
@@ -29,6 +29,6 @@ class CreatePostTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('t_post');
+        Schema::dropIfExists('post_read');
     }
 }
