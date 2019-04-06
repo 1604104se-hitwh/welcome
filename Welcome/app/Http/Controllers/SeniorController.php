@@ -8,21 +8,17 @@ use Illuminate\Support\Facades\DB;
 require_once __DIR__.'/../../include.php';
 use Jxlwqq\IdValidator\IdValidator;
 
-function str_n_pos($str,$find,$n) {
-    $pos_val = 0;
-    for ($i=1;$i<=$n;$i++){
-        $pos = strpos($str,$find);
-        $str = substr($str,$pos+1);
-        $pos_val=$pos+$pos_val+1;
-    }
-    return $pos_val-1;
-}
-
 /* 老生模块 */
 class SeniorController extends Controller
 {
-    public function index(Request $request) {
+    private $idValidator;
+
+    public function __construct()
+    {
         $this->idValidator = new IdValidator();
+    }
+
+    public function index(Request $request) {
         $res_obj_array = DB::select('SELECT * FROM `t_student` WHERE id = :id', ["id"=>session("id")]);
         /*班级情况统计*/
         $stu_class_str = substr($res_obj_array[0]->stu_num, 0, 7);  //学号digit0~digit6
@@ -89,20 +85,20 @@ class SeniorController extends Controller
            'stuID'=>$res_obj_array[0]->stu_num, // 学号
            'user'=> $res_obj_array[0]->stu_name, // 用户名
            'userImg'=> "userImg",// 用户头像链接 url(site)
-           'toInfomationURL'=>"toInfomationURL", // 个人设置url
+           'toInformationURL'=>"toInformationURL", // 个人设置url
            'toSettingURL'=>"toSettingURL", // 个人设置
            'stuDept'=>"计算机",
-           'stuDomitory'=>$res_obj_array[0]->stu_dorm_str,
+           'stuDormitory'=>$res_obj_array[0]->stu_dorm_str,
            'stuReportTime'=>"9月1日", // 报到时间
            'schoolInfo'=>"<div class=\"text-center\"><img class=\"img-fluid px-3 px-sm-4 mt-3 mb-4\" style=\"width: 25rem;\" src=\"img/undraw_posting_photo.svg\" alt=\"\"></div><p>
            哈尔滨工业大学（以下简称哈工大）是一所有着近百年历史、世界知名的工科强校，2017年入选国家“双一流”建设A类高校，是我国首批入选国家“985工程”重点建设的大学，拥有以38位院士为带头人的雄厚师资，有9个国家一级重点学科，10个学科名列全国前五名，其中，名列前茅的工科类重点学科数量位居全国第二，工程学在全球排名第六。</p>", // 学校信息 可以html
            'toSchoolInfoURL'=>"toSchoolInfoURL",
            'toAllStuURL'=>"toAllStuURL", // 所有同学信息url
-           'domStus'=>$roommates_array, // 室友
+           'dormStus'=>$roommates_array, // 室友
            'deptInfo'=>"deptInfo", // 专业信息
            'toDeptInfoURL'=>"toDeptInfoURL",
            'domInfo'=>"domInfo", // 宿舍信息
-           'toDomInfoURL'=>"toDomInfoURL",
+           'toDormInfoURL'=>"toDormInfoURL",
            'localFolks'=>$contry_folk_array, // 老乡
            'toLocalFolkURL'=>"toLocalFolksURL", // 查看老乡信息url
            'toLogoutURL'=>"/logout",      // 退出登录
@@ -147,7 +143,7 @@ class SeniorController extends Controller
                    'classmates'=>$classmates_array, // 你的同学
                    'user'=>$res_obj_array[0]->stu_name, // 用户名?
                    'userImg'=> "userImg",// 用户头像链接 url(site)?
-                   'toInfomationURL'=>"toInfomationURL", // 个人设置url
+                   'toInformationURL'=>"toInformationURL", // 个人设置url
                    'toSettingURL'=>"toSettingURL", // 个人设置
                    'toLogoutURL'=>"/logout",      // 退出登录
         ]);
@@ -188,14 +184,14 @@ class SeniorController extends Controller
                    'userImg'=> "userImg",// 用户头像链接 url(site)
                    'stuID'=>"stuID", // 学号
                    'stuDept'=>"计算机",
-                   'stuDomitory'=>"stuDomitory", // 宿舍
+                   'stuDormitory'=>"stuDormitory", // 宿舍
                    'domInfo'=>"domInfo", // 宿舍介绍
                    'yourDoms'=>array(),
                    'domLocal'=>array( // 宿舍位置（定位）
                        'PX'=>array(122.080098,37.532806),
                        'title'=>"七公寓"
                    ),
-                   'toInfomationURL'=>"toInfomationURL", // 个人设置url
+                   'toInformationURL'=>"toInformationURL", // 个人设置url
                    'toSettingURL'=>"toSettingURL", // 个人设置
                    'toLogoutURL'=>"/logout",      // 退出登录
         ]);
@@ -208,11 +204,11 @@ class SeniorController extends Controller
 
         $localStudents = DB::table('t_student')->where('stu_cid', 'like', $localNumber . '%')
             ->where('stu_cid', '<>', $cid)->get();
-        $fromSchool = session('stu_fromSchool');
+        $fromSchool = session('stu_from_school');
         $sameSchools = [];
 
         foreach ($localStudents as $localStudent) {
-            if ($localStudent->stu_fromSchool == $fromSchool)
+            if ($localStudent->stu_from_school == $fromSchool)
                 array_push($sameSchools, $localStudent);
         }
 
@@ -238,7 +234,7 @@ class SeniorController extends Controller
                    'stuID'=>"stuID", // 学号
                    'user'=>"user", // 用户名
                    'userImg'=> "userImg",// 用户头像链接 url(site)
-                   'toInfomationURL'=>"toInfomationURL", // 个人设置url
+                   'toInformationURL'=>"toInformationURL", // 个人设置url
                    'toSettingURL'=>"toSettingURL", // 个人设置
                    'IDnumber'=>"111111", // 身份证号码
                    'stuLocal'=>"stuLocal", // 识别地区

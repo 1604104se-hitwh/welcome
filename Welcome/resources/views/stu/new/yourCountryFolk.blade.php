@@ -197,7 +197,7 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{url($toInfomationURL)}}">
+                            <a class="dropdown-item" href="{{url($toInformationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
                             <a class="dropdown-item" href="{{url($toSettingURL)}}">
@@ -341,7 +341,7 @@
                                                     女
                                                 @endif
                                             </td>
-                                            <td>{{$countymen->stu_fromSchool}}</td>
+                                            <td>{{$countymen->stu_from_school}}</td>
                                         </tr>
                                     @endforeach @endif
                                     </tbody>

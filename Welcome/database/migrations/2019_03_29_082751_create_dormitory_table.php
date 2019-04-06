@@ -15,6 +15,9 @@ class CreateDormitoryTable extends Migration
     {
         Schema::create('t_dormitory', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('dorm_name', 10)->nullable();
+            $table->string('dorm_position_x', 10)->nullable();
+            $table->string('dorm_position_y', 10)->nullable();
             $table->text('dorm_desc')->nullable();
         });
     }
