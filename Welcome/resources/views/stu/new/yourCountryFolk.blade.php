@@ -341,7 +341,7 @@
                                                     女
                                                 @endif
                                             </td>
-                                            <td>{{$countymen->stu_fromSchool}}</td>
+                                            <td>{{$countymen->stu_from_school}}</td>
                                         </tr>
                                     @endforeach @endif
                                     </tbody>

@@ -420,7 +420,7 @@
                                                     女
                                                 @endif
                                             </td>
-                                            <td>{{$localFolk->stu_fromSchool}}</td>
+                                            <td>{{$localFolk->stu_from_school}}</td>
                                         </tr>
                                     @endforeach @endif
                                     </tbody>

@@ -257,12 +257,12 @@ class StuController extends Controller
             ['stu_cid','<>', session('stu_cid')]
         ])->orderBy('stu_cid', 'asc')
            ->get();
-
+           
         $fromSchool = session('stu_fromSchool');
         $sameSchools = [];
 
         foreach ($localStudents as $localStudent) {
-            if ($localStudent->stu_fromSchool == $fromSchool)
+            if ($localStudent->stu_from_school == $fromSchool)
                 array_push($sameSchools, $localStudent);
         }
 

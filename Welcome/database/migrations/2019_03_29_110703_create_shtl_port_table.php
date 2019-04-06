@@ -15,6 +15,7 @@ class CreateShtlPortTable extends Migration
     {
         Schema::create('t_shtl_port', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('port_name', 50)->nullable();
             $table->text('port_info')->nullable();
         });
     }
