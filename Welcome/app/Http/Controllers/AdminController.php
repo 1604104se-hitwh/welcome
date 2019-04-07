@@ -83,7 +83,7 @@ class AdminController extends Controller
             'hasReportNumber'=>5, // 已报到人数
             'stuReportTime'=>"9月1日", // 报到时间
             'majorInfos'=>array(), // 专业新生情况
-            'newsInfoPostURL'=>"", // 新生信息提交URL
+            'newsInfoPostURL'=>"/admin/stuInfoUpload", // 新生信息提交URL
 
             'toLogoutURL'=>"/logout",      // 退出登录
         ]);

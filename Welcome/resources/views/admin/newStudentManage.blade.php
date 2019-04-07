@@ -396,6 +396,7 @@
         }
     });
     $('#submitNewsInfo').click(function () {
+        var formData = new FormData();
         var fileObj = $("#newsInfoUpload")[0].files[0]; // js 获取文件对象
         if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
             spop({
@@ -407,6 +408,8 @@
                 group: "submitNewsInfo",
             });
             return;
+        }else{
+            formData.append('newsInfo',fileObj);
         }
         $.ajax({
             async: true,   		//是否为异步请求
@@ -416,7 +419,7 @@
             processData: false,	//用于对data参数进行序列化处理 这里必须false
             contentType: false, //必须
             url: "{{url($newsInfoPostURL)}}",
-            data: {"newsInfo": fileObj},
+            data: formData,
 
             success: function (data) {
                 if (data.code == 200) {

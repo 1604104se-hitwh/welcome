@@ -22,7 +22,7 @@ class CreateStudentTable extends Migration
             $table->boolean('stu_gen')->default(false);
             $table->char('stu_cid', 18);
             $table->char('stu_eid', 14);
-            $table->integer('class_id')->unsigned();
+            //$table->integer('class_id')->unsigned();
             $table->string('stu_dorm_str', 10)->nullable();
             $table->string('stu_from_school', 10)->nullable();
         });

@@ -71,5 +71,7 @@ Route::group(['middleware' => ['checkAuth:admin']], function () {
     Route::get('/admin/posts/create', '\App\Http\Controllers\PostController@create');
 });
 
+Route::post('/admin/stuInfoUpload','\App\Http\Controllers\ImportController@studentExcelImport')->middleware('uploadAuthCheck:admin');
+
 
 
