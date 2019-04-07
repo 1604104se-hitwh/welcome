@@ -167,7 +167,7 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{url($toInfomationURL)}}">
+                            <a class="dropdown-item" href="{{url($toInformationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
                             <a class="dropdown-item" href="{{url($toSettingURL)}}">
@@ -241,7 +241,7 @@
                                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">宿舍</div>
                                         <div class="row no-gutters align-items-center">
                                             <div class="col-auto">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$stuDomitory}}
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$stuDormitory}}
                                                 </div>
                                             </div>
                                         </div>

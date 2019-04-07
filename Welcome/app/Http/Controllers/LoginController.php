@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LoginPost;
 
+use App\Models\Students as Student;
 /**
  * 此为登录控制器，登录分为三种情况：
  * 新生
@@ -15,14 +16,6 @@ use App\Http\Requests\LoginPost;
  */
 class LoginController extends Controller
 {
-    /**
-     * XXX：这里有待改进
-     * app\Request下有一个人继承自Request的LoginPost，
-     * 但是将Request替换为LoginPost时，会将连接的数据库表替换为名叫posts的表，
-     * 修改这个配置的方法目前还没找到；
-     * 解决该问题后可以使用validated方法对post的数据进行初步验证
-     */
-
     /* 登录总控 */
     public function login(Request $request)
     {
@@ -33,9 +26,10 @@ class LoginController extends Controller
             $stu_eid = $request->input("examId", "default");
             $stu_cid = $request->input("perId", "default");
             // $this->idValidator = new IdValidator();
-            $res_obj_array = DB::select('SELECT * FROM t_student WHERE 
-                                        stu_cid = :stu_cid AND stu_eid = :stu_eid',
-                ["stu_cid" => $stu_cid, "stu_eid" => $stu_eid]);
+            $res_obj_array = Student::where([
+                ["stu_cid",$stu_cid],
+                ["stu_eid",$stu_eid],
+            ])->first();
             /* 判断该名新生是否存在 */
             if ($res_obj_array) {
                 session([
@@ -58,9 +52,10 @@ class LoginController extends Controller
         } else if ($loginType === "old") { // 老生部分
             $name = $request->input("name", "default");
             $perId = $request->input("perId", "default");
-            $res_obj_array = DB::select('SELECT * FROM t_student WHERE stu_name = :name 
-                                        AND stu_cid = :perId',
-                ["name" => $name, "perId" => $perId]);
+            $res_obj_array = Student::where([
+                ["stu_name",$name],
+                ["perId",$perId],
+            ])->first();
             if ($res_obj_array) {
                 session([
                     "id" => $res_obj_array[0]->id,
@@ -78,11 +73,11 @@ class LoginController extends Controller
         } else if ($loginType === "admin") { // 管理员部分
             $userId = $request->input("userId", "default");
             $psw = $request->input("psw", "default");
-            $res_obj_array = DB::select('SELECT * FROM t_admin WHERE adm_name = :userId 
-                                        AND adm_password = :psw',
-                ["userId" => $userId, "psw" => $psw]);
-
-                if ($res_obj_array) {
+            $res_obj_array = Student::where([
+                ["adm_name",$userId],
+                ["adm_password",$psw],
+            ])->first();
+            if ($res_obj_array) {
                 session([
                     "id" => $res_obj_array[0]->id,
                     "name" => $userId,
