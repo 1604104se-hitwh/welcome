@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LoginPost;
 
 use App\Models\Students as Student;
+use App\Models\Admin as Admin;
 /**
  * 此为登录控制器，登录分为三种情况：
  * 新生
@@ -73,13 +74,13 @@ class LoginController extends Controller
         } else if ($loginType === "admin") { // 管理员部分
             $userId = $request->input("userId", "default");
             $psw = $request->input("psw", "default");
-            $res_obj_array = Student::where([
+            $res_obj_array = Admin::where([
                 ["adm_name",$userId],
                 ["adm_password",$psw],
             ])->first();
             if ($res_obj_array) {
                 session([
-                    "id" => $res_obj_array[0]->id,
+                    "id" => $res_obj_array->id,
                     "name" => $userId,
                     "Auth" => "admin",
                 ]);

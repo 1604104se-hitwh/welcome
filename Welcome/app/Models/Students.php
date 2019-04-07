@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $stu_gen
  * @property string $stu_cid
  * @property string $stu_eid
- * @property int $class_id
  * @property string|null $stu_dorm_str
  * @property string|null $stu_fromSchool
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Students whereClassId($value)
@@ -44,5 +43,16 @@ class Students extends Model
     public $timestamps = false; 
     //设置时间戳格式为Unix 
     protected $dateFormat = 'U'; 
-    
+    // 设置白名单
+    protected $fillable =[
+        'stu_status',
+        'stu_degree',
+        'stu_num',
+        'stu_name',
+        'stu_gen',
+        'stu_cid',
+        'stu_eid',
+        'stu_dorm_str',
+        'stu_fromSchool'
+    ];
 }

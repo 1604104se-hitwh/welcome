@@ -3,9 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Models\User;
-// use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 /* 用来控制非法访问，只有session中有Auth项才能正常访问 */
 class AuthMiddle {
