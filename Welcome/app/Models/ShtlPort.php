@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlPort whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlPort wherePortInfo($value)
  * @mixin \Eloquent
+ * @property string|null $port_name
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlPort wherePortName($value)
  */
 class ShtlPort extends Model
 {

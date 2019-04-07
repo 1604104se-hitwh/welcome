@@ -19,7 +19,6 @@ class StudentTableSeeder extends Seeder
             'stu_gen' => true,
             'stu_cid' => "230123199010106583",
             'stu_eid' => '12345678901234',
-            'class_id' => 4,
             'stu_dorm_str' => '12-666-6',
             'stu_from_school'=> '实验中学',
         ]);
@@ -32,7 +31,6 @@ class StudentTableSeeder extends Seeder
             'stu_gen' => true,
             'stu_cid' => '13073119600207437X',
             'stu_eid' => '11145678901234',
-            'class_id' => 4,
             'stu_dorm_str' => '6-170-4',
             'stu_from_school'=> '实验中学',
         ]);
@@ -45,7 +43,6 @@ class StudentTableSeeder extends Seeder
             'stu_gen' => true,
             'stu_cid' => '451423199810285725',
             'stu_eid' => '11145678901234',
-            'class_id' => 4,
             'stu_dorm_str' => '12-666-5',
             'stu_from_school'=> '实验中学',
         ]);
@@ -58,7 +55,6 @@ class StudentTableSeeder extends Seeder
             'stu_gen' => true,
             'stu_cid' => '230123199603077335',
             'stu_eid' => '11145678901234',
-            'class_id' => 4,
             'stu_dorm_str' => '12-666-4',
             'stu_from_school'=> '实验中学',
         ]);
@@ -71,7 +67,6 @@ class StudentTableSeeder extends Seeder
             'stu_gen' => false,
             'stu_cid' => '230123199011274923',
             'stu_eid' => '11145678901234',
-            'class_id' => 4,
             'stu_dorm_str' => '12-666-3',
             'stu_from_school'=> '实验中学',
         ]);
@@ -84,7 +79,6 @@ class StudentTableSeeder extends Seeder
             'stu_gen' => false,
             'stu_cid' => '230123199011274953',
             'stu_eid' => '11145678901234',
-            'class_id' => 4,
             'stu_dorm_str' => '12-666-2',
             'stu_from_school'=> '实验中学',
         ]);
@@ -97,7 +91,6 @@ class StudentTableSeeder extends Seeder
             'stu_gen' => false,
             'stu_cid' => '230123199011274961',
             'stu_eid' => '11145678901234',
-            'class_id' => 4,
             'stu_dorm_str' => '12-666-1',
             'stu_from_school'=> '实验中学',
         ]);

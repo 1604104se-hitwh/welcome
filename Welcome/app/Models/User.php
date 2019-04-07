@@ -36,6 +36,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereStuName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereStuNum($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereStuStatus($value)
+ * @property string|null $stu_from_school
  */
 class User extends Model
 {

@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 require_once __DIR__ . '/../../include.php';
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\LoginPost;
 
 use App\Models\Students as Student;
 use App\Models\Admin as Admin;
@@ -30,20 +28,22 @@ class LoginController extends Controller
             $res_obj_array = Student::where([
                 ["stu_cid",$stu_cid],
                 ["stu_eid",$stu_eid],
-            ])->first();
+            ])->whereIn("stu_status",["PREPARE","ENROLL"])->first();
             /* 判断该名新生是否存在 */
             if ($res_obj_array) {
+                // 先清空，避免错误
+                $request->session()->flush();
                 session([
-                    "id" => $res_obj_array[0]->id,
-                    "stu_status" => $res_obj_array[0]->stu_status,
-                    "stu_num" => $res_obj_array[0]->stu_num,
-                    "stu_name" => $res_obj_array[0]->stu_name,
-                    "stu_gen" => $res_obj_array[0]->stu_gen,
-                    "stu_cid" => $res_obj_array[0]->stu_cid,
-                    "stu_eid" => $res_obj_array[0]->stu_eid,
-                    "class_id" => $res_obj_array[0]->class_id,
-                    "stu_dorm_str" => $res_obj_array[0]->stu_dorm_str,
-                    "stu_from_school" => $res_obj_array[0]->stu_from_school,
+                    "id" => $res_obj_array->id,
+                    "stu_status" => $res_obj_array->stu_status,
+                    "stu_num" => $res_obj_array->stu_num,
+                    "stu_name" => $res_obj_array->stu_name,
+                    "stu_gen" => $res_obj_array->stu_gen,
+                    "stu_cid" => $res_obj_array->stu_cid,
+                    "stu_eid" => $res_obj_array->stu_eid,
+                    "class_id" => $res_obj_array->class_id,
+                    "stu_dorm_str" => $res_obj_array->stu_dorm_str,
+                    "stu_from_school" => $res_obj_array->stu_from_school,
                     "Auth" => "new",
                 ]);
 
@@ -56,17 +56,20 @@ class LoginController extends Controller
             $res_obj_array = Student::where([
                 ["stu_name",$name],
                 ["perId",$perId],
+                ["stu_status","CURRENT"]
             ])->first();
             if ($res_obj_array) {
+                // 先清空，避免错误
+                $request->session()->flush();
                 session([
-                    "id" => $res_obj_array[0]->id,
+                    "id" => $res_obj_array->id,
                     "stu_name" => $name,
-                    "stu_gen" => $res_obj_array[0]->stu_gen,
+                    "stu_gen" => $res_obj_array->stu_gen,
                     "stu_cid" => $perId,
-                    "stu_eid" => $res_obj_array[0]->stu_eid,
-                    "class_id" => $res_obj_array[0]->class_id,
-                    "stu_dorm_str" => $res_obj_array[0]->stu_dorm_str,
-                    "stu_from_school" => $res_obj_array[0]->stu_from_school,
+                    "stu_eid" => $res_obj_array->stu_eid,
+                    "class_id" => $res_obj_array->class_id,
+                    "stu_dorm_str" => $res_obj_array->stu_dorm_str,
+                    "stu_from_school" => $res_obj_array->stu_from_school,
                     "Auth" => "old",
                 ]);
                 return redirect()->intended("/senior");
@@ -79,6 +82,8 @@ class LoginController extends Controller
                 ["adm_password",$psw],
             ])->first();
             if ($res_obj_array) {
+                // 先清空，避免错误
+                $request->session()->flush();
                 session([
                     "id" => $res_obj_array->id,
                     "name" => $userId,

@@ -15,6 +15,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Dormitory whereDormDesc($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Dormitory whereId($value)
  * @mixin \Eloquent
+ * @property string|null $dorm_name
+ * @property string|null $dorm_position_x
+ * @property string|null $dorm_position_y
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Dormitory whereDormName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Dormitory whereDormPositionX($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Dormitory whereDormPositionY($value)
  */
 class Dormitory extends Model
 {

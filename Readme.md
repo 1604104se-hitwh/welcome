@@ -113,7 +113,7 @@ DB_PASSWORD=数据库密码
 再执行：
 
 ```php
-php artisan migrate
+php artisan key:generate
 php artisan db:seed --class=StudentTableSeeder
 php artisan db:seed --class=AdminTableSeeder
 php artisan db:seed --class=DatabaseSeeder
