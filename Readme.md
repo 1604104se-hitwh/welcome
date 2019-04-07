@@ -114,11 +114,12 @@ DB_PASSWORD=数据库密码
 
 ```php
 php artisan migrate
-php artisan db:seed --class=StudentTableSeeder
-php artisan db:seed --class=AdminTableSeeder
-php artisan db:seed --class=DatabaseSeeder
-php artisan db:seed --class=DepartmentTableSeeder
-php artisan db:seed --class=MajorTableSeeder
+php artisan db:seed --class=StudentTableSeeder          //插入学生测试数据
+php artisan db:seed --class=AdminTableSeeder            //插入管理员测试账号数据
+php artisan db:seed --class=DatabaseSeeder              //暂时是随机生成许多学生数据
+php artisan db:seed --class=DepartmentTableSeeder       //
+php artisan db:seed --class=MajorTableSeeder            //
+php artisan db:seed --class=EnrollCfgTableSeeder        //插入报到时间
 ```
 
 调试运行：
