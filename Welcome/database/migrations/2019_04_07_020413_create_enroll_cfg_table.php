@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDormitoryTable extends Migration
+class CreateEnrollCfgTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateDormitoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('t_dormitory', function (Blueprint $table) {
+        Schema::create('t_enroll_cfg', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('dorm_name', 10)->nullable();
-            $table->double('dorm_position_x', 15, 10)->nullable();
-            $table->double('dorm_position_y', 15, 10)->nullable();
-            $table->text('dorm_desc')->nullable();
+            $table->string('enrl_begin_time', 50)->nullable();
+            $table->boolean('enrl_permission')->default(false);
         });
     }
 
@@ -29,6 +27,6 @@ class CreateDormitoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('t_dormitory');
+        Schema::dropIfExists('enroll_cfg');
     }
 }

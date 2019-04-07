@@ -17,7 +17,7 @@
 | 新生-通知公告-通知详情 | /stu/posts/{postId}    | \App\Http\Controllers\PostController@show           |
 | 新生-到站信息          | /stu/nav               | \App\Http\Controllers\NavController@index           |
 | 新生-报到流程-报到说明 | /stu/enrollInfo        | \App\Http\Controllers\EnrollController@enrollInfo   |
-| 新生-报到流程-开始报道 | /stu/enrollGuide       | \App\Http\Controllers\EnrollController@enrollGuide  |
+| 新生-报到流程-开始报到 | /stu/enrollGuide       | \App\Http\Controllers\EnrollController@enrollGuide  |
 | 新生-问卷系统          | /stu/survey            | \App\Http\Controllers\SurveyController@index        |
 | 新生-问卷系统-填写问卷 | /stu/survey/{surveyId} | \App\Http\Controllers\SurveyController@show         |
 
