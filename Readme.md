@@ -108,9 +108,10 @@ DB_PASSWORD=数据库密码
 ```php
 php artisan migrate
 php artisan key:generate                                // 生成密钥
+php artisan db:seed --class=DatabaseSeeder              // 随机生成许多学生数据，同时调用以下命令；现在只需执行这一条
+以下备用：
 php artisan db:seed --class=StudentTableSeeder          // 插入学生测试数据
 php artisan db:seed --class=AdminTableSeeder            // 插入管理员测试账号数据
-php artisan db:seed --class=DatabaseSeeder              // 暂时是随机生成许多学生数据
 php artisan db:seed --class=DepartmentTableSeeder       //
 php artisan db:seed --class=MajorTableSeeder            //
 php artisan db:seed --class=EnrollCfgTableSeeder        // 插入报到时间

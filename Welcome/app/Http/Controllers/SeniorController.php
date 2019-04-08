@@ -139,7 +139,7 @@ class SeniorController extends Controller
                    ), // 信息
                    'stuID'=>$res_obj_array[0]->stu_num, // 学号
                    'stuDept'=>"计算机",
-                   'classID'=>$res_obj_array[0]->class_id,
+                   'classID'=>$stu_class_str,
                    'classmates'=>$classmates_array, // 你的同学
                    'user'=>$res_obj_array[0]->stu_name, // 用户名?
                    'userImg'=> "userImg",// 用户头像链接 url(site)?

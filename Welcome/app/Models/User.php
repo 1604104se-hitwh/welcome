@@ -22,7 +22,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property int $stu_gen
  * @property string $stu_cid
  * @property string $stu_eid
- * @property int $class_id
  * @property string|null $stu_dorm_str
  * @property string|null $stu_fromSchool
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereClassId($value)

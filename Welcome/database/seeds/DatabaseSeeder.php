@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
                 'stu_gen' => rand(0, 1),
                 'stu_cid' => $this->idValidator->fakeId(true),
                 'stu_eid' => str_random(14),
-                'class_id' => 4,
+                //'class_id' => 4,
                 'stu_dorm_str' => sprintf("%d", rand(1, 12)).'-'.sprintf("%1d", rand(1, 6)).sprintf("%02d", rand(1, 72)).'-'.sprintf("%1d", rand(0, 4))
             ]);
         }
@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
                 'stu_gen' => rand(0, 1),
                 'stu_cid' => $this->idValidator->fakeId(true),
                 'stu_eid' => str_random(14),
-                'class_id' => 4,
+                //'class_id' => 4,
                 'stu_dorm_str' => sprintf("%d", rand(1, 12)).'-'.sprintf("%1d", rand(1, 6)).sprintf("%02d", rand(1, 72)).'-'.sprintf("%1d", rand(0, 4))
             ]);
         }
