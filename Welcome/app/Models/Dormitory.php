@@ -21,6 +21,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Dormitory whereDormName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Dormitory whereDormPositionX($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Dormitory whereDormPositionY($value)
+ * @property string $dorm_tag
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Dormitory whereDormTag($value)
  */
 class Dormitory extends Model
 {

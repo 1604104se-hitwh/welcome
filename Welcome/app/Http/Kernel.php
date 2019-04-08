@@ -57,8 +57,8 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'checkAuth' => \App\Http\Middleware\AuthMiddle::class,
-        'check' => \App\Http\Middleware\CheckMiddle::class,
-        'uploadAuthCheck' => \App\Http\Middleware\AuthImportMiddle::class,
         'loginIndexCheck' => \App\Http\Middleware\LoginIndexCheck::class,
+        'importAuthCheck' => \App\Http\Middleware\AuthImportMiddle::class,
+        'postAuthCheck' => \App\Http\Middleware\AuthPostMiddle::class,
     ];
 }

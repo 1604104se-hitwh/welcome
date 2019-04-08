@@ -5,17 +5,18 @@
     use Illuminate\Database\Eloquent\Model;
 
     /**
-     * App\Models\Department
-     *
-     * @property int $id
-     * @property string $dept_name
-     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Department newModelQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Department newQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Department query()
-     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Department whereDeptName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Department whereId($value)
-     * @mixin \Eloquent
-     */
+ * App\Models\Department
+ *
+ * @property int $id
+ * @property string $dept_name
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Department newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Department newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Department query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Department whereDeptName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Department whereId($value)
+ * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Major[] $major
+ */
     class Department extends Model
     {
         //指定表名

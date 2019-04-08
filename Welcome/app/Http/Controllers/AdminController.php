@@ -2,12 +2,14 @@
 
     namespace App\Http\Controllers;
 
+    use App\Models\Department;
     use App\Models\Major;
+    use App\Models\Students;
+    use App\Models\EnrollCfg;
     use Illuminate\Http\Request;
     use App\Http\Controllers\Controller;
 
-    use App\Models\Students as Students;
-    use App\Models\EnrollCfg as EnrollCfg;
+
 
     class AdminController extends Controller
     {
@@ -28,8 +30,54 @@
             $current = Students::where([
                 ["stu_status", "CURRENT"]
             ])->count();
+            // 报到配置信息
             $enrollcfg = EnrollCfg::all()->first();
             $enrollTime = ($enrollcfg) ? $enrollcfg['enrl_begin_time'] : "暂无信息";
+            // 院系信息统计
+            $deptInfos = Department::all();
+            // 按照院系
+            foreach ($deptInfos as $deptInfo){
+                $girl = 0;$boy = 0;
+                $enrolled = 0;
+                // 得到每个专业
+                foreach ($deptInfo->major as $major){
+                    $majorGets = Students::where([
+                        ['stu_degree','UG'],
+                        ['stu_num','like','__'.$major->major_num.'%'],
+                    ])->whereIn('stu_status',[
+                        'PREPARE',
+                        'ENROLL',
+                    ])->get();
+                    // 有这个专业的学生
+                    if(count($majorGets)){ // 不为空才能继续
+                        foreach ($majorGets as $majorGet){
+                            if($majorGet->stu_status === 'ENROLL'){
+                                ++$enrolled;
+                            }
+                            if($majorGet->stu_gen === 0){
+                                ++$boy;
+                            }else{
+                                ++$girl;
+                            }
+                        }
+                    }
+                }
+                // 计算男女比例
+                if($girl != 0 && $boy != 0){
+                    $deptInfo->genderRate = round($boy/$girl,2);
+                }else{
+                    if($girl === 0)
+                        $deptInfo->genderRate = 'All Boys';
+                    if($boy === 0)
+                        $deptInfo->genderRate = 'All Girls';
+                    if($boy === $girl && $boy === 0)
+                        $deptInfo->genderRate = '没有学生';
+                }
+
+                $deptInfo->hasReportNumber = $enrolled;
+                $deptInfo->stuNumber = $boy + $girl;
+
+            }
             return view('admin.index', [
                 'sysType' => "管理员",  // 系统运行模式，新生，老生，管理员
                 'user' => session("name"), // 用户名
@@ -40,14 +88,14 @@
                 'oldStuNumber' => $current, // 老生人数
                 'hasReportNumber' => $enroll, // 已报到人数
                 'stuReportTime' => $enrollTime, // 报到时间
-                'schoolInfo' => "<div class=\"text-center\"><img class=\"img-fluid px-3 px-sm-4 mt-3 mb-4\" style=\"width: 25rem;\" src=\"img/undraw_posting_photo.svg\" alt=\"\"></div><p>
-            哈尔滨工业大学（以下简称哈工大）是一所有着近百年历史、世界知名的工科强校，2017年入选国家“双一流”建设A类高校，是我国首批入选国家“985工程”重点建设的大学，拥有以38位院士为带头人的雄厚师资，有9个国家一级重点学科，10个学科名列全国前五名，其中，名列前茅的工科类重点学科数量位居全国第二，工程学在全球排名第六。</p>", // 学校信息 可以html
-                'toSetSchoolInfoURL' => "toSetSchoolInfoURL", // 设置学校信息URL
-                'schoolStatistics' => array(), // 院系状态
+                'schoolInfo' => $enrollcfg->school_info, // 学校信息 可以html
+                'toSetSchoolInfoURL' => "/admin/manageSchoolInfo", // 设置学校信息URL
+                'schoolStatistics' => $deptInfos, // 院系状态
                 'systemStatus' => array( // 系统状态
                     'newsStatus' => "未导入", // 新生状态
                     'deptStatus' => "已导入，共23个系", // 院系状态
-                    'reportStatus' => "等待开始报到", // 报到状态
+                    'reportStatus' => $enrollcfg->enrl_permission?
+                        "开始报道": "等待开始报到", // 报到状态
                 ),
 
                 'toLogoutURL' => "/logout",      // 退出登录
@@ -82,9 +130,9 @@
                 'oldStuNumber' => $current, // 老生人数
                 'hasReportNumber' => $enroll, // 已报到人数
                 'stuReportTime' => $enrollTime, // 报到时间
-                'schoolInfo' => "<p>学校信息在这里更改</p>", // 设置学校信息
+                'schoolInfo' => $enrollcfg->school_info, // 设置学校信息
                 'majorInfos' => $majorInfos, // 专业信息
-                'schoolInfoPostURL' => "", // 学校信息提交URL
+                'schoolInfoPostURL' => "/admin/schoolInfoPost", // 学校信息提交URL
                 'majorInfoPostURL' => "/admin/majorInfoUpload", // 专业信息提交URL
 
                 'toLogoutURL' => "/logout",      // 退出登录

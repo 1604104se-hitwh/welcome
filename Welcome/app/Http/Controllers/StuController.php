@@ -4,6 +4,9 @@
 
     require_once __DIR__ . '/../../include.php';
 
+    use App\Models\Dormitory;
+    use App\Models\EnrollCfg as EnrollCfg;
+    use App\Models\Major;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\DB;
 
@@ -27,21 +30,21 @@
         public function index()
         {
             $stu_class_str = substr(session('stu_num'), 0, 7);  //学号digit0~digit6
-            //获得同班同学信息
-            $classmates_array = Student::where('stu_num', 'like', $stu_class_str . '%')
+            /* 获得同班同学信息 */
+            $classmates_array = Student::where('stu_num',
+                'like', $stu_class_str . '%')
                 ->orderBy('stu_num', 'asc')
                 ->get();
-            //性别比例
+            /* 图表性别比例 */
             $class_male_num = 0;
             $class_female_num = 0;
             foreach ($classmates_array as $classmate) {
                 if ($classmate->stu_gen) $class_male_num++;
                 else $class_female_num++;
             }
+            /* 老乡信息 */
             //地区分布，需要做桶排序
-
             $classmates_addr_prov_cnt = array();
-
             foreach ($classmates_array as $classmate) {
                 $classmate_addr_info = $this->idValidator->getInfo($classmate->stu_cid);
                 // 错误的不要
@@ -53,10 +56,12 @@
                     $classmates_addr_prov_cnt[$classmate_addr_info['addressTree'][0]] = 1;
                 }
             }
-
-            arsort($classmates_addr_prov_cnt);  //按照值降序排序
-            $classmates_addr_prov_cnt = array_slice($classmates_addr_prov_cnt, 0, 4); //取前五个
-
+            /* 老乡图表 */
+            //按照值降序排序
+            arsort($classmates_addr_prov_cnt);
+            //取前五个
+            $classmates_addr_prov_cnt = array_slice($classmates_addr_prov_cnt, 0, 4);
+            // 选取前四位
             $top4_num = 0;
             $vals = array_values($classmates_addr_prov_cnt);
             for ($i = 0; $i < count($classmates_addr_prov_cnt); ++$i) {
@@ -64,28 +69,44 @@
             }
             if (0 != $restNumber = $class_male_num + $class_female_num - $top4_num)
                 $classmates_addr_prov_cnt['其他'] = $restNumber;
-
-            $cid = session('stu_cid');
-            $res = $this->idValidator->getInfo($cid);
-
+            /* 报到配置信息 */
+            $enrollcfg = EnrollCfg::all()->first();
+            $enrollTime = ($enrollcfg) ? $enrollcfg['enrl_begin_time'] : "暂无信息";
             /*室友统计 */
-            $dorm_str = substr(session('stu_dorm_str'), 0, str_n_pos(session('stu_dorm_str'), '-', 2));   // 切割宿舍信息
+            // 切割宿舍信息
+            $dorm_str = substr(session('stu_dorm_str'),
+                0, str_n_pos(session('stu_dorm_str'), '-', 2));
             $roommates_array = Student::where([
                 ['stu_dorm_str', 'like', $dorm_str . '%'],
-                ['stu_cid', '<>', $cid]
+                ['stu_cid', '<>', session('stu_cid')]
             ])->orderBy('stu_dorm_str', 'asc')
                 ->get();
-
+            // 取到地址信息
             foreach ($roommates_array as $roommate) {
-                $roommate->address = $this->idValidator->getInfo($roommate->stu_cid)['address'];
+                $roommate->address = $this->idValidator
+                    ->getInfo($roommate->stu_cid)['address'];
             }
             /*老乡统计 */
             $stu_prov_city_str = substr(session('stu_cid'), 0, 5);
             $country_folk_array = Student::where([
                 ['stu_cid', 'like', $stu_prov_city_str . '%'],
-                ['stu_cid', '<>', $cid]
+                ['stu_cid', '<>', session('stu_cid')]
             ])->orderBy('stu_cid', 'asc')
                 ->get();
+            /* 获取院系 */
+            if(session()->exists('stu_num')){
+                $majorNum = substr(session('stu_num'),2,3);
+                $majorRes = Major::where([
+                    ['major_num',$majorNum],
+                ])->first();
+                if($majorRes){
+                    $major = $majorRes->dept->dept_name;
+                }else{
+                    $major = "暂无院系信息";
+                }
+            }else{
+                $major = "暂无信息";
+            }
 
             return view('stu.new.index', [
                 'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
@@ -111,11 +132,10 @@
                 'userImg' => "userImg", // 用户头像链接 url(site)
                 'toInformationURL' => "toInformationURL", // 更多信息url
                 'toSettingURL' => "toSettingURL", // 个人设置
-                'stuDept' => "计算机",
+                'stuDept' => $major,
                 'stuDormitory' => session('stu_dorm_str'),
-                'stuReportTime' => "9月1日", // 报到时间
-                'schoolInfo' => "<div class=\"text-center\"><img class=\"img-fluid px-3 px-sm-4 mt-3 mb-4\" style=\"width: 25rem;\" src=\"img/undraw_posting_photo.svg\" alt=\"\"></div><p>
-            哈尔滨工业大学（以下简称哈工大）是一所有着近百年历史、世界知名的工科强校，2017年入选国家“双一流”建设A类高校，是我国首批入选国家“985工程”重点建设的大学，拥有以38位院士为带头人的雄厚师资，有9个国家一级重点学科，10个学科名列全国前五名，其中，名列前茅的工科类重点学科数量位居全国第二，工程学在全球排名第六。</p>", // 学校信息 可以html
+                'stuReportTime' => $enrollTime, // 报到时间
+                'schoolInfo' => $enrollcfg->school_info, // 学校信息 可以html
                 'toSchoolInfoURL' => "toSchoolInfoURL",
                 'toAllStuURL' => "/stu/queryClass", // 所有同学信息url
                 'dormStus' => $roommates_array, // 室友
@@ -139,15 +159,36 @@
          */
         public function queryClass()
         {
-            $stu_class_str = substr(session('stu_num'), 0, 7);  //学号digit0~digit6
-            //获得同班同学信息
-            $classmates_array = Student::where('stu_num', 'like', $stu_class_str . '%')
+            $stu_class_str = substr(session('stu_num'),
+                0, 7);  //学号digit0~digit6
+            /* 获得同班同学信息 */
+            $classmates_array = Student::where('stu_num',
+                'like', $stu_class_str . '%')
                 ->orderBy('stu_num', 'asc')
                 ->get();
-
             foreach ($classmates_array as $classmate) {
-                $classmate->address = $this->idValidator->getInfo($classmate->stu_cid)['address'];
+                $classmate->address = $this->idValidator
+                    ->getInfo($classmate->stu_cid)['address'];
             }
+            /* 报到配置信息 */
+            $enrollcfg = EnrollCfg::all()->first();
+            $enrollTime = (EnrollCfg::all()->first()) ?
+                $enrollcfg['enrl_begin_time'] : "暂无信息";
+            /* 获取院系 */
+            if(session()->exists('stu_num')){
+                $majorNum = substr(session('stu_num'),2,3);
+                $majorRes = Major::where([
+                    ['major_num',$majorNum],
+                ])->first();
+                if($majorRes){
+                    $major = $majorRes->dept->dept_name;
+                }else{
+                    $major = "暂无院系信息";
+                }
+            }else{
+                $major = "暂无信息";
+            }
+
             return view('stu.new.yourClass', [
                 'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
                 'messages' => array(
@@ -170,11 +211,11 @@
                 'stuID' => session('stu_num'), // 学号
                 'user' => session('stu_name'), // 用户名
                 'userImg' => "userImg", // 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 个人设置url
+                'toInformationURL' => "toInformationURL", // 个人信息url
                 'toSettingURL' => "toSettingURL", // 个人设置
-                'stuDept' => "计算机",
+                'stuDept' => $major,
                 'stuDormitory' => session('stu_dorm_str'),
-                'stuReportTime' => "9月1日",
+                'stuReportTime' => $enrollTime,
                 'classmates' => $classmates_array, // 你的同学
                 'toLogoutURL' => "/logout",      // 退出登录
             ]);
@@ -186,19 +227,47 @@
          */
         public function queryDorm()
         {
-            $dorm_str = substr(session('stu_dorm_str'), 0, str_n_pos(session('stu_dorm_str'), '-', 2));   // 切割宿舍信息
+            // 切割宿舍信息
+            $dorm_str = substr(session('stu_dorm_str'),
+                0, str_n_pos(session('stu_dorm_str'), '-', 2));
+            /* 获取室友 */
             $roommates_array = Student::where([
                 ['stu_dorm_str', 'like', $dorm_str . '%'],
                 ['stu_cid', '<>', session('stu_cid')]
             ])->orderBy('stu_dorm_str', 'asc')
                 ->get();
-
+            // 室友来自
             foreach ($roommates_array as $roommate) {
-                $roommate->address = $this->idValidator->getInfo($roommate->stu_cid)['address'];
+                $roommate->address = $this->idValidator
+                    ->getInfo($roommate->stu_cid)['address'];
             }
-          
-            $dorm_building_str = substr(session('stu_dorm_str'), 0, str_n_pos(session('stu_dorm_str'), '-', 1));
-            $dorm_res = DB::table('t_dormitory')->where('dorm_name', '=', $dorm_building_str)->get();
+            /* 公寓信息 */
+            $dorm_building_str = substr(session('stu_dorm_str'),
+                0, str_n_pos(session('stu_dorm_str'), '-', 1));
+            $dorm_res = Dormitory::where([
+                    ['dorm_tag',$dorm_building_str],
+            ])->first();
+
+            /* 报到配置信息 */
+            $enrollcfg = EnrollCfg::all()->first();
+            $enrollTime = (EnrollCfg::all()->first()) ?
+                $enrollcfg['enrl_begin_time'] : "暂无信息";
+            /* 获取院系 */
+            if(session()->exists('stu_num')){
+                $majorNum = substr(session('stu_num'),2,3);
+                $majorRes = Major::where([
+                    ['major_num',$majorNum],
+                ])->first();
+                if($majorRes){
+                    $major = $majorRes->dept->dept_name;
+                }else{
+                    $major = "暂无院系信息";
+                }
+            }else{
+                $major = "暂无信息";
+            }
+
+
             return view('stu.new.yourDom', [
                 'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
                 'messages' => array(
@@ -221,16 +290,17 @@
                 'stuID' => session('stu_num'), // 学号
                 'user' => session('stu_name'), // 用户名
                 'userImg' => "userImg", // 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 个人设置url
+                'toInformationURL' => "toInformationURL", // 个人信息url
                 'toSettingURL' => "toSettingURL", // 个人设置
-                'stuDept' => "计算机",
+                'stuDept' => $major,
                 'stuDormitory' => session('stu_dorm_str'), // 宿舍
-                'stuReportTime' => "9月1日", // 报到时间
+                'stuReportTime' => $enrollTime, // 报到时间
                 'domInfo' => "domInfo", // 宿舍介绍
                 'yourDoms' => $roommates_array,
                 'domLocal' => array( // 宿舍位置（定位）
-                    'PX' => array(122.080098, 37.532806),
-                    'title' => "七公寓"
+                    'PX' => array($dorm_res->dorm_position_x
+                        , $dorm_res->dorm_position_y),
+                    'title' => $dorm_res->dorm_name
                 ),
                 'toLogoutURL' => "/logout",      // 退出登录
             ]);
@@ -243,7 +313,9 @@
         public function queryCountryFolk()
         {
             $cid = session('stu_cid');
-            $res = $this->idValidator->getInfo($cid);
+            /* 识别你来自 */
+            $cid_res = $this->idValidator->getInfo($cid);
+            /* 查询老乡 */
             $localNumber = substr($cid, 0, 5);
             // 查询数据库
             $localStudents = Student::where([
@@ -251,10 +323,9 @@
                 ['stu_cid', '<>', session('stu_cid')]
             ])->orderBy('stu_cid', 'asc')
                 ->get();
-
+            /* 来自同一个学校 */
             $fromSchool = session('stu_from_school');
             $sameSchools = [];
-
             foreach ($localStudents as $localStudent) {
                 if ($localStudent->stu_from_school == $fromSchool)
                     array_push($sameSchools, $localStudent);
@@ -282,10 +353,10 @@
                 'stuID' => session('stu_num'), // 学号
                 'user' => session('stu_name'), // 用户名
                 'userImg' => "userImg", // 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 个人设置url
-                'toSettingURL' => "toSettingURL", // 个人设置
+                'toInformationURL' => "toInformationURL", // 个人信息url
+                'toSettingURL' => "toSettingURL", // 个人设置url
                 'IDnumber' => session("stu_cid"), // 身份证号码
-                'stuLocal' => $res['address'], // 识别地区
+                'stuLocal' => $cid_res['address'], // 识别地区
                 'stuPreSchool' => $fromSchool, // 毕业院校
                 'countymens' => $localStudents, // 老乡信息
                 'sameSchools' => $sameSchools, // 同校信息

@@ -313,7 +313,9 @@
                             <h6 class="m-0 font-weight-bold text-primary">学校简介</h6>
                         </div>
                         <div class="card-body">
-                            {!! $schoolInfo !!}
+                            <div>
+                                {!! $schoolInfo !!}
+                            </div>
                             <a target="_blank" rel="nofollow" href="{{url($toSchoolInfoURL)}}">更多介绍 &rarr;</a>
                         </div>
                     </div>
