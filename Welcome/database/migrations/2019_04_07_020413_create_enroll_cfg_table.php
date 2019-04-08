@@ -28,6 +28,6 @@ class CreateEnrollCfgTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('enroll_cfg');
+        Schema::dropIfExists('t_enroll_cfg');
     }
 }
