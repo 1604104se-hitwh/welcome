@@ -25,12 +25,12 @@ class LoginController extends Controller
             $stu_eid = $request->input("examId", "default");
             $stu_cid = $request->input("perId", "default");
             // $this->idValidator = new IdValidator();
-            $res_obj_array = Student::where([
+            $res_obj = Student::where([
                 ["stu_cid",$stu_cid],
                 ["stu_eid",$stu_eid],
             ])->whereIn("stu_status",["PREPARE","ENROLL"])->first();
             /* 判断该名新生是否存在 */
-            if ($res_obj_array) {
+            if ($res_obj) {
                 // 先清空，避免错误
                 $request->session()->flush();
                 session([
@@ -53,12 +53,12 @@ class LoginController extends Controller
         } else if ($loginType === "old") { // 老生部分
             $name = $request->input("name", "default");
             $perId = $request->input("perId", "default");
-            $res_obj_array = Student::where([
+            $res_obj = Student::where([
                 ["stu_name",$name],
                 ["perId",$perId],
                 ["stu_status","CURRENT"]
             ])->first();
-            if ($res_obj_array) {
+            if ($res_obj) {
                 // 先清空，避免错误
                 $request->session()->flush();
                 session([
@@ -77,11 +77,12 @@ class LoginController extends Controller
         } else if ($loginType === "admin") { // 管理员部分
             $userId = $request->input("userId", "default");
             $psw = $request->input("psw", "default");
-            $res_obj_array = Admin::where([
+
+            $res_obj = Admin::where([
                 ["adm_name",$userId],
                 ["adm_password",$psw],
             ])->first();
-            if ($res_obj_array) {
+            if ($res_obj) {
                 // 先清空，避免错误
                 $request->session()->flush();
                 session([

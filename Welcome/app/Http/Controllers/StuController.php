@@ -196,7 +196,9 @@
             foreach ($roommates_array as $roommate) {
                 $roommate->address = $this->idValidator->getInfo($roommate->stu_cid)['address'];
             }
-
+          
+            $dorm_building_str = substr(session('stu_dorm_str'), 0, str_n_pos(session('stu_dorm_str'), '-', 1));
+            $dorm_res = DB::table('t_dormitory')->where('dorm_name', '=', $dorm_building_str)->get();
             return view('stu.new.yourDom', [
                 'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
                 'messages' => array(
@@ -233,6 +235,7 @@
                 'toLogoutURL' => "/logout",      // 退出登录
             ]);
         }
+
 
         /**
          * 老乡信息 控制器
