@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 require_once __DIR__ . '/../../include.php';
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\LoginPost;
 
 use App\Models\Students as Student;
 use App\Models\Admin as Admin;
@@ -30,9 +28,11 @@ class LoginController extends Controller
             $res_obj = Student::where([
                 ["stu_cid",$stu_cid],
                 ["stu_eid",$stu_eid],
-            ])->first();
+            ])->whereIn("stu_status",["PREPARE","ENROLL"])->first();
             /* 判断该名新生是否存在 */
             if ($res_obj) {
+                // 先清空，避免错误
+                $request->session()->flush();
                 session([
                     "id" => $res_obj->id,
                     "stu_status" => $res_obj->stu_status,
@@ -56,8 +56,11 @@ class LoginController extends Controller
             $res_obj = Student::where([
                 ["stu_name",$name],
                 ["perId",$perId],
+                ["stu_status","CURRENT"]
             ])->first();
             if ($res_obj) {
+                // 先清空，避免错误
+                $request->session()->flush();
                 session([
                     "id" => $res_obj->id,
                     "stu_name" => $name,
@@ -75,13 +78,15 @@ class LoginController extends Controller
             $userId = $request->input("userId", "default");
             $psw = $request->input("psw", "default");
 
-            $res_obj_array = Admin::where([
+            $res_obj = Admin::where([
                 ["adm_name",$userId],
                 ["adm_password",$psw],
             ])->first();
             if ($res_obj) {
+                // 先清空，避免错误
+                $request->session()->flush();
                 session([
-                    "id" => $res_obj_array->id,
+                    "id" => $res_obj->id,
                     "name" => $userId,
                     "Auth" => "admin",
                 ]);

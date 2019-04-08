@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('auth.login');
-});
+})->middleware('loginIndexCheck');
 
 Route::post("/login", "LoginController@login");
 
@@ -71,7 +71,13 @@ Route::group(['middleware' => ['checkAuth:admin']], function () {
     Route::get('/admin/posts/create', '\App\Http\Controllers\PostController@create');
 });
 
-Route::post('/admin/stuInfoUpload','\App\Http\Controllers\ImportController@studentExcelImport')->middleware('uploadAuthCheck:admin');
+// Excel Import
+Route::post('/admin/stuInfoUpload','\App\Http\Controllers\ImportController@studentExcelImport')
+    ->middleware('uploadAuthCheck:admin');
+
+Route::post('/admin/majorInfoUpload','\App\Http\Controllers\ImportController@majorExcelImport')
+    ->middleware('uploadAuthCheck:admin');
+
 
 
 

@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Students whereStuName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Students whereStuNum($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Students whereStuStatus($value)
+ * @property string|null $stu_from_school
  */
 class Students extends Model
 {

@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post wherePostSendTo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post wherePostTimestamp($value)
  * @mixin \Eloquent
+ * @property string|null $post_title
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post wherePostTitle($value)
  */
 class Post extends Model
 {

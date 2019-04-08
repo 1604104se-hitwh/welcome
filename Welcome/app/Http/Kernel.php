@@ -59,5 +59,6 @@ class Kernel extends HttpKernel
         'checkAuth' => \App\Http\Middleware\AuthMiddle::class,
         'check' => \App\Http\Middleware\CheckMiddle::class,
         'uploadAuthCheck' => \App\Http\Middleware\AuthImportMiddle::class,
+        'loginIndexCheck' => \App\Http\Middleware\LoginIndexCheck::class,
     ];
 }
