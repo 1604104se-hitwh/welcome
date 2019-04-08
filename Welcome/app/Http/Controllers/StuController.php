@@ -5,14 +5,11 @@
     require_once __DIR__ . '/../../include.php';
 
     use App\Models\Dormitory;
-    use App\Models\EnrollCfg as EnrollCfg;
+    use App\Models\EnrollCfg;
     use App\Models\Major;
-    use Illuminate\Http\Request;
-    use Illuminate\Support\Facades\DB;
+    use App\Models\Students as Student;
 
     use Jxlwqq\IdValidator\IdValidator;
-// use models
-    use App\Models\Students as Student;
 
     class StuController extends Controller
     {
