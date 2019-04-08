@@ -15,6 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(AdminTableSeeder::class);
+        $this->call(DepartmentTableSeeder::class);
+        $this->call(DormitoryTableSeeder::class);
+        $this->call(EnrollCfgTableSeeder::class);
+        $this->call(MajorTableSeeder::class);
+        $this->call(StudentTableSeeder::class);
+
         $this->idValidator = new IdValidator(); 
         // $this->call(UsersTableSeeder::class);
         //生成一些 16040xxyy的学生信息

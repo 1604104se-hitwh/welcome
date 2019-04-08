@@ -7,10 +7,11 @@
     class AuthImportMiddle
     {
         /**
-         * 解决ajax请求的中间件，会返回json
+         * Import ajax请求的中间件，会返回json
          *
          * @param \Illuminate\Http\Request $request
          * @param \Closure $next
+         * @param string $role
          * @return mixed
          */
         public function handle($request, Closure $next, $role)

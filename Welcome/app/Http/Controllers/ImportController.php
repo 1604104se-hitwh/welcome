@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\MajorImport;
 use App\Imports\StudentsImport;
+use App\Models\EnrollCfg;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
@@ -30,5 +31,17 @@ class ImportController extends Controller
             );
             return response()->jsonp($request->input('callback'),$array);
         }
+    }
+
+    public function schollInfoPost(Request $request)
+    {
+        $enrollcfg = EnrollCfg::first();
+        $enrollcfg->school_info = $request->post('schoolInfo');
+        $enrollcfg->save();
+        $array=array(
+            "code" => 200,
+            "msg" => "Saved!"
+        );
+        return response()->jsonp($request->input('callback'),$array);
     }
 }
