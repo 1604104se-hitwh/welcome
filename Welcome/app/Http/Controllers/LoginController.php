@@ -34,16 +34,16 @@ class LoginController extends Controller
                 // 先清空，避免错误
                 $request->session()->flush();
                 session([
-                    "id" => $res_obj_array->id,
-                    "stu_status" => $res_obj_array->stu_status,
-                    "stu_num" => $res_obj_array->stu_num,
-                    "stu_name" => $res_obj_array->stu_name,
-                    "stu_gen" => $res_obj_array->stu_gen,
-                    "stu_cid" => $res_obj_array->stu_cid,
-                    "stu_eid" => $res_obj_array->stu_eid,
-                    "class_id" => $res_obj_array->class_id,
-                    "stu_dorm_str" => $res_obj_array->stu_dorm_str,
-                    "stu_from_school" => $res_obj_array->stu_from_school,
+                    "id" => $res_obj->id,
+                    "stu_status" => $res_obj->stu_status,
+                    "stu_num" => $res_obj->stu_num,
+                    "stu_name" => $res_obj->stu_name,
+                    "stu_gen" => $res_obj->stu_gen,
+                    "stu_cid" => $res_obj->stu_cid,
+                    "stu_eid" => $res_obj->stu_eid,
+                    "class_id" => $res_obj->class_id,
+                    "stu_dorm_str" => $res_obj->stu_dorm_str,
+                    "stu_from_school" => $res_obj->stu_from_school,
                     "Auth" => "new",
                 ]);
 
@@ -62,14 +62,14 @@ class LoginController extends Controller
                 // 先清空，避免错误
                 $request->session()->flush();
                 session([
-                    "id" => $res_obj_array->id,
+                    "id" => $res_obj->id,
                     "stu_name" => $name,
-                    "stu_gen" => $res_obj_array->stu_gen,
+                    "stu_gen" => $res_obj->stu_gen,
                     "stu_cid" => $perId,
-                    "stu_eid" => $res_obj_array->stu_eid,
-                    "class_id" => $res_obj_array->class_id,
-                    "stu_dorm_str" => $res_obj_array->stu_dorm_str,
-                    "stu_from_school" => $res_obj_array->stu_from_school,
+                    "stu_eid" => $res_obj->stu_eid,
+                    "class_id" => $res_obj->class_id,
+                    "stu_dorm_str" => $res_obj->stu_dorm_str,
+                    "stu_from_school" => $res_obj->stu_from_school,
                     "Auth" => "old",
                 ]);
                 return redirect()->intended("/senior");
@@ -86,7 +86,7 @@ class LoginController extends Controller
                 // 先清空，避免错误
                 $request->session()->flush();
                 session([
-                    "id" => $res_obj_array->id,
+                    "id" => $res_obj->id,
                     "name" => $userId,
                     "Auth" => "admin",
                 ]);
