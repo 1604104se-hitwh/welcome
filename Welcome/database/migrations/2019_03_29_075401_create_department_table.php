@@ -14,6 +14,9 @@ class CreateDepartmentTable extends Migration
     public function up()
     {
         Schema::create('t_department', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->string('dept_name', 30);
         });

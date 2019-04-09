@@ -14,6 +14,9 @@ class CreatePermissionTable extends Migration
     public function up()
     {
         Schema::create('t_permission', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->smallInteger('pms_base_section')->default(0);
             $table->smallInteger('pms_stu_info_section')->default(0);

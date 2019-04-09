@@ -14,6 +14,9 @@ class CreateStudentTable extends Migration
     public function up()
     {
         Schema::create('t_student', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->enum('stu_status', ['PREPARE', 'ENROLL', 'CURRENT', 'GRADUATE', 'SUSPEND', 'COMPLETE', 'OTHER']);
             $table->enum('stu_degree', ['UG', 'M', 'D']);

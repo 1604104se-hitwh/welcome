@@ -14,6 +14,9 @@ class CreatePostTable extends Migration
     public function up()
     {
         Schema::create('t_post', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->timestamp('post_timestamp')->nullable();
             $table->string('post_title', 100)->nullable();

@@ -328,6 +328,7 @@
                                     <label for="majorInfoUpload">上传院系信息</label>
                                     <input type="file" id="majorInfoUpload">
                                     <p class="help-block">上传模板文件</p>
+                                    <p class="font-weight-bold text-danger">注意：上传会导致原来被覆盖</p>
                                 </div>
                                 <button type="button" class="btn btn-primary" id="submitMajorInfo">提交</button>
                             </div>
