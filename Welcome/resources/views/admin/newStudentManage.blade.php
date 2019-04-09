@@ -300,10 +300,10 @@
                                     </tr>
                                     @else @foreach($majorInfos as $majorInfo)
                                         <tr role="row">
-                                            <td>{{$majorInfo->majorName}}</td>
-                                            <td>{{$majorInfo->majorNewsNumber}}</td>
-                                            <td>{{$majorInfo->majorBoysNumber}}</td>
-                                            <td>{{$majorInfo->majorGirlsNumber}}</td>
+                                            <td>{{$majorInfo->dept_name}}</td>
+                                            <td>{{$majorInfo->deptNewsNumber}}</td>
+                                            <td>{{$majorInfo->deptBoysNumber}}</td>
+                                            <td>{{$majorInfo->deptGirlsNumber}}</td>
                                         </tr>
                                     @endforeach @endif
                                     </tbody>
@@ -321,6 +321,7 @@
                                     <label for="deptInfoUpload">上传新生信息</label>
                                     <input type="file" id="newsInfoUpload">
                                     <p class="help-block">上传模板文件</p>
+                                    <p class="font-weight-bold text-danger">注意：上传会导致原来被覆盖</p>
                                 </div>
                                 <button type="button" class="btn btn-primary" id="submitNewsInfo">提交</button>
                             </div>

@@ -14,6 +14,9 @@ class CreateConfigurationTable extends Migration
     public function up()
     {
         Schema::create('t_configuration', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->boolean('conf_open_ctrl')->default(true);
             $table->boolean('conf_svy_open_ctrl')->default(true);

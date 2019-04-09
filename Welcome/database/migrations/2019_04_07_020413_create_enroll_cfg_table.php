@@ -14,6 +14,9 @@ class CreateEnrollCfgTable extends Migration
     public function up()
     {
         Schema::create('t_enroll_cfg', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->string('enrl_begin_time', 50)->nullable();
             $table->boolean('enrl_permission')->default(false);

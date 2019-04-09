@@ -6,7 +6,6 @@
     use App\Models\Major;
     use App\Models\Students;
     use App\Models\EnrollCfg;
-    use Illuminate\Http\Request;
     use App\Http\Controllers\Controller;
 
 
@@ -153,6 +152,37 @@
             ])->count();
             $enrollcfg = EnrollCfg::all()->first();
             $enrollTime = ($enrollcfg) ? $enrollcfg['enrl_begin_time'] : "暂无信息";
+            /* 按照院系显示院系人数 */
+            // 院系信息统计
+            $deptInfos = Department::all();
+            // 按照院系
+            foreach ($deptInfos as $deptInfo) {
+                $girl = 0;
+                $boy = 0;
+                // 得到每个专业
+                foreach ($deptInfo->major as $major) {
+                    $majorGets = Students::where([
+                        ['stu_degree', 'UG'],
+                        ['stu_num', 'like', '__' . $major->major_num . '%'],
+                    ])->whereIn('stu_status', [
+                        'PREPARE',
+                        'ENROLL',
+                    ])->get();
+                    // 有这个专业的学生
+                    if (count($majorGets)) { // 不为空才能继续
+                        foreach ($majorGets as $majorGet) {
+                            if ($majorGet->stu_gen === 0) {
+                                ++$boy;
+                            } else {
+                                ++$girl;
+                            }
+                        }
+                    }
+                }
+                $deptInfo->deptGirlsNumber = $girl;
+                $deptInfo->deptBoysNumber = $boy;
+                $deptInfo->deptNewsNumber = $girl + $boy;
+            }
             return view('admin.newStudentManage', [
                 'sysType' => "管理员",  // 系统运行模式，新生，老生，管理员
                 'user' => session("name"), // 用户名
@@ -163,7 +193,7 @@
                 'oldStuNumber' => $current, // 老生人数
                 'hasReportNumber' => $enroll, // 已报到人数
                 'stuReportTime' => $enrollTime, // 报到时间
-                'majorInfos' => array(), // 专业新生情况
+                'majorInfos' => $deptInfos, // 专业新生情况
                 'newsInfoPostURL' => "/admin/stuInfoUpload", // 新生信息提交URL
 
                 'toLogoutURL' => "/logout",      // 退出登录
