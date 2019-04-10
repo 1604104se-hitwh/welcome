@@ -18,6 +18,10 @@
         }
 
         // 管理员-首页
+
+        /**
+         * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+         */
         public function index()
         {
             $res = Students::where([
@@ -76,6 +80,19 @@
                 $deptInfo->hasReportNumber = $enrolled;
                 $deptInfo->stuNumber = $boy + $girl;
 
+                /* 仪表盘信息 */
+                $newImport = ($res + $enroll === 0)?"未导入":"已导入，人数为".($res + $enroll)."人";
+                if(!Major::count() && !Department::count()){
+                    $deptImport = "未导入";
+                }else{
+                    if( !Major::count() || !Department::count()){
+                        $deptImport = "部分导入";
+                    }else{
+                        $deptImport = "已导入";
+                    }
+                    $deptImport .= "，院系".Major::count()."个，".
+                        "专业".Department::count()."个";
+                }
             }
             return view('admin.index', [
                 'sysType' => "管理员",  // 系统运行模式，新生，老生，管理员
@@ -91,8 +108,8 @@
                 'toSetSchoolInfoURL' => "/admin/manageSchoolInfo", // 设置学校信息URL
                 'schoolStatistics' => $deptInfos, // 院系状态
                 'systemStatus' => array( // 系统状态
-                    'newsStatus' => "未导入", // 新生状态
-                    'deptStatus' => "已导入，共23个系", // 院系状态
+                    'newsStatus' => $newImport, // 新生状态
+                    'deptStatus' => $deptImport, // 院系状态
                     'reportStatus' => $enrollcfg->enrl_permission?
                         "开始报道": "等待开始报到", // 报到状态
                 ),

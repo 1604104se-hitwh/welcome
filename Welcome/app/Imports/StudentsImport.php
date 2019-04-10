@@ -11,11 +11,26 @@
         /**
          * @param array $row
          *
+         * @throws \Exception
          * @return Students|null
          */
 
         public function model(array $row)
         {
+            if( !(array_key_exists('stuid',$row) &&
+                array_key_exists('name',$row) &&
+                array_key_exists('gender',$row) &&
+                array_key_exists('cid',$row) &&
+                array_key_exists('eid',$row) &&
+                array_key_exists('dorm',$row) &&
+                array_key_exists('school',$row))){
+                // 合规检查，检查1 开始有没有此行；检查2 后续会不会有没有的数据
+                throw (new \Exception("This files is in incorrect styles!"));
+            }elseif (empty($row['stuid']) || empty($row['name']) || empty($row['gender'])
+                        || empty($row['stuid']) || empty($row['cid']) || empty($row['eid'] )
+                        || empty($row['dorm']) || empty($row['school'])){
+                return null;
+            }
             return new Students([
                 'stu_status' => 'PREPARE',
                 'stu_degree' => 'UG',

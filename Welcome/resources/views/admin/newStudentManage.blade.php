@@ -425,7 +425,8 @@
             success: function (data) {
                 if (data.code == 200) {
                     spop({
-                        template: "成功保存",
+                        template: "<h4>成功保存</h4>" +
+                            "<p>信息已经更新，刷新页面就可以看到啦</p>",
                         style: 'info',
                         autoclose: 5000,
                         position: 'bottom-right',
@@ -434,7 +435,8 @@
                     });
                 } else {
                     spop({
-                        template: "保存失败（" + data.code + "）",
+                        template: "<h4>保存失败（" + data.code + "）</h4>" +
+                            "<p>"+data.data+"</p>",
                         style: 'warning',
                         autoclose: false,
                         position: 'bottom-right',
