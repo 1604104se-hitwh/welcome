@@ -12,14 +12,19 @@ class MajorImport implements ToModel,WithHeadingRow
     /**
     * @param array $row
     *
+    * @throws \Exception
     * @return \Illuminate\Database\Eloquent\Model|null
     */
     public function model(array $row)
     {
         // 先查询有没有同的数据
-        if(!($row['dept'] && $row['majornum'] && $row['majorname'])){
-            // 合规检查
-            return ;
+        if( !(array_key_exists('dept',$row) &&
+            array_key_exists('majornum',$row) &&
+            array_key_exists('majorname',$row))){
+            // 合规检查，检查1 开始有没有此行；检查2 后续会不会有没有的数据
+            throw (new \Exception("This files is in incorrect styles!"));
+        }elseif (empty($row['dept'] || empty($row['majornum'] || empty($row['majorname'])))){
+            return null;
         }
         $deptID = Department::where('dept_name',$row['dept'])
             ->select('id')->first();

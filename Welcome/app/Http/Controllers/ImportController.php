@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Imports\MajorImport;
 use App\Imports\StudentsImport;
+use App\Models\Department;
 use App\Models\EnrollCfg;
+use App\Models\Major;
 use App\Models\Students;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,6 +55,7 @@ class ImportController extends Controller
                 return response()->jsonp($request->input('callback'),$array);
             }
             // 文件出错
+            DB::rollBack();
             $array=array(
                 "code" => 404,
                 "msg" => "The files has something error!",
@@ -73,11 +76,47 @@ class ImportController extends Controller
     }
 
     public function majorExcelImport(Request $request){
-        if($request->hasFile('majorInfo') && $request->file('majorInfo')->isValid()){
-            Excel::import(new MajorImport, $request->file('majorInfo'));
+        try{
+            DB::beginTransaction();
+            // 开始需要去除所有的信息
+            DB::table('t_department')->delete();
+            DB::table('t_major')->delete();
+            if($request->hasFile('majorInfo') && $request->file('majorInfo')->isValid()){
+                try{
+                    Excel::import(new MajorImport, $request->file('majorInfo'));
+                }catch (\Exception $e){
+                    DB::rollBack();
+                    $array=array(
+                        "code" => 501,
+                        "msg" => "The file may has some error!",
+                        "data" => "上传的文件可能有误！",
+                        "exception" => $e->getMessage()
+                    );
+                    return response()->jsonp($request->input('callback'),$array);
+                }
+                DB::commit();
+                $array=array(
+                    "code" => 200,
+                    "msg" => "Saved!",
+                    "data" => "已成功保存！"
+                );
+                return response()->jsonp($request->input('callback'),$array);
+            }
+            // 文件出错
+            DB::rollBack();
             $array=array(
-                "code" => 200,
-                "msg" => "Saved!"
+                "code" => 404,
+                "msg" => "The files has something error!",
+                "data" => "文件上传出错！"
+            );
+            return response()->jsonp($request->input('callback'),$array);
+        }catch (\Exception $e){
+            DB::rollBack();
+            $array=array(
+                "code" => 500,
+                "msg" => "The programing process error! Please call administrator for help!",
+                "data" => "程序内部错误，请告知管理员处理！",
+                "exception" => $e->getMessage()
             );
             return response()->jsonp($request->input('callback'),$array);
         }
@@ -85,13 +124,26 @@ class ImportController extends Controller
 
     public function schollInfoPost(Request $request)
     {
-        $enrollcfg = EnrollCfg::first();
-        $enrollcfg->school_info = $request->post('schoolInfo');
-        $enrollcfg->save();
-        $array=array(
-            "code" => 200,
-            "msg" => "Saved!"
-        );
-        return response()->jsonp($request->input('callback'),$array);
+        try{
+            DB::beginTransaction();
+            $enrollcfg = EnrollCfg::first();
+            $enrollcfg->school_info = $request->post('schoolInfo');
+            $enrollcfg->save();
+            DB::commit();
+            $array=array(
+                "code" => 200,
+                "msg" => "Saved!"
+            );
+            return response()->jsonp($request->input('callback'),$array);
+        }catch (\Exception $e){
+            DB::rollBack();
+            $array=array(
+                "code" => 500,
+                "msg" => "The programing process error! Please call administrator for help!",
+                "data" => "程序内部错误，请告知管理员处理！",
+                "exception" => $e->getMessage()
+            );
+            return response()->jsonp($request->input('callback'),$array);
+        }
     }
 }
