@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EnrollCfgTableSeeder::class);
         $this->call(MajorTableSeeder::class);
         $this->call(StudentTableSeeder::class);
+        $this->call(PostTableSeeder::class);
 
         $this->idValidator = new IdValidator(); 
         // $this->call(UsersTableSeeder::class);

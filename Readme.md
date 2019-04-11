@@ -103,11 +103,18 @@ DB_USERNAME=数据库用户名
 DB_PASSWORD=数据库密码
 ```
 
-再执行：
+数据表迁移：
 
 ```php
-php artisan migrate
+php artisan migrate             //若之前没有表结构，则执行这条指令
+    php artisan migrate:refresh //否则使用这条指令--Drop all tables and re-run all migrations
+    php artisan migrate:rollback//若只希望回滚迁移全部数据表，则执行这条指令
 php artisan key:generate                                // 生成密钥
+```
+
+数据填充：
+
+```php
 php artisan db:seed --class=DatabaseSeeder              // 随机生成许多学生数据，同时调用以下命令；现在只需执行这一条
 以下备用：
 php artisan db:seed --class=StudentTableSeeder          // 插入学生测试数据
