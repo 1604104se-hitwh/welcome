@@ -13,7 +13,7 @@ class CreatePostReadTable extends Migration
      */
     public function up()
     {
-        Schema::create('post_read', function (Blueprint $table) {
+        Schema::create('t_post_read', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
@@ -32,6 +32,6 @@ class CreatePostReadTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_read');
+        Schema::dropIfExists('t_post_read');
     }
 }
