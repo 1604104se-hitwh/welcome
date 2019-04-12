@@ -1,8 +1,6 @@
 # 新生入学迎新系统
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b843b1a334454e909c81cacd9048651e)](https://app.codacy.com/app/specialpointcentral/welcome?utm_source=github.com&utm_medium=referral&utm_content=1604104se-hitwh/welcome&utm_campaign=Badge_Grade_Dashboard)
-
-[![Build Status](https://www.travis-ci.com/1604104se-hitwh/welcome.svg?branch=master)](https://www.travis-ci.com/1604104se-hitwh/welcome)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b843b1a334454e909c81cacd9048651e)](https://app.codacy.com/app/specialpointcentral/welcome?utm_source=github.com&utm_medium=referral&utm_content=1604104se-hitwh/welcome&utm_campaign=Badge_Grade_Dashboard) [![Build Status](https://www.travis-ci.com/1604104se-hitwh/welcome.svg?branch=master)](https://www.travis-ci.com/1604104se-hitwh/welcome)
 
 Welcome HITers
 
