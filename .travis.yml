@@ -4,6 +4,7 @@ php:
 service:
   - mysql
 before_script:
+  - cd Welcome/
   - composer install
   - composer dump-autoload
   - cp .env.travis .env
