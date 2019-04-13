@@ -271,10 +271,10 @@
                 <!-- Content Column -->
                 <div class="card-columns">
                     <div class="mb-4">
+                        <?php $id = 0 ?>
                         @if(count($enrollInfos)==0) {{-- 还没有信息 --}}
                         <p>还没有信息</p>
                         @else
-                            <?php $id = 0 ?>
                             @foreach($enrollInfos as $enrollInfo)
                                 <div class="card mb-4">
                                     <div class="card-header py-3">
