@@ -1,5 +1,7 @@
 # 新生入学迎新系统
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b843b1a334454e909c81cacd9048651e)](https://app.codacy.com/app/specialpointcentral/welcome?utm_source=github.com&utm_medium=referral&utm_content=1604104se-hitwh/welcome&utm_campaign=Badge_Grade_Dashboard) [![Build Status](https://www.travis-ci.com/1604104se-hitwh/welcome.svg?branch=master)](https://www.travis-ci.com/1604104se-hitwh/welcome)
+
 Welcome HITers
 
 :warning:此版本仅仅是用于SE的大作业，可能不会有后续更新，请谨慎使用
@@ -115,13 +117,7 @@ php artisan key:generate                                // 生成密钥
 数据填充：
 
 ```php
-php artisan db:seed --class=DatabaseSeeder              // 随机生成许多学生数据，同时调用以下命令；现在只需执行这一条
-以下备用：
-php artisan db:seed --class=StudentTableSeeder          // 插入学生测试数据
-php artisan db:seed --class=AdminTableSeeder            // 插入管理员测试账号数据
-php artisan db:seed --class=DepartmentTableSeeder       //
-php artisan db:seed --class=MajorTableSeeder            //
-php artisan db:seed --class=EnrollCfgTableSeeder        // 插入报到时间
+php artisan db:seed --class=DatabaseSeeder              // 随机生成许多学生数据
 ```
 
 调试运行：
@@ -162,6 +158,10 @@ php artisan serve
 
 ![admin](./pic/admin.png)
 
+- 管理员添加学生和院系信息
+
+- 管理员添加学校简介
+
 ## 暂定实现功能
 
 1. 个人信息查询
@@ -193,11 +193,8 @@ php artisan serve
 
   同时提供预约功能，新生可以预约迎新接送车辆，方便学校统计大致人数。
 
-- 结伴同行（待定）
 
-  新生可自愿选择是否提供出行信息，可以通过系统进行匹配，获取同一车次的新生信息，可以自行联系同行同学。
-
-4. 问卷系统
+4. 问卷系统（待定）
 
    效仿本部，新生进入迎新系统后需要完成招生办设计的调查问卷，后续管理员可以通过导出数据进行数据分析，减少后续发放纸质版再统计的麻烦。
 
