@@ -20,7 +20,8 @@ class EnrollController extends Controller
 
     public function enrollInfo()
     {
-
+        $test = new \stdClass();
+//        $test->enrl_title =
         return view('stu.new.enrollInfo', [
             'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
             'messages' => array(
@@ -51,7 +52,6 @@ class EnrollController extends Controller
             'enrollInfos' => array(),
             'enrl_location' => array(),
         ]);
-
     }
 
     public function enrollGuide()
