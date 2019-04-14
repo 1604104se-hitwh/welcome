@@ -168,7 +168,7 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{url($toInfomationURL)}}">
+                            <a class="dropdown-item" href="{{url($toInformationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
                             <a class="dropdown-item" href="{{url($toSettingURL)}}">
@@ -283,13 +283,9 @@
                             <h6 class="m-0 font-weight-bold text-primary">学校简介</h6>
                         </div>
                         <div class="card-body">
-                            <div class="text-center">
-                                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                     src="img/undraw_posting_photo.svg" alt="">
-                            </div>
-                            <p>
+                            <div>
                                 {!! $schoolInfo !!}
-                            </p>
+                            </div>
                             <a target="_blank" rel="nofollow" href="{{url($toSetSchoolInfoURL)}}">去设置 &rarr;</a>
                         </div>
                     </div>
@@ -315,7 +311,7 @@
                                 </tr>
                                 @else @foreach($schoolStatistics as $schoolStatistic)
                                     <tr role="row">
-                                        <td>{{$schoolStatistic->deptName}}</td>
+                                        <td>{{$schoolStatistic->dept_name}}</td>
                                         <td>{{$schoolStatistic->stuNumber}}</td>
                                         <td>{{$schoolStatistic->hasReportNumber}}</td>
                                         <td>{{$schoolStatistic->genderRate}}</td>

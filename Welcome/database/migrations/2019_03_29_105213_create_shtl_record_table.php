@@ -14,6 +14,9 @@ class CreateShtlRecordTable extends Migration
     public function up()
     {
         Schema::create('t_shtl_record', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->integer('shtl_id')->unsigned();
             $table->integer('stu_id')->unsigned();

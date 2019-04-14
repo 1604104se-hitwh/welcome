@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 require_once __DIR__ . '/../../include.php';
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\LoginPost;
 
+use App\Models\Students as Student;
+use App\Models\Admin as Admin;
 /**
  * 此为登录控制器，登录分为三种情况：
  * 新生
@@ -15,14 +15,6 @@ use App\Http\Requests\LoginPost;
  */
 class LoginController extends Controller
 {
-    /**
-     * XXX：这里有待改进
-     * app\Request下有一个人继承自Request的LoginPost，
-     * 但是将Request替换为LoginPost时，会将连接的数据库表替换为名叫posts的表，
-     * 修改这个配置的方法目前还没找到；
-     * 解决该问题后可以使用validated方法对post的数据进行初步验证
-     */
-
     /* 登录总控 */
     public function login(Request $request)
     {
@@ -33,22 +25,25 @@ class LoginController extends Controller
             $stu_eid = $request->input("examId", "default");
             $stu_cid = $request->input("perId", "default");
             // $this->idValidator = new IdValidator();
-            $res_obj_array = DB::select('SELECT * FROM t_student WHERE 
-                                        stu_cid = :stu_cid AND stu_eid = :stu_eid',
-                ["stu_cid" => $stu_cid, "stu_eid" => $stu_eid]);
+            $res_obj = Student::where([
+                ["stu_cid",$stu_cid],
+                ["stu_eid",$stu_eid],
+            ])->whereIn("stu_status",["PREPARE","ENROLL"])->first();
             /* 判断该名新生是否存在 */
-            if ($res_obj_array) {
+            if ($res_obj) {
+                // 先清空，避免错误
+                $request->session()->flush();
                 session([
-                    "id" => $res_obj_array[0]->id,
-                    "stu_status" => $res_obj_array[0]->stu_status,
-                    "stu_num" => $res_obj_array[0]->stu_num,
-                    "stu_name" => $res_obj_array[0]->stu_name,
-                    "stu_gen" => $res_obj_array[0]->stu_gen,
-                    "stu_cid" => $res_obj_array[0]->stu_cid,
-                    "stu_eid" => $res_obj_array[0]->stu_eid,
-                    "class_id" => $res_obj_array[0]->class_id,
-                    "stu_dorm_str" => $res_obj_array[0]->stu_dorm_str,
-                    "stu_fromSchool" => $res_obj_array[0]->stu_fromSchool,
+                    "id" => $res_obj->id,
+                    "stu_status" => $res_obj->stu_status,
+                    "stu_num" => $res_obj->stu_num,
+                    "stu_name" => $res_obj->stu_name,
+                    "stu_gen" => $res_obj->stu_gen,
+                    "stu_cid" => $res_obj->stu_cid,
+                    "stu_eid" => $res_obj->stu_eid,
+                    //"class_id" => $res_obj->class_id,
+                    "stu_dorm_str" => $res_obj->stu_dorm_str,
+                    "stu_from_school" => $res_obj->stu_from_school,
                     "Auth" => "new",
                 ]);
 
@@ -58,19 +53,23 @@ class LoginController extends Controller
         } else if ($loginType === "old") { // 老生部分
             $name = $request->input("name", "default");
             $perId = $request->input("perId", "default");
-            $res_obj_array = DB::select('SELECT * FROM t_student WHERE stu_name = :name 
-                                        AND stu_cid = :perId',
-                ["name" => $name, "perId" => $perId]);
-            if ($res_obj_array) {
+            $res_obj = Student::where([
+                ["stu_name",$name],
+                ["perId",$perId],
+                ["stu_status","CURRENT"]
+            ])->first();
+            if ($res_obj) {
+                // 先清空，避免错误
+                $request->session()->flush();
                 session([
-                    "id" => $res_obj_array[0]->id,
+                    "id" => $res_obj->id,
                     "stu_name" => $name,
-                    "stu_gen" => $res_obj_array[0]->stu_gen,
+                    "stu_gen" => $res_obj->stu_gen,
                     "stu_cid" => $perId,
-                    "stu_eid" => $res_obj_array[0]->stu_eid,
-                    "class_id" => $res_obj_array[0]->class_id,
-                    "stu_dorm_str" => $res_obj_array[0]->stu_dorm_str,
-                    "stu_fromSchool" => $res_obj_array[0]->stu_fromSchool,
+                    "stu_eid" => $res_obj->stu_eid,
+                    //"class_id" => $res_obj->class_id,
+                    "stu_dorm_str" => $res_obj->stu_dorm_str,
+                    "stu_from_school" => $res_obj->stu_from_school,
                     "Auth" => "old",
                 ]);
                 return redirect()->intended("/senior");
@@ -78,13 +77,16 @@ class LoginController extends Controller
         } else if ($loginType === "admin") { // 管理员部分
             $userId = $request->input("userId", "default");
             $psw = $request->input("psw", "default");
-            $res_obj_array = DB::select('SELECT * FROM t_admin WHERE adm_name = :userId 
-                                        AND adm_password = :psw',
-                ["userId" => $userId, "psw" => $psw]);
 
-                if ($res_obj_array) {
+            $res_obj = Admin::where([
+                ["adm_name",$userId],
+                ["adm_password",$psw],
+            ])->first();
+            if ($res_obj) {
+                // 先清空，避免错误
+                $request->session()->flush();
                 session([
-                    "id" => $res_obj_array[0]->id,
+                    "id" => $res_obj->id,
                     "name" => $userId,
                     "Auth" => "admin",
                 ]);

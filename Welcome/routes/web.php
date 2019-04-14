@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('auth.login');
-});
+})->middleware('loginIndexCheck');
 
 Route::post("/login", "LoginController@login");
 
@@ -23,29 +23,29 @@ Route::get("/logout", "LoginController@logout");
 Route::group(['middleware' => ['checkAuth:new']], function () {
     //NEW STUDENT
 
-    Route::get('/stu', '\App\Http\Controllers\StuController@index');
+    Route::get('/stu', 'StuController@index');
 
-    Route::get('/stu/index', '\App\Http\Controllers\StuController@index');
+    Route::get('/stu/index', 'StuController@index');
 
-    Route::get('/stu/queryClass', '\App\Http\Controllers\StuController@queryClass');
+    Route::get('/stu/queryClass', 'StuController@queryClass');
 
-    Route::get('/stu/queryDorm', '\App\Http\Controllers\StuController@queryDorm');
+    Route::get('/stu/queryDorm', 'StuController@queryDorm');
 
-    Route::get('/stu/queryCountryFolk', '\App\Http\Controllers\StuController@queryCountryFolk');
+    Route::get('/stu/queryCountryFolk', 'StuController@queryCountryFolk');
 
-    Route::get('/stu/posts', '\App\Http\Controllers\PostController@index');
+    Route::get('/stu/posts', 'PostController@index');
 
-    Route::get('/stu/posts/{postId}', '\App\Http\Controllers\PostController@show');
+    Route::get('/stu/posts/{postId}', 'PostController@show');
 
-    Route::get('/stu/nav', '\App\Http\Controllers\NavController@index');
+    Route::get('/stu/nav', 'NavController@index');
 
-    Route::get('/stu/enrollInfo', '\App\Http\Controllers\EnrollController@enrollInfo');
+    Route::get('/stu/enrollInfo', 'EnrollController@enrollInfo');
 
-    Route::get('/stu/enrollGuide', '\App\Http\Controllers\EnrollController@enrollGuide');
+    Route::get('/stu/enrollGuide', 'EnrollController@enrollGuide');
 
-    Route::get('/stu/survey', '\App\Http\Controllers\SurveyController@index');
+    Route::get('/stu/survey', 'SurveyController@index');
 
-    Route::get('/stu/survey/{surveyId}', '\App\Http\Controllers\SurveyController@index');
+    Route::get('/stu/survey/{surveyId}', 'SurveyController@index');
 });
 /* SENIOR STUDENT*/
 Route::group(['middleware' => ['checkAuth:old']], function () {
@@ -56,20 +56,33 @@ Route::group(['middleware' => ['checkAuth:old']], function () {
 });
 //ADMIN
 Route::group(['middleware' => ['checkAuth:admin']], function () {
-    Route::get('/admin', '\App\Http\Controllers\AdminController@index');
+    Route::get('/admin', 'AdminController@index');
 
-    Route::get('/admin/index', '\App\Http\Controllers\AdminController@index');
+    Route::get('/admin/index', 'AdminController@index');
 
-    Route::get('/admin/manageSchoolInfo', '\App\Http\Controllers\AdminController@manageSchoolInfo');
+    Route::get('/admin/manageSchoolInfo', 'AdminController@manageSchoolInfo');
 
-    Route::get('/admin/manageNewsInfo', '\App\Http\Controllers\AdminController@manageNewsInfo');
+    Route::get('/admin/manageNewsInfo', 'AdminController@manageNewsInfo');
 
-    Route::get('/admin/posts', '\App\Http\Controllers\PostController@index');
+    Route::get('/admin/posts', 'PostController@index');
 
-    Route::get('/admin/posts/{post}', '\App\Http\Controllers\PostController@show');
+    Route::get('/admin/posts/{post}', 'PostController@show');
 
-    Route::get('/admin/posts/create', '\App\Http\Controllers\PostController@create');
+    Route::get('/admin/posts/create', 'PostController@create');
 });
+
+// Excel Import
+Route::post('/admin/stuInfoUpload','ImportController@studentExcelImport')
+    ->middleware('importAuthCheck:admin');
+
+Route::post('/admin/majorInfoUpload','ImportController@majorExcelImport')
+    ->middleware('importAuthCheck:admin');
+
+// School Information Import
+Route::post('/admin/schoolInfoPost','ImportController@schollInfoPost')
+    ->middleware('postAuthCheck:admin');
+
+
 
 
 

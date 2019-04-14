@@ -68,7 +68,7 @@
             <div id="collapseInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">你可以查看：</h6>
-                    <a class="collapse-item" href="{{url('/stu/queryClass')}}">你的班级</a>
+                    <a class="collapse-item active" href="{{url('/stu/queryClass')}}">你的班级</a>
                     <a class="collapse-item" href="{{url('/stu/queryDorm')}}">你的宿舍</a>
                     <a class="collapse-item" href="{{url('/stu/queryContryFolk')}}">你的老乡</a>
                 </div>
@@ -160,7 +160,7 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{url($toInfomationURL)}}">
+                            <a class="dropdown-item" href="{{url($toInformationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
                             <a class="dropdown-item" href="{{url($toSettingURL)}}">

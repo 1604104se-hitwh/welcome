@@ -14,7 +14,14 @@ class CreateDormitoryTable extends Migration
     public function up()
     {
         Schema::create('t_dormitory', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
+            $table->string('dorm_tag', 6);
+            $table->string('dorm_name', 10);
+            $table->double('dorm_position_x', 15, 10);
+            $table->double('dorm_position_y', 15, 10);
             $table->text('dorm_desc')->nullable();
         });
     }

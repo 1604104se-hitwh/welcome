@@ -70,7 +70,7 @@
             <div id="collapseInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">你可以管理：</h6>
-                    <a class="collapse-item" href="{{url('/admin/manageSchoolInfo')}}">学校信息</a>
+                    <a class="collapse-item active" href="{{url('/admin/manageSchoolInfo')}}">学校信息</a>
                     <a class="collapse-item" href="{{url('/admin/manageNewsInfo')}}">新生信息</a>
                     <a class="collapse-item" href="{{url('/admin/manageAdminInfo')}}">管理员信息</a>
                 </div>
@@ -171,7 +171,7 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{url($toInfomationURL)}}">
+                            <a class="dropdown-item" href="{{url($toInformationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
                             <a class="dropdown-item" href="{{url($toSettingURL)}}">
@@ -298,52 +298,40 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>院系名</th>
-                                    <th>代码</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @if(count($deptInfos)==0) {{-- 还没有信息 --}}
-                                <tr role="row">
-                                    <td colspan="2">还没有信息</td>
-                                </tr>
-                                @else @foreach($deptInfos as $deptInfo)
-                                    <tr role="row">
-                                        <td>{{$deptInfo->deptName}}</td>
-                                        <td>{{$deptInfo->deptNumber}}</td>
-                                    </tr>
-                                @endforeach @endif
-                                </tbody>
-                            </table>
-
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
                                     <th>专业名</th>
                                     <th>代码</th>
+                                    <th>所属院系</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @if(count($majorInfos)==0) {{-- 还没有信息 --}}
                                 <tr role="row">
-                                    <td colspan="2">还没有信息</td>
+                                    <td colspan="3">还没有信息</td>
                                 </tr>
                                 @else @foreach($majorInfos as $majorInfo)
                                     <tr role="row">
-                                        <td>{{$majorInfo->majorName}}</td>
-                                        <td>{{$majorInfo->majorNumber}}</td>
+                                        <td>{{$majorInfo->major_name}}</td>
+                                        <td>{{$majorInfo->major_num}}</td>
+                                        <td>
+                                            {{isset($majorInfo->dept
+                                            ->dept_name)? $majorInfo->dept
+                                            ->dept_name : "不存在的院系"}}
+                                        </td>
                                     </tr>
                                 @endforeach @endif
                                 </tbody>
                             </table>
                         </div>
                         <div class="col-md-4 col-sm-12">
-                            <div class="form-group mb-4">
-                                <label for="deptInfoUpload">上传院系信息</label>
-                                <input type="file" id="deptInfoUpload">
-                                <p class="help-block">上传模板文件</p>
+                            <div class="mb-4">
+                                <div class="form-group mb-4">
+                                    <label for="majorInfoUpload">上传院系信息</label>
+                                    <input type="file" id="majorInfoUpload">
+                                    <p class="help-block">上传模板文件</p>
+                                    <p class="font-weight-bold text-danger">注意：上传会导致原来被覆盖</p>
+                                </div>
+                                <button type="button" class="btn btn-primary" id="submitMajorInfo">提交</button>
                             </div>
-                            <button type="button" class="btn btn-primary" id="submitDeptInfo">提交</button>
                         </div>
                     </div>
                 </div>
@@ -439,7 +427,8 @@
             success: function (data) {
                 if (data.code == 200) {
                     spop({
-                        template: "成功保存",
+                        template: "<h4>成功保存</h4>" +
+                            "<p>信息已经更新，刷新页面就可以看到啦</p>",
                         style: 'info',
                         autoclose: 5000,
                         position: 'bottom-right',
@@ -448,7 +437,8 @@
                     });
                 } else {
                     spop({
-                        template: "保存失败（" + data.code + "）",
+                        template: "<h4>保存失败（" + data.code + "）</h4>" +
+                            "<p>"+data.data+"</p>",
                         style: 'warning',
                         autoclose: false,
                         position: 'bottom-right',
@@ -476,8 +466,9 @@
         });
     });
 
-    $('#submitDeptInfo').click(function () {
-        var fileObj = $("#deptInfoUpload")[0].files[0]; // js 获取文件对象
+    $('#submitMajorInfo').click(function () {
+        var formData = new FormData();
+        var fileObj = $("#majorInfoUpload")[0].files[0]; // js 获取文件对象
         if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
             spop({
                 template: "请选择文件",
@@ -488,6 +479,8 @@
                 group: "submitDeptInfo",
             });
             return;
+        } else {
+            formData.append('majorInfo', fileObj);
         }
         $.ajax({
             async: true,   		//是否为异步请求
@@ -496,27 +489,29 @@
             dataType: "jsonp", 	//服务器返回的数据是什么类型
             processData: false,	//用于对data参数进行序列化处理 这里必须false
             contentType: false, //必须
-            url: "{{url($deptInfoPostURL)}}",
-            data: {"deptInfo": fileObj},
+            url: "{{url($majorInfoPostURL)}}",
+            data: formData,
 
             success: function (data) {
                 if (data.code == 200) {
                     spop({
-                        template: "成功保存",
+                        template: "<h4>成功保存</h4>" +
+                            "<p>信息已经更新，刷新页面就可以看到啦</p>",
                         style: 'info',
                         autoclose: 5000,
                         position: 'bottom-right',
                         icon: true,
-                        group: "submitDeptInfo",
+                        group: "submitMajorInfo",
                     });
                 } else {
                     spop({
-                        template: "保存失败（" + data.code + "）",
+                        template: "<h4>保存失败（" + data.code + "）</h4>" +
+                            "<p>"+data.data+"</p>",
                         style: 'warning',
                         autoclose: false,
                         position: 'bottom-right',
                         icon: true,
-                        group: "submitDeptInfo",
+                        group: "submitMajorInfo",
                     });
                 }
             },
@@ -533,7 +528,7 @@
                     autoclose: false,
                     position: 'bottom-right',
                     icon: true,
-                    group: "submitDeptInfo",
+                    group: "submitMajorInfo",
                 });
             }
         });

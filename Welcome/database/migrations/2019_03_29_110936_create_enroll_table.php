@@ -14,6 +14,9 @@ class CreateEnrollTable extends Migration
     public function up()
     {
         Schema::create('t_enroll', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->string('enrl_title', 100)->nullable();
             $table->text('enrl_info')->nullable();

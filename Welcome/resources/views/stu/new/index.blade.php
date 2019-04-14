@@ -197,7 +197,7 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{url($toInfomationURL)}}">
+                            <a class="dropdown-item" href="{{url($toInformationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
                             <a class="dropdown-item" href="{{url($toSettingURL)}}">
@@ -272,7 +272,7 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col-auto">
                                                 <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                    {{$stuDomitory}}
+                                                    {{$stuDormitory}}
                                                 </div>
                                             </div>
                                         </div>
@@ -313,7 +313,9 @@
                             <h6 class="m-0 font-weight-bold text-primary">学校简介</h6>
                         </div>
                         <div class="card-body">
-                            {!! $schoolInfo !!}
+                            <div>
+                                {!! $schoolInfo !!}
+                            </div>
                             <a target="_blank" rel="nofollow" href="{{url($toSchoolInfoURL)}}">更多介绍 &rarr;</a>
                         </div>
                     </div>
@@ -354,16 +356,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @if(count($domStus)==0) {{-- 还没有信息 --}}
+                                @if(count($dormStus)==0) {{-- 还没有信息 --}}
                                 <tr role="row">
                                     <td colspan="4">还没有信息</td>
                                 </tr>
-                                @else @foreach($domStus as $domStu)
+                                @else @foreach($dormStus as $dormStu)
                                     <tr role="row">
-                                        <td>{{$domStu->stu_name}}</td>
-                                        <td>{{$domStu->stu_num}}</td>
-                                        <td>{{$domStu->stu_dorm_str}}</td>
-                                        <td>{{$domStu->address}}</td>
+                                        <td>{{$dormStu->stu_name}}</td>
+                                        <td>{{$dormStu->stu_num}}</td>
+                                        <td>{{$dormStu->stu_dorm_str}}</td>
+                                        <td>{{$dormStu->address}}</td>
                                     </tr>
                                 @endforeach @endif
                                 </tbody>
@@ -387,7 +389,7 @@
                         </div>
                         <div class="card-body">
                             {!!$domInfo!!}
-                            <a target="_blank" rel="nofollow" href="{{url($toDomInfoURL)}}">更多介绍 &rarr;</a>
+                            <a target="_blank" rel="nofollow" href="{{url($toDormInfoURL)}}">更多介绍 &rarr;</a>
                         </div>
                     </div>
 
@@ -420,7 +422,7 @@
                                                     女
                                                 @endif
                                             </td>
-                                            <td>{{$localFolk->stu_fromSchool}}</td>
+                                            <td>{{$localFolk->stu_from_school}}</td>
                                         </tr>
                                     @endforeach @endif
                                     </tbody>

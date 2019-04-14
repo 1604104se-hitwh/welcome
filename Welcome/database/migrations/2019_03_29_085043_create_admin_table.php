@@ -14,6 +14,9 @@ class CreateAdminTable extends Migration
     public function up()
     {
         Schema::create('t_admin', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->string('adm_name', 15)->nullable();
             $table->string('adm_password', 30);

@@ -14,6 +14,9 @@ class CreateStudentTable extends Migration
     public function up()
     {
         Schema::create('t_student', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->enum('stu_status', ['PREPARE', 'ENROLL', 'CURRENT', 'GRADUATE', 'SUSPEND', 'COMPLETE', 'OTHER']);
             $table->enum('stu_degree', ['UG', 'M', 'D']);
@@ -22,9 +25,9 @@ class CreateStudentTable extends Migration
             $table->boolean('stu_gen')->default(false);
             $table->char('stu_cid', 18);
             $table->char('stu_eid', 14);
-            $table->integer('class_id')->unsigned();
+            //$table->integer('class_id')->unsigned();
             $table->string('stu_dorm_str', 10)->nullable();
-            $table->string('stu_fromSchool', 10)->nullable();
+            $table->string('stu_from_school', 10)->nullable();
         });
     }
 
