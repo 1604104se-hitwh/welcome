@@ -11,6 +11,7 @@
 
     use Jxlwqq\IdValidator\IdValidator;
 
+    /* 新生控制器 */
     class StuController extends Controller
     {
         private $idValidator;

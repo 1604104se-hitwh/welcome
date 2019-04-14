@@ -9,14 +9,21 @@ class PostController extends Controller
 {
     public function index() 
     {
+        if (session("Auth") === "new") {
+            $sysType = "新生";
+        } else if (session("Auth") === "old") {
+            $sysType = "老生";
+        } else if (session("Auth") === "admin") {
+            $sysType = "管理员";
+        }
         $posts = Post::get();
         return view('stu.posts', [
-            'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
+            'sysType' => $sysType,  // 系统运行模式，新生，老生，管理员
             'messages' => array(
                 'unreadNum' => 3, // 未读信息
                 'showMessage' => array(   // 选的信息
                     array(
-                        'title' => "111",
+                        'title' => "111", 
                         'context' => "111",
                         'readed' => false,
                     ),
@@ -44,11 +51,18 @@ class PostController extends Controller
 
     public function show($id)
     {
+        if (session("Auth") === "new") {
+            $sysType = "新生";
+        } else if (session("Auth") === "old") {
+            $sysType = "老生";
+        } else if (session("Auth") === "admin") {
+            $sysType = "管理员";
+        }
         $post = Post::where([
             ['id',$id],
         ])->get()->first();
         return view('stu.show', [
-            'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
+            'sysType' => $sysType,  // 系统运行模式，新生，老生，管理员
             'messages' => array(
                 'unreadNum' => 3, // 未读信息
                 'showMessage' => array(   // 选的信息
