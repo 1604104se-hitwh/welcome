@@ -70,7 +70,7 @@
             <div id="collapseInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">你可以管理：</h6>
-                    <a class="collapse-item" href="{{url('/admin/manageSchoolInfo')}}">学校信息</a>
+                    <a class="collapse-item active" href="{{url('/admin/manageSchoolInfo')}}">学校信息</a>
                     <a class="collapse-item" href="{{url('/admin/manageNewsInfo')}}">新生信息</a>
                     <a class="collapse-item" href="{{url('/admin/manageAdminInfo')}}">管理员信息</a>
                 </div>
