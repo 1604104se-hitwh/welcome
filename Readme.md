@@ -1,6 +1,6 @@
 # 新生入学迎新系统
 
-![Codacy branch grade](https://img.shields.io/codacy/grade/6c4e2df74fd349228e32b19e119b2664/master.svg?logo=codacy&style=flat-square) ![Travis (.com) branch](https://img.shields.io/travis/com/1604104se-hitwh/welcome/master.svg?logo=travis-ci&logoColor=white&style=flat-square) ![GitHub](https://img.shields.io/github/license/1604104se-hitwh/welcome.svg?style=flat-square)
+[![Codacy branch grade](https://img.shields.io/codacy/grade/6c4e2df74fd349228e32b19e119b2664/master.svg?logo=codacy&style=flat-square)](https://app.codacy.com/app/specialpointcentral/welcome?utm_source=github.com&utm_medium=referral&utm_content=1604104se-hitwh/welcome&utm_campaign=Badge_Grade_Dashboard) [![Travis (.com) branch](https://img.shields.io/travis/com/1604104se-hitwh/welcome/master.svg?logo=travis-ci&logoColor=white&style=flat-square)](https://www.travis-ci.com/1604104se-hitwh/welcome) [![GitHub](https://img.shields.io/github/license/1604104se-hitwh/welcome.svg?style=flat-square)](https://github.com/1604104se-hitwh/welcome/blob/master/LICENSE)
 
 Welcome HITers
 
