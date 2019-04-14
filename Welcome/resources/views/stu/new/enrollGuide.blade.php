@@ -123,8 +123,8 @@
             <div id="collapseWel" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">你可以查看：</h6>
-                    <a class="collapse-item active" href="{{url('/stu/enrollInfo')}}">报到说明</a>
-                    <a class="collapse-item" href="{{url('/stu/enrollGuide')}}">开始报到</a>
+                    <a class="collapse-item" href="{{url('/stu/enrollInfo')}}">报到说明</a>
+                    <a class="collapse-item active" href="{{url('/stu/enrollGuide')}}">开始报到</a>
                 </div>
             </div>
         </li>
@@ -227,7 +227,7 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">报到说明</h1>
+                    <h1 class="h3 mb-0 text-gray-800">开始报到</h1>
                 </div>
 
                 <div class="row">
@@ -271,7 +271,21 @@
                 <!-- Content Column -->
                 <div class="card-columns">
                     <div class="mb-4">
-                        {!! $enrollParagraph !!}
+                        @if(count($enrollInfos)==0) {{-- 还没有信息 --}}
+                        <p>还没有信息</p>
+                        @else
+                            @foreach($enrollInfos as $enrollInfo)
+                                <div class="card mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">{{$enrollInfo->enrl_title}}</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        {{ $enrollInfo->enrl_info }}
+                                        <div style="width: 100%;height: 380px;" id="container{{$enrollInfo->id}}"></div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
@@ -332,6 +346,21 @@
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script type="text/javascript"
         src="https://webapi.amap.com/maps?v=1.4.13&key=0a4d80176be0dde936743e7e03a5f237"></script>
+
+<script type="text/javascript">
+    @foreach($enrollInfos as $enrollInfo)
+        var map = new AMap.Map('container{{$enrollInfo->id}}', {
+                resizeEnable: true,
+                center: [122.083199, 37.534235],
+                zoom: 15
+            });
+        var marker = new AMap.Marker({
+            position: {{json_encode($enrollInfo->PX)}},
+            title: '{{$enrollInfo->enrl_title}}',
+        });
+        map.add(marker);
+    @endforeach
+</script>
 
 </body>
 

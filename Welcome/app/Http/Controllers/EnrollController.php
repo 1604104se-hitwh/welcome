@@ -20,7 +20,6 @@ class EnrollController extends Controller
 
     public function enrollInfo()
     {
-
         return view('stu.new.enrollInfo', [
             'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
             'messages' => array(
@@ -48,15 +47,25 @@ class EnrollController extends Controller
             'toSettingURL' => "toSettingURL", // 个人设置
             'toLogoutURL' => "/logout",      // 退出登录
             'toSchoolInfoURL' => "toSchoolInfoURL",
-            'enrollInfos' => array(),
-            'enrl_location' => array(),
+            'enrollParagraph' => "<p style='color: red;'>hello</p>",   //给出介绍性的一大段文章
         ]);
-
     }
 
     public function enrollGuide()
     {
-        return view('stu.new.enrollInfo', [
+        $test = new \stdClass();
+        $test->id = 1;
+        $test->enrl_title = "test";
+        $test->enrl_info = "test";
+        $test->PX = array(122.111, 122.222);
+
+        $test1 = new \stdClass();
+        $test1->id = 2;
+        $test1->enrl_title = "test";
+        $test1->enrl_info = "test";
+        $test1->PX = array(122.111, 122.222);
+
+        return view('stu.new.enrollGuide', [
             'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
             'messages' => array(
                 'unreadNum' => 3, // 未读信息
@@ -83,8 +92,7 @@ class EnrollController extends Controller
             'toSettingURL' => "toSettingURL", // 个人设置
             'toLogoutURL' => "/logout",      // 退出登录
             'toSchoolInfoURL' => "toSchoolInfoURL",
-            'enrollInfos' => array()
+            'enrollInfos' => array($test, $test1),   //给出报到的多个小段信息，每个Info包括id title info location
         ]);
-
     }
 }
