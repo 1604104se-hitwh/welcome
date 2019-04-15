@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\ShtlRecord
  *
  * @property int $id
- * @property int $shtl_id
+ * @property int $port_id
  * @property int $stu_id
  * @property string|null $record_time
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlRecord newModelQuery()
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlRecord query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlRecord whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlRecord whereRecordTime($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlRecord whereShtlId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlRecord wherePortId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlRecord whereStuId($value)
  * @mixin \Eloquent
  */
