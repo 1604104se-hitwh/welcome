@@ -12,13 +12,13 @@ class PostController extends Controller
         if (session("Auth") === "new") {
             $sysType = "新生";
         } else if (session("Auth") === "old") {
-            $sysType = "老生";
+            $sysType = "在校生";
         } else if (session("Auth") === "admin") {
             $sysType = "管理员";
         }
         $posts = Post::get();
         return view('stu.posts', [
-            'sysType' => $sysType,  // 系统运行模式，新生，老生，管理员
+            'sysType' => $sysType,  // 系统运行模式，新生，在校生，管理员
             'messages' => array(
                 'unreadNum' => 3, // 未读信息
                 'showMessage' => array(   // 选的信息
@@ -54,7 +54,7 @@ class PostController extends Controller
         if (session("Auth") === "new") {
             $sysType = "新生";
         } else if (session("Auth") === "old") {
-            $sysType = "老生";
+            $sysType = "在校生";
         } else if (session("Auth") === "admin") {
             $sysType = "管理员";
         }
@@ -62,7 +62,7 @@ class PostController extends Controller
             ['id',$id],
         ])->get()->first();
         return view('stu.show', [
-            'sysType' => $sysType,  // 系统运行模式，新生，老生，管理员
+            'sysType' => $sysType,  // 系统运行模式，新生，在校生，管理员
             'messages' => array(
                 'unreadNum' => 3, // 未读信息
                 'showMessage' => array(   // 选的信息

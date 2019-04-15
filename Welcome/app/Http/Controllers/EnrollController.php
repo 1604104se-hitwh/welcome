@@ -21,7 +21,7 @@ class EnrollController extends Controller
     public function enrollInfo()
     {
         return view('stu.new.enrollInfo', [
-            'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
+            'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
             'messages' => array(
                 'unreadNum' => 3, // 未读信息
                 'showMessage' => array(   // 选的信息
@@ -66,7 +66,7 @@ class EnrollController extends Controller
         $test1->PX = array(122.111, 122.222);
 
         return view('stu.new.enrollGuide', [
-            'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
+            'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
             'messages' => array(
                 'unreadNum' => 3, // 未读信息
                 'showMessage' => array(   // 选的信息

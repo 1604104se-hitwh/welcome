@@ -107,7 +107,7 @@
             }
 
             return view('stu.new.index', [
-                'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
+                'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
                 'messages' => array(
                     'unreadNum' => 3, // 未读信息数量
                     'showMessage' => array( // 选的信息
@@ -188,7 +188,7 @@
             }
 
             return view('stu.new.yourClass', [
-                'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
+                'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
                 'messages' => array(
                     'unreadNum' => 3, // 未读信息
                     'showMessage' => array(   // 选的信息
@@ -267,7 +267,7 @@
 
 
             return view('stu.new.yourDom', [
-                'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
+                'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
                 'messages' => array(
                     'unreadNum' => 3, // 未读信息
                     'showMessage' => array(   // 选的信息
@@ -330,7 +330,7 @@
             }
 
             return view('stu.new.yourCountryFolk', [
-                'sysType' => "新生",  // 系统运行模式，新生，老生，管理员
+                'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
                 'messages' => array(
                     'unreadNum' => 3, // 未读信息
                     'showMessage' => array(   // 选的信息
