@@ -18,7 +18,7 @@ class CreateShtlRecordTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
-            $table->integer('port_id')->unsigned();
+            $table->integer('shtl_id')->unsigned();
             $table->integer('stu_id')->unsigned();
             $table->string('record_time', 100)->nullable();
         });
