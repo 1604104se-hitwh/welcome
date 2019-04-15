@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>迎新系统-哈尔滨工业大学（威海）</title>
 
@@ -265,7 +264,6 @@
                 <!-- Content Column -->
                 <div class="card-columns">
                     <div class="mb-4">
-                        ##在下方选择预定的班车
                         @if(count($stationInfos)==0) {{-- 还没有信息 --}}
                             <p>还没有信息</p>
                         @else
@@ -286,19 +284,27 @@
                     <div class="mb-4">
                         <div class="card mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">预约接车##发布你的到站信息</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">预约接车</h6>
                             </div>
                             <div class="card-body">
                                 <div class="input-group">
-                                    <input class="custom-select" id="book_date" type="date"/>
-                                    <input class="custom-select" id="book_time" type="time" value="00:00"/>
+                                    <select class="custom-select" id="book_date">
+                                        <option selected>选择日期</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                    <select class="custom-select" id="book_time">
+                                        <option selected>选择时间</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
                                     <select class="custom-select" id="book_station">
                                         <option selected>选择站点</option>
-                                        @if(count($ports)==0) 
-                                            <option value="1">还没有站点</option>
-                                        @else @foreach($ports as $port)
-                                            <option value="{{$port->id}}">{{$port->port_name}}</option>
-                                        @endforeach @endif
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
                                     </select>
                                     <div class="input-group-append">
                                         <button id="submit" class="btn btn-outline-secondary" type="button">提交预约</button>
@@ -389,35 +395,23 @@
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script type="text/javascript">
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-var url = "{{url('/stu/nav')}}";
 $(document).ready(function(){
     $("#submit").click(function(){
-        if(($("#book_date").val() == "") || ($("#book_time").val() == "") || ($("#book_station").val() == ""))
-        {
-            alert("日期、时间、地点均不能为空");
-        } else {
-            $.post(
-                url,
-                {
-                    "book_date": $("#book_date").val(),
-                    "book_time": $("#book_time").val(),
-                    "book_station": $("#book_station").val(),
-                },
-                function (res) {
-                    if (res) {
-                        alert("提交成功")
-                    }
+        $.post(
+            "/path/to",
+            {
+                "book_date": $("#book_date").val(),
+                "book_time": $("#book_time").val(),
+                "book_station": $("#book_station").val(),
+            },
+            function (res) {
+                if (res) {
+                    alert("提交成功")
                 }
-            );
-        }
+            }
+        );
     });
 });
-
 </script>
 
 </body>
