@@ -39,6 +39,8 @@ Route::group(['middleware' => ['checkAuth:new']], function () {
 
     Route::get('/stu/nav', 'NavController@index');
 
+    Route::post('/stu/nav', 'NavController@catcher');
+
     Route::get('/stu/enrollInfo', 'EnrollController@enrollInfo');
 
     Route::get('/stu/enrollGuide', 'EnrollController@enrollGuide');
