@@ -10,7 +10,7 @@ use App\Models\Admin as Admin;
 /**
  * 此为登录控制器，登录分为三种情况：
  * 新生
- * 老生
+ * 在校生
  * 管理员
  */
 class LoginController extends Controller
@@ -50,7 +50,7 @@ class LoginController extends Controller
                 // $request->session()->put("usr", $request->input("stu_cid"));
                 return redirect()->intended("/stu");
             }
-        } else if ($loginType === "old") { // 老生部分
+        } else if ($loginType === "old") { // 在校生部分
             $name = $request->input("name", "default");
             $perId = $request->input("perId", "default");
             $res_obj = Student::where([

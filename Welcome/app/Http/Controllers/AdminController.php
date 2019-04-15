@@ -95,13 +95,13 @@
                 }
             }
             return view('admin.index', [
-                'sysType' => "管理员",  // 系统运行模式，新生，老生，管理员
+                'sysType' => "管理员",  // 系统运行模式，新生，在校生，管理员
                 'user' => session("name"), // 用户名
                 'userImg' => "userImg",// 用户头像链接 url(site)
                 'toInformationURL' => "toInformationURL", // 更多消息url
                 'toSettingURL' => "toSettingURL", // 个人设置
                 'newStuNumber' => $res, // 新生人数
-                'oldStuNumber' => $current, // 老生人数
+                'oldStuNumber' => $current, // 在校生人数
                 'hasReportNumber' => $enroll, // 已报到人数
                 'stuReportTime' => $enrollTime, // 报到时间
                 'schoolInfo' => $enrollcfg->school_info, // 学校信息 可以html
@@ -137,13 +137,13 @@
             $majorInfos = Major::orderBy('major_num', 'asc')->get();
 
             return view('admin.insertSchoolInfo', [
-                'sysType' => "管理员",  // 系统运行模式，新生，老生，管理员
+                'sysType' => "管理员",  // 系统运行模式，新生，在校生，管理员
                 'user' => session("name"), // 用户名
                 'userImg' => "userImg",// 用户头像链接 url(site)
                 'toInformationURL' => "toInformationURL", // 个人设置url
                 'toSettingURL' => "toSettingURL", // 个人设置
                 'newStuNumber' => $res, // 新生人数
-                'oldStuNumber' => $current, // 老生人数
+                'oldStuNumber' => $current, // 在校生人数
                 'hasReportNumber' => $enroll, // 已报到人数
                 'stuReportTime' => $enrollTime, // 报到时间
                 'schoolInfo' => $enrollcfg->school_info, // 设置学校信息
@@ -201,13 +201,13 @@
                 $deptInfo->deptNewsNumber = $girl + $boy;
             }
             return view('admin.newStudentManage', [
-                'sysType' => "管理员",  // 系统运行模式，新生，老生，管理员
+                'sysType' => "管理员",  // 系统运行模式，新生，在校生，管理员
                 'user' => session("name"), // 用户名
                 'userImg' => "userImg",// 用户头像链接 url(site)
                 'toInformationURL' => "toInformationURL", // 个人设置url
                 'toSettingURL' => "toSettingURL", // 个人设置
                 'newStuNumber' => $res, // 新生人数
-                'oldStuNumber' => $current, // 老生人数
+                'oldStuNumber' => $current, // 在校生人数
                 'hasReportNumber' => $enroll, // 已报到人数
                 'stuReportTime' => $enrollTime, // 报到时间
                 'majorInfos' => $deptInfos, // 专业新生情况

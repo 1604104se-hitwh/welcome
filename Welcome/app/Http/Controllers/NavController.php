@@ -32,14 +32,14 @@ class NavController extends Controller
         if (session("Auth") === "new") {
             $sysType = "新生";
         } else if (session("Auth") === "old") {
-            $sysType = "老生";
+            $sysType = "在校生";
         } else if (session("Auth") === "admin") {
             $sysType = "管理员";
         }
         $ports = ShtlPort::all();
         $stationInfos = Shuttle::all();
         return view('stu.new.nav', [
-            'sysType' => $sysType,  // 系统运行模式，新生，老生，管理员
+            'sysType' => $sysType,  // 系统运行模式，新生，在校生，管理员
             'messages' => array(
                 'unreadNum' => 3, // 未读信息
                 'showMessage' => array(   // 选的信息

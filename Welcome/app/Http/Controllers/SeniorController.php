@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 require_once __DIR__.'/../../include.php';
 use Jxlwqq\IdValidator\IdValidator;
 
-/* 老生模块 */
+/* 在校生模块 */
 class SeniorController extends Controller
 {
     private $idValidator;
@@ -64,7 +64,7 @@ class SeniorController extends Controller
         $stu_prov_city_str = substr($res_obj_array[0]->stu_cid, 0, 6);
         $contry_folk_array = DB::select("SELECT * FROM `t_student` WHERE `stu_cid` LIKE '$stu_prov_city_str%' AND `stu_cid`<>$cid");
         return view('stu.old.index',[
-           'sysType'=>"老生",  // 系统运行模式，新生，老生，管理员
+           'sysType'=>"在校生",  // 系统运行模式，新生，在校生，管理员
            'messages'=>array(
                'unreadNum'=>3, // 未读信息数量
                'showMessage'=>array( // 选的信息
@@ -119,7 +119,7 @@ class SeniorController extends Controller
             $classmate->address = $this->idValidator->getInfo($classmate->stu_cid)['address'];
         }
         return view('stu.old.yourClass',[
-                   'sysType'=>"老生",  // 系统运行模式，新生，老生，管理员
+                   'sysType'=>"在校生",  // 系统运行模式，新生，在校生，管理员
                    'messages'=>array(
                        'unreadNum'=>3, // 未读信息
                        'showMessage'=>array(   // 选的信息
@@ -162,7 +162,7 @@ class SeniorController extends Controller
         }
 
         return view('stu.old.yourDom',[
-                   'sysType'=>"老生",  // 系统运行模式，新生，老生，管理员
+                   'sysType'=>"在校生",  // 系统运行模式，新生，在校生，管理员
                    'messages'=>array(
                        'unreadNum'=>3, // 未读信息
                        'showMessage'=>array(   // 选的信息
@@ -213,7 +213,7 @@ class SeniorController extends Controller
         }
 
         return view('stu.old.yourCountryFolk',[
-                   'sysType'=>"老生",  // 系统运行模式，新生，老生，管理员
+                   'sysType'=>"在校生",  // 系统运行模式，新生，在校生，管理员
                    'messages'=>array(
                        'unreadNum'=>3, // 未读信息
                        'showMessage'=>array(   // 选的信息
