@@ -8,14 +8,26 @@ use Illuminate\Support\Facades\DB;
 require_once __DIR__.'/../../include.php';
 use Jxlwqq\IdValidator\IdValidator;
 
-/* 老生模块 */
+/* 在校生模块 */
 class SeniorController extends Controller
 {
     private $idValidator;
+    private $showMessages;
+    private $posts;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->idValidator = new IdValidator();
+
+        $this->posts = Post::all();
+        $this->showMessages = array();
+        $showPosts = Post::all()->take(5);
+        foreach ($showPosts as $post) {
+            $this->showMessages[] = array(
+                "title" => $post->post_title,
+                "context" => $post->post_content,
+                "readed" => false
+            );
+        }
     }
 
     public function index(Request $request) {
@@ -64,23 +76,11 @@ class SeniorController extends Controller
         $stu_prov_city_str = substr($res_obj_array[0]->stu_cid, 0, 6);
         $contry_folk_array = DB::select("SELECT * FROM `t_student` WHERE `stu_cid` LIKE '$stu_prov_city_str%' AND `stu_cid`<>$cid");
         return view('stu.old.index',[
-           'sysType'=>"老生",  // 系统运行模式，新生，老生，管理员
+           'sysType'=>"在校生",  // 系统运行模式，新生，在校生，管理员
            'messages'=>array(
-               'unreadNum'=>3, // 未读信息数量
-               'showMessage'=>array( // 选的信息
-                   array(
-                       'title'=>"111",
-                       'context'=>"111",
-                       'readed'=>false,
-                   ),
-                   array(
-                       'title'=>"222",
-                       'context'=>"222",
-                       'readed'=>true,
-                   ),
-               ),
-               'moreInfoUrl'=>"/message", // 更多信息跳转
-
+                'unreadNum' => $this->posts->count(), // 未读信息数量
+                'showMessage' => $this->showMessages,
+                'moreInfoUrl'=>"/message", // 更多信息跳转
            ), // 信息
            'stuID'=>$res_obj_array[0]->stu_num, // 学号
            'user'=> $res_obj_array[0]->stu_name, // 用户名
@@ -119,29 +119,17 @@ class SeniorController extends Controller
             $classmate->address = $this->idValidator->getInfo($classmate->stu_cid)['address'];
         }
         return view('stu.old.yourClass',[
-                   'sysType'=>"老生",  // 系统运行模式，新生，老生，管理员
-                   'messages'=>array(
-                       'unreadNum'=>3, // 未读信息
-                       'showMessage'=>array(   // 选的信息
-                           array(
-                               'title'=>"111",
-                               'context'=>"111",
-                               'readed'=>false,
-                           ),
-                           array(
-                               'title'=>"222",
-                               'context'=>"222",
-                               'readed'=>true,
-                           ),
-                       ),
-                       'moreInfoUrl'=>"/message", // 更多信息跳转
-        
-                   ), // 信息
+                    'sysType'=>"在校生",  // 系统运行模式，新生，在校生，管理员
+                    'messages'=>array(
+                        'unreadNum' => $this->posts->count(), // 未读信息数量
+                        'showMessage' => $this->showMessages,
+                        'moreInfoUrl'=>"/message", // 更多信息跳转
+                    ), // 信息
                    'stuID'=>$res_obj_array[0]->stu_num, // 学号
                    'stuDept'=>"计算机",
                    'classID'=>$stu_class_str,
                    'classmates'=>$classmates_array, // 你的同学
-                   'user'=>$res_obj_array[0]->stu_name, // 用户名?
+                   'user'=>session('stu_name'), // 用户名?
                    'userImg'=> "userImg",// 用户头像链接 url(site)?
                    'toInformationURL'=>"toInformationURL", // 个人设置url
                    'toSettingURL'=>"toSettingURL", // 个人设置
@@ -162,39 +150,27 @@ class SeniorController extends Controller
         }
 
         return view('stu.old.yourDom',[
-                   'sysType'=>"老生",  // 系统运行模式，新生，老生，管理员
-                   'messages'=>array(
-                       'unreadNum'=>3, // 未读信息
-                       'showMessage'=>array(   // 选的信息
-                           array(
-                               'title'=>"111",
-                               'context'=>"111",
-                               'readed'=>false,
-                           ),
-                           array(
-                               'title'=>"222",
-                               'context'=>"222",
-                               'readed'=>true,
-                           ),
-                       ),
-                       'moreInfoUrl'=>"/message", // 更多信息跳转
-        
-                   ), // 信息
-                   'user'=>"user", // 用户名
-                   'userImg'=> "userImg",// 用户头像链接 url(site)
-                   'stuID'=>"stuID", // 学号
-                   'stuDept'=>"计算机",
-                   'stuDormitory'=>"stuDormitory", // 宿舍
-                   'domInfo'=>"domInfo", // 宿舍介绍
-                   'yourDoms'=>array(),
-                   'domLocal'=>array( // 宿舍位置（定位）
-                       'PX'=>array(122.080098,37.532806),
-                       'title'=>"七公寓"
-                   ),
-                   'toInformationURL'=>"toInformationURL", // 个人设置url
-                   'toSettingURL'=>"toSettingURL", // 个人设置
-                   'toLogoutURL'=>"/logout",      // 退出登录
-        ]);
+                    'sysType'=>"在校生",  // 系统运行模式，新生，在校生，管理员
+                    'messages'=>array(
+                        'unreadNum' => $this->posts->count(), // 未读信息数量
+                        'showMessage' => $this->showMessages,
+                        'moreInfoUrl'=>"/message", // 更多信息跳转       
+                    ), // 信息
+                    'user'=>session('stu_name'), // 用户名
+                    'userImg'=> "userImg",// 用户头像链接 url(site)
+                    'stuID'=>session('stu_num'), // 学号
+                    'stuDept'=>"计算机",
+                    'stuDormitory'=>session("stu_dorm_str"), // 宿舍
+                    'domInfo'=>"domInfo", // 宿舍介绍
+                    'yourDoms'=>array(),
+                    'domLocal'=>array( // 宿舍位置（定位）
+                        'PX'=>array(122.080098,37.532806),
+                        'title'=>"七公寓"
+                    ),
+                    'toInformationURL'=>"toInformationURL", // 个人设置url
+                    'toSettingURL'=>"toSettingURL", // 个人设置
+                    'toLogoutURL'=>"/logout",      // 退出登录
+        ]); 
     }
 
     public function queryCountryFolk() {
@@ -213,32 +189,20 @@ class SeniorController extends Controller
         }
 
         return view('stu.old.yourCountryFolk',[
-                   'sysType'=>"老生",  // 系统运行模式，新生，老生，管理员
+                   'sysType'=>"在校生",  // 系统运行模式，新生，在校生，管理员
                    'messages'=>array(
-                       'unreadNum'=>3, // 未读信息
-                       'showMessage'=>array(   // 选的信息
-                           array(
-                               'title'=>"111",
-                               'context'=>"111",
-                               'readed'=>false,
-                           ),
-                           array(
-                               'title'=>"222",
-                               'context'=>"222",
-                               'readed'=>true,
-                           ),
-                       ),
-                       'moreInfoUrl'=>"/message", // 更多信息跳转
-        
+                        'unreadNum' => $this->posts->count(), // 未读信息数量
+                        'showMessage' => $this->showMessages,
+                        'moreInfoUrl'=>"/message", // 更多信息跳转
                    ), // 信息
-                   'stuID'=>"stuID", // 学号
-                   'user'=>"user", // 用户名
+                   'stuID'=>session("stu_num"), // 学号
+                   'user'=>session("stu_name"), // 用户名
                    'userImg'=> "userImg",// 用户头像链接 url(site)
                    'toInformationURL'=>"toInformationURL", // 个人设置url
                    'toSettingURL'=>"toSettingURL", // 个人设置
                    'IDnumber'=>"111111", // 身份证号码
                    'stuLocal'=>"stuLocal", // 识别地区
-                   'stuPreSchool'=>"stuPreSchool", // 毕业院校
+                   'stuPreSchool'=>session("stu_from_school"), // 毕业院校
                    'countymens'=>array(), // 老乡信息
                    'sameSchools'=>array(), // 同校信息
                    'toLogoutURL'=>"/logout",      // 退出登录

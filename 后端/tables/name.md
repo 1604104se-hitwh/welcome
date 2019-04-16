@@ -28,7 +28,7 @@
 | ---------------------- | ----------------------- | -------------------------------- |
 | 老生-首页              | /senior                 | SeniorController@index           |
 | 老生-信息查询-老乡查询 | /senior/queryContryFolk | SeniorController@queryContryFolk |
-| 老生-所有通知          | /senior/posts           | SeniorController@posts           |
+| 老生-所有通知          | /stu/posts              | PostController@index             |
 
 #### 管理员
 

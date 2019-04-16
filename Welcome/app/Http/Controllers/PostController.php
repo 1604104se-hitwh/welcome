@@ -3,36 +3,42 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Post as Post;
+use App\Models\Post;
 
 class PostController extends Controller
-{
-    public function index() 
-    {
+{   
+    private $sysType;
+    private $showMessages;
+    private $posts;
+
+    public function __construct() {
         if (session("Auth") === "new") {
-            $sysType = "新生";
+            $this->sysType = "新生";
         } else if (session("Auth") === "old") {
-            $sysType = "老生";
+            $this->sysType = "在校生";
         } else if (session("Auth") === "admin") {
-            $sysType = "管理员";
+            $this->sysType = "管理员";
         }
+
+        $this->posts = Post::all();
+        $this->showMessages = array();
+        $showPosts = Post::all()->take(5);
+        foreach ($showPosts as $post) {
+            $this->showMessages[] = array(
+                "title" => $post->post_title,
+                "context" => $post->post_content,
+                "readed" => false
+            );
+        }
+    }
+
+    public function index() {       
         $posts = Post::get();
         return view('stu.posts', [
-            'sysType' => $sysType,  // 系统运行模式，新生，老生，管理员
+            'sysType' => $this->sysType,  // 系统运行模式，新生，在校生，管理员
             'messages' => array(
-                'unreadNum' => 3, // 未读信息
-                'showMessage' => array(   // 选的信息
-                    array(
-                        'title' => "111", 
-                        'context' => "111",
-                        'readed' => false,
-                    ),
-                    array(
-                        'title' => "222",
-                        'context' => "222",
-                        'readed' => true,
-                    ),
-                ),
+                'unreadNum' => $this->posts->count(), // 未读信息数量
+                'showMessage' => $this->showMessages,
                 'moreInfoUrl' => "/message", // 更多信息跳转
 
             ), // 信息
@@ -44,39 +50,20 @@ class PostController extends Controller
             'stuDept' => '$major',
             'stuDormitory' => session('stu_dorm_str'),
             'stuReportTime' => '$enrollTime',
-            'posts' => $posts, // 所有通知
+            'posts' => $this->posts, // 所有通知，已读和未读的都包括
             'toLogoutURL' => "/logout"      // 退出登录
         ]);
     }
 
-    public function show($id)
-    {
-        if (session("Auth") === "new") {
-            $sysType = "新生";
-        } else if (session("Auth") === "old") {
-            $sysType = "老生";
-        } else if (session("Auth") === "admin") {
-            $sysType = "管理员";
-        }
+    public function show($id) {
         $post = Post::where([
             ['id',$id],
         ])->get()->first();
         return view('stu.show', [
-            'sysType' => $sysType,  // 系统运行模式，新生，老生，管理员
+            'sysType' => $this->sysType,  // 系统运行模式，新生，在校生，管理员
             'messages' => array(
-                'unreadNum' => 3, // 未读信息
-                'showMessage' => array(   // 选的信息
-                    array(
-                        'title' => "111",
-                        'context' => "111",
-                        'readed' => false,
-                    ),
-                    array(
-                        'title' => "222",
-                        'context' => "222",
-                        'readed' => true,
-                    ),
-                ),
+                'unreadNum' => $this->posts->count(), // 未读信息数量
+                'showMessage' => $this->showMessages,
                 'moreInfoUrl' => "/message", // 更多信息跳转
 
             ), // 信息
@@ -88,7 +75,7 @@ class PostController extends Controller
             'stuDept' => '$major',
             'stuDormitory' => session('stu_dorm_str'),
             'stuReportTime' => '$enrollTime',
-            'post' => $post, // 当前通知
+            'post' => $post, // 当前的一个通知
             'toLogoutURL' => "/logout"      // 退出登录
         ]);
     }
