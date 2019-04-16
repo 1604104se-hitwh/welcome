@@ -40,7 +40,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="oldStudent-tab" data-toggle="tab" href="#old" role="tab"
-                               aria-controls="old" aria-selected="true">老生</a>
+                               aria-controls="old" aria-selected="true">在校生</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="admin-tab" data-toggle="tab" href="#admin" role="tab"
@@ -67,7 +67,7 @@
 
                     <form class="tab-pane fade" id="old" role="tabpanel" aria-labelledby="oldStudent-tab" method="POST"
                           action="./login">
-                        <h4 class="card-title">老生登陆</h4>
+                        <h4 class="card-title">在校生登陆</h4>
                         {{ csrf_field() }}
                         <input type="hidden" name="loginType" value="old">
                         <div class="form-group">

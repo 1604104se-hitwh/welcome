@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MajorTableSeeder::class);
         $this->call(StudentTableSeeder::class);
         $this->call(PostTableSeeder::class);
+        $this->call(ShtlPortTableSeeder::class);
 
         $this->idValidator = new IdValidator(); 
         // $this->call(UsersTableSeeder::class);
@@ -52,7 +53,7 @@ class DatabaseSeeder extends Seeder
                 'stu_dorm_str' => sprintf("%d", rand(1, 12)).'-'.sprintf("%1d", rand(1, 6)).sprintf("%02d", rand(1, 72)).'-'.sprintf("%1d", rand(0, 4))
             ]);
         }
-        //生成一些 15040xxyy的学生信息（老生）
+        //生成一些 15040xxyy的学生信息（在校生）
         for($i = 0; $i < 30; ++$i) {
             DB::table('t_student')->insert([
                 'stu_status' => 'CURRENT',
