@@ -64,6 +64,7 @@ class LoginController extends Controller
                 session([
                     "id" => $res_obj->id,
                     "stu_name" => $name,
+                    "stu_num" => $res_obj->stu_num,
                     "stu_gen" => $res_obj->stu_gen,
                     "stu_cid" => $perId,
                     "stu_eid" => $res_obj->stu_eid,

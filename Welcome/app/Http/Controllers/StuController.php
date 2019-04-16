@@ -8,6 +8,8 @@
     use App\Models\EnrollCfg;
     use App\Models\Major;
     use App\Models\Students as Student;
+    use App\Models\Post;
+    use App\Models\PostRead;
 
     use Jxlwqq\IdValidator\IdValidator;
 
@@ -15,11 +17,30 @@
     class StuController extends Controller
     {
         private $idValidator;
+        private $showMessages;
+        private $posts;
 
-        public function __construct()
-        {
+        public function __construct() {
             // 身份证获取
             $this->idValidator = new IdValidator();
+            
+            $this->posts = Post::all();
+            // $posts->refresh();
+            /**
+             * 右上方显示的是全部信息前5条；
+             * 小红点的数据暂时是所有通知的条数；
+             * 通知数据库中消息要按时间排序，新的通知在最上方
+             */
+            // $postsGroup = $posts->chunk(5);
+            $this->showMessages = array();
+            $showPosts = Post::all()->take(5);
+            foreach ($showPosts as $post) {
+                $this->showMessages[] = array(
+                    "title" => $post->post_title,
+                    "context" => $post->post_content,
+                    "readed" => false
+                );
+            }
         }
 
         /**
@@ -109,21 +130,9 @@
             return view('stu.new.index', [
                 'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
                 'messages' => array(
-                    'unreadNum' => 3, // 未读信息数量
-                    'showMessage' => array( // 选的信息
-                        array(
-                            'title' => "111",
-                            'context' => "111",
-                            'readed' => false,
-                        ),
-                        array(
-                            'title' => "222",
-                            'context' => "222",
-                            'readed' => true,
-                        ),
-                    ),
+                    'unreadNum' => $this->posts->count(), // 未读信息数量
+                    'showMessage' => $this->showMessages,
                     'moreInfoUrl' => "/message", // 更多信息跳转
-
                 ), // 信息
                 'stuID' => session('stu_num'), // 学号
                 'user' => session('stu_name'), // 用户名
@@ -190,19 +199,8 @@
             return view('stu.new.yourClass', [
                 'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
                 'messages' => array(
-                    'unreadNum' => 3, // 未读信息
-                    'showMessage' => array(   // 选的信息
-                        array(
-                            'title' => "111",
-                            'context' => "111",
-                            'readed' => false,
-                        ),
-                        array(
-                            'title' => "222",
-                            'context' => "222",
-                            'readed' => true,
-                        ),
-                    ),
+                    'unreadNum' => $this->posts->count(), // 未读信息
+                    'showMessage' => $this->showMessages,
                     'moreInfoUrl' => "/message", // 更多信息跳转
 
                 ), // 信息
@@ -269,19 +267,8 @@
             return view('stu.new.yourDom', [
                 'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
                 'messages' => array(
-                    'unreadNum' => 3, // 未读信息
-                    'showMessage' => array(   // 选的信息
-                        array(
-                            'title' => "111",
-                            'context' => "111",
-                            'readed' => false,
-                        ),
-                        array(
-                            'title' => "222",
-                            'context' => "222",
-                            'readed' => true,
-                        ),
-                    ),
+                    'unreadNum' => $this->posts->count(), // 未读信息
+                    'showMessage' => $this->showMessages,
                     'moreInfoUrl' => "/message", // 更多信息跳转
 
                 ), // 信息
@@ -332,19 +319,8 @@
             return view('stu.new.yourCountryFolk', [
                 'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
                 'messages' => array(
-                    'unreadNum' => 3, // 未读信息
-                    'showMessage' => array(   // 选的信息
-                        array(
-                            'title' => "111",
-                            'context' => "111",
-                            'readed' => false,
-                        ),
-                        array(
-                            'title' => "222",
-                            'context' => "222",
-                            'readed' => true,
-                        ),
-                    ),
+                    'unreadNum' => $this->posts->count(), // 未读信息
+                    'showMessage' => $this->showMessages,
                     'moreInfoUrl' => "/message", // 更多信息跳转
 
                 ), // 信息

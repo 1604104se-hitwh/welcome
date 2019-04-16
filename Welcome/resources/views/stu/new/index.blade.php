@@ -163,7 +163,7 @@
                             <h6 class="dropdown-header">
                                 消息中心
                             </h6>
-                            @if(count($messages['showMessage'])!=0) @foreach ($messages['showMessage'] as $message)
+                            @if($messages['unreadNum']!=0) @foreach ($messages['showMessage'] as $message)
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div @if ($message['readed'] == false) class="font-weight-bold" @endif>
                                         <div class="text-truncate">{{$message['title']}}</div>
