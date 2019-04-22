@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 require_once __DIR__ . '/../../include.php';
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash;
 use App\Models\Students as Student;
-use App\Models\Admin as Admin;
+use App\Models\Admin;
 /**
  * 此为登录控制器，登录分为三种情况：
  * 新生
@@ -24,10 +24,9 @@ class LoginController extends Controller
         if ($loginType === "new") {
             $stu_eid = $request->input("examId", "default");
             $stu_cid = $request->input("perId", "default");
-            // $this->idValidator = new IdValidator();
             $res_obj = Student::where([
                 ["stu_cid",$stu_cid],
-                ["stu_eid",$stu_eid],
+                ["stu_eid", $stu_eid],
             ])->whereIn("stu_status",["PREPARE","ENROLL"])->first();
             /* 判断该名新生是否存在 */
             if ($res_obj) {
@@ -46,7 +45,6 @@ class LoginController extends Controller
                     "stu_from_school" => $res_obj->stu_from_school,
                     "Auth" => "new",
                 ]);
-
                 // $request->session()->put("usr", $request->input("stu_cid"));
                 return redirect()->intended("/stu");
             }
@@ -55,7 +53,7 @@ class LoginController extends Controller
             $perId = $request->input("perId", "default");
             $res_obj = Student::where([
                 ["stu_name",$name],
-                ["perId",$perId],
+                ["stu_cid",$perId],
                 ["stu_status","CURRENT"]
             ])->first();
             if ($res_obj) {
@@ -73,17 +71,14 @@ class LoginController extends Controller
                     "stu_from_school" => $res_obj->stu_from_school,
                     "Auth" => "old",
                 ]);
+
                 return redirect()->intended("/senior");
             }
         } else if ($loginType === "admin") { // 管理员部分
             $userId = $request->input("userId", "default");
             $psw = $request->input("psw", "default");
-
-            $res_obj = Admin::where([
-                ["adm_name",$userId],
-                ["adm_password",$psw],
-            ])->first();
-            if ($res_obj) {
+            $res_obj = Admin::where("adm_name", $userId)->first();
+            if ($res_obj && Hash::check($psw, $res_obj->adm_password)) {
                 // 先清空，避免错误
                 $request->session()->flush();
                 session([

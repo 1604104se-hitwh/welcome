@@ -19,7 +19,7 @@ class CreateAdminTable extends Migration
             $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->string('adm_name', 15)->nullable();
-            $table->string('adm_password', 30);
+            $table->string('adm_password', 64);
             $table->integer('pms_id')->unsigned()->nullable();
         });
     }

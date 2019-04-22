@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Post;
 
 require_once __DIR__.'/../../include.php';
 use Jxlwqq\IdValidator\IdValidator;
