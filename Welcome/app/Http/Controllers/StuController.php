@@ -23,27 +23,29 @@
         public function __construct() {
             // 身份证获取
             $this->idValidator = new IdValidator();
-            /**
-             * 右上方显示的是全部信息前5条；
-             * 小红点的数据是未读通知的条数；
-             * 通知数据库中消息要按时间排序，新的通知在最上方
-             */
-            // $postsGroup = $posts->chunk(5);
-            $this->showMessages = array();
-            $showPosts = Post::orderBy('post_timestamp','desc')->limit(5)->get();
-            $this->unReadPosts = Post::whereNotIn('id',function($query){
-                $query->select("post_id")->from("t_post_read")->where("stu_id", session("stu_num"));
-            })->get();
-            foreach ($showPosts as $post) {
-                $this->showMessages[] = array(
-                    "title" => $post->post_title,
-                    "context" => mb_strlen($post->post_content,"UTF-8") > 12 ?
-                        mb_substr($post->post_content,0,10,"UTF-8")."...":$post->post_content ,
-                    "toURL" => "/stu/posts/".$post->id,
-                    "readed" => $this->unReadPosts->where('id',$post->id)->isEmpty()
-                );
+            $this->middleware(function ($request, $next) { // 加入中间件，获取session
+                /**
+                 * 右上方显示的是全部信息前5条；
+                 * 小红点的数据是未读通知的条数；
+                 * 通知数据库中消息要按时间排序，新的通知在最上方
+                 */
+                $this->showMessages = array();
+                $showPosts = Post::orderBy('post_timestamp','desc')->limit(5)->get();
+                $this->unReadPosts = Post::whereNotIn('id',function($query){
+                    $query->select("post_id")->from("t_post_read")->where("stu_id", session('stu_num'));
+                })->get();
+                foreach ($showPosts as $post) {
+                    $this->showMessages[] = array(
+                        "title" => $post->post_title,
+                        "context" => mb_strlen($post->post_content,"UTF-8") > 12 ?
+                            mb_substr($post->post_content,0,10,"UTF-8")."...":$post->post_content ,
+                        "toURL" => "/stu/posts/".$post->id,
+                        "readed" => $this->unReadPosts->where('id',$post->id)->isEmpty()
+                    );
 
-            }
+                }
+                return $next($request);
+            });
         }
 
         /**

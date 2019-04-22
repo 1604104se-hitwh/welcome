@@ -18,7 +18,6 @@ class CreatePostReadTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
-            $table->timestamp('read_timestamp')->nullable();
             $table->integer('post_id')->unsigned()->nullable();
             $table->integer('stu_id')->unsigned()->nullable();
             $table->timestamps();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\PostRead;
 
 class PostController extends Controller
 {   
@@ -19,25 +20,24 @@ class PostController extends Controller
             $this->sysType = "管理员";
         }
 
-        // $this->posts = Post::all();
         $this->showMessages = array();
-        // $showPosts = Post::all()->take(5);
-
-        /* 从所有通知中选择当前登录用户未读的信息 */
-
-        $showPosts = Post::orderBy('post_timestamp','desc')->limit(5)->get();
-        $this->unReadPosts = Post::whereNotIn('id',function($query){
-            $query->select("post_id")->from("t_post_read")->where("stu_id", session("stu_num"));
-        })->get();
-        foreach ($showPosts as $post) {
-            $this->showMessages[] = array(
-                "title" => $post->post_title,
-                "context" => mb_strlen($post->post_content,"UTF-8") > 12 ?
-                    mb_substr($post->post_content,0,10,"UTF-8")."...":$post->post_content ,
-                "toURL" => "/stu/posts/".$post->id,
-                "readed" => $this->unReadPosts->where('id',$post->id)->isEmpty()
-            );
-        }
+        $this->middleware(function ($request, $next) { // 加入中间件，获取session
+            /* 从所有通知中选择当前登录用户未读的信息 */
+            $showPosts = Post::orderBy('post_timestamp', 'desc')->limit(5)->get();
+            $this->unReadPosts = Post::whereNotIn('id', function ($query) {
+                $query->select("post_id")->from("t_post_read")->where("stu_id", session("stu_num"));
+            })->get();
+            foreach ($showPosts as $post) {
+                $this->showMessages[] = array(
+                    "title" => $post->post_title,
+                    "context" => mb_strlen($post->post_content, "UTF-8") > 12 ?
+                        mb_substr($post->post_content, 0, 10, "UTF-8") . "..." : $post->post_content,
+                    "toURL" => "/stu/posts/" . $post->id,
+                    "readed" => $this->unReadPosts->where('id', $post->id)->isEmpty()
+                );
+            }
+            return $next($request);
+        });
     }
 
     public function index() {
@@ -64,13 +64,19 @@ class PostController extends Controller
         $post = Post::where([
             ['id',$id],
         ])->first();
+        if(count($post) == 0){
+            abort("404","找不到相应的内容");
+        }
+        // 确定已读
+        PostRead::firstOrCreate(
+           ['post_id'=>$id],['stu_id'=>session('stu_num')]
+        );
         return view('stu.show', [
             'sysType' => $this->sysType,  // 系统运行模式，新生，在校生，管理员
             'messages' => array(
                 'unreadNum' => $this->unReadPosts->count(), // 未读信息数量
                 'showMessage' => $this->showMessages,
                 'moreInfoUrl' => "/stu/posts", // 更多信息跳转
-
             ), // 信息
             'stuID' => session('stu_num'), // 学号
             'user' => session('stu_name'), // 用户名
