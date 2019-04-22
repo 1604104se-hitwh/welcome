@@ -46,11 +46,13 @@ class NavController extends Controller
                     array(
                         'title' => "111",
                         'context' => "111",
+                        'toURL' => "",
                         'readed' => false,
                     ),
                     array(
                         'title' => "222",
                         'context' => "222",
+                        "toURL" => "",
                         'readed' => true,
                     ),
                 ),
