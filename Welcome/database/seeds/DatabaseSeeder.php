@@ -5,25 +5,28 @@ use Illuminate\Database\Seeder;
 require_once __DIR__.'/../../app/include.php';
 use Jxlwqq\IdValidator\IdValidator;
 
-class DatabaseSeeder extends Seeder
-{
+/**
+ * 运行php artisan db:seed
+ * 命令会启动在 DatabaseSeeder.php 文件中列出的所有类
+ */
+class DatabaseSeeder extends Seeder {
     private $idValidator;
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run()
-    {
-        $this->call(AdminTableSeeder::class);
-        $this->call(DepartmentTableSeeder::class);
-        $this->call(DormitoryTableSeeder::class);
-        $this->call(EnrollCfgTableSeeder::class);
-        $this->call(MajorTableSeeder::class);
-        $this->call(StudentTableSeeder::class);
-        $this->call(PostTableSeeder::class);
-        $this->call(ShtlPortTableSeeder::class);
-
+    public function run() {
+        $this->call([
+            AdminTableSeeder::class,
+            DepartmentTableSeeder::class,
+            DormitoryTableSeeder::class,
+            EnrollCfgTableSeeder::class,
+            MajorTableSeeder::class,
+            StudentTableSeeder::class,
+            PostTableSeeder::class,
+            ShtlPortTableSeeder::class
+        ]);
         $this->idValidator = new IdValidator(); 
         // $this->call(UsersTableSeeder::class);
         //生成一些 16040xxyy的学生信息

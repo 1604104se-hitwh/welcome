@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Hash;
 |
 */
 
+/* only for test */
+
+// ------------------------------------------------------------------------
+
 Route::get('/', function () {
     return view('auth.login');
 })->middleware('loginIndexCheck');

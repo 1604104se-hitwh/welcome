@@ -13,11 +13,16 @@ use App\Models\Admin;
  * 在校生
  * 管理员
  */
-class LoginController extends Controller
-{
+class LoginController extends Controller {
+    public function __construct() {
+        
+    }
     /* 登录总控 */
-    public function login(Request $request)
-    {
+    public function login(Request $request) {
+        /* 判断是否是post表单提交 */
+        if (!$request->isMethod("POST")) {
+            return redirect("/");
+        }
         // 获取通过验证的数据...
         // $validated = $request->validated(); 
         $loginType = $request->input('loginType', "default");

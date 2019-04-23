@@ -11,8 +11,7 @@ class CreateAdminTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create('t_admin', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
@@ -22,6 +21,11 @@ class CreateAdminTable extends Migration
             $table->string('adm_password', 64);
             $table->integer('pms_id')->unsigned()->nullable();
         });
+
+        /* 当创建数据表时，就马上执行填充命令，不需要手动artisan db:seed */
+        // Artisan::call('db:seed', [
+        //     '--class' => AdminTableSeeder::class
+        // ]);
     }
 
     /**
@@ -29,8 +33,8 @@ class CreateAdminTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('t_admin');
     }
+
 }
