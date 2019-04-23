@@ -17,30 +17,35 @@
     class StuController extends Controller
     {
         private $idValidator;
-        private $showMessages;
-        private $posts;
+        private $showMessages;  // 全局message的信息
+        private $unReadPosts;
 
         public function __construct() {
             // 身份证获取
             $this->idValidator = new IdValidator();
-            
-            $this->posts = Post::all();
-            // $posts->refresh();
-            /**
-             * 右上方显示的是全部信息前5条；
-             * 小红点的数据暂时是所有通知的条数；
-             * 通知数据库中消息要按时间排序，新的通知在最上方
-             */
-            // $postsGroup = $posts->chunk(5);
-            $this->showMessages = array();
-            $showPosts = Post::all()->take(5);
-            foreach ($showPosts as $post) {
-                $this->showMessages[] = array(
-                    "title" => $post->post_title,
-                    "context" => $post->post_content,
-                    "readed" => false
-                );
-            }
+            $this->middleware(function ($request, $next) { // 加入中间件，获取session
+                /**
+                 * 右上方显示的是全部信息前5条；
+                 * 小红点的数据是未读通知的条数；
+                 * 通知数据库中消息要按时间排序，新的通知在最上方
+                 */
+                $this->showMessages = array();
+                $showPosts = Post::orderBy('post_timestamp','desc')->limit(5)->get();
+                $this->unReadPosts = Post::whereNotIn('id',function($query){
+                    $query->select("post_id")->from("t_post_read")->where("stu_id", session('stu_num'));
+                })->get();
+                foreach ($showPosts as $post) {
+                    $this->showMessages[] = array(
+                        "title" => $post->post_title,
+                        "context" => mb_strlen($post->post_content,"UTF-8") > 12 ?
+                            mb_substr($post->post_content,0,10,"UTF-8")."...":$post->post_content ,
+                        "toURL" => "/stu/posts/".$post->id,
+                        "readed" => $this->unReadPosts->where('id',$post->id)->isEmpty()
+                    );
+
+                }
+                return $next($request);
+            });
         }
 
         /**
@@ -130,9 +135,9 @@
             return view('stu.new.index', [
                 'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
                 'messages' => array(
-                    'unreadNum' => $this->posts->count(), // 未读信息数量
+                    'unreadNum' => $this->unReadPosts->count(), // 未读信息数量
                     'showMessage' => $this->showMessages,
-                    'moreInfoUrl' => "/message", // 更多信息跳转
+                    'moreInfoUrl' => "/stu/posts", // 更多信息跳转
                 ), // 信息
                 'stuID' => session('stu_num'), // 学号
                 'user' => session('stu_name'), // 用户名
@@ -199,9 +204,9 @@
             return view('stu.new.yourClass', [
                 'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
                 'messages' => array(
-                    'unreadNum' => $this->posts->count(), // 未读信息
+                    'unreadNum' => $this->unReadPosts->count(), // 未读信息
                     'showMessage' => $this->showMessages,
-                    'moreInfoUrl' => "/message", // 更多信息跳转
+                    'moreInfoUrl' => "/stu/post", // 更多信息跳转
 
                 ), // 信息
                 'stuID' => session('stu_num'), // 学号
@@ -267,9 +272,9 @@
             return view('stu.new.yourDom', [
                 'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
                 'messages' => array(
-                    'unreadNum' => $this->posts->count(), // 未读信息
+                    'unreadNum' => $this->unReadPosts->count(), // 未读信息
                     'showMessage' => $this->showMessages,
-                    'moreInfoUrl' => "/message", // 更多信息跳转
+                    'moreInfoUrl' => "/stu/posts", // 更多信息跳转
 
                 ), // 信息
                 'stuID' => session('stu_num'), // 学号
@@ -319,9 +324,9 @@
             return view('stu.new.yourCountryFolk', [
                 'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
                 'messages' => array(
-                    'unreadNum' => $this->posts->count(), // 未读信息
+                    'unreadNum' => $this->unReadPosts->count(), // 未读信息
                     'showMessage' => $this->showMessages,
-                    'moreInfoUrl' => "/message", // 更多信息跳转
+                    'moreInfoUrl' => "/stu/posts", // 更多信息跳转
 
                 ), // 信息
                 'stuID' => session('stu_num'), // 学号

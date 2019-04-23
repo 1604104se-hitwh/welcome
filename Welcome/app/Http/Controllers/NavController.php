@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 require_once __DIR__ . '/../../include.php';
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,10 +17,29 @@ use App\Models\Shuttle;
 class NavController extends Controller
 {
     private $idValidator;
+    private $showMessages;
+    private $unReadPosts;
 
     public function __construct() {
         // 身份证获取
         $this->idValidator = new IdValidator();
+
+        $this->middleware(function ($request, $next) { // 加入中间件，获取session
+            $showPosts = Post::orderBy('post_timestamp', 'desc')->limit(5)->get();
+            $this->unReadPosts = Post::whereNotIn('id', function ($query) {
+                $query->select("post_id")->from("t_post_read")->where("stu_id", session("stu_num"));
+            })->get();
+            foreach ($showPosts as $post) {
+                $this->showMessages[] = array(
+                    "title" => $post->post_title,
+                    "context" => mb_strlen($post->post_content, "UTF-8") > 12 ?
+                        mb_substr($post->post_content, 0, 10, "UTF-8") . "..." : $post->post_content,
+                    "toURL" => "/stu/posts/" . $post->id,
+                    "readed" => $this->unReadPosts->where('id', $post->id)->isEmpty()
+                );
+            }
+            return $next($request);
+        });
     }
 
     public function index()
@@ -41,20 +61,9 @@ class NavController extends Controller
         return view('stu.new.nav', [
             'sysType' => $sysType,  // 系统运行模式，新生，在校生，管理员
             'messages' => array(
-                'unreadNum' => 3, // 未读信息
-                'showMessage' => array(   // 选的信息
-                    array(
-                        'title' => "111",
-                        'context' => "111",
-                        'readed' => false,
-                    ),
-                    array(
-                        'title' => "222",
-                        'context' => "222",
-                        'readed' => true,
-                    ),
-                ),
-                'moreInfoUrl' => "/message", // 更多信息跳转
+                'unreadNum' => $this->unReadPosts->count(), // 未读信息数量
+                'showMessage' => $this->showMessages,
+                'moreInfoUrl' => "/stu/posts", // 更多信息跳转
 
             ), // 信息
             'user' => session('stu_name'), // 用户名
