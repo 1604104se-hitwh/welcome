@@ -103,7 +103,7 @@
 
         <!-- Nav Item - Notice -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/posts')}}">
+            <a class="nav-link" href="{{url('/admin/posts/create')}}">
                 <i class="fas fa-fw fa-bell"></i>
                 <span>发布通知</span></a>
         </li>

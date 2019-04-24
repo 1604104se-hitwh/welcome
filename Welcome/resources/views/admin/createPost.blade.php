@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>迎新系统-哈尔滨工业大学（威海）</title>
 
@@ -17,6 +18,8 @@
           crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
+    <!-- Smallpop -->
+    <link href="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
@@ -43,7 +46,7 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="{{url('/admin/index')}}">
                 <i class="fas fa-fw fa-home"></i>
                 <span>首页</span></a>
@@ -58,7 +61,7 @@
         </div>
 
         <!-- Nav Item - Information set -->
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo"
                aria-expanded="true" aria-controls="collapseInfo">
                 <i class="fas fa-fw fa-laptop"></i>
@@ -67,7 +70,7 @@
             <div id="collapseInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">你可以管理：</h6>
-                    <a class="collapse-item" href="{{url('/admin/manageSchoolInfo')}}">学校信息</a>
+                    <a class="collapse-item active" href="{{url('/admin/manageSchoolInfo')}}">学校信息</a>
                     <a class="collapse-item" href="{{url('/admin/manageNewsInfo')}}">新生信息</a>
                     <a class="collapse-item" href="{{url('/admin/manageAdminInfo')}}">管理员信息</a>
                 </div>
@@ -189,170 +192,54 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">首页</h1>
-                </div>
 
                 <!-- Content Row -->
-                <div class="row">
+                
 
-                    <!-- Infomation Card ID number -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-primary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">新生人数
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$newStuNumber}}</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-luggage-cart fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">新建通知</h6>
                     </div>
-
-                    <!-- Infomation Card shcool -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-success shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">在校生人数
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$oldStuNumber}}</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-user-check fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="card-header py-3">
+                        <input type="text" class="form-control" name="post_title" id="post_title" placeholder="输入通知标题" required>
                     </div>
+                    <div class="card-body">
+                        <div id="postEditor" class="mb-4">
 
-                    <!-- Infomation Card department -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-info shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">已报到人数</div>
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col-auto">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$hasReportNumber}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-check-circle fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-                    </div>
-
-                    <!-- Infomation Card report time -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-warning shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报到时间
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuReportTime}}</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <button type="button" class="btn btn-primary" id="submitPost">发布</button>
                     </div>
                 </div>
 
-                <!-- Content Row -->
-                <div class="card-columns">
-
-                    <!-- Content Column -->
-                    <div class="card mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">学校简介</h6>
-                        </div>
-                        <div class="card-body">
-                            <div>
-                                {!! $schoolInfo !!}
-                            </div>
-                            <a target="_blank" rel="nofollow" href="{{url($toSetSchoolInfoURL)}}">去设置 &rarr;</a>
-                        </div>
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">所有通知</h6>
                     </div>
-
-                    <div class="card mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">院系统计</h6>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-bordered">
-                                <thead>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr role="row">
+                                <th>通知标题</th>
+                                <th>发布时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if(count($posts)==0) 
+                            <tr role="row">
+                                <td colspan="4">还没有通知</td>
+                            </tr>
+                            @else @foreach($posts as $post)
                                 <tr role="row">
-                                    <th>系名</th>
-                                    <th>新生数</th>
-                                    <th>已报到人数</th>
-                                    <th>男女比例</th>
+                                    <td><a class="nav-link" href={{url('/stu/posts/'.strval($post->id))}}>
+                                        <span>{{$post->post_title}}</span></a></td>
+                                    <td>{{$post->post_timestamp}}</td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                @if(count($schoolStatistics)==0) {{-- 还没有信息 --}}
-                                <tr role="row">
-                                    <td colspan="4">还没有信息</td>
-                                </tr>
-                                @else @foreach($schoolStatistics as $schoolStatistic)
-                                    <tr role="row">
-                                        <td>{{$schoolStatistic->dept_name}}</td>
-                                        <td>{{$schoolStatistic->stuNumber}}</td>
-                                        <td>{{$schoolStatistic->hasReportNumber}}</td>
-                                        <td>{{$schoolStatistic->genderRate}}</td>
-                                    </tr>
-                                @endforeach @endif
-                                </tbody>
-                            </table>
-                        </div>
+                            @endforeach @endif
+                            </tbody>
+                        </table>
                     </div>
-
-                    <div class="card mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">仪表盘</h6>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr role="row">
-                                    <th></th>
-                                    <th>状态</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr role="row">
-                                    <th>新生信息</th>
-                                    <td>{{$systemStatus['newsStatus']}}</td>
-                                </tr>
-                                <tr role="row">
-                                    <th>院系信息</th>
-                                    <td>{{$systemStatus['deptStatus']}}</td>
-                                </tr>
-                                <tr role="row">
-                                    <th>报到进程</th>
-                                    <td>{{$systemStatus['reportStatus']}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
                 </div>
+
             </div>
             <!-- /.container-fluid -->
 
@@ -410,7 +297,81 @@
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
+<!-- Smallpop -->
+<script src="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.js"></script>
 
+
+<!-- Custom scripts for Editor -->
+<script type="text/javascript" src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
+<script type="text/javascript">
+    var E = window.wangEditor
+    var editor = new E('#postEditor')
+    editor.create()
+    // get html infomation
+    // editor.txt.html()
+</script>
+
+<!-- ajax post -->
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $('#submitPost').click(function () {
+        // var postTitle = document.getElementById("post_title").value;
+        var postTitle = $("post_title").value;
+        $.ajax({
+            async: true,   		//是否为异步请求
+            cache: false,  		//是否缓存结果
+            type: "POST", 		//请求方式
+            dataType: "jsonp", 	//服务器返回的数据是什么类型
+            url: "{{url($storePostURL)}}",
+            data: {"postTitle": postTitle, "newPost": editor.txt.html()},
+
+            success: function (data) {
+                if (data.code == 200) {
+                    spop({
+                        template: "<h4>发布成功</h4>" +
+                            "<p>信息已经更新，刷新页面就可以看到啦</p>",
+                        style: 'info',
+                        autoclose: 5000,
+                        position: 'bottom-right',
+                        icon: true,
+                        group: "submitPost",
+                    });
+                } else {
+                    spop({
+                        template: "<h4>提交失败（" + data.code + "）</h4>" +
+                            "<p>"+data.data+"</p>",
+                        style: 'warning',
+                        autoclose: false,
+                        position: 'bottom-right',
+                        icon: true,
+                        group: "submitPost",
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // 状态码
+                console.log("status:" + XMLHttpRequest.status + "\n");
+                // 状态
+                console.log("readyState:" + XMLHttpRequest.readyState + "\n");
+                // 错误信息
+                console.log("textStatus:" + textStatus + "\n");
+                spop({
+                    template: "保存失败（" + XMLHttpRequest.status + "）",
+                    style: 'error',
+                    autoclose: false,
+                    position: 'bottom-right',
+                    icon: true,
+                    group: "submitPost",
+                });
+            }
+        });
+    });
+</script>
 </body>
 
 </html>

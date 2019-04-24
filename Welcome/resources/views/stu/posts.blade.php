@@ -309,7 +309,6 @@
                 <!-- Content Row -->
                 <!-- Content Column -->
                 <div class="mb-4">
-
                     <!-- Illustrations -->
                     <div class="card mb-4">
                         <div class="card-header py-3">

@@ -92,6 +92,7 @@ Welcome HITers
 git clone https://github.com/1604104se-hitwh/welcome.git
 cd Welcome
 composer install
+cp .env.example .env
 ```
 
 之后需要打开`.env`配置本地的数据库环境
@@ -104,6 +105,8 @@ DB_DATABASE=数据库名称
 DB_USERNAME=数据库用户名
 DB_PASSWORD=数据库密码
 ```
+
+- Run `php artisan key:generate`
 
 数据表迁移：
 

@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\PostRead;
 
-class PostController extends Controller
-{   
+class PostController extends Controller {   
     private $sysType;
     private $showMessages;
     private $unReadPosts;
@@ -48,7 +47,6 @@ class PostController extends Controller
                 'unreadNum' => $this->unReadPosts->count(), // 未读信息数量
                 'showMessage' => $this->showMessages,
                 'moreInfoUrl' => "/stu/posts", // 更多信息跳转
-
             ), // 信息
             'stuID' => session('stu_num'), // 学号
             'user' => session('stu_name'), // 用户名
@@ -64,12 +62,12 @@ class PostController extends Controller
         $post = Post::where([
             ['id',$id],
         ])->first();
-        if(count($post) == 0){
+        if(!$post || count($post) == 0){
             abort("404","找不到相应的内容");
         }
         // 确定已读
         PostRead::firstOrCreate(
-           ['post_id'=>$id],['stu_id'=>session('stu_num')]
+           ['post_id'=>$id], ['stu_id'=>session('stu_num', 'null')]
         );
         return view('stu.show', [
             'sysType' => $this->sysType,  // 系统运行模式，新生，在校生，管理员
@@ -88,8 +86,21 @@ class PostController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        return '发布通知';
+    public function create() {
+        /** 
+         * 该方法只针对管理员 
+         * 未读消息功能对管理员不设置 
+         */
+        $posts = Post::all();
+        return view("admin.createPost", [
+            "sysType" => "管理员",
+            "user" => session("name", "管理员"),
+            "userImg" => "userImg",
+            "toInformationURL" => "toInformationURL", // 个人信息url
+            "toSettingURL" => "toSettingURL", // 个人设置
+            "posts" => $posts,
+            "storePostURL" => "/admin/storePost",
+            "toLogoutURL" => "/logout"
+        ]);
     }
 }
