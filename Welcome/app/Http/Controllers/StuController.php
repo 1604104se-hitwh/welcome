@@ -151,7 +151,7 @@
                 'toSchoolInfoURL' => "toSchoolInfoURL",
                 'toAllStuURL' => "/stu/queryClass", // 所有同学信息url
                 'dormStus' => $roommates_array, // 室友
-                
+
                 'toDormInfoURL' => "/stu/queryDorm",
                 'localFolks' => $country_folk_array, // 老乡
                 'toLocalFolkURL' => "/stu/queryCountryFolk", // 查看老乡信息url
