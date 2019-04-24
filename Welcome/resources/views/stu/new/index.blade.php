@@ -155,7 +155,9 @@
                            aria-expanded="false">
                             <i class="fas fa-envelope fa-fw"></i>
                             <!-- Counter - Messages -->
+                            @if($messages['unreadNum'] > 0)
                             <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
+                            @endif
                         </a>
                         <!-- Dropdown - Messages -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -163,7 +165,7 @@
                             <h6 class="dropdown-header">
                                 消息中心
                             </h6>
-                            @if($messages['unreadNum']!=0) @foreach ($messages['showMessage'] as $message)
+                            @if(count($messages['showMessage'])!=0) @foreach ($messages['showMessage'] as $message)
                                 <a class="dropdown-item d-flex align-items-center" href="{{url($message['toURL'])}}">
                                     <div @if ($message['readed'] == false) class="font-weight-bold" @endif>
                                         <div class="text-truncate">{{$message['title']}}</div>
@@ -370,26 +372,6 @@
                                 @endforeach @endif
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-
-                    <div class="card mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">专业介绍</h6>
-                        </div>
-                        <div class="card-body">
-                            {!!$deptInfo!!}
-                            <a target="_blank" rel="nofollow" href="{{url($toDeptInfoURL)}}">更多介绍 &rarr;</a>
-                        </div>
-                    </div>
-
-                    <div class="card mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">宿舍环境</h6>
-                        </div>
-                        <div class="card-body">
-                            {!!$domInfo!!}
-                            <a target="_blank" rel="nofollow" href="{{url($toDormInfoURL)}}">更多介绍 &rarr;</a>
                         </div>
                     </div>
 
