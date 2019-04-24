@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Imports\MajorImport;
 use App\Imports\StudentsImport;
-use App\Models\Department;
 use App\Models\EnrollCfg;
-use App\Models\Major;
+use App\Models\Post;
 use App\Models\Students;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ImportController extends Controller
@@ -149,8 +147,8 @@ class ImportController extends Controller
     public function storePost(Request $request) {
         try{
             DB::beginTransaction();
-            $post = new App\Models\Post;
-            $dt = new DateTime;
+            $post = new Post();
+            $dt = new \DateTime();
             $post->post_title = $request->post("postTitle", "none");
             $post->post_content = $request->post("newPost", "none");
             $post->post_timestamp = $dt->format('m-d-y H:i:s');

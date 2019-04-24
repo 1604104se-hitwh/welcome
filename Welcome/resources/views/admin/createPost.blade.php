@@ -321,7 +321,7 @@
 
     $('#submitPost').click(function () {
         // var postTitle = document.getElementById("post_title").value;
-        var postTitle = $("post_title").value;
+        var postTitle = $("#post_title").val();
         $.ajax({
             async: true,   		//是否为异步请求
             cache: false,  		//是否缓存结果
