@@ -10,6 +10,7 @@ use App\Models\Students;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class ImportController extends Controller
 {
@@ -148,10 +149,12 @@ class ImportController extends Controller
         try{
             DB::beginTransaction();
             $post = new Post();
-            $dt = new \DateTime();
+            // $dt = new \DateTime();
+            $now = Carbon::now();
             $post->post_title = $request->post("postTitle", "none");
             $post->post_content = $request->post("newPost", "none");
-            $post->post_timestamp = $dt->format('m-d-y H:i:s');
+            // $post->post_timestamp = $dt->format('m-d-y H:i:s');
+            $post->post_timestamp = $now;
             $post->save();
             DB::commit();
             $array=array(

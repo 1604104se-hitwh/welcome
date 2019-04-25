@@ -88,7 +88,7 @@ Route::post('/admin/majorInfoUpload','ImportController@majorExcelImport')
 
 // School and other Information Import
 Route::group(['middleware' => ['postAuthCheck:admin']], function () {
-    Route::post('/admin/schoolInfoPost','ImportController@schollInfoPost');
+    Route::post('/admin/schoolInfoPost', 'ImportController@schollInfoPost');
 
     Route::post("/admin/storePost", "ImportController@storePost");
 });
