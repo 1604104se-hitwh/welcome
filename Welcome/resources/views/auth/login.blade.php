@@ -56,7 +56,8 @@
                         <input type="hidden" name="loginType" value="new">
                         <div class="form-group">
                             <label for="examId">考生号</label>
-                            <input type="text" name="examId" class="form-control" id="examId" placeholder="填写您的考生号">
+                            <input type="text" name="examId"
+                            value="<?=old("examId")?>" class="form-control" id="examId" placeholder="填写您的考生号">
                         </div>
                         <div class="form-group">
                             <label for="perId">身份证号</label>
@@ -72,7 +73,8 @@
                         <input type="hidden" name="loginType" value="old">
                         <div class="form-group">
                             <label for="examId">姓名</label>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="填写您的姓名">
+                            <input type="text" name="name" 
+                            value="<?=old("name")?>" class="form-control" id="name" placeholder="填写您的姓名">
                         </div>
                         <div class="form-group">
                             <label for="perId">身份证号</label>
@@ -88,7 +90,8 @@
                         <input type="hidden" name="loginType" value="admin">
                         <div class="form-group">
                             <label for="examId">用户名</label>
-                            <input type="text" name="userId" class="form-control" id="userId" placeholder="填写准用户名">
+                            <input type="text" name="userId" 
+                            value="<?=old("userId")?>" class="form-control" id="userId" placeholder="填写准用户名">
                         </div>
                         <div class="form-group">
                             <label for="perId">密码</label>

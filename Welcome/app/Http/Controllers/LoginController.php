@@ -52,6 +52,8 @@ class LoginController extends Controller {
                 ]);
                 // $request->session()->put("usr", $request->input("stu_cid"));
                 return redirect()->intended("/stu");
+            } else {
+                return redirect("/")->withInput()->with(["examId" => $stu_eid]);
             }
         } else if ($loginType === "old") { // 在校生部分
             $name = $request->input("name", "default");
@@ -76,8 +78,9 @@ class LoginController extends Controller {
                     "stu_from_school" => $res_obj->stu_from_school,
                     "Auth" => "old",
                 ]);
-
                 return redirect()->intended("/senior");
+            } else {
+                return redirect("/")->withInput()->with(["name" => $name]);
             }
         } else if ($loginType === "admin") { // 管理员部分
             $userId = $request->input("userId", "default");
@@ -92,13 +95,14 @@ class LoginController extends Controller {
                     "Auth" => "admin",
                 ]);
                 return redirect()->intended("/admin");
+            } else {
+                return redirect("/")->withInput()->with(["userId" => $userId]);
             }
         }
         return redirect("/");
     }
 
-    public function logout(Request $request)
-    {
+    public function logout(Request $request) {
         $request->session()->flush();
         return redirect("/");
     }
