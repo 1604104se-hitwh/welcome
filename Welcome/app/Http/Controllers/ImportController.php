@@ -146,6 +146,9 @@ class ImportController extends Controller
     }
 
     public function storePost(Request $request) {
+        if (!$request->ajax()) {
+            return back();
+        }
         try{
             DB::beginTransaction();
             $post = new Post();

@@ -40,7 +40,8 @@ class PostController extends Controller {
     }
 
     public function index() {
-        $posts = Post::get();
+        /* 通知分页显示，但此时是将所有通知一次都取出？ */
+        $posts = Post::paginate(10);
         return view('stu.posts', [
             'sysType' => $this->sysType,  // 系统运行模式，新生，在校生，管理员
             'messages' => array(

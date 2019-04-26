@@ -327,13 +327,18 @@
                                 <tr role="row">
                                     <td colspan="4">还没有通知</td>
                                 </tr>
-                                @else @foreach($posts as $post)
-                                    <tr role="row">
-                                        <td><a class="nav-link" href={{url('/stu/posts/'.strval($post->id))}}>
-                                            <span>{{$post->post_title}}</span></a></td>
-                                        <td>{{$post->post_timestamp}}</td>
-                                    </tr>
-                                @endforeach @endif
+                                @else 
+                                <div class="container">
+                                    @foreach($posts as $post)
+                                        <tr role="row">
+                                            <td><a class="nav-link" href={{url('/stu/posts/'.strval($post->id))}}>
+                                                <span>{{$post->post_title}}</span></a></td>
+                                            <td>{{$post->post_timestamp}}</td>
+                                        </tr>
+                                    @endforeach 
+                                </div>
+                                {{ $posts->links() }}
+                                @endif
                                 </tbody>
                             </table>
                         </div>
