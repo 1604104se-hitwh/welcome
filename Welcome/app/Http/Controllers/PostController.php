@@ -101,6 +101,8 @@ class PostController extends Controller {
             "toSettingURL" => "toSettingURL", // 个人设置
             "posts" => $posts,
             "storePostURL" => "/admin/storePost",
+            "deletePostURL" => "/admin/deletePost",
+            "modifyPostURL" => "/admin/editPost",
             "toLogoutURL" => "/logout"
         ]);
     }

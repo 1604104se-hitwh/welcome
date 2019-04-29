@@ -18,6 +18,8 @@
           crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.all.min.js"
+            integrity="sha256-Smm8ER2J6Oi6HLNRv7iRvWZlhTPx0Ie91VSkg9QljzE=" crossorigin="anonymous"></script>
     <!-- Smallpop -->
     <link href="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.css" rel="stylesheet">
 
@@ -194,14 +196,15 @@
 
 
                 <!-- Content Row -->
-                
+
 
                 <div class="card mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">新建通知</h6>
                     </div>
                     <div class="card-header py-3">
-                        <input type="text" class="form-control" name="post_title" id="post_title" placeholder="输入通知标题" required>
+                        <input type="text" class="form-control" name="post_title" id="post_title" placeholder="输入通知标题"
+                               required>
                     </div>
                     <div class="card-body">
                         <div id="postEditor" class="mb-4">
@@ -221,18 +224,27 @@
                             <tr role="row">
                                 <th>通知标题</th>
                                 <th>发布时间</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @if(count($posts)==0) 
-                            <tr role="row">
-                                <td colspan="4">还没有通知</td>
-                            </tr>
+                            @if(count($posts)==0)
+                                <tr role="row">
+                                    <td colspan="4">还没有通知</td>
+                                </tr>
                             @else @foreach($posts as $post)
                                 <tr role="row">
                                     <td><a class="nav-link" href={{url('/stu/posts/'.strval($post->id))}}>
-                                        <span>{{$post->post_title}}</span></a></td>
+                                            <span>{{$post->post_title}}</span></a></td>
                                     <td>{{$post->post_timestamp}}</td>
+                                    <td>
+                                        <button type="button" class="m-1 btn btn-info modifyPost"
+                                                data-target="{{strval($post->id)}}">修改
+                                        </button>
+                                        <button type="button" class="m-1 btn btn-danger deletePost"
+                                                data-target="{{strval($post->id)}}" data-title="{{$post->post_title}}">删除
+                                        </button>
+                                    </td>
                                 </tr>
                             @endforeach @endif
                             </tbody>
@@ -294,6 +306,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js"
         integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.min.js"
+        integrity="sha256-mc3T6DNzcA7wvZn8UVCZZSHGUzsuki15ci/3gxoLBnw=" crossorigin="anonymous"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
@@ -311,6 +325,74 @@
     // editor.txt.html()
 </script>
 
+<!-- modify and delete -->
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $(".modifyPost").click(function () {
+        console.log($(this).data("target"));
+        $(window).attr('location','{{url($modifyPostURL)}}/'+ $(this).data("target"));
+    });
+
+    $(".deletePost").click(function () {
+        console.log($(this).data("target"));
+        Swal.fire({
+            title: '确定要删除吗',
+            text: "你将要删除通知\" "+$(this).data("title")+" \"",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: "确定删除",
+            cancelButtonText:"取消",
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    async: true,   		//是否为异步请求
+                    cache: false,  		//是否缓存结果
+                    type: "POST", 		//请求方式
+                    dataType: "jsonp", 	//服务器返回的数据是什么类型
+                    url: "{{url($deletePostURL)}}",
+                    data: {"deleteID": $(this).data("target")},
+
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire(
+                                '成功删除',
+                                '通知已经被成功删除',
+                                'success'
+                            );
+                        } else {
+                            Swal.fire(
+                                '提交失败（' + data.code + '）',
+                                data.data,
+                                'warning'
+                            );
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        // 状态码
+                        console.log("status:" + XMLHttpRequest.status + "\n");
+                        // 状态
+                        console.log("readyState:" + XMLHttpRequest.readyState + "\n");
+                        // 错误信息
+                        console.log("textStatus:" + textStatus + "\n");
+                        Swal.fire(
+                            '提交失败（' +XMLHttpRequest.status  + '）',
+                            textStatus,
+                            'error'
+                        );
+                    }
+                });
+            }
+        })
+    });
+</script>
+
 <!-- ajax post -->
 <script>
     $.ajaxSetup({
@@ -322,6 +404,18 @@
     $('#submitPost').click(function () {
         // var postTitle = document.getElementById("post_title").value;
         var postTitle = $("#post_title").val();
+        if (postTitle == "" || editor.txt.html() == "") {
+            spop({
+                template: "<h4>发布失败</h4>" +
+                    "<p>标题和内容都必须填写哦</p>",
+                style: 'warning',
+                autoclose: 5000,
+                position: 'bottom-right',
+                icon: true,
+                group: "submitPost",
+            });
+            return;
+        }
         $.ajax({
             async: true,   		//是否为异步请求
             cache: false,  		//是否缓存结果
@@ -341,10 +435,12 @@
                         icon: true,
                         group: "submitPost",
                     });
+                    $("#post_title").val("");
+                    editor.txt.html("");
                 } else {
                     spop({
                         template: "<h4>提交失败（" + data.code + "）</h4>" +
-                            "<p>"+data.data+"</p>",
+                            "<p>" + data.data + "</p>",
                         style: 'warning',
                         autoclose: false,
                         position: 'bottom-right',
