@@ -155,7 +155,9 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-envelope fa-fw"></i>
                             <!-- Counter - Messages -->
+                            @if($messages['unreadNum'] > 0)
                             <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
+                            @endif
                         </a>
                         <!-- Dropdown - Messages -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -164,7 +166,7 @@
                                 消息中心
                             </h6>
                             @if(count($messages['showMessage'])!=0) @foreach ($messages['showMessage'] as $message)
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                <a class="dropdown-item d-flex align-items-center" href="{{url($message['toURL'])}}">
                                     <div @if ($message['readed'] == false) class="font-weight-bold" @endif>
                                         <div class="text-truncate">{{$message['title']}}</div>
                                         <div class="small text-gray-500">{{$message['context']}}</div>
@@ -307,7 +309,6 @@
                 <!-- Content Row -->
                 <!-- Content Column -->
                 <div class="mb-4">
-
                     <!-- Illustrations -->
                     <div class="card mb-4">
                         <div class="card-header py-3">
@@ -326,13 +327,18 @@
                                 <tr role="row">
                                     <td colspan="4">还没有通知</td>
                                 </tr>
-                                @else @foreach($posts as $post)
-                                    <tr role="row">
-                                        <td><a class="nav-link" href={{url('/stu/posts/'.strval($post->id))}}>
-                                            <span>{{$post->post_title}}</span></a></td>
-                                        <td>{{$post->post_timestamp}}</td>
-                                    </tr>
-                                @endforeach @endif
+                                @else 
+                                <div class="container">
+                                    @foreach($posts as $post)
+                                        <tr role="row">
+                                            <td><a class="nav-link" href={{url('/stu/posts/'.strval($post->id))}}>
+                                                <span>{{$post->post_title}}</span></a></td>
+                                            <td>{{$post->post_timestamp}}</td>
+                                        </tr>
+                                    @endforeach 
+                                </div>
+                                {{ $posts->links() }}
+                                @endif
                                 </tbody>
                             </table>
                         </div>

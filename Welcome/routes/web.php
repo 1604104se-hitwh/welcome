@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Hash;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,6 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+/* only for test */
+
+// ------------------------------------------------------------------------
 
 Route::get('/', function () {
     return view('auth.login');
@@ -60,6 +64,9 @@ Route::group(['middleware' => ['checkAuth:admin']], function () {
 
     Route::get('/admin/index', 'AdminController@index');
 
+    /* /admin/posts/{post}会覆盖掉/admin/posts/create */
+    Route::get('/admin/posts/create', 'PostController@create'); 
+
     Route::get('/admin/manageSchoolInfo', 'AdminController@manageSchoolInfo');
 
     Route::get('/admin/manageNewsInfo', 'AdminController@manageNewsInfo');
@@ -68,7 +75,6 @@ Route::group(['middleware' => ['checkAuth:admin']], function () {
 
     Route::get('/admin/posts/{post}', 'PostController@show');
 
-    Route::get('/admin/posts/create', 'PostController@create');
 });
 
 // Excel Import
@@ -78,9 +84,18 @@ Route::post('/admin/stuInfoUpload','ImportController@studentExcelImport')
 Route::post('/admin/majorInfoUpload','ImportController@majorExcelImport')
     ->middleware('importAuthCheck:admin');
 
-// School Information Import
-Route::post('/admin/schoolInfoPost','ImportController@schollInfoPost')
-    ->middleware('postAuthCheck:admin');
+// School and other Information Import
+Route::group(['middleware' => ['postAuthCheck:admin']], function () {
+    Route::post('/admin/schoolInfoPost', 'ImportController@schollInfoPost');
+
+    Route::post("/admin/storePost", "ImportController@storePost");
+
+    Route::post("/admin/deletePost", "PostController@deletePost");
+
+    Route::post("/admin/getPost", "PostController@getPost");
+
+    Route::post("/admin/edit", "PostController@editPost");
+});
 
 
 

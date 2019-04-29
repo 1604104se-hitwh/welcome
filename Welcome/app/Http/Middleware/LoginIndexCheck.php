@@ -13,9 +13,10 @@ class LoginIndexCheck
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
-    {
-        if($request->session()->exists('Auth')){
+    public function handle($request, Closure $next) {
+        
+        if($request->session()->exists('Auth')) {
+            /* 只是针对已经登录之后的角色判断，首次登录下方代码无用 */
             switch (session('Auth')){
                 case 'new':
                     return redirect('/stu');
@@ -28,6 +29,7 @@ class LoginIndexCheck
                     break;
             }
         }
+
         return $next($request);
     }
 }

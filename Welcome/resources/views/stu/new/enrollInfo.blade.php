@@ -115,12 +115,12 @@
 
         <!-- Nav Item - welcome -->
         <li class="nav-item active">
-            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseWel"
-               aria-expanded="true" aria-controls="collapseWel">
+            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseEnroll"
+               aria-expanded="true" aria-controls="collapseEnroll">
                 <i class="fas fa-fw fa-route"></i>
                 <span>报到流程</span>
             </a>
-            <div id="collapseWel" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div id="collapseEnroll" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">你可以查看：</h6>
                     <a class="collapse-item active" href="{{url('/stu/enrollInfo')}}">报到说明</a>
@@ -162,7 +162,9 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-envelope fa-fw"></i>
                             <!-- Counter - Messages -->
+                            @if($messages['unreadNum'] > 0)
                             <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
+                            @endif
                         </a>
                         <!-- Dropdown - Messages -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -171,7 +173,7 @@
                                 消息中心
                             </h6>
                             @if(count($messages['showMessage'])!=0) @foreach ($messages['showMessage'] as $message)
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                <a class="dropdown-item d-flex align-items-center" href="{{url($message['toURL'])}}">
                                     <div @if ($message['readed'] == false) class="font-weight-bold" @endif>
                                         <div class="text-truncate">{{$message['title']}}</div>
                                         <div class="small text-gray-500">{{$message['context']}}</div>

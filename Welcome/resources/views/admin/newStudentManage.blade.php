@@ -104,7 +104,7 @@
 
         <!-- Nav Item - Notice -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/posts')}}">
+            <a class="nav-link" href="{{url('/admin/posts/create')}}">
                 <i class="fas fa-fw fa-bell"></i>
                 <span>发布通知</span></a>
         </li>
@@ -225,7 +225,7 @@
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">老生人数
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">在校生人数
                                         </div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{$oldStuNumber}}</div>
                                     </div>

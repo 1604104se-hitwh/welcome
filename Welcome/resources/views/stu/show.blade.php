@@ -59,7 +59,7 @@
         </div>
 
         <!-- Nav Item - Information Query -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo"
                aria-expanded="true" aria-controls="collapseInfo">
                 <i class="fas fa-fw fa-laptop"></i>
@@ -92,7 +92,7 @@
         </div>
 
         <!-- Nav Item - Notice -->
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="{{url('/stu/posts')}}">
                 <i class="fas fa-fw fa-bell"></i>
                 <span>所有通知</span></a>
@@ -155,7 +155,9 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-envelope fa-fw"></i>
                             <!-- Counter - Messages -->
+                            @if($messages['unreadNum'] > 0)
                             <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
+                            @endif
                         </a>
                         <!-- Dropdown - Messages -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -164,7 +166,7 @@
                                 消息中心
                             </h6>
                             @if(count($messages['showMessage'])!=0) @foreach ($messages['showMessage'] as $message)
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                <a class="dropdown-item d-flex align-items-center" href="{{url($message['toURL'])}}">
                                     <div @if ($message['readed'] == false) class="font-weight-bold" @endif>
                                         <div class="text-truncate">{{$message['title']}}</div>
                                         <div class="small text-gray-500">{{$message['context']}}</div>
@@ -311,10 +313,10 @@
                     <!-- Illustrations -->
                     <div class="card mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">{{$post->post_timestamp}}</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">发布于：{{$post->post_timestamp}}</h6>
                         </div>
                         <div class="card-body">
-                            {{$post->post_content}}
+                            {!! $post->post_content !!}
                         </div>
                     </div>
                 </div>

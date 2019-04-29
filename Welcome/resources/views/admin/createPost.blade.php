@@ -18,6 +18,8 @@
           crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.all.min.js"
+            integrity="sha256-Smm8ER2J6Oi6HLNRv7iRvWZlhTPx0Ie91VSkg9QljzE=" crossorigin="anonymous"></script>
     <!-- Smallpop -->
     <link href="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.css" rel="stylesheet">
 
@@ -61,7 +63,7 @@
         </div>
 
         <!-- Nav Item - Information set -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo"
                aria-expanded="true" aria-controls="collapseInfo">
                 <i class="fas fa-fw fa-laptop"></i>
@@ -70,7 +72,7 @@
             <div id="collapseInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">你可以管理：</h6>
-                    <a class="collapse-item active" href="{{url('/admin/manageSchoolInfo')}}">学校信息</a>
+                    <a class="collapse-item" href="{{url('/admin/manageSchoolInfo')}}">学校信息</a>
                     <a class="collapse-item" href="{{url('/admin/manageNewsInfo')}}">新生信息</a>
                     <a class="collapse-item" href="{{url('/admin/manageAdminInfo')}}">管理员信息</a>
                 </div>
@@ -102,7 +104,7 @@
         </div>
 
         <!-- Nav Item - Notice -->
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="{{url('/admin/posts/create')}}">
                 <i class="fas fa-fw fa-bell"></i>
                 <span>发布通知</span></a>
@@ -192,147 +194,65 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">学校信息</h1>
-                </div>
 
                 <!-- Content Row -->
-                <div class="row">
 
-                    <!-- Infomation Card ID number -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-primary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">新生人数
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$newStuNumber}}</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-luggage-cart fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Infomation Card shcool -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-success shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">在校生人数
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$oldStuNumber}}</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-user-check fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Infomation Card department -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-info shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">已报到人数</div>
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col-auto">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$hasReportNumber}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-check-circle fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Infomation Card report time -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-warning shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报到时间
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuReportTime}}</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="card mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">学校信息</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">新建通知</h6>
+                    </div>
+                    <div class="card-header py-3">
+                        <input type="text" class="form-control" name="post_title" id="post_title" placeholder="输入通知标题"
+                               required>
                     </div>
                     <div class="card-body">
-                        <div id="schoolInfoEditor" class="mb-4">
-                            {!! $schoolInfo !!}
+                        <div id="postEditor" class="mb-4">
+
                         </div>
-                        <button type="button" class="btn btn-primary" id="submitSchoolInfo">提交</button>
+                        <button type="button" class="btn btn-primary" id="submitPost">发布</button>
                     </div>
                 </div>
 
                 <div class="card mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">专业信息</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">所有通知</h6>
                     </div>
-                    <div class="card-body row">
-                        <div class="col-md-8 col-sm-12">
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>专业名</th>
-                                    <th>代码</th>
-                                    <th>所属院系</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @if(count($majorInfos)==0) {{-- 还没有信息 --}}
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr role="row">
+                                <th>通知标题</th>
+                                <th>发布时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if(count($posts)==0)
                                 <tr role="row">
-                                    <td colspan="3">还没有信息</td>
+                                    <td colspan="4">还没有通知</td>
                                 </tr>
-                                @else @foreach($majorInfos as $majorInfo)
-                                    <tr role="row">
-                                        <td>{{$majorInfo->major_name}}</td>
-                                        <td>{{$majorInfo->major_num}}</td>
-                                        <td>
-                                            {{isset($majorInfo->dept
-                                            ->dept_name)? $majorInfo->dept
-                                            ->dept_name : "不存在的院系"}}
-                                        </td>
-                                    </tr>
-                                @endforeach @endif
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-4 col-sm-12">
-                            <div class="mb-4">
-                                <div class="form-group mb-4">
-                                    <label for="majorInfoUpload">上传院系信息</label>
-                                    <input type="file" id="majorInfoUpload">
-                                    <p class="help-block">上传模板文件</p>
-                                    <p class="font-weight-bold text-danger">注意：上传会导致原来被覆盖</p>
-                                </div>
-                                <button type="button" class="btn btn-primary" id="submitMajorInfo">提交</button>
-                            </div>
-                        </div>
+                            @else @foreach($posts as $post)
+                                <tr role="row">
+                                    <td><a class="nav-link" href="javascript:modifyPost({{strval($post->id)}})">
+                                            <span>{{$post->post_title}}</span></a></td>
+                                    <td>{{$post->post_timestamp}}</td>
+                                    <td>
+                                        <button type="button" class="m-1 btn btn-info modifyPost"
+                                                data-target="{{strval($post->id)}}">修改
+                                        </button>
+                                        <button type="button" class="m-1 btn btn-danger deletePost"
+                                                data-target="{{strval($post->id)}}" data-title="{{$post->post_title}}">
+                                            删除
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach 
+                            
+                            {{ $posts->links() }}
+                            @endif
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -383,6 +303,37 @@
     </div>
 </div>
 
+<!-- Change notification Modal -->
+<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">修改通知内容</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="py-3">
+                    <input type="text" class="form-control" name="post_title" id="m_post_title" placeholder="输入通知标题"
+                           data-postid="" required>
+                </div>
+                <div id="postModifyEditor" class="mb-4">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="readAgain">
+                    <label class="form-check-label" for="readAgain">再次提醒阅读</label>
+                </div>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="modifyConfirm()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Bootstrap core JavaScript-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -390,6 +341,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js"
         integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.min.js"
+        integrity="sha256-mc3T6DNzcA7wvZn8UVCZZSHGUzsuki15ci/3gxoLBnw=" crossorigin="anonymous"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
@@ -401,13 +354,18 @@
 <script type="text/javascript" src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
 <script type="text/javascript">
     var E = window.wangEditor;
-    var editor = new E('#schoolInfoEditor');
+    var editor = new E('#postEditor');
     editor.customConfig.uploadImgShowBase64 = true;
     editor.customConfig.zIndex = 1;
     editor.create();
+    var modifyeditor = new E('#postModifyEditor');
+    modifyeditor.customConfig.uploadImgShowBase64 = true;
+    editor.customConfig.zIndex = 1;
+    modifyeditor.create();
+
 </script>
 
-<!-- ajax post -->
+<!-- modify and delete -->
 <script>
     $.ajaxSetup({
         headers: {
@@ -415,36 +373,89 @@
         }
     });
 
-    $('#submitSchoolInfo').click(function () {
+    $(".modifyPost").click(function () {
+        modifyPost($(this).data("target"));
+    });
+
+    $(".deletePost").click(function () {
+        var thisTable = $(this);
+        Swal.fire({
+            title: '确定要删除吗',
+            text: "你将要删除通知\" " + $(this).data("title") + " \"",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: "确定删除",
+            cancelButtonText: "取消",
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    async: true,   		//是否为异步请求
+                    cache: false,  		//是否缓存结果
+                    type: "POST", 		//请求方式
+                    dataType: "jsonp", 	//服务器返回的数据是什么类型
+                    url: "{{url($deletePostURL)}}",
+                    data: {"deleteID": $(this).data("target")},
+
+                    success: function (data) {
+                        if (data.code === 200) {
+                            Swal.fire(
+                                '成功删除',
+                                '通知已经被成功删除',
+                                'success'
+                            );
+                            thisTable.parent().parent().remove();
+                        } else {
+                            Swal.fire(
+                                '提交失败（' + data.code + '）',
+                                data.data,
+                                'warning'
+                            );
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        // 状态码
+                        console.log("status:" + XMLHttpRequest.status + "\n");
+                        // 状态
+                        console.log("readyState:" + XMLHttpRequest.readyState + "\n");
+                        // 错误信息
+                        console.log("textStatus:" + textStatus + "\n");
+                        Swal.fire(
+                            '提交失败（' + XMLHttpRequest.status + '）',
+                            textStatus,
+                            'error'
+                        );
+                    }
+                });
+            }
+        })
+    });
+</script>
+
+<script>
+    function modifyPost(id) {
+        // 获取信息
         $.ajax({
             async: true,   		//是否为异步请求
             cache: false,  		//是否缓存结果
             type: "POST", 		//请求方式
             dataType: "jsonp", 	//服务器返回的数据是什么类型
-            url: "{{url($schoolInfoPostURL)}}",
-            data: {"schoolInfo": editor.txt.html()},
-
+            url: "{{url($getPostURL)}}",
+            data: {"requestID": id},
             success: function (data) {
-                if (data.code == 200) {
-                    spop({
-                        template: "<h4>成功保存</h4>" +
-                            "<p>信息已经更新，刷新页面就可以看到啦</p>",
-                        style: 'info',
-                        autoclose: 5000,
-                        position: 'bottom-right',
-                        icon: true,
-                        group: "submitSchoolInfo",
-                    });
+                if (data.code === 200) {
+                    var input = $("#m_post_title");
+                    input.val(data.data.title);
+                    input.data("postid", id);
+                    modifyeditor.txt.html(data.data.context);
+                    $("#modifyModal").modal('show');
                 } else {
-                    spop({
-                        template: "<h4>保存失败（" + data.code + "）</h4>" +
-                            "<p>"+data.data+"</p>",
-                        style: 'warning',
-                        autoclose: false,
-                        position: 'bottom-right',
-                        icon: true,
-                        group: "submitSchoolInfo",
-                    });
+                    Swal.fire(
+                        '获取失败（' + data.code + '）',
+                        data.data,
+                        'warning'
+                    );
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -454,64 +465,113 @@
                 console.log("readyState:" + XMLHttpRequest.readyState + "\n");
                 // 错误信息
                 console.log("textStatus:" + textStatus + "\n");
-                spop({
-                    template: "保存失败（" + XMLHttpRequest.status + "）",
-                    style: 'error',
-                    autoclose: false,
-                    position: 'bottom-right',
-                    icon: true,
-                    group: "submitSchoolInfo",
-                });
+                Swal.fire(
+                    '获取失败（' + XMLHttpRequest.status + '）',
+                    textStatus,
+                    'error'
+                );
             }
         });
-    });
+    }
 
-    $('#submitMajorInfo').click(function () {
-        var formData = new FormData();
-        var fileObj = $("#majorInfoUpload")[0].files[0]; // js 获取文件对象
-        if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
+    function modifyConfirm() {
+        var thisTable = $("#m_post_title");
+        $.ajax({
+            async: true,   		//是否为异步请求
+            cache: false,  		//是否缓存结果
+            type: "POST", 		//请求方式
+            dataType: "jsonp", 	//服务器返回的数据是什么类型
+            url: "{{url($modifyPostURL)}}",
+            data: {
+                "modifyID": thisTable.data("postid"),
+                "title": thisTable.val(),
+                "context": modifyeditor.txt.html(),
+                "readAgain": $("#readAgain").prop('checked')
+            },
+            success: function (data) {
+                if (data.code === 200) {
+                    Swal.fire({
+                        title: '修改完成',
+                        text: '完成了修改',
+                        type: 'success',
+                        onClose: function () {
+                            window.location.reload();
+                        }
+                    });
+                    $("#modifyModal").modal('hide');
+
+                } else {
+                    Swal.fire(
+                        '修改失败（' + data.code + '）',
+                        data.data,
+                        'warning'
+                    );
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // 状态码
+                console.log("status:" + XMLHttpRequest.status + "\n");
+                // 状态
+                console.log("readyState:" + XMLHttpRequest.readyState + "\n");
+                // 错误信息
+                console.log("textStatus:" + textStatus + "\n");
+                Swal.fire(
+                    '修改失败（' + XMLHttpRequest.status + '）',
+                    textStatus,
+                    'error'
+                );
+            }
+        });
+    }
+</script>
+
+<!-- ajax post -->
+<script>
+    $('#submitPost').click(function () {
+        // var postTitle = document.getElementById("post_title").value;
+        var postTitle = $("#post_title").val();
+        if (postTitle === "" || editor.txt.html() === "") {
             spop({
-                template: "请选择文件",
+                template: "<h4>发布失败</h4>" +
+                    "<p>标题和内容都必须填写哦</p>",
                 style: 'warning',
-                autoclose: false,
+                autoclose: 5000,
                 position: 'bottom-right',
                 icon: true,
-                group: "submitDeptInfo",
+                group: "submitPost",
             });
             return;
-        } else {
-            formData.append('majorInfo', fileObj);
         }
         $.ajax({
             async: true,   		//是否为异步请求
             cache: false,  		//是否缓存结果
             type: "POST", 		//请求方式
             dataType: "jsonp", 	//服务器返回的数据是什么类型
-            processData: false,	//用于对data参数进行序列化处理 这里必须false
-            contentType: false, //必须
-            url: "{{url($majorInfoPostURL)}}",
-            data: formData,
+            url: "{{url($storePostURL)}}",
+            data: {"postTitle": postTitle, "newPost": editor.txt.html()},
 
             success: function (data) {
-                if (data.code == 200) {
+                if (data.code === 200) {
                     spop({
-                        template: "<h4>成功保存</h4>" +
+                        template: "<h4>发布成功</h4>" +
                             "<p>信息已经更新，刷新页面就可以看到啦</p>",
                         style: 'info',
                         autoclose: 5000,
                         position: 'bottom-right',
                         icon: true,
-                        group: "submitMajorInfo",
+                        group: "submitPost",
                     });
+                    $("#post_title").val("");
+                    editor.txt.html("");
                 } else {
                     spop({
-                        template: "<h4>保存失败（" + data.code + "）</h4>" +
-                            "<p>"+data.data+"</p>",
+                        template: "<h4>提交失败（" + data.code + "）</h4>" +
+                            "<p>" + data.data + "</p>",
                         style: 'warning',
                         autoclose: false,
                         position: 'bottom-right',
                         icon: true,
-                        group: "submitMajorInfo",
+                        group: "submitPost",
                     });
                 }
             },
@@ -528,7 +588,7 @@
                     autoclose: false,
                     position: 'bottom-right',
                     icon: true,
-                    group: "submitMajorInfo",
+                    group: "submitPost",
                 });
             }
         });
