@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\PostRead;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Http\Request;
 
 class PostController extends Controller {   
     private $sysType;
@@ -42,6 +44,7 @@ class PostController extends Controller {
     public function index() {
         /* 通知分页显示，但此时是将所有通知一次都取出？ */
         $posts = Post::paginate(10);
+        // $posts = Post::simplePaginate(10);
         return view('stu.posts', [
             'sysType' => $this->sysType,  // 系统运行模式，新生，在校生，管理员
             'messages' => array(
@@ -87,12 +90,20 @@ class PostController extends Controller {
         ]);
     }
 
-    public function create() {
+    public function create(Request $request) {
         /** 
          * 该方法只针对管理员 
          * 未读消息功能对管理员不设置 
          */
-        $posts = Post::all();
+        $posts = Post::paginate(1);
+        // $posts = Post::get();
+        // $perPage = 1;
+        // $offsetPages = $request->input("page", 1);
+        // $posts = array_slice(
+        //     $posts,
+        //     $offsetPages * $perPage,
+        //     $perPage
+        // );        
         return view("admin.createPost", [
             "sysType" => "管理员",
             "user" => session("name", "管理员"),
