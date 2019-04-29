@@ -59,7 +59,7 @@
         </div>
 
         <!-- Nav Item - Information Query -->
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo"
                aria-expanded="true" aria-controls="collapseInfo">
                 <i class="fas fa-fw fa-laptop"></i>
@@ -92,7 +92,7 @@
         </div>
 
         <!-- Nav Item - Notice -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="{{url('/stu/posts')}}">
                 <i class="fas fa-fw fa-bell"></i>
                 <span>所有通知</span></a>

@@ -43,8 +43,6 @@ Route::group(['middleware' => ['checkAuth:new']], function () {
 
     Route::get('/stu/nav', 'NavController@index');
 
-    Route::post('/stu/nav', 'NavController@catcher');
-
     Route::get('/stu/enrollInfo', 'EnrollController@enrollInfo');
 
     Route::get('/stu/enrollGuide', 'EnrollController@enrollGuide');
@@ -91,6 +89,12 @@ Route::group(['middleware' => ['postAuthCheck:admin']], function () {
     Route::post('/admin/schoolInfoPost', 'ImportController@schollInfoPost');
 
     Route::post("/admin/storePost", "ImportController@storePost");
+
+    Route::post("/admin/deletePost", "PostController@deletePost");
+
+    Route::post("/admin/getPost", "PostController@getPost");
+
+    Route::post("/admin/edit", "PostController@editPost");
 });
 
 
