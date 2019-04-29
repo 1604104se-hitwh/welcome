@@ -313,10 +313,10 @@
                     <!-- Illustrations -->
                     <div class="card mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">{{$post->post_timestamp}}</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">发布于：{{$post->post_timestamp}}</h6>
                         </div>
                         <div class="card-body">
-                            {{$post->post_content}}
+                            {!! $post->post_content !!}
                         </div>
                     </div>
                 </div>
