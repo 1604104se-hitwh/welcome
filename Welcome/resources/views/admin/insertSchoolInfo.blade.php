@@ -400,11 +400,11 @@
 <!-- Custom scripts for Editor -->
 <script type="text/javascript" src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
 <script type="text/javascript">
-    var E = window.wangEditor
-    var editor = new E('#schoolInfoEditor')
-    editor.create()
-    // get html infomation
-    // editor.txt.html()
+    var E = window.wangEditor;
+    var editor = new E('#schoolInfoEditor');
+    editor.customConfig.uploadImgShowBase64 = true;
+    editor.customConfig.zIndex = 1;
+    editor.create();
 </script>
 
 <!-- ajax post -->
