@@ -91,6 +91,12 @@ Route::group(['middleware' => ['postAuthCheck:admin']], function () {
     Route::post('/admin/schoolInfoPost', 'ImportController@schollInfoPost');
 
     Route::post("/admin/storePost", "ImportController@storePost");
+
+    Route::post("/admin/deletePost", "PostController@deletePost");
+
+    Route::post("/admin/getPost", "PostController@getPost");
+
+    Route::post("/admin/edit", "PostController@editPost");
 });
 
 
