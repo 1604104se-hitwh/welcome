@@ -99,7 +99,7 @@
              * 该方法只针对管理员
              * 未读消息功能对管理员不设置
              */
-            $posts = Post::all();
+            $posts = Post::paginate(10);
             return view("admin.createPost", [
                 "sysType" => "管理员",
                 "user" => session("name", "管理员"),
