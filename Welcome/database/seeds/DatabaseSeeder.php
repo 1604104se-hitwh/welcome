@@ -24,8 +24,7 @@ class DatabaseSeeder extends Seeder {
             EnrollCfgTableSeeder::class,
             MajorTableSeeder::class,
             StudentTableSeeder::class,
-            PostTableSeeder::class,
-            ShtlPortTableSeeder::class
+            PostTableSeeder::class
         ]);
         $this->idValidator = new IdValidator(); 
         // $this->call(UsersTableSeeder::class);
