@@ -247,8 +247,7 @@
                                         </button>
                                     </td>
                                 </tr>
-                            @endforeach 
-                            
+                            @endforeach                
                             {{ $posts->links() }}
                             @endif
                             </tbody>

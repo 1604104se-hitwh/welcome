@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder {
             DepartmentTableSeeder::class,
             DormitoryTableSeeder::class,
             EnrollCfgTableSeeder::class,
+            EnrollTableSeeder::class,
             MajorTableSeeder::class,
             StudentTableSeeder::class,
             PostTableSeeder::class

@@ -21,6 +21,7 @@ class CreateEnrollTable extends Migration
             $table->string('enrl_title', 100)->nullable();
             $table->text('enrl_info')->nullable();
             $table->text('enrl_location')->nullable();
+            $table->smallInteger('enrl_rank')->nullable();
         });
     }
 
