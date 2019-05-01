@@ -13,25 +13,25 @@ class EnrollTableSeeder extends Seeder
     {
         DB::table('t_enroll')->insert([
             'enrl_title' => '流程一',
-            'enrl_info' => true,
+            'enrl_info' => "",
             'enrl_location' => "",
             'enrl_rank' => 1
         ]);
         DB::table('t_enroll')->insert([
             'enrl_title' => '流程二',
-            'enrl_info' => true,
+            'enrl_info' => "",
             'enrl_location' => "",
             'enrl_rank' => 2
         ]);
         DB::table('t_enroll')->insert([
             'enrl_title' => '流程三',
-            'enrl_info' => true,
+            'enrl_info' => "",
             'enrl_location' => "",
             'enrl_rank' => 3
         ]);
         DB::table('t_enroll')->insert([
             'enrl_title' => '流程四',
-            'enrl_info' => true,
+            'enrl_info' => "",
             'enrl_location' => "",
             'enrl_rank' => 4
         ]);
