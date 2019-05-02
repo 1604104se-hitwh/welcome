@@ -13,13 +13,14 @@
     <title>迎新系统-哈尔滨工业大学（威海）</title>
 
     <!-- Custom fonts for this template-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css"
-          integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78="
-          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.8.1/css/all.min.css"
+          integrity="sha256-7rF6RaSKyh16288E3hVdzQtHyzatA2MQRGu0cf6pqqM=" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.all.min.js"
             integrity="sha256-Smm8ER2J6Oi6HLNRv7iRvWZlhTPx0Ie91VSkg9QljzE=" crossorigin="anonymous"></script>
+    <link href="{{asset('css/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+
     <!-- Smallpop -->
     <link href="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.css" rel="stylesheet">
 
@@ -322,7 +323,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <div class="form-check">
+                <div class="form-check abc-checkbox abc-checkbox-info abc-checkbox-circle">
                     <input type="checkbox" class="form-check-input" id="readAgain">
                     <label class="form-check-label" for="readAgain">再次提醒阅读</label>
                 </div>
@@ -342,6 +343,7 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.min.js"
         integrity="sha256-mc3T6DNzcA7wvZn8UVCZZSHGUzsuki15ci/3gxoLBnw=" crossorigin="anonymous"></script>
+
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
