@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Students;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -16,27 +17,34 @@ class LogTest extends TestCase
      */
     public function testLoginTest()
     {
+        $get = Students::where([
+            'stu_status'=>'PREPARE'
+        ])->inRandomOrder(time())->first();
         // test news
-        $respose = $this->json('POST','/login',[
+        $this->json('POST','/login',[
             'loginType' => 'new',
-            'examId' => '12345678901234',
-            'perId' => '230123199010106583',
-        ]);
-        //$respose->assertStatus(302);
+            'examId' => $get->stu_eid,
+            'perId' => $get->stu_cid,
+        ])->assertSessionHas('Auth','new');
+        // cross check
+        $this->json('GET','/admin')->assertForbidden();
+        $this->json('GET','/senior')->assertForbidden();
+        $this->json('GET','/stu')->assertSuccessful();
+
         // test olds
 
         // test admins
-        echo($this->post("/login",[
+
+        $this->json('POST','/login',[
             'loginType' => 'admin',
             'userId' => 'root',
-            'password' => '1234',
-        ])->getOriginalContent());
-        $respose = $this->json('POST','/login',[
-            'loginType' => 'admin',
-            'userId' => 'root',
-            'password' => '1234',
-        ]);
-        $respose->assertStatus(302);
+            'psw' => '1234',
+        ])->assertSessionHas('Auth','admin');
+
+        // cross check
+        $this->json('GET','/admin')->assertSuccessful();
+        $this->json('GET','/senior')->assertForbidden();
+        $this->json('GET','/stu')->assertForbidden();
     }
 
     /**
@@ -45,7 +53,13 @@ class LogTest extends TestCase
      * @return void
      */
     public function testLogoutTest(){
-        $respose = $this->get('/logout');
-        $respose->assertStatus(302);
+        $this->json('POST','/login',[
+            'loginType' => 'admin',
+            'userId' => 'root',
+            'psw' => '1234',
+        ]);
+        $this->json('GET','/admin')->assertSuccessful();
+        $this->json('get','/logout')->assertSessionMissing('Auth');
+        $this->json('GET','/admin')->assertRedirect();
     }
 }
