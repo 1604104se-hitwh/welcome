@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Admin;
 use App\Models\Students;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -35,10 +36,19 @@ class LogTest extends TestCase
 
         // test admins
 
+        $adm_name = str_random(rand(0,15));
+        $adm_psw = str_random(rand(0,15));
+
+        Admin::insert([
+            'adm_name' => $adm_name,
+            'adm_password' => bcrypt($adm_psw),
+            'pms_id' => 0,
+        ]);
+
         $this->json('POST','/login',[
             'loginType' => 'admin',
-            'userId' => 'root',
-            'psw' => '1234',
+            'userId' => $adm_name,
+            'psw' => $adm_psw,
         ])->assertSessionHas('Auth','admin');
 
         // cross check
