@@ -1,0 +1,8 @@
+~$*
+*.xlsx
+/admin
+/css
+/img
+/js
+*.html
+.project
