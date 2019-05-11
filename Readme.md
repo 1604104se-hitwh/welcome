@@ -141,7 +141,7 @@ php artisan serve
 
 ## 已实现部分功能展示
 
-- 登陆界面
+- 登录界面
 
 ![login](./pic/login.png)
 

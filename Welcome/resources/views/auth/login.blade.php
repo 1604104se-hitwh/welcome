@@ -51,7 +51,7 @@
                 <div class="card-body tab-content">
                     <form class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="newStudent-tab"
                           method="POST" action="./login">
-                        <h4 class="card-title">新生登陆</h4>
+                        <h4 class="card-title">新生登录</h4>
                         {{ csrf_field() }}
                         <input type="hidden" name="loginType" value="new">
                         <div class="form-group">
@@ -63,12 +63,12 @@
                             <label for="perId">身份证号</label>
                             <input type="text" name="perId" class="form-control" id="perId" placeholder="填写身份证号">
                         </div>
-                        <button type="submit" class="btn btn-block btn-primary" id="newLogin">登陆</button>
+                        <button type="submit" class="btn btn-block btn-primary" id="newLogin">登录</button>
                     </form>
 
                     <form class="tab-pane fade" id="old" role="tabpanel" aria-labelledby="oldStudent-tab" method="POST"
                           action="./login">
-                        <h4 class="card-title">在校生登陆</h4>
+                        <h4 class="card-title">在校生登录</h4>
                         {{ csrf_field() }}
                         <input type="hidden" name="loginType" value="old">
                         <div class="form-group">
@@ -80,12 +80,12 @@
                             <label for="perId">身份证号</label>
                             <input type="text" name="perId" class="form-control" id="perId" placeholder="填写身份证号">
                         </div>
-                        <button type="submit" class="btn btn-block btn-secondary" id="oldLogin">登陆</button>
+                        <button type="submit" class="btn btn-block btn-secondary" id="oldLogin">登录</button>
                     </form>
 
                     <form class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab" method="POST"
                           action="./login">
-                        <h4 class="card-title">管理员登陆</h4>
+                        <h4 class="card-title">管理员登录</h4>
                         {{ csrf_field() }}
                         <input type="hidden" name="loginType" value="admin">
                         <div class="form-group">
@@ -97,7 +97,7 @@
                             <label for="perId">密码</label>
                             <input type="password" name="psw" class="form-control" id="password" placeholder="填写密码">
                         </div>
-                        <button type="submit" class="btn btn-block btn-danger" id="adminLogin">登陆</button>
+                        <button type="submit" class="btn btn-block btn-danger" id="adminLogin">登录</button>
                     </form>
                 </div>
             </div>
