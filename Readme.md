@@ -6,7 +6,7 @@ Welcome HITers
 
 :warning:此版本仅仅是用于SE的大作业，可能不会有后续更新，请谨慎使用
 
-## 项目说明
+## 项目说明 
 
 ### 简介
 
@@ -135,6 +135,7 @@ php artisan serve
 
 ## 生产环境配置
 
+- 将整个文件夹递归的添加执行权限 chmod -R 777 welcome，具体主要是storage；
 - 使用`Nginx`中间件，需要将入口导向`public`，`index.php`会将流量引导到内核和路由；  
 - 删除`.env`，在`config`中进行修改配置；  
 - 关闭`debug`模式，进入生产模式。  
