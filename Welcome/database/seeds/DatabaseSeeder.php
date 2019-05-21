@@ -29,9 +29,9 @@
                 EnrollTableSeeder::class,
                 MajorTableSeeder::class,
                 StudentTableSeeder::class,
-                PostTableSeeder::class
+                PostTableSeeder::class,
+                PermissionTableSeeder::class
             ]);
-            $this->idValidator = new IdValidator();
             // $this->call(UsersTableSeeder::class);
         }
     }

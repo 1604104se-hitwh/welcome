@@ -64,16 +64,16 @@ Route::group(['middleware' => ['checkAuth:admin']], function () {
 
     Route::get('/admin/index', 'AdminController@index');
 
-    /* /admin/posts/{post}会覆盖掉/admin/posts/create */
+    /* /admin/posts/{post}会覆盖掉/admin/posts/create , 删去前者*/
     Route::get('/admin/posts/create', 'PostController@create'); 
 
     Route::get('/admin/manageSchoolInfo', 'AdminController@manageSchoolInfo');
 
     Route::get('/admin/manageNewsInfo', 'AdminController@manageNewsInfo');
 
-    Route::get('/admin/posts', 'PostController@index');
+    Route::get('/admin/manageAdminInfo', 'AdminController@manageAdminInfo');
 
-    Route::get('/admin/posts/{post}', 'PostController@show');
+    Route::get('/admin/posts', 'PostController@index');
 
 });
 
@@ -86,15 +86,25 @@ Route::post('/admin/majorInfoUpload','ImportController@majorExcelImport')
 
 // School and other Information Import
 Route::group(['middleware' => ['postAuthCheck:admin']], function () {
-    Route::post('/admin/schoolInfoPost', 'ImportController@schollInfoPost');
+    Route::post('/admin/schoolInfoPost', 'ImportController@schoolInfoPost');
 
-    Route::post("/admin/storePost", "ImportController@storePost");
+    //管理新生信息
+    Route::post("/admin/storePost", "PostController@storePost");
 
     Route::post("/admin/deletePost", "PostController@deletePost");
 
     Route::post("/admin/getPost", "PostController@getPost");
 
-    Route::post("/admin/edit", "PostController@editPost");
+    Route::post("/admin/modifyPost", "PostController@modifyPost");
+
+    //管理工作人员信息
+    Route::post("/admin/addAdmin", "AdminController@addAdmin");
+
+    Route::post("/admin/deleteAdmin", "AdminController@deleteAdmin");
+
+    Route::post("/admin/getAdmin", "AdminController@getAdmin");
+
+    Route::post("/admin/modifyAdmin", "AdminController@modifyAdmin");
 });
 
 
