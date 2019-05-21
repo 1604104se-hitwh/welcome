@@ -14,7 +14,12 @@ class AdminTableSeeder extends Seeder
         DB::table('t_admin')->insert([
             'adm_name' => 'root',
             'adm_password' => bcrypt('1234'),
-            'pms_id' => 0,
+            'pms_id' => 2,
+        ]);
+        DB::table('t_admin')->insert([
+            'adm_name' => 'tom',
+            'adm_password' => bcrypt('1234'),
+            'pms_id' => 1,
         ]);
     }
 }

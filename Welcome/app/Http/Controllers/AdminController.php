@@ -5,9 +5,11 @@
     use App\Models\Department;
     use App\Models\Major;
     use App\Models\Students;
+    use App\Models\Admin;
+    use App\Models\Permission;
     use App\Models\EnrollCfg;
     use App\Http\Controllers\Controller;
-
+    use Illuminate\Http\Request;
 
 
     class AdminController extends Controller
@@ -215,5 +217,153 @@
 
                 'toLogoutURL' => "/logout",      // 退出登录
             ]);
+        }
+
+        // 管理员-工作人员信息
+        public function manageAdminInfo()
+        {
+            $adminList = Admin::paginate(10);
+            $adminTotal = count($adminList);
+            return view('admin.manageAdmin', [
+                'sysType' => "管理员",
+                'user' => session("name"),
+                'userImg' => "userImg",
+                'toInformationURL' => "toInformationURL",
+                'toSettingURL' => "toSettingURL",
+                'adminTotal' => $adminTotal,
+                'adminList' => $adminList,
+                'getAdminURL' => '/admin/getAdmin',
+                'modifyAdminURL' => '/admin/modifyAdmin',
+                'deleteAdminURL' => '/admin/deleteAdmin',
+                'addAdminURL' => '/admin/addAdmin',
+                'toLogoutURL' => "/logout",      // 退出登录
+            ]);
+        }
+
+        // 工作人员信息-post响应函数
+        public function addAdmin(Request $request) 
+        {
+            if (!$request->ajax()) {
+                return back();
+            }
+            if(Admin::where('adm_name', $request->post("adm_name"))) {
+                $array=array(
+                    "code" => 500,
+                    "msg" => "username collision!",
+                    "data" => "用户名已存在！",
+                    "exception" => "用户名已存在！"
+                );
+                return response()->jsonp($request->input('callback'),$array);
+            }
+            try{
+                //DB::beginTransaction();
+                $admin = new Admin();
+                $admin->adm_name = $request->post("adm_name", "worker");
+                $admin->adm_password = $request->post("adm_password", "1234");
+                $admin->save();
+                //DB::commit();
+                $array=array(
+                    "code" => 200,
+                    "msg" => "Saved!"
+                );
+                return response()->jsonp($request->input('callback'),$array);
+            }catch (\Exception $e){
+                //DB::rollBack();
+                $array=array(
+                    "code" => 500,
+                    "msg" => "The programing process error! Please call administrator for help!",
+                    "data" => "程序内部错误，请告知管理员处理！",
+                    "exception" => $e->getMessage()
+                );
+                return response()->jsonp($request->input('callback'),$array);
+            }
+        }
+
+
+        public function deleteAdmin(Request $request)
+        {
+            if ($request->has('deleteID')) {
+                $deleteAdminId = $request->post('deleteID');
+                Admin::destroy($deleteAdminId);
+                $array = array(
+                    "code" => 200,
+                    "msg" => "Delete successfully!",
+                    "data" => "成功删除！"
+                );
+            } else {
+                $array = array(
+                    "code" => 500,
+                    "msg" => "Missing parameters!",
+                    "data" => "缺失参数！"
+                );
+            }
+
+            return response()->jsonp($request->input('callback'), $array);
+        }
+
+        public function getAdmin(Request $request)
+        {
+            if ($request->has('requestID')) {
+                $id = $request->post('requestID');
+                //$get = Admin::find($id);
+                if (1) {
+                    $array = array(
+                        "code" => 200,
+                        "msg" => "Data get successfully!",
+                        "data" => array(
+                            "name" => '$get->adm_name'
+                        )
+                    );
+                } else {
+                    $array = array(
+                        "code" => 404,
+                        "msg" => "Cannot get the data!",
+                        "data" => "不存在这个数据"
+                    );
+                }
+            } else {
+                $array = array(
+                    "code" => 500,
+                    "msg" => "Missing parameters!",
+                    "data" => "缺失参数！"
+                );
+            }
+            return response()->jsonp($request->input('callback'), $array);
+        }
+
+        public function modifyAdmin(Request $request)
+        {
+            if ($request->has(['modifyID', 'title', 'context', 'readAgain'])) {
+                $id = $request->post('modifyID');
+                $get = Post::find($id);
+                if ($get) {
+                    $get->post_title = $request->post('title');
+                    $get->post_content = $request->post('context');
+                    $get->post_timestamp = Carbon::now();
+                    $get->save();
+                    // 是否需要再次提醒阅读
+                    if ($request->post('readAgain')) {
+                        PostRead::where('post_id', $id)->delete();
+                    }
+                    $array = array(
+                        "code" => 200,
+                        "msg" => "Data saved successfully!",
+                        "data" => "成功保存"
+                    );
+                } else {
+                    $array = array(
+                        "code" => 404,
+                        "msg" => "Cannot get the data!",
+                        "data" => "不存在这个数据"
+                    );
+                }
+            } else {
+                $array = array(
+                    "code" => 500,
+                    "msg" => "Missing parameters!",
+                    "data" => "缺失参数！"
+                );
+            }
+            return response()->jsonp($request->input('callback'), $array);
         }
     }

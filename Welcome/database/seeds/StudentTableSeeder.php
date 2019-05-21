@@ -1,5 +1,6 @@
 <?php
-
+require_once __DIR__ . '/../../app/include.php';
+use Jxlwqq\IdValidator\IdValidator;
 use Illuminate\Database\Seeder;
 
 class StudentTableSeeder extends Seeder
@@ -11,6 +12,7 @@ class StudentTableSeeder extends Seeder
      */
     public function run()
     {
+        $this->idValidator = new IdValidator();
         //生成一些 16040xxyy的学生信息
         for ($i = 0; $i < 30; ++$i) {
             DB::table('t_student')->insert([

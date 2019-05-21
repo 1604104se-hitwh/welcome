@@ -5,6 +5,7 @@
     use App\Models\Post;
     use App\Models\PostRead;
     use Carbon\Carbon;
+    use Illuminate\Support\Facades\DB;
     use Illuminate\Http\Request;
 
     class PostController extends Controller
@@ -109,10 +110,42 @@
                 "posts" => $posts,
                 "storePostURL" => "/admin/storePost",
                 "deletePostURL" => "/admin/deletePost",
-                "modifyPostURL" => "/admin/edit",
                 "getPostURL" => "/admin/getPost",
+                "modifyPostURL" => "/admin/modifyPost",
                 "toLogoutURL" => "/logout"
             ]);
+        }
+
+        public function storePost(Request $request) 
+        {
+            if (!$request->ajax()) {
+                return back();
+            }
+            try{
+                DB::beginTransaction();
+                $post = new Post();
+                $now = Carbon::now();
+                $post->post_title = $request->post("postTitle", "无标题");
+                $post->post_content = $request->post("newPost", "暂无内容");
+                // $post->post_timestamp = $dt->format('m-d-y H:i:s');
+                $post->post_timestamp = $now;
+                $post->save();
+                DB::commit();
+                $array=array(
+                    "code" => 200,
+                    "msg" => "Saved!"
+                );
+                return response()->jsonp($request->input('callback'),$array);
+            }catch (\Exception $e){
+                DB::rollBack();
+                $array=array(
+                    "code" => 500,
+                    "msg" => "The programing process error! Please call administrator for help!",
+                    "data" => "程序内部错误，请告知管理员处理！",
+                    "exception" => $e->getMessage()
+                );
+                return response()->jsonp($request->input('callback'),$array);
+            }
         }
 
         public function deletePost(Request $request)
@@ -168,7 +201,7 @@
             return response()->jsonp($request->input('callback'), $array);
         }
 
-        public function editPost(Request $request)
+        public function modifyPost(Request $request)
         {
             if ($request->has(['modifyID', 'title', 'context', 'readAgain'])) {
                 $id = $request->post('modifyID');
