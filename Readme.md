@@ -139,6 +139,8 @@ php artisan serve
 - 使用`Nginx`中间件，需要将入口导向`public`，`index.php`会将流量引导到内核和路由；  
 - 删除`.env`，在`config`中进行修改配置；  
 - 关闭`debug`模式，进入生产模式。  
+- 部署代码到生产环境时，可以优化自动加载
+    - `composer dump-autoload --optimize`
 
 ## 已实现部分功能展示
 
