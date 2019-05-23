@@ -69,7 +69,7 @@
             $post = Post::where([
                 ['id', $id],
             ])->first();
-            if (!$post || count($post) == 0) {
+            if (!$post) {
                 abort("404", "找不到相应的内容");
             }
             // 确定已读
