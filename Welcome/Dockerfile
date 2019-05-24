@@ -43,7 +43,7 @@ COPY . /var/www
 COPY --chown=www:www . /var/www
 
 # Give laravel permission to storage folder
-RUN chmod -R 775 storage
+RUN chmod -R 777 storage
 
 # Change current user to www
 USER www
