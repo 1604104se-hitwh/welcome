@@ -54,6 +54,6 @@ class Students extends Model
         'stu_cid',
         'stu_eid',
         'stu_dorm_str',
-        'stu_fromSchool'
+        'stu_from_school'
     ];
 }

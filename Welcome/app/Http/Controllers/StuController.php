@@ -63,8 +63,8 @@
             $class_male_num = 0;
             $class_female_num = 0;
             foreach ($classmates_array as $classmate) {
-                if ($classmate->stu_gen) $class_male_num++;
-                else $class_female_num++;
+                if ($classmate->stu_gen) $class_female_num++;
+                else $class_male_num++;
             }
             /* 老乡信息 */
             //地区分布，需要做桶排序

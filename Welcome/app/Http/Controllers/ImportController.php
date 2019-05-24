@@ -18,7 +18,7 @@ class ImportController extends Controller
         // 产生提交，注意开始清除原有数据
         try{
             DB::beginTransaction();
-            if(!EnrollCfg::first()->enrl_permission){
+            if(EnrollCfg::first()->enrl_permission){
                 // 准许核验，不能上传
                 $array=array(
                     "code" => 401,

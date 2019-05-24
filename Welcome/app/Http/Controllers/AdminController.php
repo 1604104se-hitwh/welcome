@@ -92,8 +92,8 @@
                     }else{
                         $deptImport = "已导入";
                     }
-                    $deptImport .= "，院系".Major::count()."个，".
-                        "专业".Department::count()."个";
+                    $deptImport .= "，院系".Department::count()."个，".
+                        "专业".Major::count()."个";
                 }
             }
             return view('admin.index', [
