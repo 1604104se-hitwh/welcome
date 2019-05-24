@@ -4586,69 +4586,6 @@
             "time": "2018-08-05T17:53:17+00:00"
         },
         {
-            "name": "phpunit/php-code-coverage",
-            "version": "7.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "0317a769a81845c390e19684d9ba25d7f6aa4707"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/0317a769a81845c390e19684d9ba25d7f6aa4707",
-                "reference": "0317a769a81845c390e19684d9ba25d7f6aa4707",
-                "shasum": ""
-            },
-            "require": {
-                "ext-dom": "*",
-                "ext-xmlwriter": "*",
-                "php": "^7.2",
-                "phpunit/php-file-iterator": "^2.0.2",
-                "phpunit/php-text-template": "^1.2.1",
-                "phpunit/php-token-stream": "^3.0.1",
-                "sebastian/code-unit-reverse-lookup": "^1.0.1",
-                "sebastian/environment": "^4.1",
-                "sebastian/version": "^2.0.1",
-                "theseer/tokenizer": "^1.1"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.0"
-            },
-            "suggest": {
-                "ext-xdebug": "^2.6.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "7.0-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
-                }
-            ],
-            "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
-            "homepage": "https://github.com/sebastianbergmann/php-code-coverage",
-            "keywords": [
-                "coverage",
-                "testing",
-                "xunit"
-            ],
-            "time": "2019-02-26T07:38:26+00:00"
-        },
-        {
             "name": "phpunit/php-file-iterator",
             "version": "2.0.2",
             "source": {
@@ -4864,7 +4801,6 @@
                 "phar-io/version": "^2.0",
                 "php": "^7.2",
                 "phpspec/prophecy": "^1.7",
-                "phpunit/php-code-coverage": "^7.0",
                 "phpunit/php-file-iterator": "^2.0.1",
                 "phpunit/php-text-template": "^1.2.1",
                 "phpunit/php-timer": "^2.1",
