@@ -1,4 +1,4 @@
-# 新生入学迎新系统
+新生入学迎新系统
 
 [![Codacy branch grade](https://img.shields.io/codacy/grade/6c4e2df74fd349228e32b19e119b2664/master.svg?logo=codacy&style=flat-square)](https://app.codacy.com/app/specialpointcentral/welcome?utm_source=github.com&utm_medium=referral&utm_content=1604104se-hitwh/welcome&utm_campaign=Badge_Grade_Dashboard) [![Travis (.com) branch](https://img.shields.io/travis/com/1604104se-hitwh/welcome/master.svg?logo=travis-ci&logoColor=white&style=flat-square)](https://www.travis-ci.com/1604104se-hitwh/welcome) [![GitHub](https://img.shields.io/github/license/1604104se-hitwh/welcome.svg?style=flat-square)](https://github.com/1604104se-hitwh/welcome/blob/master/LICENSE)
 
@@ -106,15 +106,14 @@ DB_USERNAME=数据库用户名
 DB_PASSWORD=数据库密码
 ```
 
-- Run `php artisan key:generate`
+- Run `php artisan key:generate` 生成密钥
 
 数据表迁移：
 
 ```php
 php artisan migrate             //若之前没有表结构，则执行这条指令
-    php artisan migrate:refresh //否则使用这条指令--Drop all tables and re-run all migrations
-    php artisan migrate:rollback//若只希望回滚迁移全部数据表，则执行这条指令
-php artisan key:generate                                // 生成密钥
+php artisan migrate:refresh //否则使用这条指令--Drop all tables and re-run all migrations
+php artisan migrate:rollback//若只希望回滚迁移全部数据表，则执行这条指令
 ```
 
 数据填充：
@@ -141,6 +140,41 @@ php artisan serve
 - 关闭`debug`模式，进入生产模式。  
 - 部署代码到生产环境时，可以优化自动加载
     - `composer dump-autoload --optimize`
+
+### 使用容器
+目前支持使用Docker。
+
+- 更改 `docker-compose.yml` 配置文件
+
+    ```
+    MYSQL_ROOT_PASSWORD: your password
+    MYSQL_USER: root
+    MYSQL_PASSWORD: your password
+    ```
+
+-  `docker-compose up -d`.
+
+- Then run `sudo docker container ls --all`. Copy **Nginx** Container ID.
+
+- Then run `sudo docker exec -it <container id> bash`
+
+- Run `cp .env.example .env` 更改`.env`文件内容
+
+    ```
+    DB_HOST=db
+    DB_PORT=3306
+    DB_DATABASE=数据库名称
+    DB_USERNAME=数据库用户名
+    DB_PASSWORD=数据库密码
+    ```
+
+- Run `composer install`
+
+- Run `php artisan key:generate`
+
+- Run `php artisan migrate:fresh --seed`
+
+- Visit `http:\\localhost:80`.
 
 ## 已实现部分功能展示
 
