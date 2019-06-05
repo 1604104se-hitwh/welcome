@@ -7,10 +7,12 @@ use App\Imports\StudentsImport;
 use App\Models\EnrollCfg;
 use App\Models\Post;
 use App\Models\Students;
+use App\Models\SysInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
+use Barryvdh\Debugbar;
 
 class ImportController extends Controller
 {
@@ -124,9 +126,13 @@ class ImportController extends Controller
     public function schoolInfoPost(Request $request) {
         try{
             DB::beginTransaction();
-            $enrollcfg = EnrollCfg::first();
-            $enrollcfg->school_info = $request->post('schoolInfo');
-            $enrollcfg->save();
+            $enrollcfg = SysInfo::find('school_info');
+            if($enrollcfg){
+                $enrollcfg->school_info = $request->post('schoolInfo');
+                $enrollcfg->save();
+            }else{
+                SysInfo::create(['school_info' => $request->post('schoolInfo')]);
+            }
             DB::commit();
             $array=array(
                 "code" => 200,
@@ -141,6 +147,7 @@ class ImportController extends Controller
                 "data" => "程序内部错误，请告知管理员处理！",
                 "exception" => $e->getMessage()
             );
+
             return response()->jsonp($request->input('callback'),$array);
         }
     }

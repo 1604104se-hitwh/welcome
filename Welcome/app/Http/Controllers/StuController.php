@@ -9,8 +9,8 @@
     use App\Models\Major;
     use App\Models\Students as Student;
     use App\Models\Post;
-    use App\Models\PostRead;
 
+    use App\Models\SysInfo;
     use Jxlwqq\IdValidator\IdValidator;
 
     /* 新生控制器 */
@@ -94,7 +94,8 @@
             if (0 != $restNumber = $class_male_num + $class_female_num - $top4_num)
                 $classmates_addr_prov_cnt['其他'] = $restNumber;
             /* 报到配置信息 */
-            $enrollcfg = EnrollCfg::all()->first();
+            $enrollcfg = EnrollCfg::first();
+            $enrollcfg->school_info = SysInfo::first('school_info')->school_info;
             $enrollTime = ($enrollcfg) ? $enrollcfg['enrl_begin_time'] : "暂无信息";
             /*室友统计 */
             // 切割宿舍信息

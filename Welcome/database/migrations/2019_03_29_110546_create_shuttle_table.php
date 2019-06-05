@@ -19,7 +19,7 @@ class CreateShuttleTable extends Migration
             $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->integer('port_id')->unsigned();
-            $table->string('shtl_time', 100)->nullable();
+            $table->json('shtl_time')->nullable();
         });
     }
 

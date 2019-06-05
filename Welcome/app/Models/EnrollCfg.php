@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EnrollCfg whereEnrlPermission($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EnrollCfg whereId($value)
  * @mixin \Eloquent
+ * @property string|null $school_info
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EnrollCfg whereSchoolInfo($value)
  */
 class EnrollCfg extends Model
 {

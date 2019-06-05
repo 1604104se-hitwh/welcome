@@ -20,7 +20,7 @@ class CreateShtlRecordTable extends Migration
             $table->increments('id');
             $table->integer('shtl_id')->unsigned();
             $table->integer('stu_id')->unsigned();
-            $table->string('record_time', 100)->nullable();
+            $table->timestamp('record_time')->nullable();
         });
     }
 

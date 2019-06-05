@@ -9,6 +9,9 @@
     use App\Models\Permission;
     use App\Models\EnrollCfg;
     use App\Http\Controllers\Controller;
+    use App\Models\SysInfo;
+    use Barryvdh\Debugbar\Facade;
+    use DebugBar\DebugBar;
     use Illuminate\Http\Request;
 
 
@@ -36,7 +39,8 @@
                 ["stu_status", "CURRENT"]
             ])->count();
             // 报到配置信息
-            $enrollcfg = EnrollCfg::all()->first();
+            $enrollcfg = EnrollCfg::first();
+            $enrollcfg->school_info = SysInfo::first('school_info')->school_info;
             $enrollTime = ($enrollcfg) ? $enrollcfg['enrl_begin_time'] : "暂无信息";
             // 院系信息统计
             $deptInfos = Department::all();
@@ -133,7 +137,8 @@
                 ["stu_status", "CURRENT"]
             ])->count();
             // 报到配置
-            $enrollcfg = EnrollCfg::all()->first();
+            $enrollcfg = EnrollCfg::first();
+            $enrollcfg->school_info = SysInfo::first('school_info')->school_info;
             $enrollTime = ($enrollcfg) ? $enrollcfg['enrl_begin_time'] : "暂无信息";
             // 专业信息
             $majorInfos = Major::orderBy('major_num', 'asc')->get();
@@ -240,28 +245,34 @@
             ]);
         }
 
-        // 工作人员信息-post响应函数
+        // 管理员设定-添加管理员
         public function addAdmin(Request $request) 
         {
             if (!$request->ajax()) {
                 return back();
             }
-            if(Admin::where('adm_name', $request->post("adm_name"))) {
+            if($request->post("adm_name")===""||$request->post("adm_password")===""){
                 $array=array(
-                    "code" => 500,
-                    "msg" => "username collision!",
+                    "code" => 401,
+                    "msg" => "Missing parameters!",
+                    "data" => "缺失参数",
+                );
+                return response()->jsonp($request->input('callback'),$array);
+            }
+            if(Admin::where('adm_name', $request->post("adm_name"))->first('id')) {
+                $array=array(
+                    "code" => 400,
+                    "msg" => "Username collision!",
                     "data" => "用户名已存在！",
                     "exception" => "用户名已存在！"
                 );
                 return response()->jsonp($request->input('callback'),$array);
             }
             try{
-                //DB::beginTransaction();
                 $admin = new Admin();
-                $admin->adm_name = $request->post("adm_name", "worker");
-                $admin->adm_password = $request->post("adm_password", "1234");
+                $admin->adm_name = $request->post("adm_name");
+                $admin->adm_password = $request->post("adm_password");
                 $admin->save();
-                //DB::commit();
                 $array=array(
                     "code" => 200,
                     "msg" => "Saved!"
@@ -278,8 +289,7 @@
                 return response()->jsonp($request->input('callback'),$array);
             }
         }
-
-
+        // 管理员设定-删除管理员
         public function deleteAdmin(Request $request)
         {
             if ($request->has('deleteID')) {
@@ -292,7 +302,7 @@
                 );
             } else {
                 $array = array(
-                    "code" => 500,
+                    "code" => 401,
                     "msg" => "Missing parameters!",
                     "data" => "缺失参数！"
                 );
@@ -323,7 +333,7 @@
                 }
             } else {
                 $array = array(
-                    "code" => 500,
+                    "code" => 401,
                     "msg" => "Missing parameters!",
                     "data" => "缺失参数！"
                 );

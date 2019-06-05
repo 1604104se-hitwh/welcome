@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlRecord whereShtlId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlRecord whereStuId($value)
  * @mixin \Eloquent
+ * @property int $port_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlRecord wherePortId($value)
  */
 class ShtlRecord extends Model
 {

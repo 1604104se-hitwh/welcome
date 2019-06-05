@@ -13,17 +13,17 @@ class CreateSvyItemTable extends Migration
      */
     public function up()
     {
-        Schema::create('t_svy_item', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            $table->charset = 'utf8';
-            $table->collation = 'utf8_unicode_ci';
-            $table->increments('id');
-            $table->integer('svy_id')->unsigned();
-            $table->smallInteger('svy_type');
-            $table->text('svy_title');
-            $table->text('svy_content')->nullable();
-            $table->timestamps();
-        });
+//        Schema::create('t_svy_item', function (Blueprint $table) {
+//            $table->engine = 'InnoDB';
+//            $table->charset = 'utf8';
+//            $table->collation = 'utf8_unicode_ci';
+//            $table->increments('id');
+//            $table->integer('svy_id')->unsigned();
+//            $table->smallInteger('svy_type');
+//            $table->text('svy_title');
+//            $table->text('svy_content')->nullable();
+//            $table->timestamps();
+//        });
     }
 
     /**

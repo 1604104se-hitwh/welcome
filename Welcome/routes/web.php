@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Hash;
 // ------------------------------------------------------------------------
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('auth.login')->with('infoOut',session('LoginError'));
 })->middleware('loginIndexCheck');
 
 Route::post("/login", "LoginController@login");

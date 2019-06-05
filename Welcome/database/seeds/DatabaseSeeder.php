@@ -30,7 +30,8 @@
                 MajorTableSeeder::class,
                 StudentTableSeeder::class,
                 PostTableSeeder::class,
-                PermissionTableSeeder::class
+                PermissionTableSeeder::class,
+                SysInfoTableSeeder::class
             ]);
             // $this->call(UsersTableSeeder::class);
         }

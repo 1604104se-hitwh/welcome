@@ -19,11 +19,10 @@ class CreateConfigurationTable extends Migration
             $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
             $table->boolean('conf_open_ctrl')->default(true);
-            $table->boolean('conf_svy_open_ctrl')->default(true);
-            $table->boolean('conf_svy_strict_ctrl')->default(true);
+            //$table->boolean('conf_svy_open_ctrl')->default(true);
+            //$table->boolean('conf_svy_strict_ctrl')->default(true);
             $table->boolean('conf_shtl_open_ctrl')->default(true);
             $table->boolean('conf_enrl_open_ctrl')->default(true);
-            $table->timestamps();
         });
     }
 

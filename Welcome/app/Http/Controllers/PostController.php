@@ -16,13 +16,6 @@
 
         public function __construct()
         {
-            if (session("Auth") === "new") {
-                $this->sysType = "新生";
-            } else if (session("Auth") === "old") {
-                $this->sysType = "在校生";
-            } else if (session("Auth") === "admin") {
-                $this->sysType = "管理员";
-            }
 
             $this->showMessages = array();
             $this->middleware(function ($request, $next) { // 加入中间件，获取session
@@ -39,6 +32,14 @@
                         "toURL" => "/stu/posts/" . $post->id,
                         "readed" => $this->unReadPosts->where('id', $post->id)->isEmpty()
                     );
+                }
+
+                if (session("Auth") === "new") {
+                    $this->sysType = "新生";
+                } else if (session("Auth") === "old") {
+                    $this->sysType = "在校生";
+                } else if (session("Auth") === "admin") {
+                    $this->sysType = "管理员";
                 }
                 return $next($request);
             });

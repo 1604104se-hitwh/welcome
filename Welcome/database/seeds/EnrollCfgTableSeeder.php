@@ -13,7 +13,7 @@ class EnrollCfgTableSeeder extends Seeder
     {
         DB::table('t_enroll_cfg')->insert([
             'enrl_begin_time' => '8月23日',
-            'enrl_permission' => true
+            'enrl_permission' => false
         ]);
     }
 }

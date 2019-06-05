@@ -20,7 +20,7 @@ class CreateEnrollCfgTable extends Migration
             $table->increments('id');
             $table->string('enrl_begin_time', 50)->nullable();
             $table->boolean('enrl_permission')->default(false);
-            $table->text('school_info')->nullable();
+            $table->mediumText('enrl_info')->nullable();
         });
     }
 

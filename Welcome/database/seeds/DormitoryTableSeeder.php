@@ -16,7 +16,7 @@ class DormitoryTableSeeder extends Seeder
             'dorm_name' => '一公寓',
             'dorm_position_x' => 122.0816123486,
             'dorm_position_y' => 37.5321437804,
-            'dorm_desc' => '一公寓'
+            'dorm_desc' => '一公寓',
         ]);
         DB::table('t_dormitory')->insert([
             'dorm_tag' => '2',

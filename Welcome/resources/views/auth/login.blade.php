@@ -100,6 +100,11 @@
                         <button type="submit" class="btn btn-block btn-danger" id="adminLogin">登录</button>
                     </form>
                 </div>
+                @if(isset($infoOut))
+                <div class="alert alert-danger ml-2 mr-2">
+                    {{ $infoOut }}
+                </div>
+                @endif
             </div>
         </div>
     </div>

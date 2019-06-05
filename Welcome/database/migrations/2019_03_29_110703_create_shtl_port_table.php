@@ -18,8 +18,8 @@ class CreateShtlPortTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
-            $table->string('port_name', 50)->nullable();
-            $table->text('port_info')->nullable();
+            $table->string('port_name', 50);
+            $table->mediumText('port_info')->nullable();
         });
     }
 

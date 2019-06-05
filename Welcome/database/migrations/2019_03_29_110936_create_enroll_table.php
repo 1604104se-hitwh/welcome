@@ -18,7 +18,7 @@ class CreateEnrollTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
-            $table->string('enrl_title', 100)->nullable();
+            $table->string('enrl_title')->nullable();
             $table->text('enrl_info')->nullable();
             $table->text('enrl_location')->nullable();
             $table->smallInteger('enrl_rank')->nullable();

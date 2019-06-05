@@ -225,7 +225,8 @@
                             <thead>
                             <tr role="row">
                                 <th>用户名</th>
-                                <th>发布时间</th>
+                                <th>所属院系</th>
+                                <th>拥有权限</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -236,6 +237,7 @@
                                 </tr>
                             @else @foreach($adminList as $admin)
                                 <tr role="row">
+                                    <td>{{$admin->adm_name}}</td>
                                     <td>{{$admin->adm_name}}</td>
                                     <td>{{$admin->adm_name}}</td>
                                     <td>
@@ -305,7 +307,7 @@
 <!-- Add Modal-->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
      aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">新建管理员</h5>
@@ -314,23 +316,19 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="py-3">
+                <div class="py-1">
                     <label>输入用户名</label>
-                    <input type="text" class="form-control" id="m_new_admin_name" placeholder="输入用户名"
-                    data-adminid="" required>
+                    <input type="text" class="form-control" name="m_new_admin_name" id="m_new_admin_name" placeholder="输入用户名" required>
                 </div>
-                <div class="py-3">
+                <div class="py-1">
                     <label>输入密码</label>
-                    <input type="password" class="form-control" id="m_new_admin_pass"
-                    data-postid="" required>
+                    <input type="password" class="form-control" name="m_new_admin_pass" id="m_new_admin_pass" placeholder="输入密码" required>
                 </div>
-                <div class="py-3">
+                <div class="py-1">
                     <label>确认密码</label>
-                    <input type="password" class="form-control" id="m_new_admin_pass_confirm"
-                    data-postid="" required>
+                    <input type="password" class="form-control" name="m_new_admin_pass_confirm" id="m_new_admin_pass_confirm" placeholder="确认密码" required>
                 </div>
-                <div id="postModifyEditor" class="mb-4">
-                </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
@@ -352,22 +350,17 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="py-3">
+                <div class="py-1">
                     <label>输入用户名</label>
-                    <input type="text" class="form-control" id="m_admin_name" placeholder="输入用户名"
-                    data-adminid="" required>
+                    <input type="text" class="form-control" name="m_new_admin_name" id="m_new_admin_name" placeholder="输入用户名" required>
                 </div>
-                <div class="py-3">
+                <div class="py-1">
                     <label>输入密码</label>
-                    <input type="password" class="form-control" id="m_admin_pass"
-                    data-postid="" required>
+                    <input type="password" class="form-control" name="m_new_admin_pass" id="m_new_admin_pass" placeholder="输入密码" required>
                 </div>
-                <div class="py-3">
+                <div class="py-1">
                     <label>确认密码</label>
-                    <input type="password" class="form-control" id="m_admin_pass_confirm"
-                    data-postid="" required>
-                </div>
-                <div id="postModifyEditor" class="mb-4">
+                    <input type="password" class="form-control" name="m_new_admin_pass_confirm" id="m_new_admin_pass_confirm" placeholder="确认密码" required>
                 </div>
             </div>
             <div class="modal-footer">
@@ -393,22 +386,6 @@
 
 <!-- Smallpop -->
 <script src="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.js"></script>
-
-
-<!-- Custom scripts for Editor -->
-<script type="text/javascript" src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
-<script type="text/javascript">
-    var E = window.wangEditor;
-    var editor = new E('#postEditor');
-    editor.customConfig.uploadImgShowBase64 = true;
-    editor.customConfig.zIndex = 1;
-    editor.create();
-    var modifyeditor = new E('#postModifyEditor');
-    modifyeditor.customConfig.uploadImgShowBase64 = true;
-    editor.customConfig.zIndex = 1;
-    modifyeditor.create();
-
-</script>
 
 <!-- modify and delete -->
 <script>
@@ -498,7 +475,7 @@
             });
             return;
         }
-        if (adm_password != adm_pass_confirm) {
+        if (adm_password !== adm_pass_confirm) {
             spop({
                 template: "<h4>添加失败</h4>" +
                     "<p>两次输入的密码不相同</p>",
@@ -510,7 +487,6 @@
             });
             return;
         }
-        
         $.ajax({
             async: true,   		//是否为异步请求
             cache: false,  		//是否缓存结果
@@ -522,7 +498,7 @@
             success: function (data) {
                 if (data.code === 200) {
                     spop({
-                        template: "<h4>发布成功</h4>" +
+                        template: "<h4>已添加管理员信息</h4>" +
                             "<p>信息已经更新，刷新页面就可以看到啦</p>",
                         style: 'info',
                         autoclose: 5000,
@@ -600,7 +576,7 @@
         });
     }
 
-    function modifyConfirm() {
+    function modifyAdminCommit() {
         var thisTable = $("#m_admin_name");
         $.ajax({
             async: true,   		//是否为异步请求
