@@ -23,7 +23,6 @@ Route::post("/login", "LoginController@login");
 
 Route::get("/logout", "LoginController@logout");
 
-/* 使用中间件组方式比较灵活 */
 Route::group(['middleware' => ['checkAuth:new']], function () {
     //NEW STUDENT
 
