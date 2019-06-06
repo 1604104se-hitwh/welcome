@@ -22,7 +22,7 @@
                 /* 从所有通知中选择当前登录用户未读的信息 */
                 $showPosts = Post::orderBy('post_timestamp', 'desc')->limit(5)->get();
                 $this->unReadPosts = Post::whereNotIn('id', function ($query) {
-                    $query->select("post_id")->from("t_post_read")->where("stu_id", session("stu_num"));
+                    $query->select("post_id")->from("t_post_read")->where("stu_id", session("id"));
                 })->get();
                 foreach ($showPosts as $post) {
                     $this->showMessages[] = array(
@@ -60,7 +60,7 @@
                 'user' => session('stu_name'), // 用户名
                 'userImg' => "userImg", // 用户头像链接 url(site)
                 'toInformationURL' => "toInformationURL", // 个人信息url
-                'toSettingURL' => "toSettingURL", // 个人设置
+
                 'posts' => $posts, // 所有通知，已读和未读的都包括
                 'toLogoutURL' => "/logout"      // 退出登录
             ]);
@@ -76,7 +76,7 @@
             }
             // 确定已读
             PostRead::firstOrCreate(
-                ['post_id' => $id], ['stu_id' => session('stu_num', 'null')]
+                ['post_id' => $id, 'stu_id' => session('id', 'null')]
             );
             return view('stu.show', [
                 'sysType' => $this->sysType,  // 系统运行模式，新生，在校生，管理员
@@ -89,7 +89,7 @@
                 'user' => session('stu_name'), // 用户名
                 'userImg' => "userImg", // 用户头像链接 url(site)
                 'toInformationURL' => "toInformationURL", // 个人信息url
-                'toSettingURL' => "toSettingURL", // 个人设置
+
                 'post' => $post, // 当前的一个通知
                 'toLogoutURL' => "/logout"      // 退出登录
             ]);
@@ -107,7 +107,6 @@
                 "user" => session("name", "管理员"),
                 "userImg" => "userImg",
                 "toInformationURL" => "toInformationURL", // 个人信息url
-                "toSettingURL" => "toSettingURL", // 个人设置
                 "posts" => $posts,
                 "storePostURL" => "/admin/storePost",
                 "deletePostURL" => "/admin/deletePost",

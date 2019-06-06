@@ -23,7 +23,7 @@ class NavController extends Controller
         $this->middleware(function ($request, $next) { // 加入中间件，获取session
             $showPosts = Post::orderBy('post_timestamp', 'desc')->limit(5)->get();
             $this->unReadPosts = Post::whereNotIn('id', function ($query) {
-                $query->select("post_id")->from("t_post_read")->where("stu_id", session("stu_num"));
+                $query->select("post_id")->from("t_post_read")->where("stu_id", session("id"));
             })->get();
             foreach ($showPosts as $post) {
                 $this->showMessages[] = array(
@@ -61,10 +61,9 @@ class NavController extends Controller
             'appointments' => array(),
             'userImg' => "userImg", // 用户头像链接 url(site)
             'toInfomationURL' => "toInfomationURL", // 个人设置url
-            'toSettingURL' => "toSettingURL", // 个人设置
+
             'stationInfos' => array(), // 到站信息
             'toLogoutURL' => "/logout",      // 退出登录
-            'toSchoolInfoURL' => "toSchoolInfoURL",
         ]);
 
     }

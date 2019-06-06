@@ -53,26 +53,31 @@ Route::group(['middleware' => ['checkAuth:new']], function () {
 /* SENIOR STUDENT*/
 Route::group(['middleware' => ['checkAuth:old']], function () {
     Route::get("/senior", "SeniorController@index");
-    Route::get('/senior/queryClass', 'SeniorController@queryClass');
-    Route::get('/senior/queryDorm', 'SeniorController@queryDorm');
+
     Route::get('/senior/queryCountryFolk', 'SeniorController@queryCountryFolk');
 });
 //ADMIN
-Route::group(['middleware' => ['checkAuth:admin']], function () {
-    Route::get('/admin', 'AdminController@index');
+Route::group(['prefix'=>'admin','middleware' => ['checkAuth:admin']], function () {
+    Route::get('/', 'AdminController@index');
 
-    Route::get('/admin/index', 'AdminController@index');
+    Route::get('index', 'AdminController@index');
 
     /* /admin/posts/{post}会覆盖掉/admin/posts/create , 删去前者*/
-    Route::get('/admin/posts/create', 'PostController@create'); 
+    Route::get('posts/create', 'PostController@create');
 
-    Route::get('/admin/manageSchoolInfo', 'AdminController@manageSchoolInfo');
+    Route::get('manageSchoolInfo', 'AdminController@manageSchoolInfo');
 
-    Route::get('/admin/manageNewsInfo', 'AdminController@manageNewsInfo');
+    Route::get('manageNewsInfo', 'AdminController@manageNewsInfo');
 
-    Route::get('/admin/manageAdminInfo', 'AdminController@manageAdminInfo');
+    Route::get('manageAdminInfo', 'AdminController@manageAdminInfo');
 
-    Route::get('/admin/posts', 'PostController@index');
+    Route::get('posts', 'PostController@index');
+
+    // 管理报道信息
+    Route::get("reportInfo","ReportConfigController@index");
+
+    // 信息核验
+    Route::get("reportCheck","ReportCheckController@index");
 
 });
 
@@ -84,26 +89,45 @@ Route::post('/admin/majorInfoUpload','ImportController@majorExcelImport')
     ->middleware('importAuthCheck:admin');
 
 // School and other Information Import
-Route::group(['middleware' => ['postAuthCheck:admin']], function () {
-    Route::post('/admin/schoolInfoPost', 'ImportController@schoolInfoPost');
+Route::group(['prefix'=>'admin' ,'middleware' => ['postAuthCheck:admin']], function () {
+    Route::post('schoolInfoPost', 'ImportController@schoolInfoPost');
 
-    //管理新生信息
-    Route::post("/admin/storePost", "PostController@storePost");
+    // 管理新生信息
+    Route::post("storePost", "PostController@storePost");
 
-    Route::post("/admin/deletePost", "PostController@deletePost");
+    Route::post("deletePost", "PostController@deletePost");
 
-    Route::post("/admin/getPost", "PostController@getPost");
+    Route::post("getPost", "PostController@getPost");
 
-    Route::post("/admin/modifyPost", "PostController@modifyPost");
+    Route::post("modifyPost", "PostController@modifyPost");
 
-    //管理工作人员信息
-    Route::post("/admin/addAdmin", "AdminController@addAdmin");
+    // 管理工作人员信息
+    Route::post("addAdmin", "AdminController@addAdmin");
 
-    Route::post("/admin/deleteAdmin", "AdminController@deleteAdmin");
+    Route::post("deleteAdmin", "AdminController@deleteAdmin");
 
-    Route::post("/admin/getAdmin", "AdminController@getAdmin");
+    Route::post("getAdmin", "AdminController@getAdmin");
 
-    Route::post("/admin/modifyAdmin", "AdminController@modifyAdmin");
+    Route::post("modifyAdmin", "AdminController@modifyAdmin");
+
+    Route::post("getPermissionList", "AdminController@getPermissionList");
+
+    // 管理报道流程
+    Route::post("storeReportInfo","ReportConfigController@postReportInfo");
+
+    Route::post("getReportInfo","ReportConfigController@getReportInfo");
+
+    Route::post("saveReportInfo","ReportConfigController@saveReportInfo");
+
+    Route::post("deleteReportInfo","ReportConfigController@deleteReportInfo");
+
+    Route::post("saveEnrollConfig","ReportConfigController@saveEnrollConfig");
+
+    // 新生核验部分
+    Route::post("getStudentInfo","ReportCheckController@getStudentInfo");
+
+    Route::post("confirmReportInfo","ReportCheckController@confirmReportInfo");
+
 });
 
 

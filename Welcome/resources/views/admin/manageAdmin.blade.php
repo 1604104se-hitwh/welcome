@@ -177,9 +177,7 @@
                             <a class="dropdown-item" href="{{url($toInformationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
-                            <a class="dropdown-item" href="{{url($toSettingURL)}}">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
-                            </a>
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> 登出
@@ -225,8 +223,7 @@
                             <thead>
                             <tr role="row">
                                 <th>用户名</th>
-                                <th>所属院系</th>
-                                <th>拥有权限</th>
+                                <th>角色</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -238,8 +235,7 @@
                             @else @foreach($adminList as $admin)
                                 <tr role="row">
                                     <td>{{$admin->adm_name}}</td>
-                                    <td>{{$admin->adm_name}}</td>
-                                    <td>{{$admin->adm_name}}</td>
+                                    <td>{{$admin->permission}}</td>
                                     <td>
                                         <button type="button" class="m-1 btn btn-info modifyAdmin"
                                                 data-target="{{strval($admin->id)}}">编辑
@@ -249,11 +245,11 @@
                                         </button>
                                     </td>
                                 </tr>
-                            @endforeach                
-                            {{-- {{ $adminList->links() }} --}}
+                            @endforeach
                             @endif
                             </tbody>
                         </table>
+                        {{ $adminList->links() }}
                     </div>
                 </div>
 
@@ -318,17 +314,23 @@
             <div class="modal-body">
                 <div class="py-1">
                     <label>输入用户名</label>
-                    <input type="text" class="form-control" name="m_new_admin_name" id="m_new_admin_name" placeholder="输入用户名" required>
+                    <input type="text" class="form-control" id="m_new_admin_name" placeholder="输入用户名" required>
                 </div>
                 <div class="py-1">
                     <label>输入密码</label>
-                    <input type="password" class="form-control" name="m_new_admin_pass" id="m_new_admin_pass" placeholder="输入密码" required>
+                    <input type="password" class="form-control" id="m_new_admin_pass" placeholder="输入密码" required>
                 </div>
                 <div class="py-1">
                     <label>确认密码</label>
-                    <input type="password" class="form-control" name="m_new_admin_pass_confirm" id="m_new_admin_pass_confirm" placeholder="确认密码" required>
+                    <input type="password" class="form-control" id="m_new_admin_pass_confirm" placeholder="确认密码"
+                           required>
                 </div>
-
+                <div class="py-1">
+                    <label>角色</label>
+                    <select class="form-control" id="m_new_admin_roles" required>
+                        <option data-permissionID="1">暂无</option>
+                    </select>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
@@ -352,15 +354,21 @@
             <div class="modal-body">
                 <div class="py-1">
                     <label>输入用户名</label>
-                    <input type="text" class="form-control" name="m_new_admin_name" id="m_new_admin_name" placeholder="输入用户名" required>
+                    <input type="text" class="form-control" id="m_admin_name" placeholder="输入用户名" required>
                 </div>
                 <div class="py-1">
                     <label>输入密码</label>
-                    <input type="password" class="form-control" name="m_new_admin_pass" id="m_new_admin_pass" placeholder="输入密码" required>
+                    <input type="password" class="form-control" id="m_admin_pass" placeholder="输入密码" required>
                 </div>
                 <div class="py-1">
                     <label>确认密码</label>
-                    <input type="password" class="form-control" name="m_new_admin_pass_confirm" id="m_new_admin_pass_confirm" placeholder="确认密码" required>
+                    <input type="password" class="form-control" id="m_admin_pass_confirm" placeholder="确认密码" required>
+                </div>
+                <div class="py-1">
+                    <label>角色</label>
+                    <select class="form-control" id="m_admin_roles" required>
+                        <option data-permissionID="1">暂无</option>
+                    </select>
                 </div>
             </div>
             <div class="modal-footer">
@@ -378,6 +386,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js"
         integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
+        integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.min.js"
         integrity="sha256-mc3T6DNzcA7wvZn8UVCZZSHGUzsuki15ci/3gxoLBnw=" crossorigin="anonymous"></script>
 
@@ -395,15 +405,11 @@
         }
     });
 
-    $(".modifyAdmin").click(function () {
-        modifyAdmin($(this).data("target"));
-    });
-
     $(".deleteAdmin").click(function () {
         var thisTable = $(this);
         Swal.fire({
             title: '确定要删除吗',
-            text: "你将要删除管理员\" " + $(this).data("target") + " \"",
+            text: "你将要删除管理员\" " + $(this).parent().parent().find('td:first').text() + " \"",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -453,16 +459,65 @@
             }
         })
     });
-</script>
 
-<script>
     function addAdmin() {
-        $("#addModal").modal('show');
+        // 请求权限信息
+        // 清空下拉框
+        $("#m_new_admin_roles").empty();
+        $("#m_new_admin_name").val('');
+        $("#m_new_admin_pass").val('');
+        $("#m_new_admin_pass_confirm").val('');
+        $.ajax({
+            async: true,   		//是否为异步请求
+            cache: false,  		//是否缓存结果
+            type: "POST", 		//请求方式
+            dataType: "jsonp", 	//服务器返回的数据是什么类型
+            url: "{{url($getPermissionListURL)}}",
+            success: function (data) {
+                if (data.code === 200) {
+                    let rolesModel = $("#m_new_admin_roles");
+                    let getData = data.data;
+                    // 获取数据
+                    getData.forEach(function (val) {
+                        rolesModel.append("<option data-permissionID='" + val.id + "'>" + val.pms_name + "</option>");
+                    });
+                    $("#addModal").modal('show');
+                } else {
+                    spop({
+                        template: "<h4>信息获取失败（" + data.code + "）</h4>" +
+                            "<p>" + data.data + "</p>",
+                        style: 'warning',
+                        autoclose: false,
+                        position: 'bottom-right',
+                        icon: true,
+                        group: "addAdmin",
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // 状态码
+                console.log("status:" + XMLHttpRequest.status + "\n");
+                // 状态
+                console.log("readyState:" + XMLHttpRequest.readyState + "\n");
+                // 错误信息
+                console.log("textStatus:" + textStatus + "\n");
+                spop({
+                    template: "信息获取失败（" + XMLHttpRequest.status + "）",
+                    style: 'error',
+                    autoclose: false,
+                    position: 'bottom-right',
+                    icon: true,
+                    group: "addAdmin",
+                });
+            }
+        });
     }
+
     function addAdminCommit() {
         var adm_name = $("#m_new_admin_name").val();
         var adm_password = $("#m_new_admin_pass").val();
         var adm_pass_confirm = $("#m_new_admin_pass_confirm").val();
+        var adm_roles = $("#m_new_admin_roles option:selected").attr('data-permissionID');
         if (adm_password === "" || adm_name === "") {
             spop({
                 template: "<h4>添加失败</h4>" +
@@ -471,7 +526,7 @@
                 autoclose: 5000,
                 position: 'bottom-right',
                 icon: true,
-                group: "submitPost",
+                group: "addAdminCommit",
             });
             return;
         }
@@ -483,17 +538,18 @@
                 autoclose: 5000,
                 position: 'bottom-right',
                 icon: true,
-                group: "submitPost",
+                group: "addAdminCommit",
             });
             return;
         }
+        // 开始提交
         $.ajax({
             async: true,   		//是否为异步请求
             cache: false,  		//是否缓存结果
             type: "POST", 		//请求方式
             dataType: "jsonp", 	//服务器返回的数据是什么类型
             url: "{{url($addAdminURL)}}",
-            data: {"adm_name": adm_name, "adm_password": adm_password},
+            data: {"adm_name": adm_name, "adm_password": adm_password, "adm_permission": adm_roles},
 
             success: function (data) {
                 if (data.code === 200) {
@@ -504,8 +560,9 @@
                         autoclose: 5000,
                         position: 'bottom-right',
                         icon: true,
-                        group: "submitPost",
+                        group: "addAdminCommit",
                     });
+                    $("#addModal").modal('hide');
                 } else {
                     spop({
                         template: "<h4>提交失败（" + data.code + "）</h4>" +
@@ -514,7 +571,7 @@
                         autoclose: false,
                         position: 'bottom-right',
                         icon: true,
-                        group: "submitPost",
+                        group: "addAdminCommit",
                     });
                 }
             },
@@ -531,33 +588,92 @@
                     autoclose: false,
                     position: 'bottom-right',
                     icon: true,
-                    group: "submitPost",
+                    group: "addAdminCommit",
                 });
             }
         });
     }
-    function modifyAdmin(id) {
-        // 获取信息
+
+    let modifyID = 0;
+
+    $(".modifyAdmin").click(function () {
+        // 获取管理员id
+        modifyID = $(this).data("target");
+        // 请求管理员信息
+        // 清空下拉框
+        $("#m_admin_roles").empty();
+        $("#m_admin_name").val('');
+        $("#m_admin_pass").val('');
+        $("#m_admin_pass_confirm").val('');
         $.ajax({
-            async: true,   		//是否为异步请求
+            async: true,   	//是否为异步请求
             cache: false,  		//是否缓存结果
             type: "POST", 		//请求方式
-            dataType: "json", 	//服务器返回的数据是什么类型
+            dataType: "jsonp", 	//服务器返回的数据是什么类型
+            data: {"requestID": modifyID},
             url: "{{url($getAdminURL)}}",
-            data: {"requestID": id},
             success: function (data) {
                 if (data.code === 200) {
-                    var input = $("#m_admin_name");
-                    input.val(data.data.name);
-                    input.data("adminid", id);
-                    //modifyeditor.txt.html(data.data.context);
-                    $("#modifyModal").modal('show');
+                    $("#m_admin_name").val(data.data.name);
+                    let permissionID = data.data.permission;
+                    // 请求权限信息
+                    $.ajax({
+                        async: true,   	//是否为异步请求
+                        cache: false,  		//是否缓存结果
+                        type: "POST", 		//请求方式
+                        dataType: "jsonp", 	//服务器返回的数据是什么类型
+                        url: "{{url($getPermissionListURL)}}",
+                        success: function (data) {
+                            if (data.code === 200) {
+                                let rolesModel = $("#m_admin_roles");
+                                let getData = data.data;
+
+                                // 获取数据
+                                getData.forEach(function (val) {
+                                    if (val.id === permissionID)
+                                        rolesModel.append("<option data-permissionID='" + val.id + "' selected>" + val.pms_name + "</option>");
+                                    else
+                                        rolesModel.append("<option data-permissionID='" + val.id + "'>" + val.pms_name + "</option>");
+                                });
+                            } else {
+                                spop({
+                                    template: "<h4>信息获取失败（" + data.code + "）</h4>" +
+                                        "<p>" + data.data + "</p>",
+                                    style: 'warning',
+                                    autoclose: false,
+                                    position: 'bottom-right',
+                                    icon: true,
+                                    group: "addAdminCommit",
+                                });
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            // 状态码
+                            console.log("status:" + XMLHttpRequest.status + "\n");
+                            // 状态
+                            console.log("readyState:" + XMLHttpRequest.readyState + "\n");
+                            // 错误信息
+                            console.log("textStatus:" + textStatus + "\n");
+                            spop({
+                                template: "信息获取失败（" + XMLHttpRequest.status + "）",
+                                style: 'error',
+                                autoclose: false,
+                                position: 'bottom-right',
+                                icon: true,
+                                group: "addAdminCommit",
+                            });
+                        }
+                    });
                 } else {
-                    Swal.fire(
-                        '获取失败（' + data.code + '）',
-                        data.data,
-                        'warning'
-                    );
+                    spop({
+                        template: "<h4>信息获取失败（" + data.code + "）</h4>" +
+                            "<p>" + data.data + "</p>",
+                        style: 'warning',
+                        autoclose: false,
+                        position: 'bottom-right',
+                        icon: true,
+                        group: "addAdminCommit",
+                    });
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -567,17 +683,49 @@
                 console.log("readyState:" + XMLHttpRequest.readyState + "\n");
                 // 错误信息
                 console.log("textStatus:" + textStatus + "\n");
-                Swal.fire(
-                    '获取失败（' + XMLHttpRequest.status + '）',
-                    textStatus,
-                    'error'
-                );
+                spop({
+                    template: "信息获取失败（" + XMLHttpRequest.status + "）",
+                    style: 'error',
+                    autoclose: false,
+                    position: 'bottom-right',
+                    icon: true,
+                    group: "addAdminCommit",
+                });
             }
         });
-    }
+
+        $('#modifyModal').modal('show');
+    });
 
     function modifyAdminCommit() {
-        var thisTable = $("#m_admin_name");
+        var adm_name = $("#m_admin_name").val();
+        var adm_password = $("#m_admin_pass").val();
+        var adm_pass_confirm = $("#m_admin_pass_confirm").val();
+        var adm_roles = $("#m_admin_roles option:selected").attr('data-permissionID');
+        if (adm_password === "" || adm_name === "") {
+            spop({
+                template: "<h4>修改失败</h4>" +
+                    "<p>用户名和密码都不可为空哦</p>",
+                style: 'warning',
+                autoclose: 5000,
+                position: 'bottom-right',
+                icon: true,
+                group: "modifyAdminCommit",
+            });
+            return;
+        }
+        if (adm_password !== adm_pass_confirm) {
+            spop({
+                template: "<h4>修改失败</h4>" +
+                    "<p>两次输入的密码不相同</p>",
+                style: 'warning',
+                autoclose: 5000,
+                position: 'bottom-right',
+                icon: true,
+                group: "modifyAdminCommit",
+            });
+            return;
+        }
         $.ajax({
             async: true,   		//是否为异步请求
             cache: false,  		//是否缓存结果
@@ -585,27 +733,34 @@
             dataType: "jsonp", 	//服务器返回的数据是什么类型
             url: "{{url($modifyAdminURL)}}",
             data: {
-                "modifyID": thisTable.data("adminid"),
-                "name": thisTable.val()
+                "modifyID": modifyID,
+                "adm_name": adm_name,
+                "adm_password": adm_password,
+                "adm_permission": adm_roles
             },
+
             success: function (data) {
                 if (data.code === 200) {
-                    Swal.fire({
-                        title: '修改完成',
-                        text: '完成了修改',
-                        type: 'success',
-                        onClose: function () {
-                            window.location.reload();
-                        }
+                    spop({
+                        template: "<h4>已修改管理员信息</h4>" +
+                            "<p>信息已经更新，刷新页面就可以看到啦</p>",
+                        style: 'info',
+                        autoclose: 5000,
+                        position: 'bottom-right',
+                        icon: true,
+                        group: "modifyAdminCommit",
                     });
-                    $("#modifyModal").modal('hide');
-
+                    $('#modifyModal').modal('hide');
                 } else {
-                    Swal.fire(
-                        '修改失败（' + data.code + '）',
-                        data.data,
-                        'warning'
-                    );
+                    spop({
+                        template: "<h4>提交失败（" + data.code + "）</h4>" +
+                            "<p>" + data.data + "</p>",
+                        style: 'warning',
+                        autoclose: false,
+                        position: 'bottom-right',
+                        icon: true,
+                        group: "modifyAdminCommit",
+                    });
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -615,14 +770,18 @@
                 console.log("readyState:" + XMLHttpRequest.readyState + "\n");
                 // 错误信息
                 console.log("textStatus:" + textStatus + "\n");
-                Swal.fire(
-                    '修改失败（' + XMLHttpRequest.status + '）',
-                    textStatus,
-                    'error'
-                );
+                spop({
+                    template: "保存失败（" + XMLHttpRequest.status + "）",
+                    style: 'error',
+                    autoclose: false,
+                    position: 'bottom-right',
+                    icon: true,
+                    group: "modifyAdminCommit",
+                });
             }
         });
     }
+
 </script>
 </body>
 
