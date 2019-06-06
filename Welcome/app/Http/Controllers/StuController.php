@@ -32,7 +32,7 @@
                 $this->showMessages = array();
                 $showPosts = Post::orderBy('post_timestamp','desc')->limit(5)->get();
                 $this->unReadPosts = Post::whereNotIn('id',function($query){
-                    $query->select("post_id")->from("t_post_read")->where("stu_id", session('stu_num'));
+                    $query->select("post_id")->from("t_post_read")->where("stu_id", session('id'));
                 })->get();
                 foreach ($showPosts as $post) {
                     $this->showMessages[] = array(
@@ -94,8 +94,8 @@
             if (0 != $restNumber = $class_male_num + $class_female_num - $top4_num)
                 $classmates_addr_prov_cnt['其他'] = $restNumber;
             /* 报到配置信息 */
-            $enrollcfg = EnrollCfg::first();
-            $enrollcfg->school_info = SysInfo::first('school_info')->school_info;
+            $enrollcfg = EnrollCfg::find(1);
+            $enrollcfg->school_info = SysInfo::find(1,'school_info')->school_info;
             $enrollTime = ($enrollcfg) ? $enrollcfg['enrl_begin_time'] : "暂无信息";
             /*室友统计 */
             // 切割宿舍信息
@@ -144,12 +144,11 @@
                 'user' => session('stu_name'), // 用户名
                 'userImg' => "userImg", // 用户头像链接 url(site)
                 'toInformationURL' => "toInformationURL", // 更多信息url
-                'toSettingURL' => "toSettingURL", // 个人设置
+
                 'stuDept' => $major,
                 'stuDormitory' => session('stu_dorm_str'),
                 'stuReportTime' => $enrollTime, // 报到时间
                 'schoolInfo' => $enrollcfg->school_info, // 学校信息 可以html
-                'toSchoolInfoURL' => "toSchoolInfoURL",
                 'toAllStuURL' => "/stu/queryClass", // 所有同学信息url
                 'dormStus' => $roommates_array, // 室友
 
@@ -182,8 +181,8 @@
                     ->getInfo($classmate->stu_cid)['address'];
             }
             /* 报到配置信息 */
-            $enrollcfg = EnrollCfg::all()->first();
-            $enrollTime = (EnrollCfg::all()->first()) ?
+            $enrollcfg = EnrollCfg::find(1);
+            $enrollTime = (EnrollCfg::find(1)) ?
                 $enrollcfg['enrl_begin_time'] : "暂无信息";
             /* 获取院系 */
             if(session()->exists('stu_num')){
@@ -212,7 +211,7 @@
                 'user' => session('stu_name'), // 用户名
                 'userImg' => "userImg", // 用户头像链接 url(site)
                 'toInformationURL' => "toInformationURL", // 个人信息url
-                'toSettingURL' => "toSettingURL", // 个人设置
+
                 'stuDept' => $major,
                 'stuDormitory' => session('stu_dorm_str'),
                 'stuReportTime' => $enrollTime,
@@ -249,8 +248,8 @@
             ])->first();
 
             /* 报到配置信息 */
-            $enrollcfg = EnrollCfg::all()->first();
-            $enrollTime = (EnrollCfg::all()->first()) ?
+            $enrollcfg = EnrollCfg::find(1);
+            $enrollTime = (EnrollCfg::find(1)) ?
                 $enrollcfg['enrl_begin_time'] : "暂无信息";
             /* 获取院系 */
             if(session()->exists('stu_num')){
@@ -280,7 +279,7 @@
                 'user' => session('stu_name'), // 用户名
                 'userImg' => "userImg", // 用户头像链接 url(site)
                 'toInformationURL' => "toInformationURL", // 个人信息url
-                'toSettingURL' => "toSettingURL", // 个人设置
+
                 'stuDept' => $major,
                 'stuDormitory' => session('stu_dorm_str'), // 宿舍
                 'stuReportTime' => $enrollTime, // 报到时间
@@ -332,7 +331,6 @@
                 'user' => session('stu_name'), // 用户名
                 'userImg' => "userImg", // 用户头像链接 url(site)
                 'toInformationURL' => "toInformationURL", // 个人信息url
-                'toSettingURL' => "toSettingURL", // 个人设置url
                 'IDnumber' => session("stu_cid"), // 身份证号码
                 'stuLocal' => $cid_res['address'], // 识别地区
                 'stuPreSchool' => $fromSchool, // 毕业院校

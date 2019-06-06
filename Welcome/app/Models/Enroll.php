@@ -30,4 +30,8 @@ class Enroll extends Model
     public $timestamps = false;
     //设置时间戳格式为Unix
     protected $dateFormat = 'U';
+
+    protected $fillable = [
+        'enrl_title','enrl_info','enrl_location','enrl_rank'
+    ];
 }

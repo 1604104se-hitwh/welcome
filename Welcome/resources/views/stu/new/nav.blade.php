@@ -156,7 +156,7 @@
                             <i class="fas fa-envelope fa-fw"></i>
                             <!-- Counter - Messages -->
                             @if($messages['unreadNum'] > 0)
-                            <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
+                                <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
                             @endif
                         </a>
                         <!-- Dropdown - Messages -->
@@ -202,9 +202,7 @@
                             <a class="dropdown-item" href="{{url($toInfomationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
-                            <a class="dropdown-item" href="{{url($toSettingURL)}}">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
-                            </a>
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> 登出
@@ -246,39 +244,38 @@
 
                     <!-- Infomation Card report time -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-warning shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报到时间
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报到时间
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuReportTime}}</div>
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuReportTime}}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                    <div class="col-auto">
+                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
 
                 <!-- Content Column -->
                 <div class="card-columns">
                     <div class="mb-4">
                         @if(count($stationInfos)==0) {{-- 还没有信息 --}}
-                            <p>还没有信息</p>
+                        <p>还没有信息</p>
                         @else
                             @foreach($stationInfos as $stationInfo)
-                            <div class="card mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">{{$stationInfo->port_name}}</h6>
+                                <div class="card mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">{{$stationInfo->port_name}}</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        {{ $stationInfo->port_info }}
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    {{ $stationInfo->port_info }}
-                                    <a target="_blank" rel="nofollow" href="{{url($toSchoolInfoURL)}}">更多介绍 &rarr;</a>
-                                </div>
-                            </div>
                             @endforeach
                         @endif
                     </div>
@@ -290,6 +287,12 @@
                             </div>
                             <div class="card-body">
                                 <div class="input-group">
+                                    <select class="custom-select" id="book_station">
+                                        <option selected>选择站点</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
                                     <select class="custom-select" id="book_date">
                                         <option selected>选择日期</option>
                                         <option value="1">One</option>
@@ -302,40 +305,34 @@
                                         <option value="2">Two</option>
                                         <option value="3">Three</option>
                                     </select>
-                                    <select class="custom-select" id="book_station">
-                                        <option selected>选择站点</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
                                     <div class="input-group-append">
-                                        <button id="submit" class="btn btn-outline-secondary" type="button">提交预约</button>
+                                        <button id="submit" class="btn btn-outline-secondary" type="button">提交预约
+                                        </button>
                                     </div>
-
-                                    <table class="table table-bordered" style="margin-top:20px;">
-                                        <thead>
-                                        <tr role="row">
-                                            <th>预约时间</th>
-                                            <th>站点</th>
-                                            <th>操作</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @if(count($appointments)==0) {{-- 还没有信息 --}}
-                                        <tr role="row">
-                                            <td colspan="4">还没有预约</td>
-                                        </tr>
-                                        @else @foreach($appointments as $appointment)
-                                            <tr role="row">
-                                                <td>{{$appointment->time}}</td>
-                                                <td>{{$appointment->station}}</td>
-                                                <td><a href="{{$delpage}}">删除预约</a></td>
-                                            </tr>
-                                        @endforeach @endif
-                                        </tbody>
-                                    </table>
-
                                 </div>
+
+                                <table class="table table-bordered" style="margin-top:20px;">
+                                    <thead>
+                                    <tr role="row">
+                                        <th>预约时间</th>
+                                        <th>站点</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @if(count($appointments)==0) {{-- 还没有信息 --}}
+                                    <tr role="row">
+                                        <td colspan="4">还没有预约</td>
+                                    </tr>
+                                    @else @foreach($appointments as $appointment)
+                                        <tr role="row">
+                                            <td>{{$appointment->time}}</td>
+                                            <td>{{$appointment->station}}</td>
+                                            <td><a href="{{$delpage}}">删除预约</a></td>
+                                        </tr>
+                                    @endforeach @endif
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -394,26 +391,28 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js"
         integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
+        integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-    $("#submit").click(function(){
-        $.post(
-            "/path/to",
-            {
-                "book_date": $("#book_date").val(),
-                "book_time": $("#book_time").val(),
-                "book_station": $("#book_station").val(),
-            },
-            function (res) {
-                if (res) {
-                    alert("提交成功")
+    $(document).ready(function () {
+        $("#submit").click(function () {
+            $.post(
+                "/path/to",
+                {
+                    "book_date": $("#book_date").val(),
+                    "book_time": $("#book_time").val(),
+                    "book_station": $("#book_station").val(),
+                },
+                function (res) {
+                    if (res) {
+                        alert("提交成功")
+                    }
                 }
-            }
-        );
+            );
+        });
     });
-});
 </script>
 
 </body>

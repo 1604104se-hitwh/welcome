@@ -177,9 +177,7 @@
                             <a class="dropdown-item" href="{{url($toInformationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
-                            <a class="dropdown-item" href="{{url($toSettingURL)}}">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
-                            </a>
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> 登出
@@ -197,8 +195,6 @@
 
 
                 <!-- Content Row -->
-
-
                 <div class="card mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">新建通知</h6>
@@ -240,7 +236,7 @@
                                     <td>{{$post->post_timestamp}}</td>
                                     <td>
                                         <button type="button" class="m-1 btn btn-info modifyPost"
-                                                data-target="{{strval($post->id)}}">修改
+                                                data-target="{{strval($post->id)}}"> 修改
                                         </button>
                                         <button type="button" class="m-1 btn btn-danger deletePost"
                                                 data-target="{{strval($post->id)}}" data-title="{{$post->post_title}}">
@@ -248,11 +244,11 @@
                                         </button>
                                     </td>
                                 </tr>
-                            @endforeach                
-                            {{ $posts->links() }}
+                            @endforeach
                             @endif
                             </tbody>
                         </table>
+                        {{ $posts->links() }}
                     </div>
                 </div>
 
@@ -304,8 +300,7 @@
 </div>
 
 <!-- Change notification Modal -->
-<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-     aria-hidden="true">
+<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -341,6 +336,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js"
         integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
+        integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.min.js"
         integrity="sha256-mc3T6DNzcA7wvZn8UVCZZSHGUzsuki15ci/3gxoLBnw=" crossorigin="anonymous"></script>
 

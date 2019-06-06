@@ -163,7 +163,7 @@
                             <i class="fas fa-envelope fa-fw"></i>
                             <!-- Counter - Messages -->
                             @if($messages['unreadNum'] > 0)
-                            <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
+                                <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
                             @endif
                         </a>
                         <!-- Dropdown - Messages -->
@@ -209,9 +209,7 @@
                             <a class="dropdown-item" href="{{url($toInfomationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
-                            <a class="dropdown-item" href="{{url($toSettingURL)}}">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
-                            </a>
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> 登出
@@ -271,19 +269,20 @@
                 </div>
 
                 <!-- Content Column -->
-                <div class="card-columns">
+                <div class="">
                     <div class="mb-4">
-                        @if(count($enrollInfos)==0) {{-- 还没有信息 --}}
+                        @if(count($reportInfoLists)==0) {{-- 还没有信息 --}}
                         <p>还没有信息</p>
                         @else
-                            @foreach($enrollInfos as $enrollInfo)
+                            @foreach($reportInfoLists as $reportInfoList)
                                 <div class="card mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">{{$enrollInfo->enrl_title}}</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">{{$reportInfoList->enrl_title}}</h6>
                                     </div>
                                     <div class="card-body">
-                                        {{ $enrollInfo->enrl_info }}
-                                        <div style="width: 100%;height: 380px;" id="container{{$enrollInfo->id}}"></div>
+                                        {{ $reportInfoList->enrl_info }}
+                                        <div style="width: 100%;height: 380px;"
+                                             id="container{{$reportInfoList->id}}"></div>
                                     </div>
                                 </div>
                             @endforeach
@@ -344,23 +343,25 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js"
         integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
+        integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script type="text/javascript"
         src="https://webapi.amap.com/maps?v=1.4.13&key=0a4d80176be0dde936743e7e03a5f237"></script>
 
 <script type="text/javascript">
-    @foreach($enrollInfos as $enrollInfo)
-        var map = new AMap.Map('container{{$enrollInfo->id}}', {
-                resizeEnable: true,
-                center: [122.083199, 37.534235],
-                zoom: 15
-            });
-        var marker = new AMap.Marker({
-            position: {{json_encode($enrollInfo->PX)}},
-            title: '{{$enrollInfo->enrl_title}}',
+            @foreach($reportInfoLists as $reportInfoList)
+    var map{{$reportInfoList->id}} = new AMap.Map('container{{$reportInfoList->id}}', {
+            resizeEnable: true,
+            zoom: 16
         });
-        map.add(marker);
+    var marker{{$reportInfoList->id}} = new AMap.Marker({
+        position: {{$reportInfoList->enrl_location}},
+        title: '{{$reportInfoList->enrl_title}}',
+    });
+    map{{$reportInfoList->id}}.add(marker{{$reportInfoList->id}});
+    map{{$reportInfoList->id}}.setCenter({{$reportInfoList->enrl_location}});
     @endforeach
 </script>
 

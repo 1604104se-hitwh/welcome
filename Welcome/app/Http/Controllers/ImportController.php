@@ -126,7 +126,7 @@ class ImportController extends Controller
     public function schoolInfoPost(Request $request) {
         try{
             DB::beginTransaction();
-            $enrollcfg = SysInfo::find('school_info');
+            $enrollcfg = SysInfo::find(1);
             if($enrollcfg){
                 $enrollcfg->school_info = $request->post('schoolInfo');
                 $enrollcfg->save();

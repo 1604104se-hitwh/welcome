@@ -174,9 +174,7 @@
                             <a class="dropdown-item" href="{{url($toInformationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
-                            <a class="dropdown-item" href="{{url($toSettingURL)}}">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
-                            </a>
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> 登出
@@ -387,6 +385,8 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
+        integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js"
         integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
         crossorigin="anonymous"></script>
@@ -438,7 +438,7 @@
                 } else {
                     spop({
                         template: "<h4>保存失败（" + data.code + "）</h4>" +
-                            "<p>"+data.data+"</p>",
+                            "<p>" + data.data + "</p>",
                         style: 'warning',
                         autoclose: false,
                         position: 'bottom-right',
@@ -506,7 +506,7 @@
                 } else {
                     spop({
                         template: "<h4>保存失败（" + data.code + "）</h4>" +
-                            "<p>"+data.data+"</p>",
+                            "<p>" + data.data + "</p>",
                         style: 'warning',
                         autoclose: false,
                         position: 'bottom-right',

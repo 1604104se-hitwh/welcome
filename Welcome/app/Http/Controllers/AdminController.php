@@ -39,8 +39,8 @@
                 ["stu_status", "CURRENT"]
             ])->count();
             // 报到配置信息
-            $enrollcfg = EnrollCfg::first();
-            $enrollcfg->school_info = SysInfo::first('school_info')->school_info;
+            $enrollcfg = EnrollCfg::find(1);
+            $enrollcfg->school_info = SysInfo::find(1,'school_info')->school_info;
             $enrollTime = ($enrollcfg) ? $enrollcfg['enrl_begin_time'] : "暂无信息";
             // 院系信息统计
             $deptInfos = Department::all();
@@ -105,7 +105,7 @@
                 'user' => session("name"), // 用户名
                 'userImg' => "userImg",// 用户头像链接 url(site)
                 'toInformationURL' => "toInformationURL", // 更多消息url
-                'toSettingURL' => "toSettingURL", // 个人设置
+
                 'newStuNumber' => $res, // 新生人数
                 'oldStuNumber' => $current, // 在校生人数
                 'hasReportNumber' => $enroll, // 已报到人数
@@ -137,8 +137,8 @@
                 ["stu_status", "CURRENT"]
             ])->count();
             // 报到配置
-            $enrollcfg = EnrollCfg::first();
-            $enrollcfg->school_info = SysInfo::first('school_info')->school_info;
+            $enrollcfg = EnrollCfg::find(1);
+            $enrollcfg->school_info = SysInfo::find(1,'school_info')->school_info;
             $enrollTime = ($enrollcfg) ? $enrollcfg['enrl_begin_time'] : "暂无信息";
             // 专业信息
             $majorInfos = Major::orderBy('major_num', 'asc')->get();
@@ -148,7 +148,7 @@
                 'user' => session("name"), // 用户名
                 'userImg' => "userImg",// 用户头像链接 url(site)
                 'toInformationURL' => "toInformationURL", // 个人设置url
-                'toSettingURL' => "toSettingURL", // 个人设置
+
                 'newStuNumber' => $res, // 新生人数
                 'oldStuNumber' => $current, // 在校生人数
                 'hasReportNumber' => $enroll, // 已报到人数
@@ -174,7 +174,7 @@
             $current = Students::where([
                 ["stu_status", "CURRENT"]
             ])->count();
-            $enrollcfg = EnrollCfg::all()->first();
+            $enrollcfg = EnrollCfg::find(1);
             $enrollTime = ($enrollcfg) ? $enrollcfg['enrl_begin_time'] : "暂无信息";
             /* 按照院系显示院系人数 */
             // 院系信息统计
@@ -212,7 +212,7 @@
                 'user' => session("name"), // 用户名
                 'userImg' => "userImg",// 用户头像链接 url(site)
                 'toInformationURL' => "toInformationURL", // 个人设置url
-                'toSettingURL' => "toSettingURL", // 个人设置
+
                 'newStuNumber' => $res, // 新生人数
                 'oldStuNumber' => $current, // 在校生人数
                 'hasReportNumber' => $enroll, // 已报到人数
@@ -228,18 +228,24 @@
         public function manageAdminInfo()
         {
             $adminList = Admin::paginate(10);
+            foreach ($adminList as $adminlist){
+                $permissionName = Permission::where('id',$adminlist->pms_id)->first('pms_name');
+                if($permissionName){
+                    $adminlist->permission = $permissionName->pms_name;
+                }
+            }
             $adminTotal = count($adminList);
             return view('admin.manageAdmin', [
                 'sysType' => "管理员",
                 'user' => session("name"),
                 'userImg' => "userImg",
                 'toInformationURL' => "toInformationURL",
-                'toSettingURL' => "toSettingURL",
                 'adminTotal' => $adminTotal,
                 'adminList' => $adminList,
                 'getAdminURL' => '/admin/getAdmin',
                 'modifyAdminURL' => '/admin/modifyAdmin',
                 'deleteAdminURL' => '/admin/deleteAdmin',
+                'getPermissionListURL'=> '/admin/getPermissionList',
                 'addAdminURL' => '/admin/addAdmin',
                 'toLogoutURL' => "/logout",      // 退出登录
             ]);
@@ -251,11 +257,20 @@
             if (!$request->ajax()) {
                 return back();
             }
-            if($request->post("adm_name")===""||$request->post("adm_password")===""){
+            if(!$request->has(["adm_name","adm_password","adm_permission"])){
                 $array=array(
                     "code" => 401,
                     "msg" => "Missing parameters!",
                     "data" => "缺失参数",
+                );
+                return response()->jsonp($request->input('callback'),$array);
+            }
+
+            if(!Permission::where('id',$request->post("adm_permission"))->first()){
+                $array=array(
+                    "code" => 403,
+                    "msg" => "Forbidden Permission",
+                    "data" => "非法权限",
                 );
                 return response()->jsonp($request->input('callback'),$array);
             }
@@ -271,7 +286,8 @@
             try{
                 $admin = new Admin();
                 $admin->adm_name = $request->post("adm_name");
-                $admin->adm_password = $request->post("adm_password");
+                $admin->adm_password = bcrypt($request->post("adm_password"));
+                $admin->pms_id = $request->post("adm_permission");
                 $admin->save();
                 $array=array(
                     "code" => 200,
@@ -311,17 +327,19 @@
             return response()->jsonp($request->input('callback'), $array);
         }
 
+        // 管理员设定-获取管理员信息
         public function getAdmin(Request $request)
         {
             if ($request->has('requestID')) {
                 $id = $request->post('requestID');
-                //$get = Admin::find($id);
-                if (1) {
+                $get = Admin::find($id);
+                if ($get) {
                     $array = array(
                         "code" => 200,
                         "msg" => "Data get successfully!",
                         "data" => array(
-                            "name" => '$get->adm_name'
+                            "name" => $get->adm_name,
+                            "permission" => $get->pms_id,
                         )
                     );
                 } else {
@@ -341,20 +359,46 @@
             return response()->jsonp($request->input('callback'), $array);
         }
 
+        public function getPermissionList(Request $request){
+            $get = Permission::all('id','pms_name');
+            $array = array(
+                "code" => 200,
+                "msg" => "Data get successfully!",
+                "data" => $get
+            );
+            return response()->jsonp($request->input('callback'), $array);
+        }
+
+        // 管理员设定-修改管理员信息
         public function modifyAdmin(Request $request)
         {
-            if ($request->has(['modifyID', 'title', 'context', 'readAgain'])) {
+            if ($request->has(['modifyID', 'adm_name', 'adm_password', 'adm_permission'])) {
                 $id = $request->post('modifyID');
-                $get = Post::find($id);
+                $get = Admin::find($id);
                 if ($get) {
-                    $get->post_title = $request->post('title');
-                    $get->post_content = $request->post('context');
-                    $get->post_timestamp = Carbon::now();
-                    $get->save();
-                    // 是否需要再次提醒阅读
-                    if ($request->post('readAgain')) {
-                        PostRead::where('post_id', $id)->delete();
+                    if(!Permission::where('id',$request->post("adm_permission"))->first()){
+                        $array=array(
+                            "code" => 403,
+                            "msg" => "Forbidden Permission",
+                            "data" => "非法权限",
+                        );
+                        return response()->jsonp($request->input('callback'),$array);
                     }
+                    if(Admin::where([
+                        ['id','<>',$id],
+                        ['adm_name','like', $request->post('adm_name')]
+                    ])->first()){
+                        $array=array(
+                            "code" => 400,
+                            "msg" => "Username collision!",
+                            "data" => "用户名已存在！"
+                        );
+                        return response()->jsonp($request->input('callback'),$array);
+                    }
+                    $get->adm_name = $request->post('adm_name');
+                    $get->adm_password = bcrypt($request->post('adm_password'));
+                    $get->pms_id = $request->post('adm_permission');
+                    $get->save();
                     $array = array(
                         "code" => 200,
                         "msg" => "Data saved successfully!",
@@ -363,8 +407,8 @@
                 } else {
                     $array = array(
                         "code" => 404,
-                        "msg" => "Cannot get the data!",
-                        "data" => "不存在这个数据"
+                        "msg" => "Cannot get the user!",
+                        "data" => "不存在这个用户"
                     );
                 }
             } else {
