@@ -20,8 +20,7 @@ before_script:
   - composer dump-autoload
   - cp .env.travis .env
   - php artisan key:generate
-  - mysql -uroot -proot
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS welcome ;'
+  - mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS welcome ;'
   - php artisan migrate
   - php artisan db:seed
 script: ./vendor/bin/phpunit
