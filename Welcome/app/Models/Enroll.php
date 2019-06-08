@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Enroll whereEnrlTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Enroll whereId($value)
  * @mixin \Eloquent
+ * @property int|null $enrl_rank
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Enroll whereEnrlRank($value)
  */
 class Enroll extends Model
 {
@@ -28,8 +30,6 @@ class Enroll extends Model
     protected $primaryKey = 'id';
     //是否开启时间戳
     public $timestamps = false;
-    //设置时间戳格式为Unix
-    protected $dateFormat = 'U';
 
     protected $fillable = [
         'enrl_title','enrl_info','enrl_location','enrl_rank'

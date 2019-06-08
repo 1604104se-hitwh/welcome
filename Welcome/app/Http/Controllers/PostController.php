@@ -58,8 +58,8 @@
                 ), // 信息
                 'stuID' => session('stu_num'), // 学号
                 'user' => session('stu_name'), // 用户名
-                'userImg' => "userImg", // 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 个人信息url
+                'userImg' => "/avatar", // 用户头像链接 url(site)
+                'toInformationURL' => "/stu/personalInfo", // 个人信息url
 
                 'posts' => $posts, // 所有通知，已读和未读的都包括
                 'toLogoutURL' => "/logout"      // 退出登录
@@ -87,8 +87,8 @@
                 ), // 信息
                 'stuID' => session('stu_num'), // 学号
                 'user' => session('stu_name'), // 用户名
-                'userImg' => "userImg", // 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 个人信息url
+                'userImg' => "/avatar", // 用户头像链接 url(site)
+                'toInformationURL' => "/stu/personalInfo", // 个人信息url
 
                 'post' => $post, // 当前的一个通知
                 'toLogoutURL' => "/logout"      // 退出登录
@@ -105,8 +105,8 @@
             return view("admin.createPost", [
                 "sysType" => "管理员",
                 "user" => session("name", "管理员"),
-                "userImg" => "userImg",
-                "toInformationURL" => "toInformationURL", // 个人信息url
+                "userImg" => "/avatar",
+                "toInformationURL" => "/admin/personalInfo", // 个人信息url
                 "posts" => $posts,
                 "storePostURL" => "/admin/storePost",
                 "deletePostURL" => "/admin/deletePost",

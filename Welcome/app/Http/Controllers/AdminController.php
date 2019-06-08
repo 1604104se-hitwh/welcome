@@ -103,8 +103,8 @@
             return view('admin.index', [
                 'sysType' => "管理员",  // 系统运行模式，新生，在校生，管理员
                 'user' => session("name"), // 用户名
-                'userImg' => "userImg",// 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 更多消息url
+                'userImg' => "/avatar",// 用户头像链接 url(site)
+                'toInformationURL' => "/admin/personalInfo", // 更多消息url
 
                 'newStuNumber' => $res, // 新生人数
                 'oldStuNumber' => $current, // 在校生人数
@@ -146,8 +146,8 @@
             return view('admin.insertSchoolInfo', [
                 'sysType' => "管理员",  // 系统运行模式，新生，在校生，管理员
                 'user' => session("name"), // 用户名
-                'userImg' => "userImg",// 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 个人设置url
+                'userImg' => "/avatar",// 用户头像链接 url(site)
+                'toInformationURL' => "/admin/personalInfo", // 个人设置url
 
                 'newStuNumber' => $res, // 新生人数
                 'oldStuNumber' => $current, // 在校生人数
@@ -210,8 +210,8 @@
             return view('admin.newStudentManage', [
                 'sysType' => "管理员",  // 系统运行模式，新生，在校生，管理员
                 'user' => session("name"), // 用户名
-                'userImg' => "userImg",// 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 个人设置url
+                'userImg' => "/avatar",// 用户头像链接 url(site)
+                'toInformationURL' => "/admin/personalInfo", // 个人设置url
 
                 'newStuNumber' => $res, // 新生人数
                 'oldStuNumber' => $current, // 在校生人数
@@ -236,18 +236,18 @@
             }
             $adminTotal = count($adminList);
             return view('admin.manageAdmin', [
-                'sysType' => "管理员",
-                'user' => session("name"),
-                'userImg' => "userImg",
-                'toInformationURL' => "toInformationURL",
-                'adminTotal' => $adminTotal,
-                'adminList' => $adminList,
-                'getAdminURL' => '/admin/getAdmin',
-                'modifyAdminURL' => '/admin/modifyAdmin',
-                'deleteAdminURL' => '/admin/deleteAdmin',
-                'getPermissionListURL'=> '/admin/getPermissionList',
-                'addAdminURL' => '/admin/addAdmin',
-                'toLogoutURL' => "/logout",      // 退出登录
+                'sysType'               => "管理员",
+                'user'                  => session("name"),
+                'userImg'               => "/avatar",
+                'toInformationURL'      => "/admin/personalInfo",
+                'adminTotal'            => $adminTotal,
+                'adminList'             => $adminList,
+                'getAdminURL'           => '/admin/getAdmin',
+                'modifyAdminURL'        => '/admin/modifyAdmin',
+                'deleteAdminURL'        => '/admin/deleteAdmin',
+                'getPermissionListURL'  => '/admin/getPermissionList',
+                'addAdminURL'           => '/admin/addAdmin',
+                'toLogoutURL'           => "/logout",      // 退出登录
             ]);
         }
 

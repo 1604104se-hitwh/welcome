@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property string|null $school_info
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EnrollCfg whereSchoolInfo($value)
+ * @property string|null $enrl_info
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\EnrollCfg whereEnrlInfo($value)
  */
 class EnrollCfg extends Model
 {
@@ -28,6 +30,4 @@ class EnrollCfg extends Model
     protected $primaryKey = 'id';
     //是否开启时间戳
     public $timestamps = false;
-    //设置时间戳格式为Unix
-    protected $dateFormat = 'U';
 }

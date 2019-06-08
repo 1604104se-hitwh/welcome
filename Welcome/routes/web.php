@@ -23,40 +23,51 @@ Route::post("/login", "LoginController@login");
 
 Route::get("/logout", "LoginController@logout");
 
-Route::group(['middleware' => ['checkAuth:new']], function () {
+Route::get("avatar","avatarImageController@avatar");
+
+Route::group(['prefix'=>'stu','middleware' => ['checkAuth:new']], function () {
     //NEW STUDENT
+    Route::get('/', 'StuController@index');
 
-    Route::get('/stu', 'StuController@index');
+    Route::get('index', 'StuController@index');
 
-    Route::get('/stu/index', 'StuController@index');
+    Route::get('queryClass', 'StuController@queryClass');
 
-    Route::get('/stu/queryClass', 'StuController@queryClass');
+    Route::get('queryDorm', 'StuController@queryDorm');
 
-    Route::get('/stu/queryDorm', 'StuController@queryDorm');
+    Route::get('queryCountryFolk', 'StuController@queryCountryFolk');
 
-    Route::get('/stu/queryCountryFolk', 'StuController@queryCountryFolk');
+    Route::get('posts', 'PostController@index');
 
-    Route::get('/stu/posts', 'PostController@index');
+    Route::get('posts/{postId}', 'PostController@show');
 
-    Route::get('/stu/posts/{postId}', 'PostController@show');
+    Route::get('nav', 'NavController@index');
 
-    Route::get('/stu/nav', 'NavController@index');
+    Route::get('enrollInfo', 'EnrollController@enrollInfo');
 
-    Route::get('/stu/enrollInfo', 'EnrollController@enrollInfo');
+    Route::get('enrollGuide', 'EnrollController@enrollGuide');
 
-    Route::get('/stu/enrollGuide', 'EnrollController@enrollGuide');
+    Route::get('survey', 'SurveyController@index');
 
-    Route::get('/stu/survey', 'SurveyController@index');
-
-    Route::get('/stu/survey/{surveyId}', 'SurveyController@index');
+    Route::get('survey/{surveyId}', 'SurveyController@index');
+    // 个人信息路由
+    Route::get("personalInfo","StuInfoController@index");
 });
+
+/* 新生提交信息路由块 */
+Route::group(['prefix'=>'stu','middleware' => ['checkAuth:new']],function (){
+    // 提交个人信息
+    Route::post("commitInfo","StuInfoController@commitInfo");
+});
+
 /* SENIOR STUDENT*/
-Route::group(['middleware' => ['checkAuth:old']], function () {
-    Route::get("/senior", "SeniorController@index");
+Route::group(['prefix'=>'senior','middleware' => ['checkAuth:old']], function () {
+    Route::get("/", "SeniorController@index");
 
-    Route::get('/senior/queryCountryFolk', 'SeniorController@queryCountryFolk');
+    Route::get('queryCountryFolk', 'SeniorController@queryCountryFolk');
 });
-//ADMIN
+
+/* 管理员信息获取块 */
 Route::group(['prefix'=>'admin','middleware' => ['checkAuth:admin']], function () {
     Route::get('/', 'AdminController@index');
 
@@ -78,6 +89,9 @@ Route::group(['prefix'=>'admin','middleware' => ['checkAuth:admin']], function (
 
     // 信息核验
     Route::get("reportCheck","ReportCheckController@index");
+
+    // 个人信息更改
+    Route::get("personalInfo","AdminInfoController@index");
 
 });
 

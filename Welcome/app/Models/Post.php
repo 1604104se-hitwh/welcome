@@ -32,8 +32,6 @@ class Post extends Model
     protected $primaryKey = 'id';
     //是否开启时间戳
     public $timestamps = false;
-    //设置时间戳格式为Unix
-    protected $dateFormat = 'U';
 
     public function hasOnePostRead() {
         return $this->hasOne("\App\Models\PostRead", "post_id", "id");

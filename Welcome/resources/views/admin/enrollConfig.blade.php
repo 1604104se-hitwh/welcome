@@ -90,7 +90,7 @@
 
         <!-- Nav Item - self info -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/personalInfo')}}">
+            <a class="nav-link" href="{{url($toInformationURL)}}">
                 <i class="fas fa-fw fa-info"></i>
                 <span>个人信息</span>
             </a>
@@ -300,10 +300,10 @@
                                     <td scope="row">{{$reportInfoList->enrl_rank}}</td>
                                     <td>{{$reportInfoList->enrl_title}}</td>
                                     <td>
-                                        <button type="button" class="m-1 btn btn-info modifyPost"
+                                        <button type="button" class="m-1 btn btn-info btn-sm modifyPost"
                                                 data-target="{{$reportInfoList->id}}">修改
                                         </button>
-                                        <button type="button" class="m-1 btn btn-danger deletePost"
+                                        <button type="button" class="m-1 btn btn-danger btn-sm deletePost"
                                                 data-target="{{$reportInfoList->id}}">删除
                                         </button>
                                     </td>
@@ -518,7 +518,7 @@
                     spop({
                         template: "<h4>成功保存</h4>" +
                             "<p>信息已经更新，刷新页面就可以看到啦</p>",
-                        style: 'info',
+                        style: 'success',
                         autoclose: 5000,
                         position: 'bottom-right',
                         icon: true,
@@ -647,7 +647,7 @@
                     spop({
                         template: "<h4>成功保存</h4>" +
                             "<p>信息已经更新，刷新页面就可以看到啦</p>",
-                        style: 'info',
+                        style: 'success',
                         autoclose: 5000,
                         position: 'bottom-right',
                         icon: true,
@@ -760,7 +760,7 @@
                     spop({
                         template: "<h4>成功保存</h4>" +
                             "<p>信息已经更新，刷新页面就可以看到啦</p>",
-                        style: 'info',
+                        style: 'success',
                         autoclose: 5000,
                         position: 'bottom-right',
                         icon: true,

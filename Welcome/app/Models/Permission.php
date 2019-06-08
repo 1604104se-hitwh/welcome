@@ -25,6 +25,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission wherePmsStuInfoSection($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission wherePmsSvySection($value)
  * @mixin \Eloquent
+ * @property string $pms_name
+ * @property int $pms_admin_section
+ * @property int $pms_reporting_section
+ * @property int $pms_help_verify
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission wherePmsAdminSection($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission wherePmsHelpVerify($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission wherePmsName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission wherePmsReportingSection($value)
  */
 class Permission extends Model
 {
@@ -34,6 +42,4 @@ class Permission extends Model
     protected $primaryKey = 'id';
     //是否开启时间戳
     public $timestamps = false;
-    //设置时间戳格式为Unix
-    protected $dateFormat = 'U';
 }

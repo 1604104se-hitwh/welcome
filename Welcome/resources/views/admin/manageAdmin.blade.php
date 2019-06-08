@@ -82,7 +82,7 @@
 
         <!-- Nav Item - self info -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/personalInfo')}}">
+            <a class="nav-link" href="{{url($toInformationURL)}}">
                 <i class="fas fa-fw fa-info"></i>
                 <span>个人信息</span>
             </a>
@@ -237,10 +237,10 @@
                                     <td>{{$admin->adm_name}}</td>
                                     <td>{{$admin->permission}}</td>
                                     <td>
-                                        <button type="button" class="m-1 btn btn-info modifyAdmin"
+                                        <button type="button" class="m-1 btn btn-info btn-sm modifyAdmin"
                                                 data-target="{{strval($admin->id)}}">编辑
                                         </button>
-                                        <button type="button" class="m-1 btn btn-danger deleteAdmin"
+                                        <button type="button" class="m-1 btn btn-danger btn-sm deleteAdmin"
                                                 data-target="{{strval($admin->id)}}">删除
                                         </button>
                                     </td>
@@ -556,7 +556,7 @@
                     spop({
                         template: "<h4>已添加管理员信息</h4>" +
                             "<p>信息已经更新，刷新页面就可以看到啦</p>",
-                        style: 'info',
+                        style: 'success',
                         autoclose: 5000,
                         position: 'bottom-right',
                         icon: true,
@@ -744,7 +744,7 @@
                     spop({
                         template: "<h4>已修改管理员信息</h4>" +
                             "<p>信息已经更新，刷新页面就可以看到啦</p>",
-                        style: 'info',
+                        style: 'success',
                         autoclose: 5000,
                         position: 'bottom-right',
                         icon: true,

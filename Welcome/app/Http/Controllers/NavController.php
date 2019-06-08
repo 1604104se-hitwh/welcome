@@ -59,7 +59,7 @@ class NavController extends Controller
             'stuID' => session('stu_num'), // 学号
             'stuReportTime' => "9月1日", // 报到时间
             'appointments' => array(),
-            'userImg' => "userImg", // 用户头像链接 url(site)
+            'userImg' => "/avatar", // 用户头像链接 url(site)
             'toInfomationURL' => "toInfomationURL", // 个人设置url
 
             'stationInfos' => array(), // 到站信息

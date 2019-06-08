@@ -124,6 +124,28 @@
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            信息填报
+        </div>
+
+        <!-- Nav Item - selfInfo -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('/stu/personalInfo')}}">
+                <i class="fas fa-fw fa-info"></i>
+                <span>个人信息</span></a>
+        </li>
+
+        <!-- Nav Item - GreenPath -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('/stu/greenPath')}}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>绿色通道</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -201,14 +223,13 @@
                              aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="{{url($toInformationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
-                            </a>>
+                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> 登出
                             </a>
                         </div>
                     </li>
-
                 </ul>
 
             </nav>

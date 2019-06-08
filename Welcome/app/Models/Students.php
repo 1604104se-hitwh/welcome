@@ -41,9 +41,7 @@ class Students extends Model
     //指定主键 
     protected $primaryKey = 'id';
     //是否开启时间戳 
-    public $timestamps = false; 
-    //设置时间戳格式为Unix 
-    protected $dateFormat = 'U'; 
+    public $timestamps = false;
     // 设置白名单
     protected $fillable =[
         'stu_status',

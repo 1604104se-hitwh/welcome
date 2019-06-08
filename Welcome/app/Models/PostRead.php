@@ -30,8 +30,6 @@ class PostRead extends Model
     protected $primaryKey = 'id';
     //是否开启时间戳
     public $timestamps = true;
-    //设置时间戳格式为Unix
-    protected $dateFormat = 'U';
     // 设置白名单
     protected $fillable =[
         'post_id',

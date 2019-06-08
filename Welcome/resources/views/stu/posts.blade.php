@@ -125,6 +125,30 @@
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
+        @if($sysType === "新生")
+            <!-- Heading -->
+                <div class="sidebar-heading">
+                    信息填报
+                </div>
+
+                <!-- Nav Item - selfInfo -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('/stu/personalInfo')}}">
+                        <i class="fas fa-fw fa-info"></i>
+                        <span>个人信息</span></a>
+                </li>
+
+                <!-- Nav Item - GreenPath -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url('/stu/greenPath')}}">
+                        <i class="fas fa-fw fa-hands-helping"></i>
+                        <span>绿色通道</span></a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+        @endif
+
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>

@@ -27,8 +27,8 @@
             return view("admin.enrollConfig", [
                 'sysType'                   => "管理员",                        // 系统运行模式，新生，在校生，管理员
                 'user'                      => session("name"),            // 用户名
-                'userImg'                   => "userImg",                       // 用户头像链接 url(site)
-                'toInformationURL'          => "toInformationURL",              // 个人设置url
+                'userImg'                   => "/avatar",                       // 用户头像链接 url(site)
+                'toInformationURL'          => "/admin/personalInfo",              // 个人设置url
                 'newStuNumber'              => $res,                            // 新生人数
                 'oldStuNumber'              => $current,                        // 在校生人数
                 'stuReportTime'             => $enrollcfg->enrl_begin_time,     // 报到时间

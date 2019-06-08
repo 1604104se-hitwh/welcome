@@ -26,6 +26,4 @@ class ShtlPort extends Model
     protected $primaryKey = 'id';
     //是否开启时间戳
     public $timestamps = false;
-    //设置时间戳格式为Unix
-    protected $dateFormat = 'U';
 }

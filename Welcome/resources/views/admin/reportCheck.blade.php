@@ -83,7 +83,7 @@
 
         <!-- Nav Item - self info -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/personalInfo')}}">
+            <a class="nav-link" href="{{url($toInformationURL)}}">
                 <i class="fas fa-fw fa-info"></i>
                 <span>个人信息</span>
             </a>
@@ -198,6 +198,11 @@
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">信息核验</h1>
                 </div>
+
+                <div class="alert alert-primary" role="alert">
+                    查找新生请按照学号查找，每个新生只有一次核验机会，核验完成不可修改
+                </div>
+
                 <div class="input-group">
                     <input type="text" class="form-control search-query border-1 small" placeholder="搜索新生..."
                            aria-label="Search" aria-describedby="basic-addon2">
@@ -208,7 +213,7 @@
                     </div>
                 </div>
 
-                <div class="mt-2">
+                <div class="mt-4">
                     <table class="table table-bordered">
                         <tbody>
                         <tr>
@@ -256,7 +261,7 @@
                 </div>
 
                 <div class="mt-2">
-                    <button type="button" class="btn btn-primary" id="confirmRecord" data-target="">确认报道</button>
+                    <button type="button" class="btn btn-primary" id="confirmRecord" data-target="" disabled>确认报道</button>
                 </div>
 
             </div>
@@ -329,6 +334,12 @@
         }
     });
     // 搜索部分
+
+    $('.search-query').keypress(function (e){
+        if (13 === e.keyCode) {
+            $('#findStudent').click();
+        }
+    });
     $('#findStudent').click(function () {
         $.ajax({
             async: true,   		//是否为异步请求
@@ -357,6 +368,14 @@
                     confirmBtn.attr('disabled', !data.data.needVerify);
                     confirmBtn.text(data.data.needVerify ? '确认报道' : '已经确认');
                     confirmBtn.data('target', data.data.id);
+                    spop({
+                        template: "获取成功",
+                        style: 'success',
+                        autoclose: 4000,
+                        position: 'bottom-right',
+                        icon: true,
+                        group: "submitReportInfo",
+                    });
                 } else {
                     spop({
                         template: "<h4>获取失败（" + data.code + "）</h4>" +
@@ -410,6 +429,9 @@
                     data: {"confirmID": $(this).data("target")},
                     success: function (data) {
                         if (data.code === 200) {
+                            let confirmBtn = $('#confirmRecord');
+                            confirmBtn.attr('disabled', true);
+                            confirmBtn.text('已经确认');
                             Swal.fire(
                                 '成功确认',
                                 '已经被成功确认',

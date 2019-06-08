@@ -56,7 +56,7 @@ class EnrollController extends Controller
             'user' => session('stu_name'), // 用户名
             'stuID' => session('stu_num'), // 学号
             'stuReportTime' => $enrollCft->enrl_begin_time, // 报到时间
-            'userImg' => "userImg", // 用户头像链接 url(site)
+            'userImg' => "/avatar", // 用户头像链接 url(site)
             'toInfomationURL' => "toInfomationURL", // 个人设置url
             'toLogoutURL' => "/logout",      // 退出登录
             'enrollParagraph' => $enrollParagraph,   //给出介绍性的一大段文章
@@ -80,7 +80,7 @@ class EnrollController extends Controller
             'user' => session('stu_name'), // 用户名
             'stuID' => session('stu_num'), // 学号
             'stuReportTime' => $enrollTime, // 报到时间
-            'userImg' => "userImg", // 用户头像链接 url(site)
+            'userImg' => "/avatar", // 用户头像链接 url(site)
             'toInfomationURL' => "toInfomationURL", // 个人设置url
             'reportInfoLists' => $reportInfoLists,
 

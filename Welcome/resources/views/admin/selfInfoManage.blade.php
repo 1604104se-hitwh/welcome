@@ -8,16 +8,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>迎新系统-哈尔滨工业大学（威海）</title>
 
     <!-- Custom fonts for this template-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css"
-          integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78="
-          crossorigin="anonymous">
-    <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.8.1/css/all.min.css"
+          integrity="sha256-7rF6RaSKyh16288E3hVdzQtHyzatA2MQRGu0cf6pqqM=" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.all.min.js"
+            integrity="sha256-Smm8ER2J6Oi6HLNRv7iRvWZlhTPx0Ie91VSkg9QljzE=" crossorigin="anonymous"></script>
+    <link href="{{asset('css/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+
+    <!-- Smallpop -->
+    <link href="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
@@ -45,7 +50,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/stu')}}">
+            <a class="nav-link" href="{{url('/admin/index')}}">
                 <i class="fas fa-fw fa-home"></i>
                 <span>首页</span></a>
         </li>
@@ -55,29 +60,37 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            信息查询
+            信息管理
         </div>
 
-        <!-- Nav Item - Information Query -->
+        <!-- Nav Item - Information set -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo"
                aria-expanded="true" aria-controls="collapseInfo">
                 <i class="fas fa-fw fa-laptop"></i>
-                <span>信息查询</span>
+                <span>信息管理</span>
             </a>
             <div id="collapseInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">你可以查看：</h6>
-                    <a class="collapse-item" href="{{url('/stu/queryClass')}}">你的班级</a>
-                    <a class="collapse-item" href="{{url('/stu/queryDorm')}}">你的宿舍</a>
-                    <a class="collapse-item" href="{{url('/stu/queryCountryFolk')}}">你的老乡</a>
+                    <h6 class="collapse-header">你可以管理：</h6>
+                    <a class="collapse-item" href="{{url('/admin/manageSchoolInfo')}}">学校信息</a>
+                    <a class="collapse-item" href="{{url('/admin/manageNewsInfo')}}">新生信息</a>
+                    <a class="collapse-item" href="{{url('/admin/manageAdminInfo')}}">管理员信息</a>
                 </div>
             </div>
         </li>
 
+        <!-- Nav Item - self info -->
+        <li class="nav-item active">
+            <a class="nav-link" href="{{url($toInformationURL)}}">
+                <i class="fas fa-fw fa-info"></i>
+                <span>个人信息</span>
+            </a>
+        </li>
+
         <!-- Nav Item - Arrived -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/stu/nav')}}">
+            <a class="nav-link" href="{{url('/admin/nav')}}">
                 <i class="fas fa-fw fa-plane-arrival"></i>
                 <span>到站信息</span>
             </a>
@@ -92,10 +105,10 @@
         </div>
 
         <!-- Nav Item - Notice -->
-        <li class="nav-item active">
-            <a class="nav-link" href="{{url('/stu/posts')}}">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('/admin/posts/create')}}">
                 <i class="fas fa-fw fa-bell"></i>
-                <span>所有通知</span></a>
+                <span>发布通知</span></a>
         </li>
 
         <!-- Divider -->
@@ -115,39 +128,15 @@
             </a>
             <div id="collapseWel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">你可以查看：</h6>
-                    <a class="collapse-item" href="{{url('/stu/enrollInfo')}}">报到说明</a>
-                    <a class="collapse-item" href="{{url('/stu/enrollGuide')}}">开始报到</a>
+                    <h6 class="collapse-header">你可以：</h6>
+                    <a class="collapse-item" href="{{url('/admin/reportInfo')}}">报到信息</a>
+                    <a class="collapse-item" href="{{url('/admin/reportCheck')}}">迎新核验</a>
                 </div>
             </div>
         </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
-
-        @if($sysType === "新生")
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            信息填报
-        </div>
-
-        <!-- Nav Item - selfInfo -->
-        <li class="nav-item">
-            <a class="nav-link" href="{{url('/stu/personalInfo')}}">
-                <i class="fas fa-fw fa-info"></i>
-                <span>个人信息</span></a>
-        </li>
-
-        <!-- Nav Item - GreenPath -->
-        <li class="nav-item">
-            <a class="nav-link" href="{{url('/stu/greenPath')}}">
-                <i class="fas fa-fw fa-hands-helping"></i>
-                <span>绿色通道</span></a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-        @endif
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
@@ -173,52 +162,14 @@
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
-                    <!-- Nav Item - Messages -->
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-envelope fa-fw"></i>
-                            <!-- Counter - Messages -->
-                            @if($messages['unreadNum'] > 0)
-                                <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
-                            @endif
-                        </a>
-                        <!-- Dropdown - Messages -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="messagesDropdown">
-                            <h6 class="dropdown-header">
-                                消息中心
-                            </h6>
-                            @if(count($messages['showMessage'])!=0) @foreach ($messages['showMessage'] as $message)
-                                <a class="dropdown-item d-flex align-items-center" href="{{url($message['toURL'])}}">
-                                    <div @if ($message['readed'] == false) class="font-weight-bold" @endif>
-                                        <div class="text-truncate">{{$message['title']}}</div>
-                                        <div class="small text-gray-500">{{$message['context']}}</div>
-                                    </div>
-                                </a>
-                            @endforeach
-                            @else
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div>
-                                        <div class="text-truncate">暂时没有消息哦~</div>
-                                    </div>
-                                </a>
-                            @endif
-                            <a class="dropdown-item text-center small text-gray-500"
-                               href="{{url($messages['moreInfoUrl'])}}">更多信息...</a>
-                        </div>
-                    </li>
-
-                    <div class="topbar-divider d-none d-sm-block"></div>
 
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">您好，{{$user}}</span>
                             <img class="img-profile rounded-circle"
-                                 src="{{url($userImg)}}">
+                                 src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -233,7 +184,6 @@
                             </a>
                         </div>
                     </li>
-
                 </ul>
 
             </nav>
@@ -244,22 +194,72 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">{{$post->post_title}}</h1>
+                    <h1 class="h3 mb-0 text-gray-800">个人信息</h1>
                 </div>
 
-                <!-- Content Column -->
-                <div class="mb-4">
-
-                    <!-- Illustrations -->
-                    <div class="card mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">发布于：{{$post->post_timestamp}}</h6>
+                <!-- Content Row -->
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">您的用户名
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$user}}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-user fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            {!! $post->post_content !!}
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">您的角色
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$role}}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-user-tag fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="alert alert-primary" role="alert">
+                    如果您要更改用户名，请联系超级管理员。
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        <label for="username">你的用户名</label>
+                        <input type="email" class="form-control" id="username" value="{{$user}}" readonly>
+                        <small id="usernameHelp" class="form-text text-muted">如果您要更改用户名，请联系超级管理员。</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">原密码</label>
+                        <input type="password" class="form-control" id="password">
+                        <small id="passwordHelp" class="form-text text-muted">如果您忘记了密码，请联系超级管理员。</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="cpassword">修改密码</label>
+                        <input type="password" class="form-control" id="cpassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="ccpassword">确认密码</label>
+                        <input type="password" class="form-control" id="ccpassword">
+                    </div>
+                    <button class="btn btn-primary" id="submitPswChange">提交</button>
+                </div>
+
             </div>
             <!-- /.container-fluid -->
 
@@ -316,10 +316,51 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
         integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.min.js"
+        integrity="sha256-mc3T6DNzcA7wvZn8UVCZZSHGUzsuki15ci/3gxoLBnw=" crossorigin="anonymous"></script>
+
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
+<!-- Smallpop -->
+<script src="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.js"></script>
 
+<script>
+    $("#submitPswChange").click(function () {
+        let oldPsw = $("#password").val();
+        let newPsw = $("#cpassword").val();
+        let confirmPsw = $("#ccpassword").val();
+        if(oldPsw === ""){
+            spop({
+                template: "原密码不能为空",
+                style: 'warning',
+                autoclose: false,
+                position: 'bottom-right',
+                icon: true,
+                group: "passwordChange",
+            });
+        }else if(newPsw === ""){
+            spop({
+                template: "不能设置空密码",
+                style: 'warning',
+                autoclose: false,
+                position: 'bottom-right',
+                icon: true,
+                group: "passwordChange",
+            });
+        }else if(newPsw !== confirmPsw){
+            spop({
+                template: "两次密码不一致",
+                style: 'warning',
+                autoclose: false,
+                position: 'bottom-right',
+                icon: true,
+                group: "passwordChange",
+            });
+        }else{
+            // TODO make ajax to change the password
+        }
+    });
+</script>
 </body>
-
 </html>

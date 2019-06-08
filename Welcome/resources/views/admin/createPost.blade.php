@@ -235,10 +235,10 @@
                                             <span>{{$post->post_title}}</span></a></td>
                                     <td>{{$post->post_timestamp}}</td>
                                     <td>
-                                        <button type="button" class="m-1 btn btn-info modifyPost"
+                                        <button type="button" class="m-1 btn btn-info btn-sm modifyPost"
                                                 data-target="{{strval($post->id)}}"> 修改
                                         </button>
-                                        <button type="button" class="m-1 btn btn-danger deletePost"
+                                        <button type="button" class="m-1 btn btn-danger btn-sm deletePost"
                                                 data-target="{{strval($post->id)}}" data-title="{{$post->post_title}}">
                                             删除
                                         </button>
@@ -553,7 +553,7 @@
                     spop({
                         template: "<h4>发布成功</h4>" +
                             "<p>信息已经更新，刷新页面就可以看到啦</p>",
-                        style: 'info',
+                        style: 'success',
                         autoclose: 5000,
                         position: 'bottom-right',
                         icon: true,

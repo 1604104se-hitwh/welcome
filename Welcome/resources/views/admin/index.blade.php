@@ -76,7 +76,7 @@
 
         <!-- Nav Item - self info -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/personalInfo')}}">
+            <a class="nav-link" href="{{url($toInformationURL)}}">
                 <i class="fas fa-fw fa-info"></i>
                 <span>个人信息</span>
             </a>

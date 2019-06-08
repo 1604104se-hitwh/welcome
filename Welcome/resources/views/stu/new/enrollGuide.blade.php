@@ -120,13 +120,35 @@
                 <i class="fas fa-fw fa-route"></i>
                 <span>报到流程</span>
             </a>
-            <div id="collapseWel" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div id="collapseWel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">你可以查看：</h6>
                     <a class="collapse-item" href="{{url('/stu/enrollInfo')}}">报到说明</a>
                     <a class="collapse-item active" href="{{url('/stu/enrollGuide')}}">开始报到</a>
                 </div>
             </div>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            信息填报
+        </div>
+
+        <!-- Nav Item - selfInfo -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('/stu/personalInfo')}}">
+                <i class="fas fa-fw fa-info"></i>
+                <span>个人信息</span></a>
+        </li>
+
+        <!-- Nav Item - GreenPath -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('/stu/greenPath')}}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>绿色通道</span></a>
         </li>
 
         <!-- Divider -->
@@ -269,25 +291,33 @@
                 </div>
 
                 <!-- Content Column -->
-                <div class="">
-                    <div class="mb-4">
-                        @if(count($reportInfoLists)==0) {{-- 还没有信息 --}}
-                        <p>还没有信息</p>
-                        @else
-                            @foreach($reportInfoLists as $reportInfoList)
-                                <div class="card mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">{{$reportInfoList->enrl_title}}</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        {{ $reportInfoList->enrl_info }}
-                                        <div style="width: 100%;height: 380px;"
-                                             id="container{{$reportInfoList->id}}"></div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @endif
+
+                <div id="accordion">
+                    @if(count($reportInfoLists)==0) {{-- 还没有信息 --}}
+                    <div class="alert alert-primary" role="alert">
+                        还没有信息
                     </div>
+                    @else
+                        @foreach($reportInfoLists as $reportInfoList)
+                        <div class="card">
+                            <div class="card-header" id="heading{{$reportInfoList->id}}">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$reportInfoList->id}}" aria-expanded="true" aria-controls="collapse{{$reportInfoList->id}}">
+                                        {{$reportInfoList->enrl_title}}
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div id="collapse{{$reportInfoList->id}}" class="collapse" aria-labelledby="heading{{$reportInfoList->id}}" data-parent="#accordion">
+                                <div class="card-body">
+                                    {{ $reportInfoList->enrl_info }}
+                                    <div style="width: 100%;height: 380px;"
+                                         id="container{{$reportInfoList->id}}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
             <!-- /.container-fluid -->
