@@ -61,10 +61,8 @@ class StuInfoController extends Controller
                 'stu_dorm_str as dorm','party','relate as relation',
                 DB::raw('IF(verify=2,"未通过",IF(verify=0,"未审核",IF(verify=1,"已通过","未申请"))) as greenPath'),
                 'home_addr as homeLocation',
-                DB::raw('IF(stu_status="PREPARE",true,false) as needVerify'),
-                DB::raw('SUBSTRING(stu_num,3,3)'),'stu_status'
+                DB::raw('IF(stu_status="PREPARE",true,false) as needVerify'),'stu_status'
             ));
-        Facade::info($stuInfo->stu_status);
         if($stuInfo->stu_status === "PREPARE"){
             $needCommit = true;
         }else{

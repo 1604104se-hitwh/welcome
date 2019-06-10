@@ -25,6 +25,9 @@ Route::get("/logout", "LoginController@logout");
 
 Route::get("avatar","avatarImageController@avatar");
 
+// 绿色通道文件下载
+Route::any("/greenPath/{id}/{filePath}","GreenPathController@getFiles");
+
 Route::group(['prefix'=>'stu','middleware' => ['checkAuth:new']], function () {
     //NEW STUDENT
     Route::get('/', 'StuController@index');
@@ -52,12 +55,20 @@ Route::group(['prefix'=>'stu','middleware' => ['checkAuth:new']], function () {
     Route::get('survey/{surveyId}', 'SurveyController@index');
     // 个人信息路由
     Route::get("personalInfo","StuInfoController@index");
+    // 绿色通道
+    Route::get("greenPath","GreenPathController@index");
 });
 
 /* 新生提交信息路由块 */
 Route::group(['prefix'=>'stu','middleware' => ['checkAuth:new']],function (){
     // 提交个人信息
     Route::post("commitInfo","StuInfoController@commitInfo");
+    // 提交绿色通道信息
+    Route::post("uploadGreenPathFiles","GreenPathController@uploadFiles");
+    // 删除文件
+    Route::post("greenPath/delete","GreenPathController@deleteFile");
+    // 获取已提交文件信息
+    Route::post("greenPath/getGreenPathFiles","GreenPathController@getGreenPathFiles");
 });
 
 /* SENIOR STUDENT*/
@@ -83,16 +94,14 @@ Route::group(['prefix'=>'admin','middleware' => ['checkAuth:admin']], function (
     Route::get('manageAdminInfo', 'AdminController@manageAdminInfo');
 
     Route::get('posts', 'PostController@index');
-
     // 管理报道信息
     Route::get("reportInfo","ReportConfigController@index");
-
     // 信息核验
     Route::get("reportCheck","ReportCheckController@index");
-
     // 个人信息更改
     Route::get("personalInfo","AdminInfoController@index");
-
+    // 绿色通道审核
+    Route::get("greenPathVerify","GreenPathVerifyController@index");
 });
 
 // Excel Import
@@ -141,6 +150,10 @@ Route::group(['prefix'=>'admin' ,'middleware' => ['postAuthCheck:admin']], funct
     Route::post("getStudentInfo","ReportCheckController@getStudentInfo");
 
     Route::post("confirmReportInfo","ReportCheckController@confirmReportInfo");
+    // 管理员绿色通道审核-信息获取
+    Route::post("getGreenPathInfo","GreenPathVerifyController@getGreenPathInfo");
+    // 管理员绿色通道审核-审核信息提交
+    Route::post("commitVerifyInfo","GreenPathVerifyController@commitVerifyInfo");
 
 });
 

@@ -15,11 +15,8 @@
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css"
           integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-    <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.all.min.js"
-            integrity="sha256-Smm8ER2J6Oi6HLNRv7iRvWZlhTPx0Ie91VSkg9QljzE=" crossorigin="anonymous"></script>
     <!-- Smallpop -->
     <link href="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.css" rel="stylesheet">
     <link href="{{asset('css/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
@@ -101,6 +98,14 @@
             <a class="nav-link" href="{{url('/admin/nav')}}">
                 <i class="fas fa-fw fa-plane-arrival"></i>
                 <span>到站信息</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - greenPath info -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('admin/greenPathVerify')}}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>绿色通道</span>
             </a>
         </li>
 

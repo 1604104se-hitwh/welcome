@@ -13,11 +13,12 @@
     <title>迎新系统-哈尔滨工业大学（威海）</title>
 
     <!-- Custom fonts for this template-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css"
-          integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78="
-          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.8.1/css/all.min.css"
+          integrity="sha256-7rF6RaSKyh16288E3hVdzQtHyzatA2MQRGu0cf6pqqM=" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
+    <link href="{{asset('css/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+
     <!-- Smallpop -->
     <link href="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.css" rel="stylesheet">
 
@@ -61,7 +62,7 @@
         </div>
 
         <!-- Nav Item - Information set -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo"
                aria-expanded="true" aria-controls="collapseInfo">
                 <i class="fas fa-fw fa-laptop"></i>
@@ -70,7 +71,7 @@
             <div id="collapseInfo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">你可以管理：</h6>
-                    <a class="collapse-item active" href="{{url('/admin/manageSchoolInfo')}}">学校信息</a>
+                    <a class="collapse-item" href="{{url('/admin/manageSchoolInfo')}}">学校信息</a>
                     <a class="collapse-item" href="{{url('/admin/manageNewsInfo')}}">新生信息</a>
                     <a class="collapse-item" href="{{url('/admin/manageAdminInfo')}}">管理员信息</a>
                 </div>
@@ -94,7 +95,7 @@
         </li>
 
         <!-- Nav Item - greenPath info -->
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="{{url('admin/greenPathVerify')}}">
                 <i class="fas fa-fw fa-hands-helping"></i>
                 <span>绿色通道</span>
@@ -197,148 +198,80 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">学校信息</h1>
+                    <h1 class="h3 mb-0 text-gray-800">“绿色通道”审核</h1>
                 </div>
-
                 <!-- Content Row -->
                 <div class="row">
-
-                    <!-- Infomation Card ID number -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-primary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">新生人数
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$newStuNumber}}</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-luggage-cart fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Infomation Card shcool -->
                     <div class="col-xl-3 col-md-6 mb-4">
                         <div class="card border-left-success shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">在校生人数
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">申请人数
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$oldStuNumber}}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$applyTotal}}</div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-user-check fa-2x text-gray-300"></i>
+                                        <i class="fas fa-envelope-open-text fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Infomation Card department -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-info shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">已报到人数</div>
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col-auto">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$hasReportNumber}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-check-circle fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Infomation Card report time -->
                     <div class="col-xl-3 col-md-6 mb-4">
                         <div class="card border-left-warning shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">报到时间
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">未审核人数
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$stuReportTime}}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$needVerify}}</div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        <i class="fas fa-list fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="card mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">学校信息</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">全部申请信息</h6>
                     </div>
                     <div class="card-body">
-                        <div id="schoolInfoEditor" class="mb-4">
-                            {!! $schoolInfo !!}
-                        </div>
-                        <button type="button" class="btn btn-primary" id="submitSchoolInfo">提交</button>
-                    </div>
-                </div>
-
-                <div class="card mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">专业信息</h6>
-                    </div>
-                    <div class="card-body row">
-                        <div class="col-md-8 col-sm-12">
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>专业名</th>
-                                    <th>代码</th>
-                                    <th>所属院系</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @if(count($majorInfos)==0) {{-- 还没有信息 --}}
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr role="row">
+                                <th>姓名</th>
+                                <th>专业</th>
+                                <th>审核状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if(count($greenPathLists)==0)
                                 <tr role="row">
-                                    <td colspan="3">还没有信息</td>
+                                    <td colspan="4">还没有人员申请</td>
                                 </tr>
-                                @else @foreach($majorInfos as $majorInfo)
-                                    <tr role="row">
-                                        <td>{{$majorInfo->major_name}}</td>
-                                        <td>{{$majorInfo->major_num}}</td>
-                                        <td>
-                                            {{isset($majorInfo->dept
-                                            ->dept_name)? $majorInfo->dept
-                                            ->dept_name : "不存在的院系"}}
-                                        </td>
-                                    </tr>
-                                @endforeach @endif
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-4 col-sm-12">
-                            <div class="mb-4">
-                                <div class="form-group mb-4">
-                                    <label for="majorInfoUpload">上传院系信息</label>
-                                    <input type="file" id="majorInfoUpload">
-                                    <p class="help-block">上传模板文件</p>
-                                    <p class="font-weight-bold text-danger">注意：上传会导致原来被覆盖</p>
-                                </div>
-                                <button type="button" class="btn btn-primary" id="submitMajorInfo">提交</button>
-                            </div>
-                        </div>
+                            @else @foreach($greenPathLists as $greenPathList)
+                                <tr role="row">
+                                    <td>{{$greenPathList->name}}</td>
+                                    <td>{{$greenPathList->major}}</td>
+                                    <td>{{$greenPathList->verify}}</td>
+                                    <td>
+                                        <button type="button" class="m-1 btn btn-info btn-sm watchInfo"
+                                                data-target="{{strval($greenPathList->id)}}">查看信息
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            @endif
+                            </tbody>
+                        </table>
+                        {{-- $greenPathList->links() --}}
                     </div>
                 </div>
 
@@ -389,69 +322,217 @@
     </div>
 </div>
 
+<!-- InformationModal Modal-->
+<div class="modal fade" id="informationModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">提交信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card border-left-primary mb-2 mt-2">
+                    <div class="p-2 text-gray-700">
+                        <i class="fas fa-fw fa-columns"></i> 个人信息
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th>姓名</th>
+                        <td id="name"></td>
+                        <th>学号</th>
+                        <td id="schoolID"></td>
+                        <th>性别</th>
+                        <td id="gender"></td>
+                    </tr>
+                    <tr>
+                        <th>身份证</th>
+                        <td id="cid" colspan="2"></td>
+                        <th>政治面貌</th>
+                        <td id="party" colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <th>学院</th>
+                        <td id="dept"></td>
+                        <th>专业</th>
+                        <td id="major"></td>
+                        <th>民族</th>
+                        <td id="nation"></td>
+                    </tr>
+                    <tr>
+                        <th>家庭住址</th>
+                        <td id="homeLocation" colspan="5"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="card border-left-primary mb-2 mt-2">
+                    <div class="p-2 text-gray-700">
+                        <i class="fas fa-fw fa-file"></i> 提交文件
+                    </div>
+                </div>
+                <div id="downloadFiles">
+                    <a href="" class="btn btn-outline-primary btn-sm btn-block text-left">
+                        <i class="fas fa-fw fa-download"></i>
+                        文件
+                    </a>
+                </div>
+
+                <div class="card border-left-primary mb-2 mt-2">
+                    <div class="p-2 text-gray-700">
+                        <i class="fas fa-fw fa-check"></i> 审核信息
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <div class="form-group">
+                        <label for="verifySelect">审核选项</label>
+                        <select class="form-control" id="verifySelect">
+                            <option value="1">审核通过</option>
+                            <option value="2">申请驳回</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="verifyInfo">审核原因</label>
+                        <textarea class="form-control" id="verifyInfo" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" data-target="" id="commitVerify">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Bootstrap core JavaScript-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
-        integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js"
         integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
         crossorigin="anonymous"></script>
-<!-- Custom scripts for all pages-->
+<script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
+        integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.12.0/dist/sweetalert2.all.min.js" integrity="sha256-wWhZbmmAXb1JDP1U+ywgt4FHA4XIxzcYyGEFnInYJMQ=" crossorigin="anonymous"></script><!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
 <!-- Smallpop -->
 <script src="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.js"></script>
 
-
-<!-- Custom scripts for Editor -->
-<script type="text/javascript" src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
-<script type="text/javascript">
-    var E = window.wangEditor;
-    var editor = new E('#schoolInfoEditor');
-    editor.customConfig.uploadImgShowBase64 = true;
-    editor.customConfig.zIndex = 1;
-    editor.create();
-</script>
-
-<!-- ajax post -->
+<!-- modify and delete -->
 <script>
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
-    $('#submitSchoolInfo').click(function () {
+    
+    $(".watchInfo").click(function () {
+        let id = $(this).data('target');
+        $("#commitVerify").data('target',id);
         $.ajax({
             async: true,   		//是否为异步请求
             cache: false,  		//是否缓存结果
             type: "POST", 		//请求方式
             dataType: "jsonp", 	//服务器返回的数据是什么类型
-            url: "{{url($schoolInfoPostURL)}}",
-            data: {"schoolInfo": editor.txt.html()},
+            url: "{{url($getGreenPathInfo)}}",
+            data: {target:id},
+            success: function (data) {
+                if (data.code === 200) {
+                    // 获取个人信息
+                    let datas = data.data;
+                    $("#name").text(datas.name);
+                    $("#schoolID").text(datas.schoolID);
+                    $("#gender").text(datas.gender);
+                    $("#cid").text(datas.cid);
+                    $("#party").text(datas.party);
+                    $("#dept").text(datas.dept);
+                    $("#major").text(datas.major);
+                    $("#nation").text(datas.nation);
+                    $("#homeLocation").text(datas.homeLocation);
+                    // 获取文件信息
+                    let files = $.parseJSON(datas.files);
+                    let showHTML = "";
+                    if(files.length===0){
+                        showHTML = "<p>暂无文件</p>"
+                    }else
+                    $.each(files,function (index,val) {
+                        showHTML+="<a href=\"{{url('/')}}/"+val.file+"\" class=\"btn btn-outline-primary btn-sm btn-block text-left\">\n" +
+                            "<i class=\"fas fa-fw fa-download\"></i>\n" +
+                            val.name +" ("+formatFileSize(val.size)+")"
+                            "</a>"
+                    });
+                    $("#downloadFiles").html(showHTML);
+                    // 修改审核信息
+                    $("#verifySelect option[value='"+datas.verify+"']").attr('selected',true);
+                    $("#verifyInfo").text(datas.verifyInfo);
+                    $("#informationModal").modal('show');
+                } else {
+                    spop({
+                        template: "<h4>获取失败（" + data.code + "）</h4>" +
+                            "<p>" + data.data + "</p>",
+                        style: 'warning',
+                        autoclose: false,
+                        position: 'bottom-right',
+                        icon: true,
+                        group: "getVerifyInfo",
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // 状态码
+                console.log("status:" + XMLHttpRequest.status + "\n");
+                // 状态
+                console.log("readyState:" + XMLHttpRequest.readyState + "\n");
+                // 错误信息
+                console.log("textStatus:" + textStatus + "\n");
+                spop({
+                    template: "请求失败（" + XMLHttpRequest.status + "）",
+                    style: 'error',
+                    autoclose: false,
+                    position: 'bottom-right',
+                    icon: true,
+                    group: "getVerifyInfo",
+                });
+            }
+        });
+    });
 
+    $("#commitVerify").click(function () {
+        let id = $(this).data('target');
+        let verify = $("#verifySelect option:selected").val();
+        let verifyInfo = $("#verifyInfo").val();
+        $.ajax({
+            async: true,   		//是否为异步请求
+            cache: false,  		//是否缓存结果
+            type: "POST", 		//请求方式
+            dataType: "jsonp", 	//服务器返回的数据是什么类型
+            url: "{{url($commitVerifyInfo)}}",
+            data: {target:id, verify:verify, verifyInfo:verifyInfo},
             success: function (data) {
                 if (data.code === 200) {
                     spop({
-                        template: "<h4>成功保存</h4>" +
-                            "<p>信息已经更新，刷新页面就可以看到啦</p>",
+                        template: "已成功提交",
                         style: 'success',
                         autoclose: 5000,
                         position: 'bottom-right',
                         icon: true,
-                        group: "submitSchoolInfo",
+                        group: "saveVerify",
                     });
+                    $("#informationModal").modal('hide');
                 } else {
                     spop({
-                        template: "<h4>保存失败（" + data.code + "）</h4>" +
+                        template: "<h4>获取失败（" + data.code + "）</h4>" +
                             "<p>" + data.data + "</p>",
                         style: 'warning',
                         autoclose: false,
                         position: 'bottom-right',
                         icon: true,
-                        group: "submitSchoolInfo",
+                        group: "saveVerify",
                     });
                 }
             },
@@ -463,84 +544,36 @@
                 // 错误信息
                 console.log("textStatus:" + textStatus + "\n");
                 spop({
-                    template: "保存失败（" + XMLHttpRequest.status + "）",
+                    template: "请求失败（" + XMLHttpRequest.status + "）",
                     style: 'error',
                     autoclose: false,
                     position: 'bottom-right',
                     icon: true,
-                    group: "submitSchoolInfo",
+                    group: "saveVerify",
                 });
             }
         });
     });
 
-    $('#submitMajorInfo').click(function () {
-        var formData = new FormData();
-        var fileObj = $("#majorInfoUpload")[0].files[0]; // js 获取文件对象
-        if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
-            spop({
-                template: "请选择文件",
-                style: 'warning',
-                autoclose: false,
-                position: 'bottom-right',
-                icon: true,
-                group: "submitDeptInfo",
-            });
-            return;
+    // 文件大小转化
+    function formatFileSize(fileSize) {
+        if (fileSize < 1024) {
+            return fileSize + 'B';
+        } else if (fileSize < (1024*1024)) {
+            var temp = fileSize / 1024;
+            temp = temp.toFixed(2);
+            return temp + 'KB';
+        } else if (fileSize < (1024*1024*1024)) {
+            var temp = fileSize / (1024*1024);
+            temp = temp.toFixed(2);
+            return temp + 'MB';
         } else {
-            formData.append('majorInfo', fileObj);
+            var temp = fileSize / (1024*1024*1024);
+            temp = temp.toFixed(2);
+            return temp + 'GB';
         }
-        $.ajax({
-            async: true,   		//是否为异步请求
-            cache: false,  		//是否缓存结果
-            type: "POST", 		//请求方式
-            dataType: "jsonp", 	//服务器返回的数据是什么类型
-            processData: false,	//用于对data参数进行序列化处理 这里必须false
-            contentType: false, //必须
-            url: "{{url($majorInfoPostURL)}}",
-            data: formData,
+    }
 
-            success: function (data) {
-                if (data.code == 200) {
-                    spop({
-                        template: "<h4>成功保存</h4>" +
-                            "<p>信息已经更新，刷新页面就可以看到啦</p>",
-                        style: 'success',
-                        autoclose: 5000,
-                        position: 'bottom-right',
-                        icon: true,
-                        group: "submitMajorInfo",
-                    });
-                } else {
-                    spop({
-                        template: "<h4>保存失败（" + data.code + "）</h4>" +
-                            "<p>" + data.data + "</p>",
-                        style: 'warning',
-                        autoclose: false,
-                        position: 'bottom-right',
-                        icon: true,
-                        group: "submitMajorInfo",
-                    });
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                // 状态码
-                console.log("status:" + XMLHttpRequest.status + "\n");
-                // 状态
-                console.log("readyState:" + XMLHttpRequest.readyState + "\n");
-                // 错误信息
-                console.log("textStatus:" + textStatus + "\n");
-                spop({
-                    template: "保存失败（" + XMLHttpRequest.status + "）",
-                    style: 'error',
-                    autoclose: false,
-                    position: 'bottom-right',
-                    icon: true,
-                    group: "submitMajorInfo",
-                });
-            }
-        });
-    });
 </script>
 </body>
 

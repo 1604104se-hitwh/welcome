@@ -66,7 +66,7 @@
             ]);
         }
 
-        public function show($id)
+        public function show(Request $request,$id)
         {
             $post = Post::where([
                 ['id', $id],

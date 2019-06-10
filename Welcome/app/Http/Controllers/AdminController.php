@@ -323,7 +323,6 @@
                     "data" => "缺失参数！"
                 );
             }
-
             return response()->jsonp($request->input('callback'), $array);
         }
 

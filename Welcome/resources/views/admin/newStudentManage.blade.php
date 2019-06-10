@@ -94,6 +94,14 @@
             </a>
         </li>
 
+        <!-- Nav Item - greenPath info -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('admin/greenPathVerify')}}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>绿色通道</span>
+            </a>
+        </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider">
 

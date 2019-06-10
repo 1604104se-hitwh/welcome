@@ -5,9 +5,10 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>迎新系统-哈尔滨工业大学（威海）</title>
 
@@ -16,18 +17,17 @@
           integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78="
           crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-fileinput@5.0.3/css/fileinput.min.css"
+          integrity="sha256-wB5fOxF9Sm0mGhft46OVh4gehcDAzvpNFIZUmCHZzSo=" crossorigin="anonymous">
+
+    <!-- Smallpop -->
+    <link href="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
-    <style>
-        #container {
-            width: 100%;
-            height: 380px;
-        }
-    </style>
+
 
 </head>
-
 
 <body id="page-top">
 
@@ -64,7 +64,7 @@
         </div>
 
         <!-- Nav Item - Information Query -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInfo"
                aria-expanded="true" aria-controls="collapseInfo">
                 <i class="fas fa-fw fa-laptop"></i>
@@ -74,7 +74,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">你可以查看：</h6>
                     <a class="collapse-item" href="{{url('/stu/queryClass')}}">你的班级</a>
-                    <a class="collapse-item active" href="{{url('/stu/queryDorm')}}">你的宿舍</a>
+                    <a class="collapse-item" href="{{url('/stu/queryDorm')}}">你的宿舍</a>
                     <a class="collapse-item" href="{{url('/stu/queryCountryFolk')}}">你的老乡</a>
                 </div>
             </div>
@@ -143,7 +143,7 @@
         </li>
 
         <!-- Nav Item - GreenPath -->
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="{{url('/stu/greenPath')}}">
                 <i class="fas fa-fw fa-hands-helping"></i>
                 <span>绿色通道</span></a>
@@ -235,7 +235,9 @@
                             </a>
                         </div>
                     </li>
+
                 </ul>
+
             </nav>
             <!-- End of Topbar -->
 
@@ -244,7 +246,7 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">你的宿舍</h1>
+                    <h1 class="h3 mb-0 text-gray-800">绿色通道</h1>
                 </div>
 
                 <!-- Content Row -->
@@ -328,65 +330,82 @@
                     </div>
                 </div>
 
-                <!-- Content Row -->
-                <div class="card-columns">
-
-                    <!-- Content Column -->
-                    <div class="mb-4">
-                        <!-- Illustrations -->
-                        <div class="card mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">宿舍简介</h6>
-                            </div>
-                            <div class="card-body">
-                                {!! $domInfo !!}
-                            </div>
-                        </div>
-
-                        <!-- Illustrations -->
-                        <div class="card mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">宿舍位置</h6>
-                            </div>
-                            <div class="card-body">
-                                <div id="container"></div>
-                            </div>
-                        </div>
-
-                        <!-- Illustrations -->
-                        <div class="card mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">你的室友</h6>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr role="row">
-                                        <th>姓名</th>
-                                        <th>学号</th>
-                                        <th>床位</th>
-                                        <th>来自</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @if(count($yourDoms)==0) {{-- 还没有信息 --}}
-                                    <tr role="row">
-                                        <td colspan="4">还没有信息</td>
-                                    </tr>
-                                    @else @foreach($yourDoms as $yourDom)
-                                        <tr role="row">
-                                            <td>{{$yourDom->stu_name}}</td>
-                                            <td>{{$yourDom->stu_num}}</td>
-                                            <td>{{$yourDom->stu_dorm_str}}</td>
-                                            <td>{{$yourDom->address}}</td>
-                                        </tr>
-                                    @endforeach @endif
-                                    </tbody>
-                                </table>
-                            </div>
+                <div class="mt-2">
+                    <div class="alert alert-primary" role="alert">
+                        <h4 class="alert-heading">“绿色通道”申请说明</h4>
+                        <hr />
+                        <p>如果同学需要申请困难补助，请核对以下个人信息并且上传<b>家庭情况调查表</b>以及其他证明材料。</p>
+                        <p>个人信息有误请到<a href="{{url("/stu/personalInfo")}}">个人信息</a>页面修改。</p>
+                    </div>
+                    <div class="card border-left-warning mb-2 mt-2">
+                        <div class="p-2">
+                            <i class="fas fa-fw fa-columns"></i> 个人信息确认
                         </div>
                     </div>
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th>姓名</th>
+                            <td>{{$stuInfo->name}}</td>
+                            <th>学号</th>
+                            <td>{{$stuInfo->schoolID}}</td>
+                            <th>性别</th>
+                            <td>{{$stuInfo->gender}}</td>
+                        </tr>
+                        <tr>
+                            <th>身份证</th>
+                            <td colspan="2">{{$stuInfo->cid}}</td>
+                            <th>政治面貌</th>
+                            <td colspan="2">{{$stuInfo->party}}</td>
+                        </tr>
+                        <tr>
+                            <th>学院</th>
+                            <td>{{$stuInfo->dept}}</td>
+                            <th>专业</th>
+                            <td>{{$stuInfo->major}}</td>
+                            <th>民族</th>
+                            <td>{{$stuInfo->nation}}</td>
+                        </tr>
+                        <tr>
+                            <th>家庭住址</th>
+                            <td colspan="5">
+                                {{$stuInfo->homeLocation}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
+                <div class="card border-left-warning mb-2 mt-2">
+                    <div class="p-2">
+                        <i class="fas fa-fw fa-comment"></i> 审核结果
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header
+                    @if($verifyResultbool===1)
+                        bg-success text-white
+                    @elseif($verifyResultbool===2)
+                        bg-warning text-white
+                    @endif
+                    ">
+                        {{$verifyResult}}
+                    </div>
+                    <div class="card-body">
+                        {{$verifyReason}}
+                    </div>
+                </div>
+                <div class="card border-left-warning mb-2 mt-2">
+                    <div class="p-2">
+                        <i class="fas fa-fw fa-cloud-upload-alt"></i> 申请材料上传
+                        @if($verifyResultbool === 1)
+                            <span class="text-danger">已通过审核，材料上传通道关闭</span>
+                        @endif
+                    </div>
+                </div>
+                <div class="file-loading">
+                    <input id="input-files" name="input-files[]" type="file" multiple>
+                </div>
+
             </div>
             <!-- /.container-fluid -->
 
@@ -443,26 +462,160 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
         integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
+
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
-<!-- amap scripts for local infomation-->
-<script type="text/javascript"
-        src="https://webapi.amap.com/maps?v=1.4.13&key=0a4d80176be0dde936743e7e03a5f237"></script>
+
+<!-- Smallpop -->
+<script src="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.js"></script>
+
+<!-- bootstrap-fileinput -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-fileinput@5.0.3/js/fileinput.min.js"
+        integrity="sha256-MDfQRKo8050L0tbYEInUuY0IRR1rQ7yFCZg7DI1hDgk=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-fileinput@5.0.3/themes/fas/theme.min.js"
+        integrity="sha256-D1oLj4NNXxgt0/xo2KLOX6YQ0dO/KWI4+lDy0oxsj4k=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-fileinput@5.0.3/js/locales/zh.js"
+        integrity="sha256-CSMmMd7U2z4bweRFWMhz0qwzPVoNADZvKzlHbZPBBK4=" crossorigin="anonymous"></script>
 
 <script>
-    var map = new AMap.Map('container', {
-        resizeEnable: true,
-        center: [122.083199, 37.534235],
-        zoom: 15
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
+    $(document).ready(function () {
+        $.ajax({
+            async: true,   		//是否为异步请求
+            cache: false,  		//是否缓存结果
+            type: "POST", 		//请求方式
+            dataType: "jsonp", 	//服务器返回的数据是什么类型
+            url: "{{url('/stu/greenPath/getGreenPathFiles')}}",
+            success: function (data) {
+                if (data.code === 200) {
+                    let initialPreview = new Array();
+                    let initialPreviewConfig = new Array();
+                    let datas = $.parseJSON(data.data);
+                    $.each(datas,function (index,val) {
+                        let image = ['jpg','jpeg','png','gif'];
+                        let text = ['txt','ini','csv','java','php','js','css'];
+                        let type = (val.type==='pdf')?'pdf':
+                            ($.inArray(val.type,image)!==-1)?'image':
+                            ($.inArray(val.type,text)!==-1)?'text':'object';
+                        console.log(type)
+                        initialPreviewConfig.push({
+                            caption: val.name,
+                            url: '{{url('stu/greenPath/delete')}}',
+                            key: val.md5,
+                            size:val.size,
+                            downloadUrl: '{{url('/')}}'+'/'+val.file,
+                            type: type
+                        });
+                        initialPreview.push('{{url('/')}}'+'/'+val.file);
+                    });
+                    initUploader(initialPreview,initialPreviewConfig);
+                } else if(data.code === 404){
+                    initUploader();
+                }else {
+                    spop({
+                        template: "<h4>获取失败（" + data.code + "）</h4>" +
+                            "<p>" + data.data + "</p>",
+                        style: 'warning',
+                        autoclose: false,
+                        position: 'bottom-right',
+                        icon: true,
+                        group: "getFiles",
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // 状态码
+                console.log("status:" + XMLHttpRequest.status + "\n");
+                // 状态
+                console.log("readyState:" + XMLHttpRequest.readyState + "\n");
+                // 错误信息
+                console.log("textStatus:" + textStatus + "\n");
+                spop({
+                    template: "请求失败（" + XMLHttpRequest.status + "）",
+                    style: 'error',
+                    autoclose: false,
+                    position: 'bottom-right',
+                    icon: true,
+                    group: "getFiles",
+                });
+            }
+        });
     });
 
-    var marker = new AMap.Marker({
-        position: {{json_encode($domLocal['PX'])}},//[122.080098,37.532806]
-        title: '{{$domLocal['title']}}',
-    });
-    map.add(marker);
+    function initUploader(initialPreview,initialPreviewConfig) {
+        $("#input-files").fileinput({
+            language: "zh",
+            theme: "fas",
+            uploadUrl: "{{url('/stu/uploadGreenPathFiles')}}",
+            allowedFileExtensions: ['pdf', 'doc', 'docx','zip','rar','tar','gzip','gz','7z','jpg','jpeg','png'],   //接收的文件后缀
+            initialPreviewAsData: true,
+            overwriteInitial: false,
+            maxFileCount: 5,
+            maxFileSize:10000,          //单位为kb，如果为0表示不限制文件大小
+            preferIconicPreview: true,
+            enctype: "multipart/form-data",
+            initialPreview:initialPreview,
+            initialPreviewConfig:initialPreviewConfig,
+            previewFileIconSettings: {  // configure your icon file extensions
+                'doc': '<i class="fas fa-file-word text-primary"></i>',
+                'xls': '<i class="fas fa-file-excel text-success"></i>',
+                'ppt': '<i class="fas fa-file-powerpoint text-danger"></i>',
+                'pdf': '<i class="fas fa-file-pdf text-danger"></i>',
+                'zip': '<i class="fas fa-file-archive text-muted"></i>',
+                'htm': '<i class="fas fa-file-code text-info"></i>',
+                'txt': '<i class="fas fa-file-alt text-info"></i>',
+                'mov': '<i class="fas fa-file-video text-warning"></i>',
+                'mp3': '<i class="fas fa-file-audio text-warning"></i>',
+                // note for these file types below no extension determination logic
+                // has been configured (the keys itself will be used as extensions)
+                'jpg': '<i class="fas fa-file-image text-danger"></i>',
+                'gif': '<i class="fas fa-file-image text-muted"></i>',
+                'png': '<i class="fas fa-file-image text-primary"></i>'
+            },
+            previewFileExtSettings: { // configure the logic for determining icon file extensions
+                'doc': function(ext) {
+                    return ext.match(/(doc|docx)$/i);
+                },
+                'xls': function(ext) {
+                    return ext.match(/(xls|xlsx)$/i);
+                },
+                'ppt': function(ext) {
+                    return ext.match(/(ppt|pptx)$/i);
+                },
+                'zip': function(ext) {
+                    return ext.match(/(zip|rar|tar|gzip|gz|7z)$/i);
+                },
+                'htm': function(ext) {
+                    return ext.match(/(htm|html)$/i);
+                },
+                'txt': function(ext) {
+                    return ext.match(/(txt|ini|csv|java|php|js|css)$/i);
+                },
+                'mov': function(ext) {
+                    return ext.match(/(avi|mpg|mkv|mov|mp4|3gp|webm|wmv)$/i);
+                },
+                'mp3': function(ext) {
+                    return ext.match(/(mp3|wav)$/i);
+                },
+                'jpg': function (ext) {
+                    return ext.match(/(jpg|jpeg)$/i);
+                }
+            },
+        }).on("filepredelete", function(jqXHR) {
+            var abort = true;
+            if (confirm("确定删除吗？")) {
+                abort = false;
+            }
+            return abort;
+        }).fileinput('{{($verifyResultbool === 1)?"disable":"enable"}}');
+    }
+
 </script>
 
 </body>
-
 </html>

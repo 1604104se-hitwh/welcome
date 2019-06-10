@@ -96,6 +96,14 @@
             </a>
         </li>
 
+        <!-- Nav Item - greenPath info -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('admin/greenPathVerify')}}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>绿色通道</span>
+            </a>
+        </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider">
 
@@ -316,10 +324,7 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
         integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.min.js"
-        integrity="sha256-mc3T6DNzcA7wvZn8UVCZZSHGUzsuki15ci/3gxoLBnw=" crossorigin="anonymous"></script>
-
-<!-- Custom scripts for all pages-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.12.0/dist/sweetalert2.all.min.js" integrity="sha256-wWhZbmmAXb1JDP1U+ywgt4FHA4XIxzcYyGEFnInYJMQ=" crossorigin="anonymous"></script><!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
 <!-- Smallpop -->
