@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Hash;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -104,6 +105,7 @@ Route::group(['prefix'=>'admin','middleware' => ['checkAuth:admin']], function (
     Route::get("greenPathVerify","GreenPathVerifyController@index");
     // 到站服务
     Route::get("navManage","NavManageController@index");
+
 });
 
 // Excel Import
