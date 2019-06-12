@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css"
           integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet">
+          rel="stylesheet">
     <!-- Smallpop -->
     <link href="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.css" rel="stylesheet">
     <link href="{{asset('css/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
@@ -94,8 +94,8 @@
         </li>
 
         <!-- Nav Item - Arrived -->
-        <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/nav')}}">
+        <li class="nav-item active">
+            <a class="nav-link" href="{{url('/admin/navManage')}}">
                 <i class="fas fa-fw fa-plane-arrival"></i>
                 <span>到站信息</span>
             </a>
@@ -133,7 +133,7 @@
         </div>
 
         <!-- Nav Item - welcome -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseWel"
                aria-expanded="true" aria-controls="collapseWel">
                 <i class="fas fa-fw fa-route"></i>
@@ -142,7 +142,7 @@
             <div id="collapseWel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">你可以：</h6>
-                    <a class="collapse-item active" href="{{url('/admin/reportInfo')}}">报到信息</a>
+                    <a class="collapse-item" href="{{url('/admin/reportInfo')}}">报到信息</a>
                     <a class="collapse-item" href="{{url('/admin/reportCheck')}}">迎新核验</a>
                 </div>
             </div>
@@ -208,7 +208,7 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">报到信息</h1>
+                    <h1 class="h3 mb-0 text-gray-800">到站信息管理</h1>
                 </div>
 
                 <!-- Content Row -->
@@ -238,9 +238,9 @@
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">在校生人数
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">预约人数
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$oldStuNumber}}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$reserveStuNumber}}</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-user-check fa-2x text-gray-300"></i>
@@ -267,49 +267,63 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="card mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">报到信息</h6>
-                    </div>
-                    <div class="card-body">
-                        <div id="reportInfoEditor" class="mb-4">
-                            {!! $reportInfo !!}
+                    <!-- Infomation Card port number -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">站点个数
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$portNumber}}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-map-marker-alt fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <button type="button" class="btn btn-primary" id="submitReportInfo">提交</button>
                     </div>
                 </div>
 
+
                 <div class="card mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">报道流程</h6>
+                        <div class="row">
+                            <h6 class="m-auto font-weight-bold text-primary align-content-center col-6">站点信息</h6>
+                            <div class="m-auto text-right col-6">
+                                <button type="button" id="addNewItem" class="btn btn-primary btn-sm m-0">
+                                    <i class="fas fa-plus"></i>
+                                    添加新站点
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body row">
-                        <button type="button" id="addNewItem" class="btn btn-primary btn-small mb-2">添加新项目</button>
+                    <div class="card-body table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>流程</th>
-                                <th>标题</th>
+                                <th>站点名称</th>
+                                <th>可预约时段</th>
                                 <th>选项</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @if(count($reportInfoLists)==0)
+                            @if(count($portInfoLists) === 0)
                                 <tr role="row">
-                                    <td colspan="3">还没有流程</td>
+                                    <td colspan="3">还没有站点</td>
                                 </tr>
-                            @else @foreach($reportInfoLists as $reportInfoList)
+                            @else @foreach($portInfoLists as $portInfoList)
                                 <tr>
-                                    <td scope="row">{{$reportInfoList->enrl_rank}}</td>
-                                    <td>{{$reportInfoList->enrl_title}}</td>
+                                    <td scope="row">{{$portInfoList->portName}}</td>
+                                    <td>{{$portInfoList->setReserveTime}}个</td>
                                     <td>
-                                        <button type="button" class="m-1 btn btn-info btn-sm modifyPost"
-                                                data-target="{{$reportInfoList->id}}">修改
+                                        <button type="button" class="m-0 ml-1 btn btn-info btn-sm modifyPost"
+                                                data-target="{{$portInfoList->id}}">修改
                                         </button>
-                                        <button type="button" class="m-1 btn btn-danger btn-sm deletePost"
-                                                data-target="{{$reportInfoList->id}}">删除
+                                        <button type="button" class="m-0 ml-1 btn btn-danger btn-sm deletePost"
+                                                data-target="{{$portInfoList->id}}">删除
                                         </button>
                                     </td>
                                 </tr>
@@ -317,21 +331,58 @@
                             @endif
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header py-3">
                         <div class="row">
-                            <div class="form-group ml-4">
-                                <label for="reportDate">报到日期</label>
-                                <input class="form-control form_datetime" id="reportDate"
-                                       type="text" value="{{$reportData}}" readonly>
+                            <h6 class="m-auto font-weight-bold text-primary align-content-center col-6">预约信息</h6>
+                            <div class="m-auto text-right col-6">
+                                <button type="button" id="exportInfo" class="btn btn-primary btn-sm m-0">
+                                    <i class="fas fa-file-export"></i>
+                                    导出预约信息
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <div class="form-check abc-checkbox abc-checkbox-info abc-checkbox-circle pb-2 pl-2">
-                            <input type="checkbox" class="form-check-input" id="beginReport" {{$check?"checked":""}}>
-                            <label class="form-check-label" for="beginReport">开始迎新核验</label>
+                    <div class="card-body">
+                        @if(count($reservationLists) === 0)
+                        <div class="alert alert-primary">
+                            没有站点
                         </div>
-
-                        <button type="button" id="saveConfig" class="btn btn-primary btn-small">保存配置</button>
+                        @else
+                        <div class="table-responsive">
+                            @for($i=0; $i<count($reservationLists) / 3; ++$i)
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                <tr>
+                                    @for($j=$i*3; $j<count($reservationLists)
+                                    && $j<$i*3 +3; ++$j)
+                                    <th colspan="2">{{$reservationLists[$j]->portName}}</th>
+                                    @endfor
+                                </tr>
+                                <tr>
+                                    @for($j=$i*3; $j<count($reservationLists)
+                                    && $j<$i*3 +3; ++$j)
+                                    <th>预约时间</th>
+                                    <th>预约人数</th>
+                                    @endfor
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    @for($j=$i*3; $j<count($reservationLists)
+                                    && $j<$i*3 +3; ++$j)
+                                    <td>{{$reservationLists[$j]->time}}</td>
+                                    <td>{{$reservationLists[$j]->stuNumber}}</td>
+                                    @endfor
+                                </tr>
+                                </tbody>
+                            </table>
+                            @endfor
+                        </div>
+                        @endif
                     </div>
                 </div>
 
@@ -381,34 +432,68 @@
     </div>
 </div>
 
-<!-- Add report step Modal -->
+<!-- Add/Modify port Modal -->
 <div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modifyModalTitle" data-type="modify">修改流程信息</h5>
+                <h5 class="modal-title" id="modifyModalTitle" data-type="modify">修改站点信息</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="py-3">
-                    <input type="text" class="form-control" name="post_title" id="postTitle" placeholder="输入流程标题"
+                    <input type="text" class="form-control" name="post_title" id="postTitle" placeholder="输入站点名称"
                            required>
                 </div>
                 <div id="postModifyEditor" class="mb-4">
                 </div>
-                <label for="positionDiv">确定地点</label>
-                <div class="row m-0" id="positionDiv">
-                    <div id="mapContainer"></div>
-                    <div class="ml-5">
-                        <div class="form-group">
-                            <label for="x-dig">经度</label>
-                            <input type="text" class="form-control" id="x-dig" readonly>
+                <label for="selectTime">可选时间</label>
+                <div class="border-primary">
+                    <div id="selectTime">
+
+                    </div>
+                    <div class="text-right">
+                        <button type="button" class="btn btn-secondary btn-sm"
+                                id="modifyTime" data-target="">修改时间信息</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveInfoBtn" data-target="">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Modify time Modal -->
+<div class="modal fade" id="timeModifyModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="timeModifyModalTitle" data-type="modify">修改可选时间</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-2">
+                    <label for="selectTime">已选择时间</label>
+                    <div class="border-primary">
+                        <div id="selectedTime">
+
                         </div>
-                        <div class="form-group">
-                            <label for="y-dig">纬度</label>
-                            <input type="text" class="form-control" id="y-dig" readonly>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label for="addTime">添加时间</label>
+                    <div class="input-group">
+                        <input type="text" id="addTime" class="form-control form_datetime">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" id="addTimeBtn" type="button">选中</button>
                         </div>
                     </div>
                 </div>
@@ -416,11 +501,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" id="saveInfoBtn">保存</button>
+                <button type="button" class="btn btn-primary" id="saveTimeBtn" data-target="">保存</button>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Bootstrap core JavaScript-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"
@@ -435,70 +521,67 @@
 <!-- Smallpop -->
 <script src="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.12.0/dist/sweetalert2.all.min.js"
+        integrity="sha256-wWhZbmmAXb1JDP1U+ywgt4FHA4XIxzcYyGEFnInYJMQ=" crossorigin="anonymous"></script>
+
+
 
 <!-- Custom scripts for Editor -->
 <script type="text/javascript" src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
 <script type="text/javascript" src="{{asset('js/bootstrap-datetimepicker.min.js')}}"></script>
 <script type="text/javascript">
     var E = window.wangEditor;
-    var editor1 = new E('#reportInfoEditor');
-    editor1.customConfig.uploadImgShowBase64 = true;
-    editor1.customConfig.zIndex = 1;
-    editor1.create();
-    var editor2 = new E('#postModifyEditor');
-    editor2.customConfig.uploadImgShowBase64 = true;
-    editor2.customConfig.zIndex = 1;
-    editor2.create();
+    var editor = new E('#postModifyEditor');
+    editor.customConfig.uploadImgShowBase64 = true;
+    editor.customConfig.zIndex = 1;
+    editor.create();
 </script>
 
-<!--异步加载 高德地图JSAPI ，注意 callback 参数-->
-<script src="https://webapi.amap.com/maps?v=1.4.13&key=0a4d80176be0dde936743e7e03a5f237&callback=my_init"></script>
-
-<!--引入UI组件库异步版本main-async.js（1.0版本） -->
-<script src="https://webapi.amap.com/ui/1.0/main-async.js"></script>
-
-<script type="text/javascript">
-    //JSAPI回调入口
-    var positionPicker;
-    var AMapUIProtocol = 'https:';
-    var map = new AMap.Map('mapContainer', {
-        zoom: 15,
-        center: [122.083553, 37.533764],
-    });
-
-    function my_init() {
-        initAMapUI();
-        //加载PositionPicker，loadUI的路径参数为模块名中 'ui/' 之后的部分
-        AMapUI.loadUI(['misc/PositionPicker'], function (PositionPicker) {
-            positionPicker = new PositionPicker({
-                mode: 'dragMap',//设定为拖拽地图模式，可选'dragMap'、'dragMarker'，默认为'dragMap'
-                map: map//依赖地图对象
-            });
-
-            positionPicker.on('success', function (positionResult) {
-                $('#x-dig').val(positionResult.position.lng);
-                $('#y-dig').val(positionResult.position.lat)
-            });
-            positionPicker.on('fail', function (positionResult) {
-                // 海上或海外无法获得地址信息
-                console.log('fail');
-            });
-            positionPicker.start();
-        });
-
-    }
-</script>
 
 <!-- Data Picker -->
 <script>
     $('.form_datetime').datetimepicker({
-        format: "mm月dd日",
-        autoclose: true,
+        format: "mm月dd日 hh:ii",
         todayBtn: "linked",
         todayHighlight: true,
-        minView: "month",
-        maxView: "year",
+        forceParse: 0,
     });
+
+    Date.prototype.Format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1,      //月份
+            "d+": this.getDate(),           //日
+            "H+": this.getHours(),          //小时
+            "m+": this.getMinutes(),        //分
+            "s+": this.getSeconds(),        //秒
+        };
+        if (/(y+)/.test(fmt)) fmt =
+            fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt =
+                fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ?
+                    (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
+    /**
+     * 日期 转换为 Unix时间戳
+     * @param <string> 01月01日 20:20:20  日期格式
+     * @return <int>        unix时间戳(秒)
+     */
+    function DateToUnix (string) {
+        let f = string.split(' ', 2);
+        let d = (f[0] ? f[0] : '').split(/[月日]/, 2);
+        let t = (f[1] ? f[1] : '').split(':', 3);
+        return (new Date(
+            new Date().getFullYear(),
+            (parseInt(d[0], 10) || 1) - 1,
+            parseInt(d[1], 10) || null,
+            parseInt(t[0], 10) || null,
+            parseInt(t[1], 10) || null,
+            parseInt(t[2], 10) || null
+        )).getTime() / 1000;
+    }
 </script>
 
 <!-- ajax post -->
@@ -509,92 +592,48 @@
         }
     });
 
-    $('#submitReportInfo').click(function () {
-        $.ajax({
-            async: true,   		//是否为异步请求
-            cache: false,  		//是否缓存结果
-            type: "POST", 		//请求方式
-            dataType: "jsonp", 	//服务器返回的数据是什么类型
-            url: "{{url($reportInfoPostURL)}}",
-            data: {"reportInfo": editor1.txt.html()},
-
-            success: function (data) {
-                if (data.code === 200) {
-                    spop({
-                        template: "<h4>成功保存</h4>" +
-                            "<p>信息已经更新，刷新页面就可以看到啦</p>",
-                        style: 'success',
-                        autoclose: 5000,
-                        position: 'bottom-right',
-                        icon: true,
-                        group: "submitReportInfo",
-                    });
-                } else {
-                    spop({
-                        template: "<h4>保存失败（" + data.code + "）</h4>" +
-                            "<p>" + data.data + "</p>",
-                        style: 'warning',
-                        autoclose: false,
-                        position: 'bottom-right',
-                        icon: true,
-                        group: "submitReportInfo",
-                    });
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                // 状态码
-                console.log("status:" + XMLHttpRequest.status + "\n");
-                // 状态
-                console.log("readyState:" + XMLHttpRequest.readyState + "\n");
-                // 错误信息
-                console.log("textStatus:" + textStatus + "\n");
-                spop({
-                    template: "保存失败（" + XMLHttpRequest.status + "）",
-                    style: 'error',
-                    autoclose: false,
-                    position: 'bottom-right',
-                    icon: true,
-                    group: "submitReportInfo",
-                });
-            }
-        });
-    });
-
     // 添加新的项目
     $('#addNewItem').click(function () {
         // 初始化
         let title = $('#modifyModalTitle');
-        title.text('添加新的流程');
+        title.text('添加新的站点');
         title.data('type', 'create');
-        $('#m_post_title').val('');
-        editor2.txt.clear();
-        positionPicker.start([122.083553, 37.533764]);
+        $('#postTitle').val('');
+        editor.txt.clear();
+        $("#selectTime").html("还没有设置");
         $('#modifyModal').modal('show');
     });
 
     // 修改项目
-    let modifyID = 0;
     $('.modifyPost').click(function () {
         let title = $('#modifyModalTitle');
-        title.text('修改流程');
+        title.text('修改站点信息');
         title.data('type', 'modify');
-        modifyID = $(this).data('target');
+        let modifyID = $(this).data('target');
+        $("#saveInfoBtn").data('target',modifyID);
+        $("#modifyTime").data('target',modifyID);
         // 请求以前内容
         $.ajax({
             async: true,   		//是否为异步请求
             cache: false,  		//是否缓存结果
             type: "POST", 		//请求方式
             dataType: "jsonp", 	//服务器返回的数据是什么类型
-            url: "{{url($getReportInfoURL)}}",
+            url: "{{url($getNavInfoURL)}}",
             data: {"target": modifyID},
 
             success: function (data) {
                 if (data.code === 200) {
-                    let position = JSON.parse(data.data.enrl_location);
-                    $('#postTitle').val(data.data.enrl_title);
-                    editor2.txt.html(data.data.enrl_info);
-                    var pos = new AMap.LngLat(position[0], position[1]);
-                    map.setCenter(pos);
+                    let times = "";
+                    let timeM = "";
+                    $.each($.parseJSON(data.data.shtl_time),function (index,val) {
+                        times+="<span class=\"badge badge-primary mr-1\"" +
+                            " data-timestamp=\""+val+"\">" +
+                            (new Date(val*1000)).Format("MM月dd日 HH:mm")+"</span>";
+                    });
+                    $("#selectTime").html(times===""?"暂无时间段":times);
+                    $('#postTitle').val(data.data.port_name);
+                    editor.txt.html(data.data.port_info);
+                    $('#modifyModal').modal('show');
                 } else {
                     spop({
                         template: "<h4>请求失败（" + data.code + "）</h4>" +
@@ -624,15 +663,19 @@
                 });
             }
         });
-        $('#modifyModal').modal('show');
     });
 
     // 确认修改
     $('#saveInfoBtn').click(function () {
+        let target = $(this).data('target');
         let type = $('#modifyModalTitle').data('type');
         let title = $('#postTitle').val();
-        let info = editor2.txt.text();
-        let location = JSON.stringify([parseFloat($('#x-dig').val()), parseFloat($('#y-dig').val())]);
+        let info = editor.txt.text();
+        // 获取时间戳
+        let timestamps = [];
+        $.each($('#selectTime span'),function (index,val) {
+            timestamps.push(parseInt($(this).data('timestamp')));
+        });
         $.ajax({
             async: true,   		//是否为异步请求
             cache: false,  		//是否缓存结果
@@ -641,10 +684,10 @@
             url: "{{url($saveInfoURL)}}",
             data: {
                 "type": type,
-                "target": modifyID,
+                "target": target,
                 "title": title,
                 "info": info,
-                "location": location
+                "timestamps":timestamps,
             },
             success: function (data) {
                 if (data.code === 200) {
@@ -694,7 +737,7 @@
         var thisTable = $(this);
         Swal.fire({
             title: '确定要删除吗',
-            text: "你将要删除流程\" " + $(this).parent().parent().find('td:eq(1)').text() + " \"",
+            text: "你将要删除站点\" " + $(this).parent().parent().find('td:eq(0)').text() + " \"",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -708,7 +751,7 @@
                     cache: false,  		//是否缓存结果
                     type: "POST", 		//请求方式
                     dataType: "jsonp", 	//服务器返回的数据是什么类型
-                    url: "{{url($deleteReportInfoURL)}}",
+                    url: "{{url($deletePortInfoURL)}}",
                     data: {"deleteID": $(this).data("target")},
 
                     success: function (data) {
@@ -745,61 +788,48 @@
         })
     });
 
-    // 保存配置
-    $('#saveConfig').click(function () {
-        let data = $('#reportDate').val();
-        let beginCheck = $('#beginReport').prop('checked');
-        $.ajax({
-            async: true,   		//是否为异步请求
-            cache: false,  		//是否缓存结果
-            type: "POST", 		//请求方式
-            dataType: "jsonp", 	//服务器返回的数据是什么类型
-            url: "{{url($saveEnrollConfig)}}",
-            data: {
-                "reportDate": data,
-                "beginReport": beginCheck,
-            },
-            success: function (data) {
-                if (data.code === 200) {
-                    $('#modifyModal').modal('hide');
-                    spop({
-                        template: "<h4>成功保存</h4>" +
-                            "<p>信息已经更新，刷新页面就可以看到啦</p>",
-                        style: 'success',
-                        autoclose: 5000,
-                        position: 'bottom-right',
-                        icon: true,
-                        group: "saveInfo",
-                    });
-                } else {
-                    spop({
-                        template: "<h4>保存失败（" + data.code + "）</h4>" +
-                            "<p>" + data.data + "</p>",
-                        style: 'warning',
-                        autoclose: false,
-                        position: 'bottom-right',
-                        icon: true,
-                        group: "saveInfo",
-                    });
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                // 状态码
-                console.log("status:" + XMLHttpRequest.status + "\n");
-                // 状态
-                console.log("readyState:" + XMLHttpRequest.readyState + "\n");
-                // 错误信息
-                console.log("textStatus:" + textStatus + "\n");
-                spop({
-                    template: "请求失败（" + XMLHttpRequest.status + "）",
-                    style: 'error',
-                    autoclose: false,
-                    position: 'bottom-right',
-                    icon: true,
-                    group: "saveInfo",
-                });
-            }
+    // 修改时间
+    $('#modifyTime').click(function () {
+        let id = $(this).data('target');
+        $('#saveTimeBtn').data('target',id);
+        let timeM = "";
+        $.each($('#selectTime span'),function (index,val) {
+            let vals = $(this).data('timestamp');
+            timeM+="<a href=\"javascript:void(0);\" class=\"badge badge-primary mr-1\"" +
+                " data-timestamp=\""+vals+"\">"+(new Date(vals*1000)).Format("MM月dd日 HH:mm") +
+                " <i class=\"fas fa-times\"></i></a>";
         });
+        $("#selectedTime").html(timeM);
+        $('#timeModifyModal').modal('show');
+    });
+
+    // 保存时间信息
+    $('#saveTimeBtn').click(function () {
+        let timestamps = [];
+        let times = "";
+        $.each($('#selectedTime a'),function (index,val) {
+            let vals = $(this).data('timestamp');
+            times+="<span class=\"badge badge-primary mr-1\" data-timestamp=\"" +
+                vals +"\">" + (new Date(vals*1000)).Format("MM月dd日 HH:mm")+"</span>";
+            timestamps.push($(this).data('timestamp'));
+        });
+        $("#selectTime").html(times===""?"暂无时间段":times);
+        $('#timeModifyModal').modal('hide');
+    });
+
+    // 点击时间删除
+    $("#selectedTime").on("click","a",function () {
+        $(this).remove();
+    });
+
+    // 添加时间
+    $("#addTimeBtn").click(function () {
+        let time = $.trim($("#addTime").val());
+        if(time==="") return;
+        let timeM = "<a href=\"javascript:void(0);\" class=\"badge badge-primary mr-1\"" +
+            " data-timestamp=\""+DateToUnix(time)+"\">"+time +
+            " <i class=\"fas fa-times\"></i></a>";
+        $("#selectedTime").append(timeM);
     });
 
 </script>

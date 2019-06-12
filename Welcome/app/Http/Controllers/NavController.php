@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 require_once __DIR__ . '/../../include.php';
 
 use App\Models\Post;
+use App\Models\StudentsHelp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -65,6 +66,5 @@ class NavController extends Controller
             'stationInfos' => array(), // 到站信息
             'toLogoutURL' => "/logout",      // 退出登录
         ]);
-
     }
 }

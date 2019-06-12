@@ -336,135 +336,137 @@
                             核验已完成，信息不可更改
                         @endif
                     </div>
-                    <table class="table table-bordered">
-                        <tbody>
-                        <tr>
-                            <th>姓名</th>
-                            <td id="name" data-target="{{$stuInfo->id}}">{{$stuInfo->name}}</td>
-                            <th>学号</th>
-                            <td>{{$stuInfo->schoolID}}</td>
-                            <th>性别</th>
-                            <td>{{$stuInfo->gender}}</td>
-                        </tr>
-                        <tr>
-                            <th>考生号</th>
-                            <td colspan="2">{{$stuInfo->eid}}</td>
-                            <th>身份证</th>
-                            <td colspan="2">{{$stuInfo->cid}}</td>
-                        </tr>
-                        <tr>
-                            <th>学院</th>
-                            <td>{{$stuInfo->dept}}</td>
-                            <th>专业</th>
-                            <td>{{$stuInfo->major}}</td>
-                            <th>民族</th>
-                            <td>
-                                <select class="form-control form-control-sm" id="nation" @if(!$needCommit) disabled @endif>
-                                    <option value="汉族">汉族</option>
-                                    <option value="蒙古族">蒙古族</option>
-                                    <option value="回族">回族</option>
-                                    <option value="藏族">藏族</option>
-                                    <option value="维吾尔族">维吾尔族</option>
-                                    <option value="苗族">苗族</option>
-                                    <option value="彝族">彝族</option>
-                                    <option value="壮族">壮族</option>
-                                    <option value="布依族">布依族</option>
-                                    <option value="朝鲜族">朝鲜族</option>
-                                    <option value="满族">满族</option>
-                                    <option value="侗族">侗族</option>
-                                    <option value="瑶族">瑶族</option>
-                                    <option value="白族">白族</option>
-                                    <option value="土家族">土家族</option>
-                                    <option value="哈尼族">哈尼族</option>
-                                    <option value="哈萨克族">哈萨克族</option>
-                                    <option value="傣族">傣族</option>
-                                    <option value="黎族">黎族</option>
-                                    <option value="傈僳族">傈僳族</option>
-                                    <option value="佤族">佤族</option>
-                                    <option value="畲族">畲族</option>
-                                    <option value="高山族">高山族</option>
-                                    <option value="拉祜族">拉祜族</option>
-                                    <option value="水族">水族</option>
-                                    <option value="东乡族">东乡族</option>
-                                    <option value="纳西族">纳西族</option>
-                                    <option value="景颇族">景颇族</option>
-                                    <option value="柯尔克孜族">柯尔克孜族</option>
-                                    <option value="土族">土族</option>
-                                    <option value="达斡尔族">达斡尔族</option>
-                                    <option value="仫佬族">仫佬族</option>
-                                    <option value="羌族">羌族</option>
-                                    <option value="布朗族">布朗族</option>
-                                    <option value="撒拉族">撒拉族</option>
-                                    <option value="毛南族">毛南族</option>
-                                    <option value="仡佬族">仡佬族</option>
-                                    <option value="锡伯族">锡伯族</option>
-                                    <option value="阿昌族">阿昌族</option>
-                                    <option value="普米族">普米族</option>
-                                    <option value="塔吉克族">塔吉克族</option>
-                                    <option value="怒族">怒族</option>
-                                    <option value="乌孜别克族">乌孜别克族</option>
-                                    <option value="俄罗斯族">俄罗斯族</option>
-                                    <option value="鄂温克族">鄂温克族</option>
-                                    <option value="德昂族">德昂族</option>
-                                    <option value="保安族">保安族</option>
-                                    <option value="裕固族">裕固族</option>
-                                    <option value="京族">京族</option>
-                                    <option value="塔塔尔族">塔塔尔族</option>
-                                    <option value="独龙族">独龙族</option>
-                                    <option value="鄂伦春族">鄂伦春族</option>
-                                    <option value="赫哲族">赫哲族</option>
-                                    <option value="门巴族">门巴族</option>
-                                    <option value="珞巴族">珞巴族</option>
-                                    <option value="基诺族">基诺族</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>联系方式</th>
-                            <td>
-                                <input type="text" class="form-control form-control-sm" maxlength="11"
-                                       onkeyup="this.value=this.value.replace(/\D/g,'')" id="phone" value="{{$stuInfo->phone}}"
-                                       @if(!$needCommit) disabled @endif>
-                            </td>
-                            <th>宿舍</th>
-                            <td>{{$stuInfo->dorm}}</td>
-                            <th>政治面貌</th>
-                            <td>
-                                <select class="form-control form-control-sm" id="party" @if(!$needCommit) disabled @endif>
-                                    <option value="中共党员">中共党员</option>
-                                    <option value="中共预备党员">中共预备党员</option>
-                                    <option value="共青团员">共青团员</option>
-                                    <option value="民革党员">民革党员</option>
-                                    <option value="民盟盟员">民盟盟员</option>
-                                    <option value="民建会员">民建会员</option>
-                                    <option value="民进会员">民进会员</option>
-                                    <option value="农工党党员">农工党党员</option>
-                                    <option value="致公党党员">致公党党员</option>
-                                    <option value="九三学社社员">九三学社社员</option>
-                                    <option value="台盟盟员">台盟盟员</option>
-                                    <option value="无党派人士">无党派人士</option>
-                                    <option value="群众">群众</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>团关系</th>
-                            <td colspan="3">
-                                <input type="text" class="form-control form-control-sm"
-                                       id="relation" value="{{$stuInfo->relation}}" @if(!$needCommit) disabled @endif>
-                            </td>
-                            <th>绿色通道</th>
-                            <td>{{$stuInfo->greenPath}}</td>
-                        </tr>
-                        <tr>
-                            <th>家庭住址</th>
-                            <td colspan="5">
-                                <input type="text" class="form-control form-control-sm"
-                                       id="homeLocation" value="{{$stuInfo->homeLocation}}" @if(!$needCommit) disabled @endif>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th>姓名</th>
+                                <td id="name" data-target="{{$stuInfo->id}}">{{$stuInfo->name}}</td>
+                                <th>学号</th>
+                                <td>{{$stuInfo->schoolID}}</td>
+                                <th>性别</th>
+                                <td>{{$stuInfo->gender}}</td>
+                            </tr>
+                            <tr>
+                                <th>考生号</th>
+                                <td colspan="2">{{$stuInfo->eid}}</td>
+                                <th>身份证</th>
+                                <td colspan="2">{{$stuInfo->cid}}</td>
+                            </tr>
+                            <tr>
+                                <th>学院</th>
+                                <td>{{$stuInfo->dept}}</td>
+                                <th>专业</th>
+                                <td>{{$stuInfo->major}}</td>
+                                <th>民族</th>
+                                <td>
+                                    <select class="form-control form-control-sm" id="nation" @if(!$needCommit) disabled @endif>
+                                        <option value="汉族">汉族</option>
+                                        <option value="蒙古族">蒙古族</option>
+                                        <option value="回族">回族</option>
+                                        <option value="藏族">藏族</option>
+                                        <option value="维吾尔族">维吾尔族</option>
+                                        <option value="苗族">苗族</option>
+                                        <option value="彝族">彝族</option>
+                                        <option value="壮族">壮族</option>
+                                        <option value="布依族">布依族</option>
+                                        <option value="朝鲜族">朝鲜族</option>
+                                        <option value="满族">满族</option>
+                                        <option value="侗族">侗族</option>
+                                        <option value="瑶族">瑶族</option>
+                                        <option value="白族">白族</option>
+                                        <option value="土家族">土家族</option>
+                                        <option value="哈尼族">哈尼族</option>
+                                        <option value="哈萨克族">哈萨克族</option>
+                                        <option value="傣族">傣族</option>
+                                        <option value="黎族">黎族</option>
+                                        <option value="傈僳族">傈僳族</option>
+                                        <option value="佤族">佤族</option>
+                                        <option value="畲族">畲族</option>
+                                        <option value="高山族">高山族</option>
+                                        <option value="拉祜族">拉祜族</option>
+                                        <option value="水族">水族</option>
+                                        <option value="东乡族">东乡族</option>
+                                        <option value="纳西族">纳西族</option>
+                                        <option value="景颇族">景颇族</option>
+                                        <option value="柯尔克孜族">柯尔克孜族</option>
+                                        <option value="土族">土族</option>
+                                        <option value="达斡尔族">达斡尔族</option>
+                                        <option value="仫佬族">仫佬族</option>
+                                        <option value="羌族">羌族</option>
+                                        <option value="布朗族">布朗族</option>
+                                        <option value="撒拉族">撒拉族</option>
+                                        <option value="毛南族">毛南族</option>
+                                        <option value="仡佬族">仡佬族</option>
+                                        <option value="锡伯族">锡伯族</option>
+                                        <option value="阿昌族">阿昌族</option>
+                                        <option value="普米族">普米族</option>
+                                        <option value="塔吉克族">塔吉克族</option>
+                                        <option value="怒族">怒族</option>
+                                        <option value="乌孜别克族">乌孜别克族</option>
+                                        <option value="俄罗斯族">俄罗斯族</option>
+                                        <option value="鄂温克族">鄂温克族</option>
+                                        <option value="德昂族">德昂族</option>
+                                        <option value="保安族">保安族</option>
+                                        <option value="裕固族">裕固族</option>
+                                        <option value="京族">京族</option>
+                                        <option value="塔塔尔族">塔塔尔族</option>
+                                        <option value="独龙族">独龙族</option>
+                                        <option value="鄂伦春族">鄂伦春族</option>
+                                        <option value="赫哲族">赫哲族</option>
+                                        <option value="门巴族">门巴族</option>
+                                        <option value="珞巴族">珞巴族</option>
+                                        <option value="基诺族">基诺族</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>联系方式</th>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm" maxlength="11"
+                                           onkeyup="this.value=this.value.replace(/\D/g,'')" id="phone" value="{{$stuInfo->phone}}"
+                                           @if(!$needCommit) disabled @endif>
+                                </td>
+                                <th>宿舍</th>
+                                <td>{{$stuInfo->dorm}}</td>
+                                <th>政治面貌</th>
+                                <td>
+                                    <select class="form-control form-control-sm" id="party" @if(!$needCommit) disabled @endif>
+                                        <option value="中共党员">中共党员</option>
+                                        <option value="中共预备党员">中共预备党员</option>
+                                        <option value="共青团员">共青团员</option>
+                                        <option value="民革党员">民革党员</option>
+                                        <option value="民盟盟员">民盟盟员</option>
+                                        <option value="民建会员">民建会员</option>
+                                        <option value="民进会员">民进会员</option>
+                                        <option value="农工党党员">农工党党员</option>
+                                        <option value="致公党党员">致公党党员</option>
+                                        <option value="九三学社社员">九三学社社员</option>
+                                        <option value="台盟盟员">台盟盟员</option>
+                                        <option value="无党派人士">无党派人士</option>
+                                        <option value="群众">群众</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>团关系</th>
+                                <td colspan="3">
+                                    <input type="text" class="form-control form-control-sm"
+                                           id="relation" value="{{$stuInfo->relation}}" @if(!$needCommit) disabled @endif>
+                                </td>
+                                <th>绿色通道</th>
+                                <td>{{$stuInfo->greenPath}}</td>
+                            </tr>
+                            <tr>
+                                <th>家庭住址</th>
+                                <td colspan="5">
+                                    <input type="text" class="form-control form-control-sm"
+                                           id="homeLocation" value="{{$stuInfo->homeLocation}}" @if(!$needCommit) disabled @endif>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <button type="button" class="btn btn-primary" id="commitInfo"
                             @if(!$needCommit) disabled @endif>
                         @if(!$needCommit) 已经核验 @else 提交 @endif

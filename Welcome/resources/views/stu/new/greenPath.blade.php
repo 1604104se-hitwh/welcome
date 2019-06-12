@@ -338,9 +338,19 @@
                         <p>个人信息有误请到<a href="{{url("/stu/personalInfo")}}">个人信息</a>页面修改。</p>
                     </div>
                     <div class="card border-left-warning mb-2 mt-2">
-                        <div class="p-2">
-                            <i class="fas fa-fw fa-columns"></i> 个人信息确认
+                        <div class="row p-2">
+                            <div class="m-auto col-6">
+                                <i class="fas fa-fw fa-columns"></i> 个人信息确认
+                            </div>
+                            <div class="m-auto col-6 text-right">
+                                <a href="{{url('stu/personalInfo')}}" target="_blank"
+                                   class="btn btn-primary btn-sm">
+                                    <i class="fas fa-edit fa-columns"></i>
+                                    修改信息
+                                </a>
+                            </div>
                         </div>
+
                     </div>
                     <table class="table table-bordered">
                         <tbody>

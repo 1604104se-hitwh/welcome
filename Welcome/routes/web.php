@@ -91,7 +91,7 @@ Route::group(['prefix'=>'admin','middleware' => ['checkAuth:admin']], function (
 
     Route::get('manageNewsInfo', 'AdminController@manageNewsInfo');
 
-    Route::get('manageAdminInfo', 'AdminController@manageAdminInfo');
+    Route::get('manageAdminInfo', 'AdminManageController@index');
 
     Route::get('posts', 'PostController@index');
     // 管理报道信息
@@ -102,6 +102,8 @@ Route::group(['prefix'=>'admin','middleware' => ['checkAuth:admin']], function (
     Route::get("personalInfo","AdminInfoController@index");
     // 绿色通道审核
     Route::get("greenPathVerify","GreenPathVerifyController@index");
+    // 到站服务
+    Route::get("navManage","NavManageController@index");
 });
 
 // Excel Import
@@ -125,17 +127,17 @@ Route::group(['prefix'=>'admin' ,'middleware' => ['postAuthCheck:admin']], funct
     Route::post("modifyPost", "PostController@modifyPost");
 
     // 管理工作人员信息
-    Route::post("addAdmin", "AdminController@addAdmin");
+    Route::post("addAdmin", "AdminManageController@addAdmin");
 
-    Route::post("deleteAdmin", "AdminController@deleteAdmin");
+    Route::post("deleteAdmin", "AdminManageController@deleteAdmin");
 
-    Route::post("getAdmin", "AdminController@getAdmin");
+    Route::post("getAdmin", "AdminManageController@getAdmin");
 
-    Route::post("modifyAdmin", "AdminController@modifyAdmin");
+    Route::post("modifyAdmin", "AdminManageController@modifyAdmin");
 
-    Route::post("getPermissionList", "AdminController@getPermissionList");
+    Route::post("getPermissionList", "AdminManageController@getPermissionList");
 
-    // 管理报道流程
+    // 管理报到流程
     Route::post("storeReportInfo","ReportConfigController@postReportInfo");
 
     Route::post("getReportInfo","ReportConfigController@getReportInfo");
@@ -148,12 +150,17 @@ Route::group(['prefix'=>'admin' ,'middleware' => ['postAuthCheck:admin']], funct
 
     // 新生核验部分
     Route::post("getStudentInfo","ReportCheckController@getStudentInfo");
-
     Route::post("confirmReportInfo","ReportCheckController@confirmReportInfo");
     // 管理员绿色通道审核-信息获取
     Route::post("getGreenPathInfo","GreenPathVerifyController@getGreenPathInfo");
     // 管理员绿色通道审核-审核信息提交
     Route::post("commitVerifyInfo","GreenPathVerifyController@commitVerifyInfo");
+    // 接车信息-获取站点设置
+    Route::post("getPortInfo","NavManageController@getPortInfo");
+    // 接车信息-增加/修改站点信息
+    Route::post("savePortInfo","NavManageController@savePortInfo");
+    // 接着信息-删除
+    Route::post("deletePort","NavManageController@deletePort");
 
 });
 

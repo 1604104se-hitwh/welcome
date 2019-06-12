@@ -88,7 +88,7 @@
 
         <!-- Nav Item - Arrived -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/nav')}}">
+            <a class="nav-link" href="{{url('/admin/navManage')}}">
                 <i class="fas fa-fw fa-plane-arrival"></i>
                 <span>到站信息</span>
             </a>
@@ -218,7 +218,7 @@
                     </div>
                 </div>
 
-                <div class="mt-4">
+                <div class="mt-4 table-responsive">
                     <table class="table table-bordered">
                         <tbody>
                         <tr>

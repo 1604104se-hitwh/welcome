@@ -24,7 +24,7 @@
             // 报到配置
             $enrollcfg = EnrollCfg::first(['enrl_begin_time', 'enrl_info', 'enrl_permission']);
             $reportInfoLists = Enroll::orderBy('enrl_rank', 'asc')->get(['id', 'enrl_title', 'enrl_rank']);
-            return view("admin.enrollConfig", [
+            return view("admin.reportConfig", [
                 'sysType'                   => "管理员",                        // 系统运行模式，新生，在校生，管理员
                 'user'                      => session("name"),            // 用户名
                 'userImg'                   => "/avatar",                       // 用户头像链接 url(site)
@@ -67,7 +67,7 @@
             return response()->jsonp($request->input('callback'), $array);
         }
 
-        // 获取报道流程详细信息
+        // 获取报到流程详细信息
         public function getReportInfo(Request $request)
         {
             if ($request->has('target')) {

@@ -88,7 +88,7 @@
 
         <!-- Nav Item - Arrived -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/nav')}}">
+            <a class="nav-link" href="{{url('/admin/navManage')}}">
                 <i class="fas fa-fw fa-plane-arrival"></i>
                 <span>到站信息</span>
             </a>
@@ -224,7 +224,7 @@
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">所有通知</h6>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr role="row">

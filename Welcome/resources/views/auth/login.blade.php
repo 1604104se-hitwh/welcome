@@ -60,8 +60,8 @@
                                    value="{{old("examId")}}" class="form-control" id="examId" placeholder="填写您的考生号">
                         </div>
                         <div class="form-group">
-                            <label for="perId">身份证号</label>
-                            <input type="text" name="perId" class="form-control" id="perId" placeholder="填写身份证号">
+                            <label for="nperId">身份证号</label>
+                            <input type="text" name="perId" class="form-control" id="nperId" placeholder="填写身份证号">
                         </div>
                         <button type="submit" class="btn btn-block btn-primary" id="newLogin">登录</button>
                     </form>
@@ -72,13 +72,13 @@
                         {{ csrf_field() }}
                         <input type="hidden" name="loginType" value="old">
                         <div class="form-group">
-                            <label for="examId">姓名</label>
+                            <label for="name">姓名</label>
                             <input type="text" name="name"
                                    value="{{old("name")}}" class="form-control" id="name" placeholder="填写您的姓名">
                         </div>
                         <div class="form-group">
-                            <label for="perId">身份证号</label>
-                            <input type="text" name="perId" class="form-control" id="perId" placeholder="填写身份证号">
+                            <label for="operId">身份证号</label>
+                            <input type="text" name="perId" class="form-control" id="operId" placeholder="填写身份证号">
                         </div>
                         <button type="submit" class="btn btn-block btn-secondary" id="oldLogin">登录</button>
                     </form>
@@ -89,12 +89,12 @@
                         {{ csrf_field() }}
                         <input type="hidden" name="loginType" value="admin">
                         <div class="form-group">
-                            <label for="examId">用户名</label>
+                            <label for="userId">用户名</label>
                             <input type="text" name="userId"
                                    value="{{old("userId")}}" class="form-control" id="userId" placeholder="填写准用户名">
                         </div>
                         <div class="form-group">
-                            <label for="perId">密码</label>
+                            <label for="password">密码</label>
                             <input type="password" name="psw" class="form-control" id="password" placeholder="填写密码">
                         </div>
                         <button type="submit" class="btn btn-block btn-danger" id="adminLogin">登录</button>

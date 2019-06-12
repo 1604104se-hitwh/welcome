@@ -1,0 +1,166 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Enroll;
+use App\Models\EnrollCfg;
+use App\Models\ShtlPort;
+use App\Models\ShtlRecord;
+use App\Models\Shuttle;
+use App\Models\Students;
+use Barryvdh\Debugbar\Facade;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\Object_;
+
+// 到站信息管理控制器
+class NavManageController extends Controller
+{
+    //到站信息-展示
+    public function index(Request $request){
+
+        $res = Students::where([
+            ["stu_status", "PREPARE"]
+        ])->count();
+        $reserveStuNumber = ShtlRecord::count();
+        // 报到配置
+        $enrollcfg = EnrollCfg::first(['enrl_begin_time']);
+        $port = ShtlPort::leftJoin('t_shuttle','t_shuttle.port_id','t_shtl_port.id')->get([
+            't_shtl_port.id','t_shtl_port.port_name as portName',
+            DB::raw("IFNULL(JSON_LENGTH(`shtl_time`),0) as setReserveTime")
+        ]);
+        $test = new \stdClass();
+        $test->portName = "1";
+        $test->time= "1";
+        $test->stuNumber="1";
+        return view("admin.navManage", [
+            'sysType'                   => "管理员",                        // 系统运行模式，新生，在校生，管理员
+            'user'                      => session("name"),            // 用户名
+            'userImg'                   => "/avatar",                       // 用户头像链接 url(site)
+            'toInformationURL'          => "/admin/personalInfo",           // 个人设置url
+            'newStuNumber'              => $res,                            // 新生人数
+            'reserveStuNumber'          => $reserveStuNumber,               // 预约新生人数
+            'stuReportTime'             => $enrollcfg->enrl_begin_time,     // 报到时间
+            'getNavInfoURL'             => "/admin/getPortInfo",            // 获取站点信息URL
+            'saveInfoURL'               => "/admin/savePortInfo",           // 保存站点信息URL
+            'deletePortInfoURL'         => '/admin/deletePort',             // 删除信息URL
+            'portInfoLists'             => $port,                           // 列表
+            'saveEnrollConfig'          => '/admin/saveEnrollConfig',       // 配置保存
+            'portNumber'                => $port->count(),                               // 站点个数
+            'reservationLists'          => array(
+                $test,$test,$test,$test,$test
+            ),                         // 站点预约信息
+
+            'toLogoutURL'               => "/logout",                       // 退出登录
+        ]);
+    }
+
+    // 获取数据
+    public function getPortInfo(Request $request){
+        if($request->has('target')){
+            $data = ShtlPort::where('t_shtl_port.id',$request->post('target'))
+                ->leftJoin('t_shuttle','t_shuttle.port_id','t_shtl_port.id')
+                ->first([
+                    'port_name','port_info','shtl_time'
+                ]);
+            Facade::info($data);
+            if($data){
+                $array = array(
+                    "code"  => 200,
+                    "msg"   => "Get data successfully!",
+                    "data"  => $data
+                );
+            }else{
+                $array = array(
+                    "code"  => 404,
+                    "msg"   => "Cannot get the data!",
+                    "data"  => "无法获取到数据！"
+                );
+            }
+        }else{
+            $array = array(
+                "code"  => 500,
+                "msg"   => "Missing parameters!",
+                "data"  => "缺失参数！"
+            );
+        }
+        return response()->jsonp($request->input('callback'), $array);
+    }
+
+    // 修改和增加站点信息
+    public function savePortInfo(Request $request){
+        if($request->has(['title','info','timestamps'])){
+            if($request->post('type')==='modify' &&
+                $request->has('target')){
+                $get = ShtlPort::find($request->post('target'));
+                $get->port_name = $request->post('title');
+                $get->port_info = $request->post('info');
+                $get->save();
+                $getShuttle = Shuttle::FirstOrNew(['port_id'=>$get->id]);
+                $getShuttle->shtl_time = json_encode($request->post('timestamps'));
+                $getShuttle->save();
+                $array = array(
+                    "code"  => 200,
+                    "msg"   => "Save successfully!",
+                    "data"  => "成功保存！"
+                );
+            }else if($request->post('type')==='create'){
+                $get = ShtlPort::create([
+                    'port_name' => $request->post('title'),
+                    'port_info' => $request->post('info'),
+                ]);
+                $getShuttle = Shuttle::FirstOrNew(['port_id'=>$get->id]);
+                $getShuttle->shtl_time = json_encode($request->post('timestamps'));
+                $getShuttle->save();
+                $array = array(
+                    "code"  => 200,
+                    "msg"   => "Save successfully!",
+                    "data"  => "成功保存！"
+                );
+            }else{
+                $array = array(
+                    "code"  => 500,
+                    "msg"   => "Missing parameters!",
+                    "data"  => "缺失参数！"
+                );
+            }
+        }else{
+            $array = array(
+                "code"  => 500,
+                "msg"   => "Missing parameters!",
+                "data"  => "缺失参数！"
+            );
+        }
+        return response()->jsonp($request->input('callback'), $array);
+    }
+
+    // 删除站点
+    public function deletePort(Request $request){
+        if($request->has('deleteID')){
+            $get = ShtlPort::find($request->post('deleteID'));
+            if($get){
+                $get->delete();
+                $array = array(
+                    "code"  => 200,
+                    "msg"   => "Delete successfully!",
+                    "data"  => "成功删除！"
+                );
+            }else{
+                $array = array(
+                    "code"  => 404,
+                    "msg"   => "Cannot find the port ID!",
+                    "data"  => "无法找到需要删除的！"
+                );
+            }
+        }else{
+            $array = array(
+                "code"  => 500,
+                "msg"   => "Missing parameters!",
+                "data"  => "缺失参数！"
+            );
+        }
+        return response()->jsonp($request->input('callback'), $array);
+    }
+
+}

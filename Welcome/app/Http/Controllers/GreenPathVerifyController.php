@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\Debugbar\Facade;
 use Illuminate\Support\Facades\DB;
 use App\Models\StudentsHelp;
 use Illuminate\Http\Request;
@@ -12,16 +13,17 @@ class GreenPathVerifyController extends Controller
     // 前端页面展示
     public function index(Request $request){
 
-        $greenPathList=StudentsHelp::orderBy('verify','asc')
+        $greenPathLists=StudentsHelp::orderBy('verify','asc')
             ->leftJoin('t_student','t_student_help.student_id','t_student.id')
-            ->leftJoin('t_major','t_major.major_num',DB::raw('SUBSTRING(t_student.stu_num,3,3)'))->get([
-            't_student.stu_name as name','t_student_help.id as id',
-            DB::raw('IF(t_student_help.verify=2,
-            "申请未通过",IF(t_student_help.verify=0,
-            "申请未审核",IF(t_student_help.verify=1,
-            "已通过申请","暂未申请"))) as verify'),
-            't_major.major_name as major'
-        ]);
+            ->leftJoin('t_major','t_major.major_num',DB::raw('SUBSTRING(t_student.stu_num,3,3)'))
+            ->select([
+                't_student.stu_name as name','t_student_help.id as id',
+                DB::raw('IF(t_student_help.verify=2,
+                "申请未通过",IF(t_student_help.verify=0,
+                "申请未审核",IF(t_student_help.verify=1,
+                "已通过申请","暂未申请"))) as verify'),
+                't_major.major_name as major'
+            ])->paginate(10);
         $applyTotal = StudentsHelp::count();
         $needVerify = StudentsHelp::where('verify',0)->count();
         return view('admin.greenPathVerify', [
@@ -31,7 +33,7 @@ class GreenPathVerifyController extends Controller
             'toInformationURL'      => "/admin/personalInfo",
             'needVerify'            => $needVerify,
             'applyTotal'            => $applyTotal,
-            'greenPathLists'        => $greenPathList,
+            'greenPathLists'        => $greenPathLists,
             'getGreenPathInfo'      => '/admin/getGreenPathInfo',               // 获取个人申请信息URL
             'commitVerifyInfo'      => '/admin/commitVerifyInfo',               // 提交审核信息URL
 

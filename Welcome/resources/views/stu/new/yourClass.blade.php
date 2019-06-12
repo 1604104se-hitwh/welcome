@@ -333,8 +333,8 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">你的同学</h6>
                         </div>
-                        <div class="card-body">
-                            <table class="table table-bordered">
+                        <div class="card-body table-responsive">
+                        <table class="table table-bordered">
                                 <thead>
                                 <tr role="row">
                                     <th>姓名</th>

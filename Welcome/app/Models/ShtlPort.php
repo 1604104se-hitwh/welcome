@@ -26,4 +26,8 @@ class ShtlPort extends Model
     protected $primaryKey = 'id';
     //是否开启时间戳
     public $timestamps = false;
+
+    protected $fillable = [
+        'port_name','port_info'
+    ];
 }
