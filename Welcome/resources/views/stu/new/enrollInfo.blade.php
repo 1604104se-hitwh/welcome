@@ -288,7 +288,7 @@
                 </div>
 
                 <!-- Content Column -->
-                <div class="card-columns">
+                <div class="container">
                     <div class="mb-4">
                         {!! $enrollParagraph !!}
                     </div>

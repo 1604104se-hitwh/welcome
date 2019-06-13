@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Enroll;
+date_default_timezone_set('PRC');
 use App\Models\EnrollCfg;
 use App\Models\ShtlPort;
 use App\Models\ShtlRecord;
@@ -12,7 +11,6 @@ use Barryvdh\Debugbar\Facade;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Types\Object_;
 
 // 到站信息管理控制器
 class NavManageController extends Controller
@@ -26,17 +24,47 @@ class NavManageController extends Controller
         $reserveStuNumber = ShtlRecord::count();
         // 报到配置
         $enrollcfg = EnrollCfg::first(['enrl_begin_time']);
-        $port = ShtlPort::leftJoin('t_shuttle','t_shuttle.port_id','t_shtl_port.id')->get([
-            't_shtl_port.id','t_shtl_port.port_name as portName',
-            DB::raw("IFNULL(JSON_LENGTH(`shtl_time`),0) as setReserveTime")
+        $port = ShtlPort::leftJoin('t_shuttle','t_shuttle.port_id','t_shtl_port.id')
+        ->get([
+            't_shtl_port.id as id','t_shtl_port.port_name as portName',
+            DB::raw("IFNULL(JSON_LENGTH(`shtl_time`),0) as setReserveTime"),
+            'shtl_time'
         ]);
-        $test = new \stdClass();
-        $test->portName = "1";
-        $test->time= "1";
-        $test->stuNumber="1";
+
+        /*
+        DB::raw("SELECT
+        JSON_UNQUOTE(JSON_EXTRACT(
+            @json,
+        concat( '$[', @i, ']' ))) as `shtl_time`,
+        @i := @i + 1 as `id` ,@info as port_id
+        FROM
+        information_schema.COLUMNS a,
+        ( SELECT @i := 0, @json := ( SELECT t_shuttle.shtl_time FROM t_shuttle ), @max_id := JSON_LENGTH( @json ), @info := (SELECT port_id FROM t_shuttle) ) json 
+        WHERE
+        @i < @max_id;");
+        */
+        foreach ($port as $item) {
+            $times = json_decode($item->shtl_time);
+            $item->time = array();
+            $item->stuNumber = array();
+            if(is_array($times)) {
+                $tmptime = array();
+                $tmpstuNumber = array();
+                foreach ($times as $time) {
+
+                    array_push($tmptime, date("m月d日 H:i",$time));
+                    $getNumber = ShtlRecord::where(
+                        'shtl_id', $item->id
+                    )->whereRaw('UNIX_TIMESTAMP(record_time) = '.(int)$time)->count();
+                    array_push($tmpstuNumber, $getNumber);
+                }
+                $item->time = $tmptime;
+                $item->stuNumber = $tmpstuNumber;
+            }
+        }
         return view("admin.navManage", [
             'sysType'                   => "管理员",                        // 系统运行模式，新生，在校生，管理员
-            'user'                      => session("name"),            // 用户名
+            'user'                      => session("name"),                 // 用户名
             'userImg'                   => "/avatar",                       // 用户头像链接 url(site)
             'toInformationURL'          => "/admin/personalInfo",           // 个人设置url
             'newStuNumber'              => $res,                            // 新生人数
@@ -47,10 +75,8 @@ class NavManageController extends Controller
             'deletePortInfoURL'         => '/admin/deletePort',             // 删除信息URL
             'portInfoLists'             => $port,                           // 列表
             'saveEnrollConfig'          => '/admin/saveEnrollConfig',       // 配置保存
-            'portNumber'                => $port->count(),                               // 站点个数
-            'reservationLists'          => array(
-                $test,$test,$test,$test,$test
-            ),                         // 站点预约信息
+            'portNumber'                => $port->count(),                  // 站点个数
+            'reservationLists'          => $port,                           // 站点预约信息
 
             'toLogoutURL'               => "/logout",                       // 退出登录
         ]);
@@ -90,7 +116,7 @@ class NavManageController extends Controller
 
     // 修改和增加站点信息
     public function savePortInfo(Request $request){
-        if($request->has(['title','info','timestamps'])){
+        if($request->has(['title','info'])){
             if($request->post('type')==='modify' &&
                 $request->has('target')){
                 $get = ShtlPort::find($request->post('target'));
@@ -98,7 +124,8 @@ class NavManageController extends Controller
                 $get->port_info = $request->post('info');
                 $get->save();
                 $getShuttle = Shuttle::FirstOrNew(['port_id'=>$get->id]);
-                $getShuttle->shtl_time = json_encode($request->post('timestamps'));
+                $getShuttle->shtl_time = $request->has('timestamps')?
+                    json_encode($request->post('timestamps')):null;
                 $getShuttle->save();
                 $array = array(
                     "code"  => 200,
@@ -111,7 +138,8 @@ class NavManageController extends Controller
                     'port_info' => $request->post('info'),
                 ]);
                 $getShuttle = Shuttle::FirstOrNew(['port_id'=>$get->id]);
-                $getShuttle->shtl_time = json_encode($request->post('timestamps'));
+                $getShuttle->shtl_time = $request->has('timestamps')?
+                    json_encode($request->post('timestamps')):null;
                 $getShuttle->save();
                 $array = array(
                     "code"  => 200,
@@ -141,6 +169,9 @@ class NavManageController extends Controller
             $get = ShtlPort::find($request->post('deleteID'));
             if($get){
                 $get->delete();
+                // 丢掉预约的时间
+                Shuttle::where('port_id',$request->post('deleteID'))->delete();
+                ShtlRecord::where('shtl_id',$request->post('deleteID'))->delete();
                 $array = array(
                     "code"  => 200,
                     "msg"   => "Delete successfully!",

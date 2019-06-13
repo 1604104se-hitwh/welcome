@@ -371,13 +371,36 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @php
+                                    // 计算$max
+                                    $first = ($i*3 < count($reservationLists))? 
+                                        max(count($reservationLists[$i*3]->time),
+                                            count($reservationLists[$i*3]->stuNumber)):0;
+                                    $second = ($i*3+ 1 < count($reservationLists))? 
+                                        max(count($reservationLists[$i*3+ 1]->time),
+                                            count($reservationLists[$i*3+ 1]->stuNumber)):0;
+                                    $third = ($i*3+ 2 < count($reservationLists))? 
+                                        max(count($reservationLists[$i*3+ 2]->time),
+                                            count($reservationLists[$i*3+ 2]->stuNumber)):0;
+                                    $max = max($first,$second,$third);
+                                @endphp
+                                @for($k=0; $k<$max; ++$k)
                                 <tr>
                                     @for($j=$i*3; $j<count($reservationLists)
                                     && $j<$i*3 +3; ++$j)
-                                    <td>{{$reservationLists[$j]->time}}</td>
-                                    <td>{{$reservationLists[$j]->stuNumber}}</td>
+                                    <td>
+                                        @if(count($reservationLists[$j]->time) > $k)
+                                        {{$reservationLists[$j]->time[$k]}}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(count($reservationLists[$j]->stuNumber) > $k)
+                                        {{$reservationLists[$j]->stuNumber[$k]}}
+                                        @endif
+                                    </td>
                                     @endfor
                                 </tr>
+                                @endfor
                                 </tbody>
                             </table>
                             @endfor
