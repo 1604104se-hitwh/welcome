@@ -445,7 +445,7 @@
                         if (data.code === 200) {
                             Swal.fire(
                                 '成功删除',
-                                '通知已经被成功删除',
+                                '管理员已经被成功删除',
                                 'success'
                             );
                             thisTable.parent().parent().remove();
