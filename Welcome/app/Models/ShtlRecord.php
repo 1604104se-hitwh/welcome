@@ -30,4 +30,8 @@ class ShtlRecord extends Model
     protected $primaryKey = 'id';
     //是否开启时间戳
     public $timestamps = false;
+
+    protected $fillable = [
+        'stu_id','shtl_id','record_time'
+    ];
 }

@@ -69,6 +69,12 @@ Route::group(['prefix'=>'stu','middleware' => ['checkAuth:new']],function (){
     Route::post("greenPath/delete","GreenPathController@deleteFile");
     // 获取已提交文件信息
     Route::post("greenPath/getGreenPathFiles","GreenPathController@getGreenPathFiles");
+    // 获取站点信息
+    Route::post("getNavTime","NavController@getNavTime");
+    // 提交预约信息
+    Route::post("submitBook","NavController@submitBook");
+    // 删除预约
+    Route::post("deleteBook","NavController@deleteBook");
 });
 
 /* SENIOR STUDENT*/
@@ -104,6 +110,8 @@ Route::group(['prefix'=>'admin','middleware' => ['checkAuth:admin']], function (
     Route::get("greenPathVerify","GreenPathVerifyController@index");
     // 到站服务
     Route::get("navManage","NavManageController@index");
+    // 到站表格导出
+    Route::get("navExcel","NavManageController@exportExcel");
 
 });
 

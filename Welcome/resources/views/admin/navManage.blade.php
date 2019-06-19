@@ -693,7 +693,7 @@
         let target = $(this).data('target');
         let type = $('#modifyModalTitle').data('type');
         let title = $('#postTitle').val();
-        let info = editor.txt.text();
+        let info = editor.txt.html();
         // 获取时间戳
         let timestamps = [];
         $.each($('#selectTime span'),function (index,val) {
@@ -853,6 +853,10 @@
             " data-timestamp=\""+DateToUnix(time)+"\">"+time +
             " <i class=\"fas fa-times\"></i></a>";
         $("#selectedTime").append(timeM);
+    });
+    
+    $("#exportInfo").click(function () {
+        window.open("{{url('/admin/navExcel')}}");
     });
 
 </script>

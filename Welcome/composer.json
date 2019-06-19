@@ -13,7 +13,8 @@
         "laravel/framework": "^5.8",
         "laravel/tinker": "~1.0",
         "maatwebsite/excel": "^3.1",
-        "ofcold/identity-card": "^3.1"
+        "ofcold/identity-card": "^3.1",
+        "ext-json": "*"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.3",

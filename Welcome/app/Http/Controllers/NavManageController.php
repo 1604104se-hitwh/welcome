@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 date_default_timezone_set('PRC');
+
+use App\Exports\portBookExport;
 use App\Models\EnrollCfg;
 use App\Models\ShtlPort;
 use App\Models\ShtlRecord;
@@ -9,8 +11,8 @@ use App\Models\Shuttle;
 use App\Models\Students;
 use Barryvdh\Debugbar\Facade;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 // 到站信息管理控制器
 class NavManageController extends Controller
@@ -192,6 +194,10 @@ class NavManageController extends Controller
             );
         }
         return response()->jsonp($request->input('callback'), $array);
+    }
+
+    public function exportExcel(Request $request){
+        return Excel::download(new portBookExport, 'export.xlsx');
     }
 
 }
