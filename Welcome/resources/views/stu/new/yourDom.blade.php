@@ -333,15 +333,7 @@
 
                     <!-- Content Column -->
                     <div class="mb-4">
-                        <!-- Illustrations -->
-                        <div class="card mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">宿舍简介</h6>
-                            </div>
-                            <div class="card-body">
-                                {!! $domInfo !!}
-                            </div>
-                        </div>
+
 
                         <!-- Illustrations -->
                         <div class="card mb-4">
