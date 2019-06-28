@@ -16,10 +16,10 @@ class ReportCheckController extends Controller
         return view('admin.reportCheck',[
             'sysType'                   =>'管理员',
             'user'                      => session("name"),            // 用户名
-            'userImg'                   => "userImg",                       // 用户头像链接 url(site)
-            'toInformationURL'          => "toInformationURL",              // 个人设置url
-            'confirmReportInfoURL'      => "/admin/confirmReportInfo", // 确认信息提交url
-            'getStudentInfoURL'          => "/admin/getStudentInfo",         // 获取学生信息url
+            'userImg'                   => "/avatar",                       // 用户头像链接 url(site)
+            'toInformationURL'          => "/admin/personalInfo",           // 个人设置url
+            'confirmReportInfoURL'      => "/admin/confirmReportInfo",      // 确认信息提交url
+            'getStudentInfoURL'         => "/admin/getStudentInfo",         // 获取学生信息url
 
             'toLogoutURL'               => "/logout",                       // 退出登录
         ]);
@@ -44,22 +44,22 @@ class ReportCheckController extends Controller
                 ));
             if($get){
                 $array = array(
-                    "code" => 200,
-                    "msg" => "Get information successfully!",
-                    "data" => $get
+                    "code"  => 200,
+                    "msg"   => "Get information successfully!",
+                    "data"  => $get
                 );
             }else{
                 $array = array(
-                    "code" => 404,
-                    "msg" => "Cannot get the student!",
-                    "data" => "找不到这名学生！"
+                    "code"  => 404,
+                    "msg"   => "Cannot get the student!",
+                    "data"  => "找不到这名学生！"
                 );
             }
         }else{
             $array = array(
-                "code" => 500,
-                "msg" => "Missing parameters!",
-                "data" => "缺失参数！"
+                "code"  => 500,
+                "msg"   => "Missing parameters!",
+                "data"  => "缺失参数！"
             );
         }
         return response()->jsonp($request->input('callback'), $array);
@@ -69,32 +69,32 @@ class ReportCheckController extends Controller
         if($request->has('confirmID')){
             $get = Students::find($request->post('confirmID'));
             if($get->stu_status==='PREPARE'){
-                $get->stu_status="ENROLLING";
+                $get->stu_status="ENROLL";
                 $get->save();
                 $array = array(
-                    "code" => 200,
-                    "msg" => "Saved!",
-                    "data" => "成功确认！"
+                    "code"  => 200,
+                    "msg"   => "Saved!",
+                    "data"  => "成功确认！"
                 );
-            }else if($get->stu_status==='ENROLLING'){
+            }else if($get->stu_status==='ENROLL'){
                 $array = array(
-                    "code" => 405,
-                    "msg" => "Do not confirm again!",
-                    "data" => "已经确认过了，无需重复确认！"
+                    "code"  => 405,
+                    "msg"   => "Do not confirm again!",
+                    "data"  => "已经确认过了，无需重复确认！"
                 );
             }else{
                 $array = array(
-                    "code" => 200,
-                    "msg" => "Cannot find the information!",
-                    "data" => "找不到信息，可能是老生或者信息错误！"
+                    "code"  => 404,
+                    "msg"   => "Cannot find the information!",
+                    "data"  => "找不到信息，可能是老生或者信息错误！"
                 );
             }
 
         }else{
             $array = array(
-                "code" => 500,
-                "msg" => "Missing parameters!",
-                "data" => "缺失参数！"
+                "code"  => 500,
+                "msg"   => "Missing parameters!",
+                "data"  => "缺失参数！"
             );
         }
         return response()->jsonp($request->input('callback'), $array);

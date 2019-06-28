@@ -15,11 +15,8 @@
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.8.1/css/all.min.css"
           integrity="sha256-7rF6RaSKyh16288E3hVdzQtHyzatA2MQRGu0cf6pqqM=" crossorigin="anonymous">
-    <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.all.min.js"
-            integrity="sha256-Smm8ER2J6Oi6HLNRv7iRvWZlhTPx0Ie91VSkg9QljzE=" crossorigin="anonymous"></script>
     <link href="{{asset('css/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
 
     <!-- Smallpop -->
@@ -83,7 +80,7 @@
 
         <!-- Nav Item - self info -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/personalInfo')}}">
+            <a class="nav-link" href="{{url($toInformationURL)}}">
                 <i class="fas fa-fw fa-info"></i>
                 <span>个人信息</span>
             </a>
@@ -91,9 +88,17 @@
 
         <!-- Nav Item - Arrived -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/nav')}}">
+            <a class="nav-link" href="{{url('/admin/navManage')}}">
                 <i class="fas fa-fw fa-plane-arrival"></i>
                 <span>到站信息</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - greenPath info -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('admin/greenPathVerify')}}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>绿色通道</span>
             </a>
         </li>
 
@@ -198,6 +203,11 @@
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">信息核验</h1>
                 </div>
+
+                <div class="alert alert-primary" role="alert">
+                    查找新生请按照学号查找，每个新生只有一次核验机会，核验完成不可修改
+                </div>
+
                 <div class="input-group">
                     <input type="text" class="form-control search-query border-1 small" placeholder="搜索新生..."
                            aria-label="Search" aria-describedby="basic-addon2">
@@ -208,7 +218,7 @@
                     </div>
                 </div>
 
-                <div class="mt-2">
+                <div class="mt-4 table-responsive">
                     <table class="table table-bordered">
                         <tbody>
                         <tr>
@@ -256,7 +266,7 @@
                 </div>
 
                 <div class="mt-2">
-                    <button type="button" class="btn btn-primary" id="confirmRecord" data-target="">确认报道</button>
+                    <button type="button" class="btn btn-primary" id="confirmRecord" data-target="" disabled>确认报道</button>
                 </div>
 
             </div>
@@ -313,10 +323,7 @@
         integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
         integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.min.js"
-        integrity="sha256-mc3T6DNzcA7wvZn8UVCZZSHGUzsuki15ci/3gxoLBnw=" crossorigin="anonymous"></script>
-
-<!-- Custom scripts for all pages-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.12.0/dist/sweetalert2.all.min.js" integrity="sha256-wWhZbmmAXb1JDP1U+ywgt4FHA4XIxzcYyGEFnInYJMQ=" crossorigin="anonymous"></script><!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
 <!-- Smallpop -->
@@ -329,6 +336,12 @@
         }
     });
     // 搜索部分
+
+    $('.search-query').keypress(function (e){
+        if (13 === e.keyCode) {
+            $('#findStudent').click();
+        }
+    });
     $('#findStudent').click(function () {
         $.ajax({
             async: true,   		//是否为异步请求
@@ -357,6 +370,14 @@
                     confirmBtn.attr('disabled', !data.data.needVerify);
                     confirmBtn.text(data.data.needVerify ? '确认报道' : '已经确认');
                     confirmBtn.data('target', data.data.id);
+                    spop({
+                        template: "获取成功",
+                        style: 'success',
+                        autoclose: 4000,
+                        position: 'bottom-right',
+                        icon: true,
+                        group: "submitReportInfo",
+                    });
                 } else {
                     spop({
                         template: "<h4>获取失败（" + data.code + "）</h4>" +
@@ -410,6 +431,9 @@
                     data: {"confirmID": $(this).data("target")},
                     success: function (data) {
                         if (data.code === 200) {
+                            let confirmBtn = $('#confirmRecord');
+                            confirmBtn.attr('disabled', true);
+                            confirmBtn.text('已经确认');
                             Swal.fire(
                                 '成功确认',
                                 '已经被成功确认',

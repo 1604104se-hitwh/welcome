@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>迎新系统-哈尔滨工业大学（威海）</title>
 
@@ -15,11 +16,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css"
           integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78="
           crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-          rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+
+    <!-- Smallpop -->
+    <link href="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+
 
 </head>
 
@@ -43,7 +47,7 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="{{url('/stu')}}">
                 <i class="fas fa-fw fa-home"></i>
                 <span>首页</span></a>
@@ -130,7 +134,7 @@
         </div>
 
         <!-- Nav Item - selfInfo -->
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="{{url('/stu/personalInfo')}}">
                 <i class="fas fa-fw fa-info"></i>
                 <span>个人信息</span></a>
@@ -173,8 +177,7 @@
                     <!-- Nav Item - Messages -->
                     <li class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-envelope fa-fw"></i>
                             <!-- Counter - Messages -->
                             @if($messages['unreadNum'] > 0)
@@ -230,6 +233,7 @@
                             </a>
                         </div>
                     </li>
+
                 </ul>
 
             </nav>
@@ -240,7 +244,7 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">首页</h1>
+                    <h1 class="h3 mb-0 text-gray-800">个人信息</h1>
                 </div>
 
                 <!-- Content Row -->
@@ -324,114 +328,151 @@
                     </div>
                 </div>
 
-                <!-- Content Row -->
-                <div class="card-columns">
-
-                    <!-- Content Column -->
-                    <div class="card mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">学校简介</h6>
-                        </div>
-                        <div class="card-body">
-                            <div>
-                                {!! $schoolInfo !!}
-                            </div>
-                        </div>
+                <div class="mt-2">
+                    <div class="alert alert-primary" role="alert">
+                        @if($needCommit)
+                            请确认以下信息，并且提交以下空内的信息，核验完成后不可更改
+                        @else
+                            核验已完成，信息不可更改
+                        @endif
                     </div>
-
-                    <div class="card mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">你的同学</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-6 col-lg-12">
-                                    <div class="chart-pie pt-4">
-                                        <canvas id="groupAccountChart"></canvas>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-12">
-                                    <div class="chart-pie pt-4">
-                                        <canvas id="groupProviceChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <a target="_blank" rel="nofollow" href="{{url($toAllStuURL)}}">查看所有同学 &rarr;</a>
-                        </div>
-                    </div>
-
-                    <div class="card mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">你的室友</h6>
-                        </div>
-                        <div class="card-body table-responsive">
+                    <div class="table-responsive">
                         <table class="table table-bordered">
-                                <thead>
-                                <tr role="row">
-                                    <th>姓名</th>
-                                    <th>学号</th>
-                                    <th>床位</th>
-                                    <th>来自</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @if(count($dormStus)==0) {{-- 还没有信息 --}}
-                                <tr role="row">
-                                    <td colspan="4">还没有信息</td>
-                                </tr>
-                                @else @foreach($dormStus as $dormStu)
-                                    <tr role="row">
-                                        <td>{{$dormStu->stu_name}}</td>
-                                        <td>{{$dormStu->stu_num}}</td>
-                                        <td>{{$dormStu->stu_dorm_str}}</td>
-                                        <td>{{$dormStu->address}}</td>
-                                    </tr>
-                                @endforeach @endif
-                                </tbody>
-                            </table>
-                        </div>
+                            <tbody>
+                            <tr>
+                                <th>姓名</th>
+                                <td id="name" data-target="{{$stuInfo->id}}">{{$stuInfo->name}}</td>
+                                <th>学号</th>
+                                <td>{{$stuInfo->schoolID}}</td>
+                                <th>性别</th>
+                                <td>{{$stuInfo->gender}}</td>
+                            </tr>
+                            <tr>
+                                <th>考生号</th>
+                                <td colspan="2">{{$stuInfo->eid}}</td>
+                                <th>身份证</th>
+                                <td colspan="2">{{$stuInfo->cid}}</td>
+                            </tr>
+                            <tr>
+                                <th>学院</th>
+                                <td>{{$stuInfo->dept}}</td>
+                                <th>专业</th>
+                                <td>{{$stuInfo->major}}</td>
+                                <th>民族</th>
+                                <td>
+                                    <select class="form-control form-control-sm" id="nation" @if(!$needCommit) disabled @endif>
+                                        <option value="汉族">汉族</option>
+                                        <option value="蒙古族">蒙古族</option>
+                                        <option value="回族">回族</option>
+                                        <option value="藏族">藏族</option>
+                                        <option value="维吾尔族">维吾尔族</option>
+                                        <option value="苗族">苗族</option>
+                                        <option value="彝族">彝族</option>
+                                        <option value="壮族">壮族</option>
+                                        <option value="布依族">布依族</option>
+                                        <option value="朝鲜族">朝鲜族</option>
+                                        <option value="满族">满族</option>
+                                        <option value="侗族">侗族</option>
+                                        <option value="瑶族">瑶族</option>
+                                        <option value="白族">白族</option>
+                                        <option value="土家族">土家族</option>
+                                        <option value="哈尼族">哈尼族</option>
+                                        <option value="哈萨克族">哈萨克族</option>
+                                        <option value="傣族">傣族</option>
+                                        <option value="黎族">黎族</option>
+                                        <option value="傈僳族">傈僳族</option>
+                                        <option value="佤族">佤族</option>
+                                        <option value="畲族">畲族</option>
+                                        <option value="高山族">高山族</option>
+                                        <option value="拉祜族">拉祜族</option>
+                                        <option value="水族">水族</option>
+                                        <option value="东乡族">东乡族</option>
+                                        <option value="纳西族">纳西族</option>
+                                        <option value="景颇族">景颇族</option>
+                                        <option value="柯尔克孜族">柯尔克孜族</option>
+                                        <option value="土族">土族</option>
+                                        <option value="达斡尔族">达斡尔族</option>
+                                        <option value="仫佬族">仫佬族</option>
+                                        <option value="羌族">羌族</option>
+                                        <option value="布朗族">布朗族</option>
+                                        <option value="撒拉族">撒拉族</option>
+                                        <option value="毛南族">毛南族</option>
+                                        <option value="仡佬族">仡佬族</option>
+                                        <option value="锡伯族">锡伯族</option>
+                                        <option value="阿昌族">阿昌族</option>
+                                        <option value="普米族">普米族</option>
+                                        <option value="塔吉克族">塔吉克族</option>
+                                        <option value="怒族">怒族</option>
+                                        <option value="乌孜别克族">乌孜别克族</option>
+                                        <option value="俄罗斯族">俄罗斯族</option>
+                                        <option value="鄂温克族">鄂温克族</option>
+                                        <option value="德昂族">德昂族</option>
+                                        <option value="保安族">保安族</option>
+                                        <option value="裕固族">裕固族</option>
+                                        <option value="京族">京族</option>
+                                        <option value="塔塔尔族">塔塔尔族</option>
+                                        <option value="独龙族">独龙族</option>
+                                        <option value="鄂伦春族">鄂伦春族</option>
+                                        <option value="赫哲族">赫哲族</option>
+                                        <option value="门巴族">门巴族</option>
+                                        <option value="珞巴族">珞巴族</option>
+                                        <option value="基诺族">基诺族</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>联系方式</th>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm" maxlength="11"
+                                           onkeyup="this.value=this.value.replace(/\D/g,'')" id="phone" value="{{$stuInfo->phone}}"
+                                           @if(!$needCommit) disabled @endif>
+                                </td>
+                                <th>宿舍</th>
+                                <td>{{$stuInfo->dorm}}</td>
+                                <th>政治面貌</th>
+                                <td>
+                                    <select class="form-control form-control-sm" id="party" @if(!$needCommit) disabled @endif>
+                                        <option value="中共党员">中共党员</option>
+                                        <option value="中共预备党员">中共预备党员</option>
+                                        <option value="共青团员">共青团员</option>
+                                        <option value="民革党员">民革党员</option>
+                                        <option value="民盟盟员">民盟盟员</option>
+                                        <option value="民建会员">民建会员</option>
+                                        <option value="民进会员">民进会员</option>
+                                        <option value="农工党党员">农工党党员</option>
+                                        <option value="致公党党员">致公党党员</option>
+                                        <option value="九三学社社员">九三学社社员</option>
+                                        <option value="台盟盟员">台盟盟员</option>
+                                        <option value="无党派人士">无党派人士</option>
+                                        <option value="群众">群众</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>团关系</th>
+                                <td colspan="3">
+                                    <input type="text" class="form-control form-control-sm"
+                                           id="relation" value="{{$stuInfo->relation}}" @if(!$needCommit) disabled @endif>
+                                </td>
+                                <th>绿色通道</th>
+                                <td>{{$stuInfo->greenPath}}</td>
+                            </tr>
+                            <tr>
+                                <th>家庭住址</th>
+                                <td colspan="5">
+                                    <input type="text" class="form-control form-control-sm"
+                                           id="homeLocation" value="{{$stuInfo->homeLocation}}" @if(!$needCommit) disabled @endif>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-
-                    <div class="card mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">老乡信息</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="col-sm-12">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr role="row">
-                                        <th>姓名</th>
-                                        <th>学号</th>
-                                        <th>性别</th>
-                                        <th>毕业学校</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @if (count($localFolks)==0)
-                                        <td colspan="4">还没有信息</td>
-                                    @else @foreach ($localFolks as $localFolk)
-                                        <tr role="row">
-                                            <td>{{$localFolk->stu_name}}</td>
-                                            <td>{{$localFolk->stu_num}}</td>
-                                            <td>
-                                                @if($localFolk->stu_gen == 0)
-                                                    男
-                                                @else
-                                                    女
-                                                @endif
-                                            </td>
-                                            <td>{{$localFolk->stu_from_school}}</td>
-                                        </tr>
-                                    @endforeach @endif
-                                    </tbody>
-                                </table>
-                                <a target="_blank" rel="nofollow" href="{{url($toLocalFolkURL)}}">查看全部老乡 &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-
+                    <button type="button" class="btn btn-primary" id="commitInfo"
+                            @if(!$needCommit) disabled @endif>
+                        @if(!$needCommit) 已经核验 @else 提交 @endif
+                    </button>
                 </div>
+
             </div>
             <!-- /.container-fluid -->
 
@@ -491,81 +532,84 @@
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
-<!-- Chart -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.bundle.min.js"
-        integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis="
-        crossorigin="anonymous"></script>
-<!-- Chart -->
-<script type="text/javascript">
-    // Set new default font family and font color to mimic Bootstrap's default styling
-    Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-    Chart.defaults.global.defaultFontColor = '#858796';
+<!-- Smallpop -->
+<script src="https://cdn.jsdelivr.net/gh/RioHsc/Smallpop/dist/spop.min.js"></script>
 
-    // groupAccountChart, using to show the Male and Female in a class
-    var groupAccountChart = new Chart(document.getElementById("groupAccountChart"), {
-        type: 'doughnut',
-        data: {
-            labels: ["男生", "女生"],
-            datasets: [{
-                data: {!! json_encode($yourStuChartBoyGirl) !!},
-                backgroundColor: ['#4e73df', '#1cc88a'],
-                hoverBackgroundColor: ['#2e59d9', '#17a673'],
-                hoverBorderColor: "rgba(234, 236, 244, 1)",
-            }],
-        },
-        options: {
-            maintainAspectRatio: false,
-            tooltips: {
-                backgroundColor: "rgb(255,255,255)",
-                bodyFontColor: "#858796",
-                borderColor: '#dddfeb',
-                borderWidth: 1,
-                xPadding: 15,
-                yPadding: 15,
-                displayColors: false,
-                caretPadding: 10,
-            },
-            legend: {
-                display: true
-            },
-            cutoutPercentage: 80,
-        },
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
 
-
-    var allAccountChart = new Chart(document.getElementById("groupProviceChart"), {
-        type: 'doughnut',
-        data: {
-            labels: {!! json_encode($yourStuChartProName,JSON_UNESCAPED_UNICODE) !!},
-            datasets: [{
-                data: {!! json_encode($yourStuChartProData) !!},
-                backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f26d5b', '#7f9eb2'],
-                hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#c03546', '#77919d'],
-                hoverBorderColor: "rgba(234, 236, 244, 1)",
-            }],
-        },
-        options: {
-            maintainAspectRatio: false,
-            tooltips: {
-                backgroundColor: "rgb(255,255,255)",
-                bodyFontColor: "#858796",
-                borderColor: '#dddfeb',
-                borderWidth: 1,
-                xPadding: 15,
-                yPadding: 15,
-                displayColors: false,
-                caretPadding: 10,
-            },
-            legend: {
-                display: true
-            },
-            cutoutPercentage: 80,
-        },
+    $(document).ready(function () {
+        $("#party option[value='{{$stuInfo->party}}']").attr('selected',true);
+        $("#nation option[value='{{$stuInfo->nation}}']").attr('selected',true);
     });
 
+    $("#commitInfo").click(function(){
+        let id              = $("#name").data('target');
+        let phone           = $("#phone").val();
+        let nation          = $("#nation").val();
+        let party           = $("#party").val();
+        let relation        = $("#relation").val();
+        let homeLocation    = $("#homeLocation").val();
+        // TODO commit the information
+        $.ajax({
+            async: true,   		//是否为异步请求
+            cache: false,  		//是否缓存结果
+            type: "POST", 		//请求方式
+            dataType: "jsonp", 	//服务器返回的数据是什么类型
+            url: "{{url($commitInfoURL)}}",
+            data: {'target':id,
+                'phone':phone,
+                'nation':nation,
+                'party':party,
+                'relation':relation,
+                'homeLocation':homeLocation
+            },
+            success: function (data) {
+                if (data.code === 200) {
+                    spop({
+                        template: "保存成功",
+                        style: 'success',
+                        autoclose: 5000,
+                        position: 'bottom-right',
+                        icon: true,
+                        group: "commitInfo",
+                    });
+                } else {
+                    spop({
+                        template: "<h4>信息提交失败（" + data.code + "）</h4>" +
+                            "<p>" + data.data + "</p>",
+                        style: 'warning',
+                        autoclose: false,
+                        position: 'bottom-right',
+                        icon: true,
+                        group: "commitInfo",
+                    });
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // 状态码
+                console.log("status:" + XMLHttpRequest.status + "\n");
+                // 状态
+                console.log("readyState:" + XMLHttpRequest.readyState + "\n");
+                // 错误信息
+                console.log("textStatus:" + textStatus + "\n");
+                spop({
+                    template: "信息提交失败（" + XMLHttpRequest.status + "）",
+                    style: 'error',
+                    autoclose: false,
+                    position: 'bottom-right',
+                    icon: true,
+                    group: "commitInfo",
+                });
+            }
+        });
+
+    });
 </script>
 
-
 </body>
-
 </html>

@@ -85,7 +85,7 @@ class SeniorController extends Controller
            ), // 信息
            'stuID'=>$res_obj_array[0]->stu_num, // 学号
            'user'=> $res_obj_array[0]->stu_name, // 用户名
-           'userImg'=> "userImg",// 用户头像链接 url(site)
+           'userImg'=> "/avatar",// 用户头像链接 url(site)
            'toInformationURL'=>"toInformationURL", // 个人设置url
            'toSettingURL'=>"toSettingURL", // 个人设置
            'stuDept'=>"计算机",
@@ -134,7 +134,7 @@ class SeniorController extends Controller
                    ), // 信息
                    'stuID'=>session("stu_num"), // 学号
                    'user'=>session("stu_name"), // 用户名
-                   'userImg'=> "userImg",// 用户头像链接 url(site)
+                   'userImg'=> "/avatar",// 用户头像链接 url(site)
                    'toInformationURL'=>"toInformationURL", // 个人设置url
                    'toSettingURL'=>"toSettingURL", // 个人设置
                    'IDnumber'=>"111111", // 身份证号码

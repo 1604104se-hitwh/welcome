@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin wherePmsId($value)
  * @mixin \Eloquent
+ * @property int $dept_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin whereDeptId($value)
  */
 class Admin extends Model
 {
@@ -28,6 +30,4 @@ class Admin extends Model
     protected $primaryKey = 'id';
     //是否开启时间戳
     public $timestamps = false;
-    //设置时间戳格式为Unix
-    protected $dateFormat = 'U';
 }

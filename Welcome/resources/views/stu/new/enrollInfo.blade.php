@@ -120,13 +120,35 @@
                 <i class="fas fa-fw fa-route"></i>
                 <span>报到流程</span>
             </a>
-            <div id="collapseEnroll" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div id="collapseEnroll" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">你可以查看：</h6>
                     <a class="collapse-item active" href="{{url('/stu/enrollInfo')}}">报到说明</a>
                     <a class="collapse-item" href="{{url('/stu/enrollGuide')}}">开始报到</a>
                 </div>
             </div>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            信息填报
+        </div>
+
+        <!-- Nav Item - selfInfo -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('/stu/personalInfo')}}">
+                <i class="fas fa-fw fa-info"></i>
+                <span>个人信息</span></a>
+        </li>
+
+        <!-- Nav Item - GreenPath -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('/stu/greenPath')}}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>绿色通道</span></a>
         </li>
 
         <!-- Divider -->
@@ -215,9 +237,7 @@
                             </a>
                         </div>
                     </li>
-
                 </ul>
-
             </nav>
             <!-- End of Topbar -->
 
@@ -268,7 +288,7 @@
                 </div>
 
                 <!-- Content Column -->
-                <div class="card-columns">
+                <div class="container">
                     <div class="mb-4">
                         {!! $enrollParagraph !!}
                     </div>

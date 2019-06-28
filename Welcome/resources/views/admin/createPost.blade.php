@@ -17,8 +17,6 @@
           integrity="sha256-7rF6RaSKyh16288E3hVdzQtHyzatA2MQRGu0cf6pqqM=" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.all.min.js"
-            integrity="sha256-Smm8ER2J6Oi6HLNRv7iRvWZlhTPx0Ie91VSkg9QljzE=" crossorigin="anonymous"></script>
     <link href="{{asset('css/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
 
     <!-- Smallpop -->
@@ -90,9 +88,17 @@
 
         <!-- Nav Item - Arrived -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/nav')}}">
+            <a class="nav-link" href="{{url('/admin/navManage')}}">
                 <i class="fas fa-fw fa-plane-arrival"></i>
                 <span>到站信息</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - greenPath info -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('admin/greenPathVerify')}}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>绿色通道</span>
             </a>
         </li>
 
@@ -192,7 +198,10 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">发布通知</h1>
+                </div>
 
                 <!-- Content Row -->
                 <div class="card mb-4">
@@ -215,7 +224,7 @@
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">所有通知</h6>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr role="row">
@@ -235,10 +244,10 @@
                                             <span>{{$post->post_title}}</span></a></td>
                                     <td>{{$post->post_timestamp}}</td>
                                     <td>
-                                        <button type="button" class="m-1 btn btn-info modifyPost"
+                                        <button type="button" class="m-1 btn btn-info btn-sm modifyPost"
                                                 data-target="{{strval($post->id)}}"> 修改
                                         </button>
-                                        <button type="button" class="m-1 btn btn-danger deletePost"
+                                        <button type="button" class="m-1 btn btn-danger btn-sm deletePost"
                                                 data-target="{{strval($post->id)}}" data-title="{{$post->post_title}}">
                                             删除
                                         </button>
@@ -338,10 +347,7 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
         integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.9.0/dist/sweetalert2.min.js"
-        integrity="sha256-mc3T6DNzcA7wvZn8UVCZZSHGUzsuki15ci/3gxoLBnw=" crossorigin="anonymous"></script>
-
-<!-- Custom scripts for all pages-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.12.0/dist/sweetalert2.all.min.js" integrity="sha256-wWhZbmmAXb1JDP1U+ywgt4FHA4XIxzcYyGEFnInYJMQ=" crossorigin="anonymous"></script><!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
 <!-- Smallpop -->
@@ -553,7 +559,7 @@
                     spop({
                         template: "<h4>发布成功</h4>" +
                             "<p>信息已经更新，刷新页面就可以看到啦</p>",
-                        style: 'info',
+                        style: 'success',
                         autoclose: 5000,
                         position: 'bottom-right',
                         icon: true,

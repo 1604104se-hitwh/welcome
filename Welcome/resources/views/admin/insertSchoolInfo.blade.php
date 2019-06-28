@@ -79,7 +79,7 @@
 
         <!-- Nav Item - self info -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/personalInfo')}}">
+            <a class="nav-link" href="{{url($toInformationURL)}}">
                 <i class="fas fa-fw fa-info"></i>
                 <span>个人信息</span>
             </a>
@@ -87,9 +87,17 @@
 
         <!-- Nav Item - Arrived -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/nav')}}">
+            <a class="nav-link" href="{{url('/admin/navManage')}}">
                 <i class="fas fa-fw fa-plane-arrival"></i>
                 <span>到站信息</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - greenPath info -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('admin/greenPathVerify')}}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>绿色通道</span>
             </a>
         </li>
 
@@ -425,11 +433,11 @@
             data: {"schoolInfo": editor.txt.html()},
 
             success: function (data) {
-                if (data.code == 200) {
+                if (data.code === 200) {
                     spop({
                         template: "<h4>成功保存</h4>" +
                             "<p>信息已经更新，刷新页面就可以看到啦</p>",
-                        style: 'info',
+                        style: 'success',
                         autoclose: 5000,
                         position: 'bottom-right',
                         icon: true,
@@ -497,7 +505,7 @@
                     spop({
                         template: "<h4>成功保存</h4>" +
                             "<p>信息已经更新，刷新页面就可以看到啦</p>",
-                        style: 'info',
+                        style: 'success',
                         autoclose: 5000,
                         position: 'bottom-right',
                         icon: true,
