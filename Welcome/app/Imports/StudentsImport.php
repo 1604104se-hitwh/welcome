@@ -34,13 +34,13 @@
             return new Students([
                 'stu_status' => 'PREPARE',
                 'stu_degree' => 'UG',
-                'stu_num' => $row['stuid'],
-                'stu_name' => $row['name'],
-                'stu_gen' => ($row['gender'] == '男') ? 0 : 1,
-                'stu_cid' => $row['cid'],
-                'stu_eid' => $row['eid'],
-                'stu_dorm_str' => $row['dorm'],
-                'stu_from_school' => $row['school'],
+                'stu_num' => trim($row['stuid']),
+                'stu_name' => trim($row['name']),
+                'stu_gen' => (trim($row['gender']) == '男') ? 0 : 1,
+                'stu_cid' => trim($row['cid']),
+                'stu_eid' => trim($row['eid']),
+                'stu_dorm_str' => trim($row['dorm']),
+                'stu_from_school' => trim($row['school']),
             ]);
         }
 

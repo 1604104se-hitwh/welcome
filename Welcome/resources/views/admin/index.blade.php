@@ -76,7 +76,7 @@
 
         <!-- Nav Item - self info -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/personalInfo')}}">
+            <a class="nav-link" href="{{url($toInformationURL)}}">
                 <i class="fas fa-fw fa-info"></i>
                 <span>个人信息</span>
             </a>
@@ -84,9 +84,17 @@
 
         <!-- Nav Item - Arrived -->
         <li class="nav-item">
-            <a class="nav-link" href="{{url('/admin/nav')}}">
+            <a class="nav-link" href="{{url('/admin/navManage')}}">
                 <i class="fas fa-fw fa-plane-arrival"></i>
                 <span>到站信息</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - greenPath info -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('admin/greenPathVerify')}}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>绿色通道</span>
             </a>
         </li>
 
@@ -171,9 +179,7 @@
                             <a class="dropdown-item" href="{{url($toInformationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
-                            <a class="dropdown-item" href="{{url($toSettingURL)}}">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
-                            </a>
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> 登出
@@ -294,8 +300,8 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">院系统计</h6>
                         </div>
-                        <div class="card-body">
-                            <table class="table table-bordered">
+                        <div class="card-body table-responsive">
+                        <table class="table table-bordered">
                                 <thead>
                                 <tr role="row">
                                     <th>系名</th>
@@ -326,8 +332,8 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">仪表盘</h6>
                         </div>
-                        <div class="card-body">
-                            <table class="table table-bordered">
+                        <div class="card-body table-responsive">
+                        <table class="table table-bordered">
                                 <thead>
                                 <tr role="row">
                                     <th></th>
@@ -404,6 +410,8 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
+        integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js"
         integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
         crossorigin="anonymous"></script>

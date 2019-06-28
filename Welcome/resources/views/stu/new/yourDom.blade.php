@@ -15,9 +15,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.7.2/css/all.min.css"
           integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78="
           crossorigin="anonymous">
-    <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
 
     <!-- Custom styles for this template-->
     <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
@@ -132,6 +130,28 @@
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            信息填报
+        </div>
+
+        <!-- Nav Item - selfInfo -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('/stu/personalInfo')}}">
+                <i class="fas fa-fw fa-info"></i>
+                <span>个人信息</span></a>
+        </li>
+
+        <!-- Nav Item - GreenPath -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('/stu/greenPath')}}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>绿色通道</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -163,7 +183,7 @@
                             <i class="fas fa-envelope fa-fw"></i>
                             <!-- Counter - Messages -->
                             @if($messages['unreadNum'] > 0)
-                            <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
+                                <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
                             @endif
                         </a>
                         <!-- Dropdown - Messages -->
@@ -209,18 +229,13 @@
                             <a class="dropdown-item" href="{{url($toInformationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
-                            <a class="dropdown-item" href="{{url($toSettingURL)}}">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
-                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> 登出
                             </a>
                         </div>
                     </li>
-
                 </ul>
-
             </nav>
             <!-- End of Topbar -->
 
@@ -318,15 +333,7 @@
 
                     <!-- Content Column -->
                     <div class="mb-4">
-                        <!-- Illustrations -->
-                        <div class="card mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">宿舍简介</h6>
-                            </div>
-                            <div class="card-body">
-                                {!! $domInfo !!}
-                            </div>
-                        </div>
+
 
                         <!-- Illustrations -->
                         <div class="card mb-4">
@@ -343,8 +350,8 @@
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">你的室友</h6>
                             </div>
-                            <div class="card-body">
-                                <table class="table table-bordered">
+                            <div class="card-body table-responsive">
+                        <table class="table table-bordered">
                                     <thead>
                                     <tr role="row">
                                         <th>姓名</th>
@@ -426,6 +433,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js"
         integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
+        integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <!-- amap scripts for local infomation-->

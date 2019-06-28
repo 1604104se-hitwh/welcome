@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 require_once __DIR__ . '/../../include.php';
 
+use App\Models\Enroll;
+use App\Models\EnrollCfg;
 use App\Models\Post;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 use Jxlwqq\IdValidator\IdValidator;
 
@@ -25,7 +25,7 @@ class EnrollController extends Controller
         $this->middleware(function ($request, $next) {
             $showPosts = Post::orderBy('post_timestamp', 'desc')->limit(5)->get();
             $this->unReadPosts = Post::whereNotIn('id', function ($query) {
-                $query->select("post_id")->from("t_post_read")->where("stu_id", session("stu_num"));
+                $query->select("post_id")->from("t_post_read")->where("stu_id", session("id"));
             })->get();
             foreach ($showPosts as $post) {
                 $this->showMessages[] = array(
@@ -42,6 +42,9 @@ class EnrollController extends Controller
 
     public function enrollInfo()
     {
+        $enrollCft = EnrollCfg::first(['enrl_info','enrl_begin_time']);
+        $enrollParagraph = $enrollCft->enrl_info;
+        if(empty($enrollParagraph)) $enrollParagraph = "<p>暂时未有消息</p>";
         return view('stu.new.enrollInfo', [
             'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
             'messages' => array(
@@ -52,30 +55,20 @@ class EnrollController extends Controller
             ), // 信息
             'user' => session('stu_name'), // 用户名
             'stuID' => session('stu_num'), // 学号
-            'stuReportTime' => "9月1日", // 报到时间
-            'userImg' => "userImg", // 用户头像链接 url(site)
+            'stuReportTime' => $enrollCft->enrl_begin_time, // 报到时间
+            'userImg' => "/avatar", // 用户头像链接 url(site)
             'toInfomationURL' => "toInfomationURL", // 个人设置url
-            'toSettingURL' => "toSettingURL", // 个人设置
             'toLogoutURL' => "/logout",      // 退出登录
-            'toSchoolInfoURL' => "toSchoolInfoURL",
-            'enrollParagraph' => "<p style='color: red;'>hello</p>",   //给出介绍性的一大段文章
+            'enrollParagraph' => $enrollParagraph,   //给出介绍性的一大段文章
         ]);
     }
 
     public function enrollGuide()
     {
-        $test = new \stdClass();
-        $test->id = 1;
-        $test->enrl_title = "test";
-        $test->enrl_info = "test";
-        $test->PX = array(122.111, 122.222);
-
-        $test1 = new \stdClass();
-        $test1->id = 2;
-        $test1->enrl_title = "test";
-        $test1->enrl_info = "test";
-        $test1->PX = array(122.111, 122.222);
-
+        $enrollTime = EnrollCfg::first('enrl_begin_time')->enrl_begin_time;
+        $reportInfoLists = Enroll::orderBy('enrl_rank','asc')->get([
+            'id','enrl_title','enrl_info','enrl_location'
+        ]);
         return view('stu.new.enrollGuide', [
             'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
             'messages' => array(
@@ -86,13 +79,12 @@ class EnrollController extends Controller
             ), // 信息
             'user' => session('stu_name'), // 用户名
             'stuID' => session('stu_num'), // 学号
-            'stuReportTime' => "9月1日", // 报到时间
-            'userImg' => "userImg", // 用户头像链接 url(site)
+            'stuReportTime' => $enrollTime, // 报到时间
+            'userImg' => "/avatar", // 用户头像链接 url(site)
             'toInfomationURL' => "toInfomationURL", // 个人设置url
-            'toSettingURL' => "toSettingURL", // 个人设置
+            'reportInfoLists' => $reportInfoLists,
+
             'toLogoutURL' => "/logout",      // 退出登录
-            'toSchoolInfoURL' => "toSchoolInfoURL",
-            'enrollInfos' => array($test, $test1),   //给出报到的多个小段信息，每个Info包括id title info location
         ]);
     }
 }

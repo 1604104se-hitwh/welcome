@@ -45,9 +45,7 @@ class User extends Model
     //指定主键 
     protected $primaryKey = 'id'; 
     //是否开启时间戳 
-    public $timestamps = false; 
-    //设置时间戳格式为Unix 
-    protected $dateFormat = 'U'; 
+    public $timestamps = false;
     //过滤字段，只有包含的字段才能被更新 
     protected $fillable = ['stu_eid', 'stu_cid']; 
     //隐藏字段 

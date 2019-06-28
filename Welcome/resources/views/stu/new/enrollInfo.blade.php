@@ -120,13 +120,35 @@
                 <i class="fas fa-fw fa-route"></i>
                 <span>报到流程</span>
             </a>
-            <div id="collapseEnroll" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div id="collapseEnroll" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">你可以查看：</h6>
                     <a class="collapse-item active" href="{{url('/stu/enrollInfo')}}">报到说明</a>
                     <a class="collapse-item" href="{{url('/stu/enrollGuide')}}">开始报到</a>
                 </div>
             </div>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            信息填报
+        </div>
+
+        <!-- Nav Item - selfInfo -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('/stu/personalInfo')}}">
+                <i class="fas fa-fw fa-info"></i>
+                <span>个人信息</span></a>
+        </li>
+
+        <!-- Nav Item - GreenPath -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('/stu/greenPath')}}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>绿色通道</span></a>
         </li>
 
         <!-- Divider -->
@@ -163,7 +185,7 @@
                             <i class="fas fa-envelope fa-fw"></i>
                             <!-- Counter - Messages -->
                             @if($messages['unreadNum'] > 0)
-                            <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
+                                <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
                             @endif
                         </a>
                         <!-- Dropdown - Messages -->
@@ -209,18 +231,13 @@
                             <a class="dropdown-item" href="{{url($toInfomationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
-                            <a class="dropdown-item" href="{{url($toSettingURL)}}">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
-                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> 登出
                             </a>
                         </div>
                     </li>
-
                 </ul>
-
             </nav>
             <!-- End of Topbar -->
 
@@ -271,7 +288,7 @@
                 </div>
 
                 <!-- Content Column -->
-                <div class="card-columns">
+                <div class="container">
                     <div class="mb-4">
                         {!! $enrollParagraph !!}
                     </div>
@@ -330,6 +347,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js"
         integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
+        integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script type="text/javascript"

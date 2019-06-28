@@ -120,13 +120,35 @@
                 <i class="fas fa-fw fa-route"></i>
                 <span>报到流程</span>
             </a>
-            <div id="collapseWel" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div id="collapseWel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">你可以查看：</h6>
                     <a class="collapse-item" href="{{url('/stu/enrollInfo')}}">报到说明</a>
                     <a class="collapse-item active" href="{{url('/stu/enrollGuide')}}">开始报到</a>
                 </div>
             </div>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            信息填报
+        </div>
+
+        <!-- Nav Item - selfInfo -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('/stu/personalInfo')}}">
+                <i class="fas fa-fw fa-info"></i>
+                <span>个人信息</span></a>
+        </li>
+
+        <!-- Nav Item - GreenPath -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('/stu/greenPath')}}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>绿色通道</span></a>
         </li>
 
         <!-- Divider -->
@@ -163,7 +185,7 @@
                             <i class="fas fa-envelope fa-fw"></i>
                             <!-- Counter - Messages -->
                             @if($messages['unreadNum'] > 0)
-                            <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
+                                <span class="badge badge-danger badge-counter">{{$messages['unreadNum']}}</span>
                             @endif
                         </a>
                         <!-- Dropdown - Messages -->
@@ -209,9 +231,7 @@
                             <a class="dropdown-item" href="{{url($toInfomationURL)}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 个人信息
                             </a>
-                            <a class="dropdown-item" href="{{url($toSettingURL)}}">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> 设定
-                            </a>
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> 登出
@@ -271,24 +291,33 @@
                 </div>
 
                 <!-- Content Column -->
-                <div class="card-columns">
-                    <div class="mb-4">
-                        @if(count($enrollInfos)==0) {{-- 还没有信息 --}}
-                        <p>还没有信息</p>
-                        @else
-                            @foreach($enrollInfos as $enrollInfo)
-                                <div class="card mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">{{$enrollInfo->enrl_title}}</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        {{ $enrollInfo->enrl_info }}
-                                        <div style="width: 100%;height: 380px;" id="container{{$enrollInfo->id}}"></div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @endif
+
+                <div id="accordion">
+                    @if(count($reportInfoLists)==0) {{-- 还没有信息 --}}
+                    <div class="alert alert-primary" role="alert">
+                        还没有信息
                     </div>
+                    @else
+                        @foreach($reportInfoLists as $reportInfoList)
+                        <div class="card">
+                            <div class="card-header" id="heading{{$reportInfoList->id}}">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{$reportInfoList->id}}" aria-expanded="true" aria-controls="collapse{{$reportInfoList->id}}">
+                                        {{$reportInfoList->enrl_title}}
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div id="collapse{{$reportInfoList->id}}" class="collapse" aria-labelledby="heading{{$reportInfoList->id}}" data-parent="#accordion">
+                                <div class="card-body">
+                                    {{ $reportInfoList->enrl_info }}
+                                    <div style="width: 100%;height: 380px;"
+                                         id="container{{$reportInfoList->id}}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
             <!-- /.container-fluid -->
@@ -344,23 +373,25 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.js"
         integrity="sha256-pVreZ67fRaATygHF6T+gQtF1NI700W9kzeAivu6au9U="
         crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"
+        integrity="sha256-H3cjtrm/ztDeuhCN9I4yh4iN2Ybx/y1RM7rMmAesA0k=" crossorigin="anonymous"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script type="text/javascript"
         src="https://webapi.amap.com/maps?v=1.4.13&key=0a4d80176be0dde936743e7e03a5f237"></script>
 
 <script type="text/javascript">
-    @foreach($enrollInfos as $enrollInfo)
-        var map = new AMap.Map('container{{$enrollInfo->id}}', {
-                resizeEnable: true,
-                center: [122.083199, 37.534235],
-                zoom: 15
-            });
-        var marker = new AMap.Marker({
-            position: {{json_encode($enrollInfo->PX)}},
-            title: '{{$enrollInfo->enrl_title}}',
+            @foreach($reportInfoLists as $reportInfoList)
+    var map{{$reportInfoList->id}} = new AMap.Map('container{{$reportInfoList->id}}', {
+            resizeEnable: true,
+            zoom: 16
         });
-        map.add(marker);
+    var marker{{$reportInfoList->id}} = new AMap.Marker({
+        position: {{$reportInfoList->enrl_location}},
+        title: '{{$reportInfoList->enrl_title}}',
+    });
+    map{{$reportInfoList->id}}.add(marker{{$reportInfoList->id}});
+    map{{$reportInfoList->id}}.setCenter({{$reportInfoList->enrl_location}});
     @endforeach
 </script>
 

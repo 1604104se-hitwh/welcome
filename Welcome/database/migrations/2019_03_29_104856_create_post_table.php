@@ -18,9 +18,9 @@ class CreatePostTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->increments('id');
-            $table->timestamp('post_timestamp')->nullable();
-            $table->string('post_title', 100)->nullable();
-            $table->text('post_content')->nullable();
+            $table->timestamp('post_timestamp');
+            $table->string('post_title', 100);
+            $table->mediumText('post_content')->nullable();
             $table->smallInteger('post_send_to')->default(0);
         });
     }

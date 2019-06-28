@@ -85,7 +85,7 @@ class SeniorController extends Controller
            ), // 信息
            'stuID'=>$res_obj_array[0]->stu_num, // 学号
            'user'=> $res_obj_array[0]->stu_name, // 用户名
-           'userImg'=> "userImg",// 用户头像链接 url(site)
+           'userImg'=> "/avatar",// 用户头像链接 url(site)
            'toInformationURL'=>"toInformationURL", // 个人设置url
            'toSettingURL'=>"toSettingURL", // 个人设置
            'stuDept'=>"计算机",
@@ -108,70 +108,6 @@ class SeniorController extends Controller
            'yourStuChartProName'=>array_keys($classmates_addr_prov_cnt), // 省份名字
            'yourStuChartProData'=>array_values($classmates_addr_prov_cnt) // 每个信息
        ]);
-    }
-
-    public function queryClass() {
-        $res_obj_array = DB::select('SELECT * FROM `t_student` WHERE `stu_cid`= :stu_cid', ["stu_cid" => session('stu_cid')]);
-        /*班级情况统计*/
-        $stu_class_str = substr(session('stu_num'), 0, 7);  //学号digit0~digit6
-        $classmates_array = DB::select("SELECT * FROM `t_student` WHERE `stu_num` LIKE '$stu_class_str%'"); //获得同班同学信息
-
-        foreach ($classmates_array as $classmate) {
-            $classmate->address = $this->idValidator->getInfo($classmate->stu_cid)['address'];
-        }
-        return view('stu.old.yourClass',[
-                    'sysType'=>"在校生",  // 系统运行模式，新生，在校生，管理员
-                    'messages'=>array(
-                        'unreadNum' => $this->posts->count(), // 未读信息数量
-                        'showMessage' => $this->showMessages,
-                        'moreInfoUrl'=>"/message", // 更多信息跳转
-                    ), // 信息
-                   'stuID'=>$res_obj_array[0]->stu_num, // 学号
-                   'stuDept'=>"计算机",
-                   'classID'=>$stu_class_str,
-                   'classmates'=>$classmates_array, // 你的同学
-                   'user'=>session('stu_name'), // 用户名?
-                   'userImg'=> "userImg",// 用户头像链接 url(site)?
-                   'toInformationURL'=>"toInformationURL", // 个人设置url
-                   'toSettingURL'=>"toSettingURL", // 个人设置
-                   'toLogoutURL'=>"/logout",      // 退出登录
-        ]);
-    }
-
-    public function queryDorm() {
-        /*室友统计 */
-        $dorm_str = substr(session('stu_dorm_str'), 0, str_n_pos(session('stu_dorm_str'), '-', 2));   // 切割宿舍信息
-        $roommates_array = DB::select(
-            "SELECT * FROM `t_student` WHERE `stu_dorm_str` LIKE '$dorm_str%' AND `stu_cid`<> :cid",
-            ["cid" => session('stu_cid')]
-        );
-
-        foreach ($roommates_array as $roommate) {
-            $roommate->address = $this->idValidator->getInfo($roommate->stu_cid)['address'];
-        }
-
-        return view('stu.old.yourDom',[
-                    'sysType'=>"在校生",  // 系统运行模式，新生，在校生，管理员
-                    'messages'=>array(
-                        'unreadNum' => $this->posts->count(), // 未读信息数量
-                        'showMessage' => $this->showMessages,
-                        'moreInfoUrl'=>"/message", // 更多信息跳转       
-                    ), // 信息
-                    'user'=>session('stu_name'), // 用户名
-                    'userImg'=> "userImg",// 用户头像链接 url(site)
-                    'stuID'=>session('stu_num'), // 学号
-                    'stuDept'=>"计算机",
-                    'stuDormitory'=>session("stu_dorm_str"), // 宿舍
-                    'domInfo'=>"domInfo", // 宿舍介绍
-                    'yourDoms'=>array(),
-                    'domLocal'=>array( // 宿舍位置（定位）
-                        'PX'=>array(122.080098,37.532806),
-                        'title'=>"七公寓"
-                    ),
-                    'toInformationURL'=>"toInformationURL", // 个人设置url
-                    'toSettingURL'=>"toSettingURL", // 个人设置
-                    'toLogoutURL'=>"/logout",      // 退出登录
-        ]); 
     }
 
     public function queryCountryFolk() {
@@ -198,7 +134,7 @@ class SeniorController extends Controller
                    ), // 信息
                    'stuID'=>session("stu_num"), // 学号
                    'user'=>session("stu_name"), // 用户名
-                   'userImg'=> "userImg",// 用户头像链接 url(site)
+                   'userImg'=> "/avatar",// 用户头像链接 url(site)
                    'toInformationURL'=>"toInformationURL", // 个人设置url
                    'toSettingURL'=>"toSettingURL", // 个人设置
                    'IDnumber'=>"111111", // 身份证号码

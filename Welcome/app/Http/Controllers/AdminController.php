@@ -5,9 +5,14 @@
     use App\Models\Department;
     use App\Models\Major;
     use App\Models\Students;
+    use App\Models\Admin;
+    use App\Models\Permission;
     use App\Models\EnrollCfg;
     use App\Http\Controllers\Controller;
-
+    use App\Models\SysInfo;
+    use Barryvdh\Debugbar\Facade;
+    use DebugBar\DebugBar;
+    use Illuminate\Http\Request;
 
 
     class AdminController extends Controller
@@ -34,7 +39,8 @@
                 ["stu_status", "CURRENT"]
             ])->count();
             // 报到配置信息
-            $enrollcfg = EnrollCfg::all()->first();
+            $enrollcfg = EnrollCfg::find(1);
+            $enrollcfg->school_info = SysInfo::find(1,'school_info')->school_info;
             $enrollTime = ($enrollcfg) ? $enrollcfg['enrl_begin_time'] : "暂无信息";
             // 院系信息统计
             $deptInfos = Department::all();
@@ -90,16 +96,16 @@
                     }else{
                         $deptImport = "已导入";
                     }
-                    $deptImport .= "，院系".Major::count()."个，".
-                        "专业".Department::count()."个";
+                    $deptImport .= "，院系".Department::count()."个，".
+                        "专业".Major::count()."个";
                 }
             }
             return view('admin.index', [
                 'sysType' => "管理员",  // 系统运行模式，新生，在校生，管理员
                 'user' => session("name"), // 用户名
-                'userImg' => "userImg",// 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 更多消息url
-                'toSettingURL' => "toSettingURL", // 个人设置
+                'userImg' => "/avatar",// 用户头像链接 url(site)
+                'toInformationURL' => "/admin/personalInfo", // 更多消息url
+
                 'newStuNumber' => $res, // 新生人数
                 'oldStuNumber' => $current, // 在校生人数
                 'hasReportNumber' => $enroll, // 已报到人数
@@ -131,7 +137,8 @@
                 ["stu_status", "CURRENT"]
             ])->count();
             // 报到配置
-            $enrollcfg = EnrollCfg::all()->first();
+            $enrollcfg = EnrollCfg::find(1);
+            $enrollcfg->school_info = SysInfo::find(1,'school_info')->school_info;
             $enrollTime = ($enrollcfg) ? $enrollcfg['enrl_begin_time'] : "暂无信息";
             // 专业信息
             $majorInfos = Major::orderBy('major_num', 'asc')->get();
@@ -139,9 +146,9 @@
             return view('admin.insertSchoolInfo', [
                 'sysType' => "管理员",  // 系统运行模式，新生，在校生，管理员
                 'user' => session("name"), // 用户名
-                'userImg' => "userImg",// 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 个人设置url
-                'toSettingURL' => "toSettingURL", // 个人设置
+                'userImg' => "/avatar",// 用户头像链接 url(site)
+                'toInformationURL' => "/admin/personalInfo", // 个人设置url
+
                 'newStuNumber' => $res, // 新生人数
                 'oldStuNumber' => $current, // 在校生人数
                 'hasReportNumber' => $enroll, // 已报到人数
@@ -167,7 +174,7 @@
             $current = Students::where([
                 ["stu_status", "CURRENT"]
             ])->count();
-            $enrollcfg = EnrollCfg::all()->first();
+            $enrollcfg = EnrollCfg::find(1);
             $enrollTime = ($enrollcfg) ? $enrollcfg['enrl_begin_time'] : "暂无信息";
             /* 按照院系显示院系人数 */
             // 院系信息统计
@@ -203,9 +210,9 @@
             return view('admin.newStudentManage', [
                 'sysType' => "管理员",  // 系统运行模式，新生，在校生，管理员
                 'user' => session("name"), // 用户名
-                'userImg' => "userImg",// 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 个人设置url
-                'toSettingURL' => "toSettingURL", // 个人设置
+                'userImg' => "/avatar",// 用户头像链接 url(site)
+                'toInformationURL' => "/admin/personalInfo", // 个人设置url
+
                 'newStuNumber' => $res, // 新生人数
                 'oldStuNumber' => $current, // 在校生人数
                 'hasReportNumber' => $enroll, // 已报到人数
@@ -216,6 +223,5 @@
                 'toLogoutURL' => "/logout",      // 退出登录
             ]);
         }
-
 
     }

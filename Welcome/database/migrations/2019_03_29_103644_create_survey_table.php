@@ -13,15 +13,15 @@ class CreateSurveyTable extends Migration
      */
     public function up()
     {
-        Schema::create('t_survey', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            $table->charset = 'utf8';
-            $table->collation = 'utf8_unicode_ci';
-            $table->increments('id');
-            $table->string('svy_name', 100)->nullable();
-            $table->timestamp('svy_timestamp')->nullable();
-            $table->boolean('svy_real_name_flag')->default(true);
-        });
+//        Schema::create('t_survey', function (Blueprint $table) {
+//            $table->engine = 'InnoDB';
+//            $table->charset = 'utf8';
+//            $table->collation = 'utf8_unicode_ci';
+//            $table->increments('id');
+//            $table->string('svy_name', 100)->nullable();
+//            $table->timestamp('svy_timestamp')->nullable();
+//            $table->boolean('svy_real_name_flag')->default(true);
+//        });
     }
 
     /**

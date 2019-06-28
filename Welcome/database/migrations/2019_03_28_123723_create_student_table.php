@@ -20,15 +20,16 @@ class CreateStudentTable extends Migration
             $table->increments('id');
             $table->enum('stu_status', ['PREPARE', 'ENROLL', 'CURRENT', 'GRADUATE', 'SUSPEND', 'COMPLETE', 'OTHER']);
             $table->enum('stu_degree', ['UG', 'M', 'D']);
-            $table->char('stu_num', 10);
+            $table->char('stu_num', 10)->nullable()->unique();
             $table->string('stu_name', 15);
             $table->boolean('stu_gen')->default(false);
-            $table->char('stu_cid', 18);
-            $table->char('stu_eid', 14);
+            $table->char('stu_cid', 18)->unique();
+            $table->char('stu_eid', 14)->unique();
             //$table->integer('class_id')->unsigned();
-            $table->string('stu_dorm_str', 10)->nullable();
+            $table->string('stu_dorm_str', 10)->nullable()->unique();
             $table->string('stu_from_school', 10)->nullable();
         });
+
     }
 
     /**

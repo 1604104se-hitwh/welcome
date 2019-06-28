@@ -54,7 +54,7 @@
 | -------------------------------- | -------------------------- | ---------------------------------------------------- |
 |新生信息上传|/admin/stuInfoUpload|ImportController@studentExcelImport|
 |院系信息上传|/admin/majorInfoUpload|ImportController@majorExcelImport|
-|学校信息提交|/admin/schoolInfoPost|ImportController@schollInfoPost|
+|学校信息提交|/admin/schoolInfoPost|ImportController@schoolInfoPost|
 
 注：
 

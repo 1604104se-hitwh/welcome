@@ -26,15 +26,15 @@ class MajorImport implements ToModel,WithHeadingRow
         }elseif (empty($row['dept'] || empty($row['majornum'] || empty($row['majorname'])))){
             return null;
         }
-        $deptID = Department::where('dept_name',$row['dept'])
+        $deptID = Department::where('dept_name',trim($row['dept']))
             ->select('id')->first();
         if(!$deptID){
-            $deptID = Department::create(['dept_name'=>$row['dept']]);
+            $deptID = Department::create(['dept_name'=>trim($row['dept'])]);
         }
         return new Major([
-            'major_num' => $row['majornum'],
-            'major_name' => $row['majorname'],
-            'dept_id' => $deptID['id'],
+            'major_num' => trim($row['majornum']),
+            'major_name' => trim($row['majorname']),
+            'dept_id' => trim($deptID['id']),
         ]);
     }
 

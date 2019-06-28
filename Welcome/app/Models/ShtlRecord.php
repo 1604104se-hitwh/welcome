@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlRecord whereShtlId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlRecord whereStuId($value)
  * @mixin \Eloquent
+ * @property int $port_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShtlRecord wherePortId($value)
  */
 class ShtlRecord extends Model
 {
@@ -28,6 +30,8 @@ class ShtlRecord extends Model
     protected $primaryKey = 'id';
     //是否开启时间戳
     public $timestamps = false;
-    //设置时间戳格式为Unix
-    protected $dateFormat = 'U';
+
+    protected $fillable = [
+        'stu_id','shtl_id','record_time'
+    ];
 }

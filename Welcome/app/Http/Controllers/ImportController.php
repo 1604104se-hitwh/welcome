@@ -7,10 +7,10 @@ use App\Imports\StudentsImport;
 use App\Models\EnrollCfg;
 use App\Models\Post;
 use App\Models\Students;
+use App\Models\SysInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
-use Carbon\Carbon;
 
 class ImportController extends Controller
 {
@@ -18,7 +18,7 @@ class ImportController extends Controller
         // 产生提交，注意开始清除原有数据
         try{
             DB::beginTransaction();
-            if(!EnrollCfg::first()->enrl_permission){
+            if(EnrollCfg::first()->enrl_permission){
                 // 准许核验，不能上传
                 $array=array(
                     "code" => 401,
@@ -121,12 +121,16 @@ class ImportController extends Controller
         }
     }
 
-    public function schollInfoPost(Request $request) {
+    public function schoolInfoPost(Request $request) {
         try{
             DB::beginTransaction();
-            $enrollcfg = EnrollCfg::first();
-            $enrollcfg->school_info = $request->post('schoolInfo');
-            $enrollcfg->save();
+            $enrollcfg = SysInfo::find(1);
+            if($enrollcfg){
+                $enrollcfg->school_info = $request->post('schoolInfo');
+                $enrollcfg->save();
+            }else{
+                SysInfo::create(['school_info' => $request->post('schoolInfo')]);
+            }
             DB::commit();
             $array=array(
                 "code" => 200,
@@ -141,38 +145,9 @@ class ImportController extends Controller
                 "data" => "程序内部错误，请告知管理员处理！",
                 "exception" => $e->getMessage()
             );
+
             return response()->jsonp($request->input('callback'),$array);
         }
     }
 
-    public function storePost(Request $request) {
-        if (!$request->ajax()) {
-            return back();
-        }
-        try{
-            DB::beginTransaction();
-            $post = new Post();
-            $now = Carbon::now();
-            $post->post_title = $request->post("postTitle", "无标题");
-            $post->post_content = $request->post("newPost", "暂无内容");
-            // $post->post_timestamp = $dt->format('m-d-y H:i:s');
-            $post->post_timestamp = $now;
-            $post->save();
-            DB::commit();
-            $array=array(
-                "code" => 200,
-                "msg" => "Saved!"
-            );
-            return response()->jsonp($request->input('callback'),$array);
-        }catch (\Exception $e){
-            DB::rollBack();
-            $array=array(
-                "code" => 500,
-                "msg" => "The programing process error! Please call administrator for help!",
-                "data" => "程序内部错误，请告知管理员处理！",
-                "exception" => $e->getMessage()
-            );
-            return response()->jsonp($request->input('callback'),$array);
-        }
-    }
 }

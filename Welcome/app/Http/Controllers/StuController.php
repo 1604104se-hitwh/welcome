@@ -9,8 +9,8 @@
     use App\Models\Major;
     use App\Models\Students as Student;
     use App\Models\Post;
-    use App\Models\PostRead;
 
+    use App\Models\SysInfo;
     use Jxlwqq\IdValidator\IdValidator;
 
     /* 新生控制器 */
@@ -32,17 +32,16 @@
                 $this->showMessages = array();
                 $showPosts = Post::orderBy('post_timestamp','desc')->limit(5)->get();
                 $this->unReadPosts = Post::whereNotIn('id',function($query){
-                    $query->select("post_id")->from("t_post_read")->where("stu_id", session('stu_num'));
+                    $query->select("post_id")->from("t_post_read")->where("stu_id", session('id'));
                 })->get();
                 foreach ($showPosts as $post) {
                     $this->showMessages[] = array(
-                        "title" => $post->post_title,
-                        "context" => mb_strlen($post->post_content,"UTF-8") > 12 ?
+                        "title"     => $post->post_title,
+                        "context"   => mb_strlen($post->post_content,"UTF-8") > 12 ?
                             mb_substr($post->post_content,0,10,"UTF-8")."...":$post->post_content ,
-                        "toURL" => "/stu/posts/".$post->id,
-                        "readed" => $this->unReadPosts->where('id',$post->id)->isEmpty()
+                        "toURL"     => "/stu/posts/".$post->id,
+                        "readed"    => $this->unReadPosts->where('id',$post->id)->isEmpty()
                     );
-
                 }
                 return $next($request);
             });
@@ -63,8 +62,8 @@
             $class_male_num = 0;
             $class_female_num = 0;
             foreach ($classmates_array as $classmate) {
-                if ($classmate->stu_gen) $class_male_num++;
-                else $class_female_num++;
+                if ($classmate->stu_gen) $class_female_num++;
+                else $class_male_num++;
             }
             /* 老乡信息 */
             //地区分布，需要做桶排序
@@ -94,7 +93,8 @@
             if (0 != $restNumber = $class_male_num + $class_female_num - $top4_num)
                 $classmates_addr_prov_cnt['其他'] = $restNumber;
             /* 报到配置信息 */
-            $enrollcfg = EnrollCfg::all()->first();
+            $enrollcfg = EnrollCfg::find(1);
+            $enrollcfg->school_info = SysInfo::find(1,'school_info')->school_info;
             $enrollTime = ($enrollcfg) ? $enrollcfg['enrl_begin_time'] : "暂无信息";
             /*室友统计 */
             // 切割宿舍信息
@@ -133,33 +133,32 @@
             }
 
             return view('stu.new.index', [
-                'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
-                'messages' => array(
-                    'unreadNum' => $this->unReadPosts->count(), // 未读信息数量
-                    'showMessage' => $this->showMessages,
-                    'moreInfoUrl' => "/stu/posts", // 更多信息跳转
+                'sysType'                   => "新生",                          // 系统运行模式，新生，在校生，管理员
+                'messages'                  => array(
+                    'unreadNum'             => $this->unReadPosts->count(),     // 未读信息数量
+                    'showMessage'           => $this->showMessages,
+                    'moreInfoUrl'           => "/stu/posts",                    // 更多信息跳转
                 ), // 信息
-                'stuID' => session('stu_num'), // 学号
-                'user' => session('stu_name'), // 用户名
-                'userImg' => "userImg", // 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 更多信息url
-                'toSettingURL' => "toSettingURL", // 个人设置
-                'stuDept' => $major,
-                'stuDormitory' => session('stu_dorm_str'),
-                'stuReportTime' => $enrollTime, // 报到时间
-                'schoolInfo' => $enrollcfg->school_info, // 学校信息 可以html
-                'toSchoolInfoURL' => "toSchoolInfoURL",
-                'toAllStuURL' => "/stu/queryClass", // 所有同学信息url
-                'dormStus' => $roommates_array, // 室友
+                'stuID'                     => session('stu_num'),          // 学号
+                'user'                      => session('stu_name'),         // 用户名
+                'userImg'                   => "/avatar",                       // 用户头像链接 url(site)
+                'toInformationURL'          => "/stu/personalInfo",             // 个人信息url
 
-                'toDormInfoURL' => "/stu/queryDorm",
-                'localFolks' => $country_folk_array, // 老乡
-                'toLocalFolkURL' => "/stu/queryCountryFolk", // 查看老乡信息url
-                'toLogoutURL' => "/logout",      // 退出登录
+                'stuDept'                   => $major,
+                'stuDormitory'              => session('stu_dorm_str'),
+                'stuReportTime'             => $enrollTime,                     // 报到时间
+                'schoolInfo'                => $enrollcfg->school_info,         // 学校信息 可以html
+                'toAllStuURL'               => "/stu/queryClass",               // 所有同学信息url
+                'dormStus'                  => $roommates_array,                // 室友
+
+                'toDormInfoURL'             => "/stu/queryDorm",
+                'localFolks'                => $country_folk_array,             // 老乡
+                'toLocalFolkURL'            => "/stu/queryCountryFolk",         // 查看老乡信息url
+                'toLogoutURL'               => "/logout",                       // 退出登录
                 //饼图
-                'yourStuChartBoyGirl' => array($class_male_num, $class_female_num), // 男女比例，先男后女
-                'yourStuChartProName' => array_keys($classmates_addr_prov_cnt), // 省份名字
-                'yourStuChartProData' => array_values($classmates_addr_prov_cnt), // 每个信息
+                'yourStuChartBoyGirl'       => array($class_male_num, $class_female_num),       // 男女比例，先男后女
+                'yourStuChartProName'       => array_keys($classmates_addr_prov_cnt),           // 省份名字
+                'yourStuChartProData'       => array_values($classmates_addr_prov_cnt),         // 每个信息
             ]);
 
         }
@@ -181,8 +180,8 @@
                     ->getInfo($classmate->stu_cid)['address'];
             }
             /* 报到配置信息 */
-            $enrollcfg = EnrollCfg::all()->first();
-            $enrollTime = (EnrollCfg::all()->first()) ?
+            $enrollcfg = EnrollCfg::find(1);
+            $enrollTime = ($enrollcfg) ?
                 $enrollcfg['enrl_begin_time'] : "暂无信息";
             /* 获取院系 */
             if(session()->exists('stu_num')){
@@ -200,23 +199,22 @@
             }
 
             return view('stu.new.yourClass', [
-                'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
-                'messages' => array(
-                    'unreadNum' => $this->unReadPosts->count(), // 未读信息
-                    'showMessage' => $this->showMessages,
-                    'moreInfoUrl' => "/stu/post", // 更多信息跳转
-
+                'sysType'                       => "新生",                        // 系统运行模式，新生，在校生，管理员
+                'messages'                      => array(
+                    'unreadNum'                 => $this->unReadPosts->count(), // 未读信息
+                    'showMessage'               => $this->showMessages,
+                    'moreInfoUrl'               => "/stu/post",                 // 更多信息跳转
                 ), // 信息
-                'stuID' => session('stu_num'), // 学号
-                'user' => session('stu_name'), // 用户名
-                'userImg' => "userImg", // 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 个人信息url
-                'toSettingURL' => "toSettingURL", // 个人设置
-                'stuDept' => $major,
-                'stuDormitory' => session('stu_dorm_str'),
-                'stuReportTime' => $enrollTime,
-                'classmates' => $classmates_array, // 你的同学
-                'toLogoutURL' => "/logout",      // 退出登录
+                'stuID'                         => session('stu_num'),      // 学号
+                'user'                          => session('stu_name'),     // 用户名
+                'userImg'                       => "/avatar",                   // 用户头像链接 url(site)
+                'toInformationURL'              => "/stu/personalInfo",         // 个人信息url
+
+                'stuDept'                       => $major,
+                'stuDormitory'                  => session('stu_dorm_str'),
+                'stuReportTime'                 => $enrollTime,
+                'classmates'                    => $classmates_array,           // 你的同学
+                'toLogoutURL'                   => "/logout",                   // 退出登录
             ]);
 
         }
@@ -248,8 +246,8 @@
             ])->first();
 
             /* 报到配置信息 */
-            $enrollcfg = EnrollCfg::all()->first();
-            $enrollTime = (EnrollCfg::all()->first()) ?
+            $enrollcfg = EnrollCfg::find(1);
+            $enrollTime = ($enrollcfg) ?
                 $enrollcfg['enrl_begin_time'] : "暂无信息";
             /* 获取院系 */
             if(session()->exists('stu_num')){
@@ -268,29 +266,29 @@
 
 
             return view('stu.new.yourDom', [
-                'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
-                'messages' => array(
-                    'unreadNum' => $this->unReadPosts->count(), // 未读信息
-                    'showMessage' => $this->showMessages,
-                    'moreInfoUrl' => "/stu/posts", // 更多信息跳转
+                'sysType'                       => "新生",                        // 系统运行模式，新生，在校生，管理员
+                'messages'                      => array(
+                    'unreadNum'                 => $this->unReadPosts->count(), // 未读信息
+                    'showMessage'               => $this->showMessages,
+                    'moreInfoUrl'               => "/stu/posts",                // 更多信息跳转
 
                 ), // 信息
-                'stuID' => session('stu_num'), // 学号
-                'user' => session('stu_name'), // 用户名
-                'userImg' => "userImg", // 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 个人信息url
-                'toSettingURL' => "toSettingURL", // 个人设置
-                'stuDept' => $major,
-                'stuDormitory' => session('stu_dorm_str'), // 宿舍
-                'stuReportTime' => $enrollTime, // 报到时间
-                'domInfo' => "domInfo", // 宿舍介绍
-                'yourDoms' => $roommates_array,
-                'domLocal' => array( // 宿舍位置（定位）
-                    'PX' => array($dorm_res->dorm_position_x
-                        , $dorm_res->dorm_position_y),
-                    'title' => $dorm_res->dorm_name
+                'stuID'                         => session('stu_num'),      // 学号
+                'user'                          => session('stu_name'),     // 用户名
+                'userImg'                       => "/avatar",                   // 用户头像链接 url(site)
+                'toInformationURL'              => "/stu/personalInfo",         // 个人信息url
+
+                'stuDept'                       => $major,
+                'stuDormitory'                  => session('stu_dorm_str'), // 宿舍
+                'stuReportTime'                 => $enrollTime,                 // 报到时间
+                'domInfo'                       => "domInfo",                   // 宿舍介绍
+                'yourDoms'                      => $roommates_array,
+                'domLocal'                      => array(                       // 宿舍位置（定位）
+                    'PX'                        => array($dorm_res->dorm_position_x
+                                                    , $dorm_res->dorm_position_y),
+                    'title'                     => $dorm_res->dorm_name
                 ),
-                'toLogoutURL' => "/logout",      // 退出登录
+                'toLogoutURL'                   => "/logout",                   // 退出登录
             ]);
         }
 
@@ -320,25 +318,24 @@
             }
 
             return view('stu.new.yourCountryFolk', [
-                'sysType' => "新生",  // 系统运行模式，新生，在校生，管理员
-                'messages' => array(
-                    'unreadNum' => $this->unReadPosts->count(), // 未读信息
-                    'showMessage' => $this->showMessages,
-                    'moreInfoUrl' => "/stu/posts", // 更多信息跳转
+                'sysType'                       => "新生",                    // 系统运行模式，新生，在校生，管理员
+                'messages'                      => array(
+                    'unreadNum'                 => $this->unReadPosts->count(), // 未读信息
+                    'showMessage'               => $this->showMessages,
+                    'moreInfoUrl'               => "/stu/posts",            // 更多信息跳转
 
                 ), // 信息
-                'stuID' => session('stu_num'), // 学号
-                'user' => session('stu_name'), // 用户名
-                'userImg' => "userImg", // 用户头像链接 url(site)
-                'toInformationURL' => "toInformationURL", // 个人信息url
-                'toSettingURL' => "toSettingURL", // 个人设置url
-                'IDnumber' => session("stu_cid"), // 身份证号码
-                'stuLocal' => $cid_res['address'], // 识别地区
-                'stuPreSchool' => $fromSchool, // 毕业院校
-                'countymens' => $localStudents, // 老乡信息
-                'sameSchools' => $sameSchools, // 同校信息
+                'stuID'                         => session('stu_num'),  // 学号
+                'user'                          => session('stu_name'), // 用户名
+                'userImg'                       => "/avatar",               // 用户头像链接 url(site)
+                'toInformationURL'              => "/stu/personalInfo",     // 个人信息url
+                'IDnumber'                      => session("stu_cid"), // 身份证号码
+                'stuLocal'                      => $cid_res['address'],     // 识别地区
+                'stuPreSchool'                  => $fromSchool,             // 毕业院校
+                'countymens'                    => $localStudents,          // 老乡信息
+                'sameSchools'                   => $sameSchools,            // 同校信息
 
-                'toLogoutURL' => "/logout",      // 退出登录
+                'toLogoutURL'                   => "/logout",               // 退出登录
             ]);
         }
     }

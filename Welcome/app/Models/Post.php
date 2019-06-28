@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use \App\Models\PostRead;
 
 /**
  * App\Models\Post
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property string|null $post_title
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post wherePostTitle($value)
+ * @property-read \App\Models\PostRead $hasOnePostRead
  */
 class Post extends Model
 {
@@ -30,10 +32,8 @@ class Post extends Model
     protected $primaryKey = 'id';
     //是否开启时间戳
     public $timestamps = false;
-    //设置时间戳格式为Unix
-    protected $dateFormat = 'U';
 
     public function hasOnePostRead() {
-        return $this->hasOne("PostRead", "post_id", "id");
+        return $this->hasOne("\App\Models\PostRead", "post_id", "id");
     }
 }

@@ -13,16 +13,16 @@ class CreateSvyFeedbackTable extends Migration
      */
     public function up()
     {
-        Schema::create('t_svy_feedback', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            $table->charset = 'utf8';
-            $table->collation = 'utf8_unicode_ci';
-            $table->increments('id');
-            $table->integer('svy_id')->unsigned();
-            $table->text('fdbk_result')->nullable();
-            $table->smallInteger('fdbk_type')->nullable();
-            $table->timestamp('fdbk_timestamp')->nullable();
-        });
+//        Schema::create('t_svy_feedback', function (Blueprint $table) {
+//            $table->engine = 'InnoDB';
+//            $table->charset = 'utf8';
+//            $table->collation = 'utf8_unicode_ci';
+//            $table->increments('id');
+//            $table->integer('svy_id')->unsigned();
+//            $table->text('fdbk_result')->nullable();
+//            $table->smallInteger('fdbk_type')->nullable();
+//            $table->timestamp('fdbk_timestamp')->nullable();
+//        });
     }
 
     /**
